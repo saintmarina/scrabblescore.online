@@ -75,19 +75,18 @@ class App extends React.Component {
   }
 
   render() {
-    let section;
-    switch (this.state.currentSection) {
-      case 1: section = <Section1 onNext={this.handleSection1Next.bind(this)} defaultNumberOfPlayers={this.state.numberOfPlayers} />; break;
-      case 2: section = <Section2 onBack={this.handleBack.bind(this)} defaultNames={Array(this.state.numberOfPlayers).fill('')}/>; break;
-    }
-
     return (   
       <div className="main-text">
         <h1> Scrabble score keeper</h1>
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
         Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
         innovative and easy way, whilst playing the Scrabble board game.</p>
-        {section}
+        {this.state.currentSection === 1 ?
+          <Section1 onNext={this.handleSection1Next.bind(this)} defaultNumberOfPlayers={this.state.numberOfPlayers} /> :
+         this.state.currentSection === 2 ?
+          <Section2 onBack={this.handleBack.bind(this)} defaultNames={Array(this.state.numberOfPlayers).fill('')}/> :
+          <p>Oops</p>
+        }
       </div>
     );
   }
