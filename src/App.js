@@ -30,8 +30,14 @@ class Section1 extends React.Component {
 
 class Section2 extends React.Component {
   state = {
-    playerNames: this.props.defaultNames
+    playerNames: this.props.defaultNames,
+    numberOfPlayers: this.props.defaultNumberOfPlayers
   }
+
+  get playerNames() {
+    return this.state.playerNames;
+  }
+
   handleChange(i, e) {
     let names = this.state.playerNames.slice();
     names[i] = e.target.value;
@@ -50,8 +56,8 @@ class Section2 extends React.Component {
                 placeholder={`Player ${i+1}`} value={name} /> )}
           </div><br />
           <div className='input-group'>
-              <button onClick={this.props.onBack} type="submit" className="btn btn-info">Back</button>
-              <button type="submit" className="btn btn-info">Next</button>
+              <button onClick={() => this.props.onBack(this)} type="submit" className="btn btn-info">Back</button>
+              <button onClick={() => this.props.onNext(this)} type="submit" className="btn btn-info">Next</button>
               <br /><br />
           </div>
         </div>
@@ -63,15 +69,27 @@ class Section2 extends React.Component {
 class App extends React.Component {
   state = {
     currentSection: 1,
-    numberOfPlayers: 2
+    numberOfPlayers: 2,
+    playerNames: []
   }
 
   handleSection1Next(numberOfPlayers) {
     this.setState({currentSection: 2, numberOfPlayers: numberOfPlayers});
   }
 
-  handleBack() {
-    this.setState({currentSection: 1});
+  handleSection2Back(target) {
+    this.setState({currentSection: 1, playerNames: target.playerNames});
+  }
+
+  handleSection2Next(target) {
+    this.setState({currentSection: 3, playerNames: target.playerNames});
+  }
+
+  getDefaultPlayerNames() {
+    let namesArray = this.state.playerNames.slice(0, this.state.numberOfPlayers);
+    while (namesArray.length < this.state.numberOfPlayers)
+      namesArray.push('');
+    return namesArray;
   }
 
   render() {
@@ -84,8 +102,8 @@ class App extends React.Component {
         {this.state.currentSection === 1 ?
           <Section1 onNext={this.handleSection1Next.bind(this)} defaultNumberOfPlayers={this.state.numberOfPlayers} /> :
          this.state.currentSection === 2 ?
-          <Section2 onBack={this.handleBack.bind(this)} defaultNames={Array(this.state.numberOfPlayers).fill('')}/> :
-          <p>Oops</p>
+          <Section2 onBack={this.handleSection2Back.bind(this)} onNext={this.handleSection2Next.bind(this)}
+                    defaultNames={this.getDefaultPlayerNames()}/> : null
         }
       </div>
     );
