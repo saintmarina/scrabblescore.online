@@ -97,32 +97,40 @@ class Section3 extends React.Component {
         <div className="row justify-content-center">
         </div>
         <br />
-        <table id='score-table' className="table table-bordered" align="center">
-          <thead>
-            <tr className="thead-rows">
-              <th id="move">Move</th>
-              {this.props.playerNames.map((name, i) =>
-              <th key={i} className="player-header">{name}</th>)}
-            </tr>
-          </thead>
-          <tbody className="tbody-rows">
-          {[...Array(this.state.currentMove + 1)].map((_, i) =>
-            <tr key={i}>
-              <th>{i+1}</th>
-              {this.state.players.map((player, j) =>
-                <td key={j}>{player.wordHistory[i] ? <TableCellContent word={player.wordHistory[i]}/> : null}</td> )}
-            </tr> )}
-          </tbody>
-        </table>
+        <ScoreGrid currentMove={this.state.currentMove} players={this.state.players} />
       </div>
     )
   }
 }
 
-class TableCellContent extends React.Component {
-render() {
-  return (
-    <span>{this.props.word.word}<div class='score-box'>{this.props.word.score}</div></span>
+class ScoreGrid extends React.Component {
+  render() {
+    return (
+      <table id='score-table' className="table table-bordered" align="center">
+          <thead>
+            <tr className="thead-rows">
+              <th id="move">Move</th>
+              {this.props.players.map((player, i) =>
+              <th key={i} className="player-header">{player.name}</th>)}
+            </tr>
+          </thead>
+          <tbody className="tbody-rows">
+          {[...Array(this.props.currentMove + 1)].map((_, i) =>
+            <tr key={i}>
+              <th>{i+1}</th>
+              {this.props.players.map((player, j) =>
+                <td key={j}>{player.wordHistory[i] ? <ScoreGridCell word={player.wordHistory[i]}/> : null}</td> )}
+            </tr> )}
+          </tbody>
+        </table>
+    )
+  }
+}
+
+class ScoreGridCell extends React.Component {
+  render() {
+    return (
+      <span>{this.props.word.word}<div class='score-box'>{this.props.word.score}</div></span>
     )
   }
 }
