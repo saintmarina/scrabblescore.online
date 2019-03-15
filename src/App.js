@@ -22,7 +22,7 @@ class Section1 extends React.Component {
             <option value="4">4</option>
           </select><br /><br />
           <div className="input-group-append">
-              <button onClick={() => this.props.onNext(this.state.numberOfPlayers)} type="submit" className="btn btn-info">Next</button>
+              <button onClick={() => this.props.onNext(this)} type="submit" className="btn btn-info">Next</button>
           </div><br /><br />
         </div>
       </div>
@@ -85,19 +85,56 @@ class Section3 extends React.Component {
           <div>
             <br />
             <p className="bold">Submit a word:</p>
-            <div id='input-container'>
-              <div className='real-input-box'>
-                <div id='blink-me'></div>
-                  <input id='input-word' type='text' name='word'  size='15' maxLength='30' autoComplete='off'  /><br />
-                <div className='scrabble-tiles'></div>
-              </div>
-            </div>
+            <ScrabbleInputBox  />
             <button type="submit" className="btn btn-info word-submit-button">Submit</button>     <br /><br />
           </div>
         <div className="row justify-content-center">
         </div>
         <br />
         <ScoreGrid currentMove={this.state.currentMove} players={this.state.players} />
+      </div>
+    )
+  }
+}
+
+class ScrabbleInputBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.textInput = React.createRef();
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      inFocus:false,
+      input: ''
+    }
+  }
+
+  handleClick() {
+    this.textInput.current.focus();
+    this.setState({inFocus: true});
+  }
+
+  handleChange(e) {
+    this.setState({input: e.target.value, inFocus: false});
+  }
+
+  render() {
+    return (
+      <div id='input-container'>
+        <div onClick={this.handleClick} className='scrabble-input-box'>
+          {this.state.inFocus ? <div className='blinker'></div> : null}
+          <input ref={this.textInput} onChange={this.handleChange}
+                 className='hidden-input' type='text' name='word'
+                 size='15' maxLength='30' autoComplete='off' /><br />
+          <div className='scrabble-tiles'>
+            {this.state.input.split('').map((c, i) =>
+              <span className='scrabble-letter' key={i} >
+                <span className='letter'>{c.toUpperCase()}</span>
+                <span className='score'>4</span>
+              </span> )
+            }
+          </div>
+        </div>
       </div>
     )
   }
@@ -130,7 +167,7 @@ class ScoreGrid extends React.Component {
 class ScoreGridCell extends React.Component {
   render() {
     return (
-      <span>{this.props.word.word}<div class='score-box'>{this.props.word.score}</div></span>
+      <span>{this.props.word.word}<div className='score-box'>{this.props.word.score}</div></span>
     )
   }
 }
@@ -147,8 +184,8 @@ class App extends React.Component {
     playerNames: []
   }
 
-  handleSection1Next(numberOfPlayers) {
-    this.setState({currentSection: 2, numberOfPlayers: numberOfPlayers});
+  handleSection1Next(target) {
+    this.setState({currentSection: 2, numberOfPlayers: target.state.numberOfPlayers});
   }
 
   handleSection2Back(target) {

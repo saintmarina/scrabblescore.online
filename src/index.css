@@ -68,22 +68,13 @@ form#submit_word button {
     margin-top: 30px;
     border: none;
 }
-
-#input-word {
-	margin-right: 30%; 
-    margin-left: 30%;
-	float: left;
-    height:40px;
-    margin: 0 auto;
-    display: inline; 
-}
 #input-img {
     width:50px;
     height:50px;
     display:inline-block;
     bottom: 19px;
 }
-.real-input-box {
+.scrabble-input-box {
 	position: relative;
 	margin: auto;
 	margin-bottom: 10px;
@@ -106,7 +97,7 @@ form#submit_word button {
 
 .player-active { color: red; }
 
-#blink-me {
+.blinker {
 	position: absolute;
 	background-color: #335;
 	top: 7px;
@@ -116,7 +107,7 @@ form#submit_word button {
 	animation: blinker 1s linear infinite;
 }
 
-#input-word {
+.hidden-input {
 	position: fixed;
 	top: -10px;
 	width: 0px;
@@ -132,7 +123,7 @@ form#submit_word button {
 }
 
 .scrabble-letter {
-	background: url("/static/background.jpg");
+	background: url("/background.jpg");
 	background-size: 56px;
 	display: inline-block;
     width: 56px;
