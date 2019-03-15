@@ -2,6 +2,10 @@ import React from 'react';
 
 const debug = true;
 
+const letterScoreMap = { a: 1, e: 1, i: 1, o: 1, u: 1, l: 1, n: 1, r: 1, s: 1,
+t: 1, d: 2, g: 2, b: 3, c: 3, m: 3, p: 3, f: 4, h: 4, v: 4, w: 4, y: 4,
+k: 5, j: 8, x: 8, q: 10, z: 10, };
+
 class Section1 extends React.Component {
   state = {
     numberOfPlayers: this.props.defaultNumberOfPlayers
@@ -120,7 +124,7 @@ class ScrabbleInputBox extends React.Component {
 
   render() {
     return (
-      <div onClick={this.handleClick} className='scrabble-input-box'>
+      <div onClick={this.handleClick} className={`scrabble-input-box${this.state.input.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus ? <div className='blinker'></div> : null}
         <input ref={this.textInput} onChange={this.handleChange}
                className='hidden-input' type='text' maxLength='30' autoComplete='off' /><br />
@@ -135,11 +139,15 @@ class ScrabbleInputBox extends React.Component {
 }
 
 class ScrabbleTile extends React.Component{
+  get score() {
+    return letterScoreMap[this.props.letter];
+  }
+
   render() {
     return (
       <span className='scrabble-letter'>
         <span className='letter'>{this.props.letter.toUpperCase()}</span>
-        <span className='score'>4</span>
+        <span className='score'>{this.score}</span>
       </span>
     )
   }
@@ -210,7 +218,7 @@ class App extends React.Component {
 
   render() {
     return (   
-      <div className="main-text">
+      <div className='main'>
         <h1> Scrabble score keeper</h1>
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
         Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 

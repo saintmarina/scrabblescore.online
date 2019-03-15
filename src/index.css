@@ -42,11 +42,9 @@ form#submit_word button {
 	border-radius: 10px;
 	margin-bottom: 10px;
 }
-.main-text {
-   word-wrap: break-word;
-   width: 600px;
-   margin: auto;
-   color: black;
+.main {
+	width: 80%;
+	margin: 0 auto;
 }
 .input-group-append {
 	display:block;
@@ -71,6 +69,11 @@ form#submit_word button {
 	width: 375px;
 	border-radius: 20px;
 }
+
+.scrabble-input-box.large {
+	width: 600px;
+}
+
 .score-box {
 	float: right;
 	display: inline-block;
