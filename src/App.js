@@ -115,27 +115,32 @@ class ScrabbleInputBox extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({input: e.target.value, inFocus: false});
+    this.setState({input: e.target.value});
   }
 
   render() {
     return (
-      <div id='input-container'>
-        <div onClick={this.handleClick} className='scrabble-input-box'>
-          {this.state.inFocus ? <div className='blinker'></div> : null}
-          <input ref={this.textInput} onChange={this.handleChange}
-                 className='hidden-input' type='text' name='word'
-                 size='15' maxLength='30' autoComplete='off' /><br />
-          <div className='scrabble-tiles'>
-            {this.state.input.split('').map((c, i) =>
-              <span className='scrabble-letter' key={i} >
-                <span className='letter'>{c.toUpperCase()}</span>
-                <span className='score'>4</span>
-              </span> )
-            }
-          </div>
+      <div onClick={this.handleClick} className='scrabble-input-box'>
+        {this.state.inFocus ? <div className='blinker'></div> : null}
+        <input ref={this.textInput} onChange={this.handleChange}
+               className='hidden-input' type='text' maxLength='30' autoComplete='off' /><br />
+        <div className='scrabble-tiles'>
+          {this.state.input.split('').map((c, i) =>
+            <ScrabbleTile key={i} letter={c} />)
+          }
         </div>
       </div>
+    )
+  }
+}
+
+class ScrabbleTile extends React.Component{
+  render() {
+    return (
+      <span className='scrabble-letter'>
+        <span className='letter'>{this.props.letter.toUpperCase()}</span>
+        <span className='score'>4</span>
+      </span>
     )
   }
 }
