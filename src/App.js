@@ -110,11 +110,19 @@ class Section3 extends React.Component {
             <tr key={i}>
               <th>{i+1}</th>
               {this.state.players.map((player, j) =>
-                <td key={j}>{player.wordHistory[i] ? `${player.wordHistory[i].word}, ${player.wordHistory[i].score}` : null}</td> )}
+                <td key={j}>{player.wordHistory[i] ? <TableCellContent word={player.wordHistory[i]}/> : null}</td> )}
             </tr> )}
           </tbody>
         </table>
       </div>
+    )
+  }
+}
+
+class TableCellContent extends React.Component {
+render() {
+  return (
+    <span>{this.props.word.word}<div class='score-box'>{this.props.word.score}</div></span>
     )
   }
 }
