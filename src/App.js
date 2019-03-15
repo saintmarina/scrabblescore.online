@@ -1,5 +1,7 @@
 import React from 'react';
 
+const debug = true;
+
 class Section1 extends React.Component {
   state = {
     numberOfPlayers: this.props.defaultNumberOfPlayers
@@ -66,8 +68,64 @@ class Section2 extends React.Component {
   }
 }
 
-class App extends React.Component {
+class Section3 extends React.Component {
   state = {
+    currentPlayerIndex: 0,
+    currentMove: 1,
+    players: [
+      {name: "Anna", wordHistory: [{word:'word', score: 8}, {word: 'leaf', score: 9}]},
+      {name: "Nico", wordHistory: [{word:'rose', score: 6}]}
+    ]
+  }
+
+  render() {
+    return (
+      <div className='section3'>
+        <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
+          <div>
+            <br />
+            <p className="bold">Submit a word:</p>
+            <div id='input-container'>
+              <div className='real-input-box'>
+                <div id='blink-me'></div>
+                  <input id='input-word' type='text' name='word'  size='15' maxLength='30' autoComplete='off'  /><br />
+                <div className='scrabble-tiles'></div>
+              </div>
+            </div>
+            <button type="submit" className="btn btn-info word-submit-button">Submit</button>     <br /><br />
+          </div>
+        <div className="row justify-content-center">
+        </div>
+        <br />
+        <table id='score-table' className="table table-bordered" align="center">
+          <thead>
+            <tr className="thead-rows">
+              <th id="move">Move</th>
+              {this.props.playerNames.map((name, i) =>
+              <th key={i} className="player-header">{name}</th>)}
+            </tr>
+          </thead>
+          <tbody className="tbody-rows">
+          {[...Array(this.state.currentMove + 1)].map((_, i) =>
+            <tr key={i}>
+              <th>{i+1}</th>
+              {this.state.players.map((player, j) =>
+                <td key={j}>{player.wordHistory[i] ? `${player.wordHistory[i].word}, ${player.wordHistory[i].score}` : null}</td> )}
+            </tr> )}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+}
+
+class App extends React.Component {
+  state = debug ? {
+    currentSection: 3,
+    numberOfPlayers: 2,
+    playerNames: ["Anna", "Nico"]
+  } :
+  {
     currentSection: 1,
     numberOfPlayers: 2,
     playerNames: []
@@ -103,7 +161,9 @@ class App extends React.Component {
           <Section1 onNext={this.handleSection1Next.bind(this)} defaultNumberOfPlayers={this.state.numberOfPlayers} /> :
          this.state.currentSection === 2 ?
           <Section2 onBack={this.handleSection2Back.bind(this)} onNext={this.handleSection2Next.bind(this)}
-                    defaultNames={this.getDefaultPlayerNames()}/> : null
+                    defaultNames={this.getDefaultPlayerNames()}/> :
+          this.state.currentSection === 3 ?
+          <Section3 playerNames={this.state.playerNames}/> : null
         }
       </div>
     );
