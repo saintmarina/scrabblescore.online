@@ -46,6 +46,19 @@ form#submit_word button {
 	width: 80%;
 	margin: 0 auto;
 }
+.rap-popover-content {
+ 	background: white;
+	box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2),
+				0 8px 24px rgba(16, 22, 26, 0.2);
+	border-radius: 20px;
+	padding-top: 5px;
+}
+
+.pad {
+	padding: 10px;
+	width: 166px;
+
+}
 .input-group-append {
 	display:block;
 }
@@ -165,7 +178,7 @@ form#submit_word button {
 }
 .modifier {
 	margin: 2px;
-	background-image: url('/static/modifier-frame.png');
+	background-image: url('/modifier-frame.png');
 	background-size: 138px 69px;
 	width: 69px;
 	height: 69px;
@@ -185,11 +198,11 @@ form#submit_word button {
 .modifier.double-word {
 	background-color: #eda498;
 }							
-.modifier.tripple-letter {
+.modifier.triple-letter {
 	background-color: #18a3e1;
 	background-position: 69px 0px;
 }
-.modifier.tripple-word {
+.modifier.triple-word {
 	background-color: #f74d13;
 	background-position: 69px 0px;
 }
@@ -207,12 +220,12 @@ form#submit_word button {
 	border-color: #eda498;
 	z-index: 10;
 }
-.scrabble-letter.tripple-letter {
+.scrabble-letter.triple-letter {
 	border-style: solid;
 	border-color: #18a3e1;
 	z-index: 10;
 }
-.scrabble-letter.tripple-word {
+.scrabble-letter.triple-word {
 	border-style: solid;
 	border-color: #f74d13;
 	z-index: 10;
