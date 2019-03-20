@@ -46,18 +46,8 @@ form#submit_word button {
 	width: 80%;
 	margin: 0 auto;
 }
-.rap-popover-content {
- 	background: white;
-	box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2),
-				0 8px 24px rgba(16, 22, 26, 0.2);
-	border-radius: 20px;
-	padding-top: 5px;
-}
-
-.pad {
-	padding: 10px;
-	width: 166px;
-
+.tooltip-container {
+	width: 165px;
 }
 .input-group-append {
 	display:block;

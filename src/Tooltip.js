@@ -10,12 +10,13 @@ const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
       tooltipRef,
       getArrowProps,
       getTooltipProps,
-      placement
+      placement,
+      
     }) => (
       <div
         {...getTooltipProps({
           ref: tooltipRef,
-          className: 'tooltip-container'
+          className: 'tooltip-container',
         })}
       >
         {!hideArrow && (
@@ -45,3 +46,17 @@ const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
 );
 
 export default Tooltip;
+
+
+/*
+class PArent:
+render()
+  <MiddleChild onCLick=handleonlick>
+
+
+class MiddleChild:
+  <Child {...this.props}>
+
+
+class Child:
+  this.props.onClock()*/
