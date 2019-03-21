@@ -107,6 +107,8 @@ class ModifierTile extends React.Component {
         return 'Triple letter score';
       case 'triple-word':
         return 'Triple word score';
+      default:
+        return 'Scrabble tile'
     }
   }
   render() {

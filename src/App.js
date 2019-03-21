@@ -1,7 +1,6 @@
 import React from 'react';
-import {Section1, Section2} from './PlayerPicker.js';
+import PlayerPicker from './PlayerPicker.js';
 import ScrabbleInputBox from './ScrabbleInputBox.js';
-import resizeArray from './Util.js';
 
 const debug = true;
 
@@ -81,31 +80,28 @@ class ScoreGridCell extends React.Component {
 class App extends React.Component {
   state = debug ? {
     currentSection: 3,
-    numberOfPlayers: 2,
-    playerNames: ["Anna", "Nico"]
+    playerNames: ['Anna', 'Nico']
   } :
   {
     currentSection: 1,
-    numberOfPlayers: 2,
     playerNames: []
   }
 
-  handleSection1Next(target) {
-    this.setState({currentSection: 2, numberOfPlayers: target.state.numberOfPlayers});
+  handleSectionChange(sectionNumber) {
+    this.setState({currentSection: sectionNumber});
   }
 
-  handleSection2Back(target) {
-    this.setState({currentSection: 1, playerNames: target.playerNames});
+  handlePlayerChange(playerNames) {
+    this.setState({playerNames: playerNames});
   }
-
-  handleSection2Next(target) {
-    this.setState({currentSection: 3, playerNames: target.playerNames});
+  section(currentSection) {
+    if(currentSection === 1 || currentSection ===  2) {
+      return <PlayerPicker currentSection={this.state.currentSection} onSectionChange = {this.handleSectionChange.bind(this)}
+                        onPlayerChange={this.handlePlayerChange.bind(this)} />
+    } else if (currentSection === 3) {
+      return <Section3 playerNames={this.state.playerNames} />
+    }
   }
-
-  getDefaultPlayerNames() {
-    return resizeArray(this.state.playerNames, this.state.numberOfPlayers, '');
-  }
-
   render() {
     return (
       <div className='main'>
@@ -113,14 +109,7 @@ class App extends React.Component {
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
         Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
         innovative and easy way, whilst playing the Scrabble board game.</p>
-        {this.state.currentSection === 1 ?
-          <Section1 onNext={this.handleSection1Next.bind(this)} defaultNumberOfPlayers={this.state.numberOfPlayers} /> :
-         this.state.currentSection === 2 ?
-          <Section2 onBack={this.handleSection2Back.bind(this)} onNext={this.handleSection2Next.bind(this)}
-                    defaultNames={this.getDefaultPlayerNames()}/> :
-          this.state.currentSection === 3 ?
-          <Section3 playerNames={this.state.playerNames}/> : null
-        }
+        {this.section(this.state.currentSection)}
       </div>
     );
   }
@@ -141,14 +130,14 @@ X 1) Do a popover including all the logic
 X 2) When we click on the same modifier it should turn off the modifier.
 
 3) X  ScrableInputBox should have an onChange prop to pass the word = {'value': "anna", "modifiers": [...]} to its parent
-   - Put ScrabbleInputBox in its own file
+   X Put ScrabbleInputBox in its own file
 
 4) Make a new component "PlayerPicker"
-    - Think about how data should flow with its Parent
-    - It should have Section1 and Section2 as children
-    - Section1 and Section2 should be renamed to something more appropriate
-    - Section{1,2} should not be expoted
-    - util.js should contain the resizeArray function and export it
+    X Think about how data should flow with its Parent
+    X It should have Section1 and Section2 as children
+    X Section1 and Section2 should be renamed to something more appropriate
+    X Section{1,2} should not be expoted
+    X util.js should contain the resizeArray function and export it
 
 5) Have ScrabbleTile display its modifier underneath through a prop. It should reuse the ModifierTile component (but without an onClick callback).
 

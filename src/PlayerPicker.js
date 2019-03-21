@@ -1,6 +1,60 @@
 import React from 'react';
+import resizeArray from './Util.js';
 
-export class Section1 extends React.Component {
+class PlayerPicker extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleNumberPickerNext = this.handleNumberPickerNext.bind(this);
+    this.handleNamePickerBack = this.handleNamePickerBack.bind(this);
+    this.handleNamePickerNext = this.handleNamePickerNext.bind(this);
+
+    this.state = {
+      currentSection: this.props.currentSection,
+      numberOfPlayers: 2,
+      playerNames: []
+    }
+  }
+
+  handleNumberPickerNext(target) {
+    this.setState({currentSection: 2, numberOfPlayers: target.state.numberOfPlayers});
+    this.props.onSectionChange(2);
+  }
+
+  handleNamePickerBack(target) {
+    this.setState({currentSection: 1, playerNames: target.state.playerNames});
+    this.props.onSectionChange(1);
+  }
+
+  handleNamePickerNext(target) {
+    this.setState({currentSection: 3, playerNames: target.state.playerNames});
+    this.props.onSectionChange(3);
+    this.props.onPlayerChange(target.state.playerNames);
+
+  }
+
+  getDefaultPlayerNames() {
+    return resizeArray(this.state.playerNames, this.state.numberOfPlayers, '');
+  }
+
+  sectionRender(section) {
+    if(section === 1) {
+        return <NumberPicker onNext={this.handleNumberPickerNext} defaultNumberOfPlayers={this.state.numberOfPlayers} />;
+    } else if (section === 2) {
+        return <NamePicker onBack={this.handleNamePickerBack} onNext={this.handleNamePickerNext}
+                           defaultNames={this.getDefaultPlayerNames()} />;
+      }
+    }
+
+  render() {
+    return (
+      <div>
+        {this.sectionRender(this.state.currentSection)}
+      </div>
+    )
+  }
+}
+
+class NumberPicker extends React.Component {
   state = {
     numberOfPlayers: this.props.defaultNumberOfPlayers
   }
@@ -11,7 +65,7 @@ export class Section1 extends React.Component {
 
   render() {
     return (
-      <div className='section1'>
+      <div className='NumberPicker'>
         <h3>Choose number of players:</h3>
         <div>
           <select value={this.state.numberOfPlayers} onChange={this.handleChange.bind(this)} className="custom-select">
@@ -28,7 +82,7 @@ export class Section1 extends React.Component {
   }
 }
 
-export class Section2 extends React.Component {
+class NamePicker extends React.Component {
   state = {
     playerNames: this.props.defaultNames,
     numberOfPlayers: this.props.defaultNumberOfPlayers
@@ -46,7 +100,7 @@ export class Section2 extends React.Component {
 
   render() {
     return (
-      <div className='section2'>
+      <div className='NamePicker'>
         <div className="main-text">
           <h3>Choose nicknames for players:</h3>
           <div className="input_names">
@@ -65,3 +119,5 @@ export class Section2 extends React.Component {
     );
   }
 }
+
+export default PlayerPicker;
