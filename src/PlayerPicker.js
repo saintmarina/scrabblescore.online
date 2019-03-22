@@ -1,5 +1,5 @@
 import React from 'react';
-import resizeArray from './Util.js';
+import {resizeArray} from './Util.js';
 
 class PlayerPicker extends React.Component {
   constructor(props) {
@@ -7,7 +7,6 @@ class PlayerPicker extends React.Component {
     this.handleNumberPickerNext = this.handleNumberPickerNext.bind(this);
     this.handleNamePickerBack = this.handleNamePickerBack.bind(this);
     this.handleNamePickerNext = this.handleNamePickerNext.bind(this);
-
     this.state = {
       currentSection: this.props.currentSection,
       numberOfPlayers: 2,
@@ -36,27 +35,30 @@ class PlayerPicker extends React.Component {
     return resizeArray(this.state.playerNames, this.state.numberOfPlayers, '');
   }
 
-  sectionRender(section) {
-    if(section === 1) {
-        return <NumberPicker onNext={this.handleNumberPickerNext} defaultNumberOfPlayers={this.state.numberOfPlayers} />;
-    } else if (section === 2) {
-        return <NamePicker onBack={this.handleNamePickerBack} onNext={this.handleNamePickerNext}
-                           defaultNames={this.getDefaultPlayerNames()} />;
-      }
-    }
+  sectionPicker() {
+    let section = this.state.currentSection === 1 ? 
+    <NumberPicker onNext={this.handleNumberPickerNext} defaultNumberOfPlayers={this.state.numberOfPlayers} /> : 
+    <NamePicker onBack={this.handleNamePickerBack} onNext={this.handleNamePickerNext}
+                defaultNames={this.getDefaultPlayerNames()} />;
+    return section
+  }
 
   render() {
     return (
       <div>
-        {this.sectionRender(this.state.currentSection)}
+        {this.sectionPicker()}
       </div>
     )
   }
 }
 
 class NumberPicker extends React.Component {
-  state = {
-    numberOfPlayers: this.props.defaultNumberOfPlayers
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      numberOfPlayers: this.props.defaultNumberOfPlayers
+    }
   }
 
   handleChange(e) {
@@ -68,7 +70,7 @@ class NumberPicker extends React.Component {
       <div className='NumberPicker'>
         <h3>Choose number of players:</h3>
         <div>
-          <select value={this.state.numberOfPlayers} onChange={this.handleChange.bind(this)} className="custom-select">
+          <select value={this.state.numberOfPlayers} onChange={this.handleChange} className="custom-select">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -83,11 +85,14 @@ class NumberPicker extends React.Component {
 }
 
 class NamePicker extends React.Component {
-  state = {
-    playerNames: this.props.defaultNames,
-    numberOfPlayers: this.props.defaultNumberOfPlayers
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      playerNames: this.props.defaultNames,
+      numberOfPlayers: this.props.defaultNumberOfPlayers
+    }
   }
-
   get playerNames() {
     return this.state.playerNames;
   }

@@ -36,6 +36,8 @@ form#submit_word button {
 	margin-left:10px;
 }
 .card-header#score {
+	margin-left: 34%;
+	margin-top: 33px;
 	width: 19rem;
 	font-weight: bold;
 	background-color: rgb(243, 106, 152);

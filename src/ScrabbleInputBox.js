@@ -1,12 +1,10 @@
 import React from 'react';
-import resizeArray from './Util.js';
+import {resizeArray, scrabbleScore} from './Util.js';
 import Tooltip from './Tooltip.js';
 
 const letterScoreMap = { a: 1, e: 1, i: 1, o: 1, u: 1, l: 1, n: 1, r: 1, s: 1,
 t: 1, d: 2, g: 2, b: 3, c: 3, m: 3, p: 3, f: 4, h: 4, v: 4, w: 4, y: 4,
 k: 5, j: 8, x: 8, q: 10, z: 10, };
-
-
 
 class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -16,8 +14,8 @@ class ScrabbleInputBox extends React.Component {
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
     this.state = {
       inFocus: false,
-      input: 'anna',
-      modifiers: [null, null, null, null]
+      input: '',
+      modifiers: []
     }
   }
 
@@ -30,14 +28,26 @@ class ScrabbleInputBox extends React.Component {
     let input = e.target.value;
     let modifiers = resizeArray(this.state.modifiers, input.length, null);
     this.setState({input: input, modifiers: modifiers});
-    this.props.onChange(input, this.state.modifiers);
   }
 
   handleModifierChange(letter_index, modifier) {
     let modifiers = this.state.modifiers.slice();
+    modifiers = resizeArray(this.state.modifiers, this.state.input.length, null);
     modifiers[letter_index] = modifier;
     this.setState({modifiers: modifiers});
-    this.props.onChange(this.state.input, modifiers);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.input == prevState.input &&
+        this.state.modifiers == prevState.modifiers)
+      return;
+
+    let wordObject = {
+      value: this.state.input,
+      modifiers: this.state.modifiers,
+      score: scrabbleScore(this.state.input, this.state.modifiers)
+    };
+    this.props.onChange(wordObject);
   }
 
   render() {

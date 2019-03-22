@@ -2,27 +2,68 @@ import React from 'react';
 import PlayerPicker from './PlayerPicker.js';
 import ScrabbleInputBox from './ScrabbleInputBox.js';
 
-const debug = true;
+const debug = false;
+
+class Game {
+  constructor(playerNames) {
+    this.currentPlayerIndex = 0;
+    this.Players = playerNames.map(name => {
+      return {name: name, wordHistory: []};
+    });
+  }
+
+  play(word) {
+    this.Players[this.currentPlayerIndex].wordHistory.push(word);
+    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.Players.length;
+  };
+
+  getPlayerHistory(playerIndex) {
+    return this.Players[playerIndex].wordHistory
+  };
+
+  getPlayerName(playerIndex) {
+    return this.Players[playerIndex].name
+  };
+
+  getCurrentTurn() {
+    return this.Players[this.Players.length - 1].wordHistory.length + 1;  
+  };
+
+  /*
+  getTotalScore(playerIndex) {
+    let result = 0;
+    for (let i = 0; i < (this.Players[playerIndex].wordHistory.length); i++) {
+      result += this.Players[playerIndex].wordHistory[i].score
+    };
+    return result;
+  };
+  */
+}
 
 class Section3 extends React.Component {
   constructor(props) {
     super(props);
+    this.game = new Game(this.props.playerNames);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      currentPlayerIndex: 0,
-      currentMove: 1,
-      players: [
-        {name: "Anna", wordHistory: [{word:'word', score: 8, modifiers: []}, {word: 'leaf', score: 9, modifiers: []}]},
-        {name: "Nico", wordHistory: [{word:'rose', score: 6, modifiers: []}]}
-      ]
+      currentWord: {value: '', modifiers: [], score: 0},
+      ...this.getGameState()
     }
   }
 
-  handleChange(currentPlayerTurn, value, modifiers) {
-    let players = this.state.players.slice();
-    players[currentPlayerTurn].wordHistory[this.state.currentMove - 1].word = value;
-    players[currentPlayerTurn].wordHistory[this.state.currentMove - 1].modifiers = modifiers;
-    this.setState({players: players});
+  handleChange(wordObject) {
+    this.setState({currentWord: wordObject});
+  }
+
+  getGameState() {
+    return {players: this.game.Players,
+            currentPlayerIndex: this.game.currentPlayerIndex,
+            currentTurn: this.game.getCurrentTurn(),
+            }
+  }
+
+  refreshGameState() {
+    this.setState(this.getGameState());
   }
 
   render() {
@@ -32,17 +73,29 @@ class Section3 extends React.Component {
         <div>
           <br />
           <p className="bold">Submit a word:</p>
-          <ScrabbleInputBox  onChange={(value, modifier) => this.handleChange(1, value, modifier)}/>
+          <ScrabbleInputBox onChange={this.handleChange} />
+          <CurrentScore score={this.state.currentWord.score} />
           <button type="submit" className="btn btn-info word-submit-button">Submit</button>     <br /><br />
         </div>
         <div className="row justify-content-center">
         </div>
         <br />
-        <ScoreGrid currentMove={this.state.currentMove} players={this.state.players} />
+        <ScoreGrid currentTurn={this.state.currentTurn} players={this.state.players} />
       </div>
     )
   }
 }
+
+class CurrentScore extends React.Component {
+  render() {
+    return(
+      <div id="score" class="card-header ">
+        Score is {this.props.score}
+        </div>
+    )
+  }
+}
+
 
 
 class ScoreGrid extends React.Component {
@@ -57,7 +110,7 @@ class ScoreGrid extends React.Component {
             </tr>
           </thead>
           <tbody className="tbody-rows">
-          {[...Array(this.props.currentMove + 1)].map((_, i) =>
+          {[...Array(this.props.currentTurn)].map((_, i) =>
             <tr key={i}>
               <th>{i+1}</th>
               {this.props.players.map((player, j) =>
@@ -94,14 +147,14 @@ class App extends React.Component {
   handlePlayerChange(playerNames) {
     this.setState({playerNames: playerNames});
   }
-  section(currentSection) {
-    if(currentSection === 1 || currentSection ===  2) {
-      return <PlayerPicker currentSection={this.state.currentSection} onSectionChange = {this.handleSectionChange.bind(this)}
-                        onPlayerChange={this.handlePlayerChange.bind(this)} />
-    } else if (currentSection === 3) {
-      return <Section3 playerNames={this.state.playerNames} />
-    }
+  section() {
+    let section = (this.state.currentSection === 1 || this.state.currentSection ===  2) ? 
+      <PlayerPicker currentSection={this.state.currentSection} onSectionChange = {this.handleSectionChange.bind(this)}
+                    onPlayerChange={this.handlePlayerChange.bind(this)} /> :
+      <Section3 playerNames={this.state.playerNames} />;
+      return section
   }
+
   render() {
     return (
       <div className='main'>
@@ -109,7 +162,7 @@ class App extends React.Component {
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
         Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
         innovative and easy way, whilst playing the Scrabble board game.</p>
-        {this.section(this.state.currentSection)}
+        {this.section()}
       </div>
     );
   }
@@ -118,27 +171,12 @@ class App extends React.Component {
 export default App;
 
 /*
+1) Make a new component "PlayerPicker"
+    - The parent (App) should not know about the different sections. All it wants is a callback onPlayerSelected, which
+    get called at the end of the player picking process (the section2 next), with the player array
 
-X First commit the code
-
-X 1) Do a popover including all the logic
-     X Use the WithModifierPopover. It should have a handleModifierChange prop that is passed down to the ModifierTile children.
-     X ModifierTile should be a componentn that renders differently depending on this.props.modifier
-     X To hide the popover once clicking on the modifier tile, use the tooltipShown / onVisibilyChange props (https://github.com/mohsinulhaq/react-popper-tooltip)
-     X Style as as square
-
-X 2) When we click on the same modifier it should turn off the modifier.
-
-3) X  ScrableInputBox should have an onChange prop to pass the word = {'value': "anna", "modifiers": [...]} to its parent
-   X Put ScrabbleInputBox in its own file
-
-4) Make a new component "PlayerPicker"
-    X Think about how data should flow with its Parent
-    X It should have Section1 and Section2 as children
-    X Section1 and Section2 should be renamed to something more appropriate
-    X Section{1,2} should not be expoted
-    X util.js should contain the resizeArray function and export it
-
-5) Have ScrabbleTile display its modifier underneath through a prop. It should reuse the ModifierTile component (but without an onClick callback).
-
+2) Have ScrabbleTile display its modifier underneath through a prop.
+  * have a css class to color the tile accordingly
+3) rename wordObject into word
+4) rename Section3 into something more appropriate
 */
