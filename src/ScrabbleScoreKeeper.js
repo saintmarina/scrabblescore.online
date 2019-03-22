@@ -29,7 +29,6 @@ class Game {
     return this.Players[this.Players.length - 1].wordHistory.length + 1;  
   };
 
-  /*
   getTotalScore(playerIndex) {
     let result = 0;
     for (let i = 0; i < (this.Players[playerIndex].wordHistory.length); i++) {
@@ -37,22 +36,22 @@ class Game {
     };
     return result;
   };
-  */
 }
 
-class Section3 extends React.Component {
+class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
     this.game = new Game(this.props.playerNames);
     this.handleChange = this.handleChange.bind(this);
+    console.log(props);
     this.state = {
       currentWord: {value: '', modifiers: [], score: 0},
       ...this.getGameState()
     }
   }
 
-  handleChange(wordObject) {
-    this.setState({currentWord: wordObject});
+  handleChange(word) {
+    this.setState({currentWord: word});
   }
 
   getGameState() {
@@ -68,7 +67,7 @@ class Section3 extends React.Component {
 
   render() {
     return (
-      <div className='section3'>
+      <div className='score-keeper'>
         <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
         <div>
           <br />
@@ -89,7 +88,7 @@ class Section3 extends React.Component {
 class CurrentScore extends React.Component {
   render() {
     return(
-      <div id="score" class="card-header ">
+      <div id="score" className="card-header ">
         Score is {this.props.score}
         </div>
     )
@@ -130,29 +129,21 @@ class ScoreGridCell extends React.Component {
   }
 }
 
-class App extends React.Component {
+class ScrabbleScoreKeeper extends React.Component {
   state = debug ? {
-    currentSection: 3,
     playerNames: ['Anna', 'Nico']
   } :
   {
-    currentSection: 1,
     playerNames: []
   }
 
-  handleSectionChange(sectionNumber) {
-    this.setState({currentSection: sectionNumber});
-  }
-
-  handlePlayerChange(playerNames) {
+  handleGameStart(playerNames) {
     this.setState({playerNames: playerNames});
   }
-  section() {
-    let section = (this.state.currentSection === 1 || this.state.currentSection ===  2) ? 
-      <PlayerPicker currentSection={this.state.currentSection} onSectionChange = {this.handleSectionChange.bind(this)}
-                    onPlayerChange={this.handlePlayerChange.bind(this)} /> :
-      <Section3 playerNames={this.state.playerNames} />;
-      return section
+  renderGame() {
+    return this.state.playerNames.length === 0 ? 
+      <PlayerPicker onPlayersChosen={this.handleGameStart.bind(this)} /> :
+      <ScoreKeeper playerNames={this.state.playerNames} />;
   }
 
   render() {
@@ -162,21 +153,17 @@ class App extends React.Component {
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
         Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
         innovative and easy way, whilst playing the Scrabble board game.</p>
-        {this.section()}
+        {this.renderGame()}
       </div>
     );
   }
 }
 
-export default App;
+export default ScrabbleScoreKeeper;
 
 /*
-1) Make a new component "PlayerPicker"
-    - The parent (App) should not know about the different sections. All it wants is a callback onPlayerSelected, which
-    get called at the end of the player picking process (the section2 next), with the player array
-
-2) Have ScrabbleTile display its modifier underneath through a prop.
+1) Have ScrabbleTile display its modifier underneath through a prop.
   * have a css class to color the tile accordingly
-3) rename wordObject into word
-4) rename Section3 into something more appropriate
+
+
 */

@@ -42,6 +42,7 @@ class ScrabbleInputBox extends React.Component {
         this.state.modifiers == prevState.modifiers)
       return;
 
+    /* TODO rename wordObject */
     let wordObject = {
       value: this.state.input,
       modifiers: this.state.modifiers,

@@ -8,7 +8,7 @@ class PlayerPicker extends React.Component {
     this.handleNamePickerBack = this.handleNamePickerBack.bind(this);
     this.handleNamePickerNext = this.handleNamePickerNext.bind(this);
     this.state = {
-      currentSection: this.props.currentSection,
+      currentSection: 1,
       numberOfPlayers: 2,
       playerNames: []
     }
@@ -16,19 +16,15 @@ class PlayerPicker extends React.Component {
 
   handleNumberPickerNext(target) {
     this.setState({currentSection: 2, numberOfPlayers: target.state.numberOfPlayers});
-    this.props.onSectionChange(2);
   }
 
   handleNamePickerBack(target) {
     this.setState({currentSection: 1, playerNames: target.state.playerNames});
-    this.props.onSectionChange(1);
   }
 
   handleNamePickerNext(target) {
-    this.setState({currentSection: 3, playerNames: target.state.playerNames});
-    this.props.onSectionChange(3);
-    this.props.onPlayerChange(target.state.playerNames);
-
+    this.setState({playerNames: target.state.playerNames});
+    this.props.onPlayersChosen(target.state.playerNames);
   }
 
   getDefaultPlayerNames() {
@@ -36,6 +32,7 @@ class PlayerPicker extends React.Component {
   }
 
   sectionPicker() {
+    /* TODO no need for the section variable, return directly */
     let section = this.state.currentSection === 1 ? 
     <NumberPicker onNext={this.handleNumberPickerNext} defaultNumberOfPlayers={this.state.numberOfPlayers} /> : 
     <NamePicker onBack={this.handleNamePickerBack} onNext={this.handleNamePickerNext}
@@ -65,6 +62,11 @@ class NumberPicker extends React.Component {
     this.setState({numberOfPlayers: parseInt(e.target.value)});
   }
 
+  /*
+    TODO add a getter for numberOfPlayer like playerNames in NamePicker,
+    so that the parent doesn't need to fish into the *private* state of the Component.
+  */
+
   render() {
     return (
       <div className='NumberPicker'>
@@ -90,7 +92,7 @@ class NamePicker extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       playerNames: this.props.defaultNames,
-      numberOfPlayers: this.props.defaultNumberOfPlayers
+      numberOfPlayers: this.props.defaultNumberOfPlayers /* TODO remove, it's not being used */
     }
   }
   get playerNames() {
