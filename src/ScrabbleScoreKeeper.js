@@ -1,38 +1,39 @@
 import React from 'react';
 import PlayerPicker from './PlayerPicker.js';
 import ScrabbleInputBox from './ScrabbleInputBox.js';
+import {resizeArray} from './Util.js';
 
-const debug = false;
+const debug = true;
 
 class Game {
-  constructor(playerNames) {
-    this.currentPlayerIndex = 0;
-    this.Players = playerNames.map(name => {
-      return {name: name, wordHistory: []};
-    });
+  constructor(wordHistories, currentPlayerIndex) {
+    this.currentPlayerIndex = currentPlayerIndex;
+    this.wordHistories = wordHistories;
   }
 
-  play(word) {
-    this.Players[this.currentPlayerIndex].wordHistory.push(word);
-    this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.Players.length;
-  };
+  static createNewGame(numberOfPlayers) {
+    let wordHistories = resizeArray([], numberOfPlayers, []);
+    return new Game(wordHistories, 0)
+  }
 
-  getPlayerHistory(playerIndex) {
-    return this.Players[playerIndex].wordHistory
-  };
+  play(wordObject) {
+    let newWordHistories = this.wordHistories.map((history, playerIndex) => playerIndex === this.currentPlayerIndex ? [...history, wordObject] : history);
+    let newPlayerIndex = (this.currentPlayerIndex + 1) % this.wordHistories.length; 
+    return new Game(newWordHistories, newPlayerIndex);
+  }
 
-  getPlayerName(playerIndex) {
-    return this.Players[playerIndex].name
+  getPlayerHistory() {
+    return this.wordHistories[this.currentPlayerIndex]
   };
 
   getCurrentTurn() {
-    return this.Players[this.Players.length - 1].wordHistory.length + 1;  
+    return this.wordHistories[this.wordHistories.length - 1].length + 1;  
   };
 
-  getTotalScore(playerIndex) {
+  getTotalScore() {
     let result = 0;
-    for (let i = 0; i < (this.Players[playerIndex].wordHistory.length); i++) {
-      result += this.Players[playerIndex].wordHistory[i].score
+    for (let i = 0; i < (this.wordHistories[this.currentPlayerIndex].length); i++) {
+      result += this.wordHistories[this.currentPlayerIndex][i].score
     };
     return result;
   };
@@ -41,12 +42,11 @@ class Game {
 class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
-    this.game = new Game(this.props.playerNames);
+    this.scrabbleInputBoxComponent = React.createRef();
     this.handleChange = this.handleChange.bind(this);
-    console.log(props);
     this.state = {
       currentWord: {value: '', modifiers: [], score: 0},
-      ...this.getGameState()
+      game: Game.createNewGame(this.props.playerNames.length)
     }
   }
 
@@ -54,15 +54,9 @@ class ScoreKeeper extends React.Component {
     this.setState({currentWord: word});
   }
 
-  getGameState() {
-    return {players: this.game.Players,
-            currentPlayerIndex: this.game.currentPlayerIndex,
-            currentTurn: this.game.getCurrentTurn(),
-            }
-  }
-
-  refreshGameState() {
-    this.setState(this.getGameState());
+  handleSubmit() {
+    this.setState({currentWord: {value: '', modifiers: [], score: 0}, game: this.state.game.play(this.state.currentWord)});
+    this.scrabbleInputBoxComponent.current.handleReset();
   }
 
   render() {
@@ -72,14 +66,14 @@ class ScoreKeeper extends React.Component {
         <div>
           <br />
           <p className="bold">Submit a word:</p>
-          <ScrabbleInputBox onChange={this.handleChange} />
+          <ScrabbleInputBox ref={this.scrabbleInputBoxComponent} onChange={this.handleChange} />
           <CurrentScore score={this.state.currentWord.score} />
-          <button type="submit" className="btn btn-info word-submit-button">Submit</button>     <br /><br />
+          <button onClick={this.handleSubmit.bind(this)}type="submit" className="btn btn-info word-submit-button">Submit</button>     <br /><br />
         </div>
         <div className="row justify-content-center">
         </div>
         <br />
-        <ScoreGrid currentTurn={this.state.currentTurn} players={this.state.players} />
+        <ScoreGrid currentTurn={this.state.game.getCurrentTurn()} playerNames={this.props.playerNames} words={this.state.game} />
       </div>
     )
   }
@@ -104,16 +98,16 @@ class ScoreGrid extends React.Component {
           <thead>
             <tr className="thead-rows">
               <th id="move">Move</th>
-              {this.props.players.map((player, i) =>
-              <th key={i} className="player-header">{player.name}</th>)}
+              {this.props.playerNames.map((player, i) =>
+              <th key={i} className="player-header">{player}</th>)}
             </tr>
           </thead>
           <tbody className="tbody-rows">
           {[...Array(this.props.currentTurn)].map((_, i) =>
             <tr key={i}>
               <th>{i+1}</th>
-              {this.props.players.map((player, j) =>
-                <td key={j}>{player.wordHistory[i] ? <ScoreGridCell word={player.wordHistory[i]}/> : null}</td> )}
+              {this.props.words.wordHistories.map((wordHistory, j) =>
+                <td key={j}>{wordHistory[i] ? <ScoreGridCell word={wordHistory[i]}/> : null}</td> )}
             </tr> )}
           </tbody>
         </table>
@@ -124,7 +118,7 @@ class ScoreGrid extends React.Component {
 class ScoreGridCell extends React.Component {
   render() {
     return (
-      <span>{this.props.word.word}<div className='score-box'>{this.props.word.score}</div></span>
+      <span>{this.props.word.value}<div className='score-box'>{this.props.word.score}</div></span>
     )
   }
 }
@@ -162,8 +156,20 @@ class ScrabbleScoreKeeper extends React.Component {
 export default ScrabbleScoreKeeper;
 
 /*
-1) Have ScrabbleTile display its modifier underneath through a prop.
-  * have a css class to color the tile accordingly
+0) X Fix warnings
+1) - Have ScrabbleTile display its modifier underneath through a prop with  a css class to color the tile accordingly
+2) X Make Game immutable. Take away the playerNames from Game. put the game variable directly in the ScoreKeeper's state.
+   - To make Game immutable make sure to copy all arrays that you would modify.
+   - The ScoreGrid compoenent should take a game as a prop.
+3) - Highlight the current player
+4) - Add totals to the ScoreGrid
+5) - Show the words in the ScoreGrid as ScrableTiles. Put the ScrableTile component in its own file.
+6) - Implement undo of the submit button. This should not be done in the game class, but rather in the ScoreKeeper class.
+    in the submit button handler, save the current game in this.state.old_game. Undo would restore the old game to the current game. 
+7) - Think about how to add multiple words for a move
 
+Future Work:
+- read game rules, and make sure to cover them all
+- 
 
 */

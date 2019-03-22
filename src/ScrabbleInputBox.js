@@ -10,6 +10,7 @@ class ScrabbleInputBox extends React.Component {
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
+    this.handleReset = this.handleReset.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
     this.state = {
@@ -17,6 +18,10 @@ class ScrabbleInputBox extends React.Component {
       input: '',
       modifiers: []
     }
+  }
+
+  handleReset(){
+    this.setState({ inFocus: false, input: '',modifiers: []})
   }
 
   handleClick() {
@@ -38,8 +43,8 @@ class ScrabbleInputBox extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.input == prevState.input &&
-        this.state.modifiers == prevState.modifiers)
+    if (this.state.input === prevState.input &&
+        this.state.modifiers === prevState.modifiers)
       return;
 
     /* TODO rename wordObject */
@@ -92,6 +97,7 @@ class WithModifierPopover extends React.Component {
   }
 
   render() {
+    let modifier = this.state.modifier;
     return(
     <Tooltip onVisibilityChange={this.handleVisibilityChange} tooltipShown={this.state.visibility} placement="bottom" trigger="click" tooltip={
               <div>
@@ -101,7 +107,7 @@ class WithModifierPopover extends React.Component {
                 <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
                </div>
             }>
-      {this.props.children}
+      {React.cloneElement(this.props.children, {modifier: this.state.modifier})}
     </Tooltip>
     );
   }
@@ -130,13 +136,30 @@ class ModifierTile extends React.Component {
 }
 
 class ScrabbleTile extends React.Component{
+  state = {
+    modifier: null,
+  }
+
   get score() {
     return letterScoreMap[this.props.letter];
   }
-
+  setClass() {
+    switch (this.props.modifier) {
+      case 'double-letter':
+        return 'scrabble-letter double-letter';
+      case 'double-word':
+        return 'scrabble-letter double-word';
+      case 'triple-letter':
+        return 'scrabble-letter triple-letter';
+      case 'triple-word':
+        return 'scrabble-letter triple-word';
+      default:
+        return 'scrabble-letter';
+    }
+  }
   render() {
     return (
-      <span className='scrabble-letter'>
+      <span className={'scrabble-letter ' + this.props.modifier}>
         <span className='letter'>{this.props.letter.toUpperCase()}</span>
         <span className='score'>{this.score}</span>
       </span>
