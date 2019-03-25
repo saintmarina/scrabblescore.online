@@ -63,7 +63,9 @@ form#submit_word button {
     margin: 0 auto;
     text-align: center;
 }
-
+.player-header.current {
+color: red;
+}
 .scrabble-input-box {
 	position: relative;
 	margin: auto;
@@ -175,6 +177,9 @@ form#submit_word button {
 .scrabble-letter {
 	cursor: pointer;
 }
+.btn {
+	margin: 8px;
+}
 .modifier {
 	margin: 2px;
 	background-image: url('/modifier-frame.png');
@@ -216,23 +221,30 @@ form#submit_word button {
 	background-image: linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg");
 }
 .scrabble-letter.triple-letter {
-background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg");
+	background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg");
 }
 .scrabble-letter.triple-word {
-background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
+	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
 }
-
+.tableTile {
+	height: 32px;
+	width: 32px;
+	font-size: 20px;
+	top: 3px;
+}
+.score.tableTile {
+	font-size: 12px;
+	top: 15px;
+}
 @keyframes blinker {  
   0% { opacity: 1; }
   49% { opacity: 1; }
   50% { opacity: 0; }
   100% { opacity: 0; }
 }
-
 .child {
 	top: 8px;
 }
-
 .word-submit-button {
 	margin-top: 30px;
 }

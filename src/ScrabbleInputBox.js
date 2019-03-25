@@ -1,12 +1,9 @@
 import React from 'react';
 import {resizeArray, scrabbleScore} from './Util.js';
 import Tooltip from './Tooltip.js';
+import ScrabbleTile from './ScrabbleTile.js';
 
-const letterScoreMap = { a: 1, e: 1, i: 1, o: 1, u: 1, l: 1, n: 1, r: 1, s: 1,
-t: 1, d: 2, g: 2, b: 3, c: 3, m: 3, p: 3, f: 4, h: 4, v: 4, w: 4, y: 4,
-k: 5, j: 8, x: 8, q: 10, z: 10, };
-
-class ScrabbleInputBox extends React.Component {
+export class ScrabbleInputBox extends React.Component {
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
@@ -97,7 +94,6 @@ class WithModifierPopover extends React.Component {
   }
 
   render() {
-    let modifier = this.state.modifier;
     return(
     <Tooltip onVisibilityChange={this.handleVisibilityChange} tooltipShown={this.state.visibility} placement="bottom" trigger="click" tooltip={
               <div>
@@ -107,7 +103,7 @@ class WithModifierPopover extends React.Component {
                 <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
                </div>
             }>
-      {React.cloneElement(this.props.children, {modifier: this.state.modifier})}
+      {React.cloneElement(this.props.children, {modifier: this.state.modifier, table: ''})}
     </Tooltip>
     );
   }
@@ -135,36 +131,6 @@ class ModifierTile extends React.Component {
   }
 }
 
-class ScrabbleTile extends React.Component{
-  state = {
-    modifier: null,
-  }
 
-  get score() {
-    return letterScoreMap[this.props.letter];
-  }
-  setClass() {
-    switch (this.props.modifier) {
-      case 'double-letter':
-        return 'scrabble-letter double-letter';
-      case 'double-word':
-        return 'scrabble-letter double-word';
-      case 'triple-letter':
-        return 'scrabble-letter triple-letter';
-      case 'triple-word':
-        return 'scrabble-letter triple-word';
-      default:
-        return 'scrabble-letter';
-    }
-  }
-  render() {
-    return (
-      <span className={'scrabble-letter ' + this.props.modifier}>
-        <span className='letter'>{this.props.letter.toUpperCase()}</span>
-        <span className='score'>{this.score}</span>
-      </span>
-    )
-  }
-}
 
 export default ScrabbleInputBox;
