@@ -1,8 +1,8 @@
 import Game from './game.js';
 
-const w1 = {value:'rose', modifiers: [null, null, null, null], score: 4}
-const w2 = {value:'time', modifiers: [null, null, null, null], score: 4}
-const w3 = {value:'lost', modifiers: [null, null, null, null], score: 4}
+const w1 = {value:'rose', modifiers: [null, null, null, null], score: 8}
+const w2 = {value:'time', modifiers: [null, null, null, null], score: 10}
+const w3 = {value:'lost', modifiers: [null, null, null, null], score: 1}
 
 test('Game can be created with some number of players', () => {
 	let game = Game.createNewGame(3);
@@ -51,6 +51,103 @@ test('game should be immutable', () => {
 
 test('test setBingo()', () => {
 	let game = Game.createNewGame(2);
+	game = game.addWord(w1)
+	expect(game.players[0][0].words).toEqual([w1])
+	game = game.setBingo(false);
+	expect(game.players[0][0].bingo).toBe(false)
 	game = game.setBingo(true);
+	expect(game.players[0][0].bingo).toBe(true);
+	game = game.addWord(w1)
+	expect(game.players[0][0].words).toEqual([w1, w1])
 	expect(game.players[0][0].bingo).toBe(true)
 });
+
+test('get score of the Turn', () => {
+	let game = Game.createNewGame(2)
+	expect(game.players[0][0].score).toEqual(0)
+	game = game.addWord(w1)
+	game = game.addWord(w2)
+	expect(game.players[0][0].score).toEqual(18)
+	game = game.setBingo(true)
+	expect(game.players[0][0].score).toEqual(68)
+	game = game.endTurn();
+	expect(game.players[0][0].score).toEqual(68)
+	expect(game.players[1][0].score).toEqual(0)
+	game = game.addWord(w3)
+	expect(game.players[0][0].score).toEqual(68)
+	expect(game.players[1][0].score).toEqual(1)
+
+});
+
+test('getTotalScore of a player', () => {
+	let game = Game.createNewGame(2)
+	expect(game.getTotalScore(0)).toEqual(0)
+	expect(game.getTotalScore(1)).toEqual(0)
+	game = game.addWord(w1)
+	game = game.addWord(w2)
+	expect(game.getTotalScore(0)).toEqual(18)
+	expect(game.getTotalScore(1)).toEqual(0)
+	game = game.setBingo(true)
+	expect(game.getTotalScore(0)).toEqual(68)
+	expect(game.getTotalScore(1)).toEqual(0)
+	game = game.endTurn();
+	expect(game.getTotalScore(0)).toEqual(68)
+	expect(game.getTotalScore(1)).toEqual(0)
+	game = game.addWord(w3)
+	expect(game.getTotalScore(0)).toEqual(68)
+	expect(game.getTotalScore(1)).toEqual(1)
+	game = game.endTurn();
+	game = game.addWord(w3)
+	expect(game.getTotalScore(0)).toEqual(69)
+	expect(game.getTotalScore(1)).toEqual(1)
+	game = game.endTurn();
+	game = game.setBingo(true)
+	expect(game.getTotalScore(0)).toEqual(69)
+	expect(game.getTotalScore(1)).toEqual(51)
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

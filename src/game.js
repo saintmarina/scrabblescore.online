@@ -1,11 +1,16 @@
 import {resizeArray, scrabbleScore} from './Util.js';
+
 class Turn {
   constructor(words, bingo) {
     this.words = words;
     this.bingo = bingo
   }
 
-  /*get score() {
+  static empty() {
+    return new Turn([], false);
+  }
+
+  get score() {
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
@@ -14,7 +19,8 @@ class Turn {
     if (this.bingo) {
       result += 50;
     }
-  }*/
+    return result
+  }
 }
 
 export default class Game {
@@ -24,7 +30,7 @@ export default class Game {
   }
 
   static createNewGame(numberOfPlayers) {
-    let turn = new Turn([], false)
+    let turn = Turn.empty()
     let players = resizeArray([[turn]], numberOfPlayers, []);
     return new Game(players, 0);
   }
@@ -32,21 +38,25 @@ export default class Game {
   addWord(word) {
     let currentTurn = this._getCurrentTurn()
     let turn = new Turn([...currentTurn.words, word], currentTurn.bingo)
-    let currentPlayerCopy = this._getCurrentPlayer().slice();
-    currentPlayerCopy[this.getCurrentTurnNumber()] = turn;
- 
- 
-    let newPlayers = this.players.map((player, playerIndex) => playerIndex === this.currentPlayerIndex ? currentPlayerCopy : player);
-
-    return new Game (newPlayers, this.currentPlayerIndex)
+    return this._setTurn(turn)
   }
 
   endTurn(word) {
-    let newTurn = new Turn([], false)
     let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
-    let players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, newTurn] : history)
-    
+    let players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
     return new Game(players, newPlayerIndex);
+  }
+
+  setBingo(value) {
+    let turn = new Turn(this._getCurrentTurn().words, value)
+    return this._setTurn(turn)
+  }
+
+  _setTurn(turn) {
+    let currentPlayerCopy = this._getCurrentPlayer().slice();
+    currentPlayerCopy[this.getCurrentTurnNumber()] = turn;
+    let newPlayers = this.players.map((player, playerIndex) => playerIndex === this.currentPlayerIndex ? currentPlayerCopy : player);
+    return new Game (newPlayers, this.currentPlayerIndex)
   }
 
   _getCurrentTurn() {
@@ -64,19 +74,36 @@ export default class Game {
   getCurrentPlayerIndex() {
     return this.currentPlayerIndex;
   }
-  setBingo(value) {
-    let turn = new Turn(this._getCurrentTurn().words, value)
-    let currentPlayerCopy = this._getCurrentPlayer().slice();
-    currentPlayerCopy[this.getCurrentTurnNumber()] = turn;
-    let newPlayers = this.players.map((player, playerIndex) => playerIndex === this.currentPlayerIndex ? currentPlayerCopy : player);
-    return new Game(newPlayers, this.currentPlayerIndex)
-  }
-
+  
   getTotalScore(playerIndex) {
-    let result = 0;
-    for ( let i = 0; i < (this.players[playerIndex].length); i++) {
-      for (let j = 0; j <(this.players[playerIndex][i].length); j++) {
-        result += this.players[playerIndex][i][j].score
-    }}
-    return result  };
+    let currentPlayer = this.players[playerIndex]
+    let result = 0
+    for (let i = 0; i < (currentPlayer.length); i++) {
+        result += currentPlayer[i].score
+    }
+    return result
+  };
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
