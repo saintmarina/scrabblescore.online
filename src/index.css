@@ -64,7 +64,7 @@ form#submit_word button {
     text-align: center;
 }
 .player-header.current {
-color: red;
+	color: rgb(238, 62, 128);
 }
 .scrabble-input-box {
 	position: relative;
@@ -254,7 +254,7 @@ tr.head {
 	background-color: #48D1CC;
 }
 h1 {
-	color:rgb(238, 62, 128);
+	color: rgb(238, 62, 128);
 }
 body {
 	text-align: center;

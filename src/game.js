@@ -14,7 +14,7 @@ class Turn {
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
-      }
+    }
 
     if (this.bingo) {
       result += 50;

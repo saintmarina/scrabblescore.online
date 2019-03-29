@@ -22,7 +22,7 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   handleReset(){
-    this.setState({ inFocus: false, input: '',modifiers: []})
+    this.setState({ inFocus: false, input: '', modifiers: []})
   }
 
   handleClick() {
@@ -33,7 +33,7 @@ export class ScrabbleInputBox extends React.Component {
   handleHiddenInputChange(e) {
     let input = e.target.value;
     let result='';
-    for ( let i = 0; i < input.length; i++) {
+    for (let i = 0; i < input.length; i++) {
       if (isLetter(input[i])) {
         result+=input[i];
       }
@@ -64,6 +64,7 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   render() {
+    /* TODO take out the table="" props */
     return (
       <div onClick={this.handleClick} className={`scrabble-input-box${this.state.input.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus && <div className='blinker'></div>}
@@ -72,7 +73,7 @@ export class ScrabbleInputBox extends React.Component {
         <div className='scrabble-tiles'>
           {this.state.input.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c}/>
+              <ScrabbleTile letter={c} modifier={this.state.modifiers[i]} table=""/>
             </WithModifierPopover>
           )}
         </div>
@@ -113,7 +114,7 @@ class WithModifierPopover extends React.Component {
                 <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
                </div>
             }>
-      {React.cloneElement(this.props.children, {modifier: this.state.modifier, table: ''})}
+      {this.props.children}
     </Tooltip>
     );
   }
@@ -121,17 +122,12 @@ class WithModifierPopover extends React.Component {
 
 class ModifierTile extends React.Component {
   tileText() {
-    switch(this.props.modifier) {
-      case 'double-letter':
-        return'Double letter score';
-      case 'double-word':
-        return 'Double word score';
-      case 'triple-letter':
-        return 'Triple letter score';
-      case 'triple-word':
-        return 'Triple word score';
-      default:
-        return 'Scrabble tile'
+    switch (this.props.modifier) {
+      case 'double-letter':  return 'Double letter score';
+      case 'double-word':    return 'Double word score';
+      case 'triple-letter':  return 'Triple letter score';
+      case 'triple-word':    return 'Triple word score';
+      default:               return null;
     }
   }
   render() {
@@ -140,7 +136,5 @@ class ModifierTile extends React.Component {
     )
   }
 }
-
-
 
 export default ScrabbleInputBox;
