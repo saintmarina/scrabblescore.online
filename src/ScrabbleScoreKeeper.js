@@ -6,38 +6,78 @@ import {resizeArray} from './Util.js';
 import Tooltip from './Tooltip.js';
 
 const debug = true;
+//let gameTurnHistory = [];
 let old_game;
 
+class Turn {
+  constructor(words, bingo) {
+    this.words = words;
+    this.bingo = bingo
+  }
+
+  /*get score() {
+    let result = 0;
+    for (let i = 0; i < this.words.length; i++) {
+      result += this.words[i].score
+      }
+
+    if (this.bingo) {
+      result += 50;
+    }
+  }*/
+}
+
 class Game {
-  constructor(wordHistories, currentPlayerIndex) {
+  constructor(players, currentPlayerIndex) {
     this.currentPlayerIndex = currentPlayerIndex;
-    this.wordHistories = wordHistories;
+    this.players = players;
   }
 
   static createNewGame(numberOfPlayers) {
-    let wordHistories = resizeArray([], numberOfPlayers, []);
-    return new Game(wordHistories, 0)
+    let turn = new Turn([], false)
+    let players = resizeArray([[turn]], numberOfPlayers, []);
+    return new Game(players, 0);
   }
 
-  play(wordObject) {
-    let newWordHistories = this.wordHistories.map((history, playerIndex) => playerIndex === this.currentPlayerIndex ? [...history, wordObject] : history);
-    let newPlayerIndex = (this.currentPlayerIndex + 1) % this.wordHistories.length;
-    return new Game(newWordHistories, newPlayerIndex);
+  addWord(word) {
+    let currentTurn = this.getCurrentTurn();
+    console.log('currentTurn', currentTurn)
+    let turn = currentTurn.words !== [] ? new Turn([...currentTurn.words, word], currentTurn.bingo) : new Turn(word, currentTurn.bingo)
+    let currentPlayerCopy = this.getCurrentPlayer().slice();
+    currentPlayerCopy[this.getCurrentTurnNumber() - 1] = turn;
+ 
+ 
+    let newPlayers = this.players.map((player, playerIndex) => playerIndex === this.currentPlayerIndex ? currentPlayerCopy : player);
+console.log('newPlayers', newPlayers)
+    return new Game (newPlayers, this.currentPlayerIndex)
   }
 
-  getPlayerHistory() {
-    return this.wordHistories[this.currentPlayerIndex]
-  };
+  endTurn(word) {
 
+    let newTurn = new Turn([], false)
+    let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+    let players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, newTurn] : history);
+    return new Game(players, newPlayerIndex);
+  }
   getCurrentTurn() {
-    return this.wordHistories[this.wordHistories.length - 1].length + 1;
-  };
+    return this.getCurrentPlayer().slice(-1)[0];
+  }
+
+  getCurrentPlayer() {
+    return this.players[this.currentPlayerIndex];
+  }
+
+  getCurrentTurnNumber() {
+    // ((max this.players.length) -1 )
+    return this.players[this.players.length - 1].length + 1;  
+  }
 
   getTotalScore(playerIndex) {
     let result = 0;
-    for ( let i = 0; i < (this.wordHistories[playerIndex].length); i++) {
-      result += this.wordHistories[playerIndex][i].score
-    }
+    for ( let i = 0; i < (this.players[playerIndex].length); i++) {
+      for (let j = 0; j <(this.players[playerIndex][i].length); j++) {
+        result += this.players[playerIndex][i][j].score
+    }}
     return result  };
 }
 
@@ -48,7 +88,8 @@ class ScoreKeeper extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       currentWord: {value: '', modifiers: [], score: 0},
-      game: Game.createNewGame(this.props.playerNames.length)
+      game: Game.createNewGame(this.props.playerNames.length),
+      bingo: false
     }
   }
 
@@ -56,10 +97,10 @@ class ScoreKeeper extends React.Component {
     this.setState({currentWord: word});
   }
 
-  handleSubmit() {
-    old_game = this.state.game;
-    this.setState({currentWord: {value: '', modifiers: [], score: 0}, game: this.state.game.play(this.state.currentWord)});
+  handleEndTurn() {
+    this.setState({game: this.state.game.addWord(this.state.currentWord).endTurn()});
     this.scrabbleInputBoxComponent.current.handleReset();
+    
   }
 
   handleUndo() {
@@ -67,7 +108,28 @@ class ScoreKeeper extends React.Component {
     this.scrabbleInputBoxComponent.current.handleReset();
   }
 
+  handleAddWord() {
+    this.setState({game: this.state.game.addWord(this.state.currentWord)});
+    this.scrabbleInputBoxComponent.current.handleReset();
+  }
+
+  handleBingo() {
+    this.setState({bingo:true});
+  }
+
+  displayAddedWords() {
+    let result = [];
+    if (this.state.currentWordsArray) {
+      for (let i=0; i < this.state.currentWordsArray.length; i++) {
+        result.push(<span key={i+10}>{this.state.currentWordsArray[i].value}<br /></span>)
+        //result.push(<br />)
+      }
+    }
+      return result
+  }
+
   render() {
+    let currentWords = this.state.game.players[this.state.game.currentPlayerIndex][this.state.game.getCurrentTurnNumber() - 1]
     return (
       <div className='score-keeper'>
         <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
@@ -75,24 +137,35 @@ class ScoreKeeper extends React.Component {
           <br />
           <p className="bold">Submit a word:</p>
           <ScrabbleInputBox ref={this.scrabbleInputBoxComponent} onChange={this.handleChange} />
-          <CurrentScore score={this.state.currentWord.score} />
+          <h1>{this.displayAddedWords()}</h1>
+        <CurrentScore words={currentWords} score={this.state.currentWord.score}/>
           <button onClick={this.handleUndo.bind(this)}type="submit" className="btn btn-info word-submit-button">UNDO</button>
-          <button onClick={this.handleSubmit.bind(this)}type="submit" className="btn btn-info word-submit-button">SUBMIT</button>     <br /><br />
+          <button onClick={this.handleAddWord.bind(this)}type="submit" className="btn btn-info word-submit-button">+ ADD A WORD</button>
+          <button onClick={this.handleEndTurn.bind(this)}type="submit" className="btn btn-info word-submit-button">END TURN</button>
+          <button onClick={this.handleBingo.bind(this)}type="submit" className="btn btn-info word-submit-button">BINGO</button>     <br /><br />
         </div>
         <div className="row justify-content-center">
         </div>
         <br />
-        <ScoreGrid currentTurn={this.state.game.getCurrentTurn()} playerNames={this.props.playerNames} game={this.state.game} />
+        <ScoreGrid currentTurn={this.state.game.getCurrentTurnNumber()} playerNames={this.props.playerNames} game={this.state.game} />
       </div>
     )
   }
 }
 
 class CurrentScore extends React.Component {
+  countScore() {
+    let result = this.props.score;
+    if (this.props.words) {
+    for (let i = 0; i < this.props.words.length; i++) {
+      result += this.props.words[i].score
+    }}
+    return result
+  }
   render() {
     return(
       <div id="score" className="card-header ">
-        Score is {this.props.score}
+        Score is {this.countScore()}
         </div>
     )
   }
@@ -119,8 +192,8 @@ class ScoreGrid extends React.Component {
           {[...Array(this.props.currentTurn)].map((_, i) =>
             <tr key={i}>
               <th>{i+1}</th>
-              {this.props.game.wordHistories.map((wordHistory, j) =>
-                <td key={j}>{wordHistory[i] ? <ScoreGridCell word={wordHistory[i]}/> : null}</td> )}
+              {this.props.game.players.map((player, j) =>
+                <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]}/> : null}</td> )}
             </tr> )}
             <tr className='total-score'>
               <td></td>
@@ -134,16 +207,26 @@ class ScoreGrid extends React.Component {
 }
 
 class ScoreGridCell extends React.Component {
+  renderWords() {
+    let result = [];
+    let words = this.props.turn.words;
+    for (let i = 0; i < words.length; i++) {
+      let letterTiles = words[i].value.split('').map((letter, j) =>
+      words[i].modifiers[j] ?
+      <Tooltip key={i} placement="top" trigger="hover" tooltip={words[i].modifiers[j]}>
+        <ScrabbleTile key={i} letter={letter} modifier={words[i].modifiers[j]} table={' tableTile'}/>
+      </Tooltip> :
+       <ScrabbleTile key={j+1100} letter={letter} modifier={words[i].modifiers[j]} table={' tableTile'} />)
+      result.push(letterTiles)
+      result.push(<span key={i}><span className='score-box'>{words[i].score}</span><br /></span>)
+     // result.push(<br />)
+    }
+    return result
+  }
+
   render() {
     return (
-      <span>{(this.props.word.value).split('').map((letter, i) =>
-        this.props.word.modifiers[i] ?
-        <Tooltip placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>
-          <ScrabbleTile letter={letter} modifier={this.props.word.modifiers[i]} table={' tableTile'}/>
-        </Tooltip> :
-         <ScrabbleTile letter={letter} modifier={this.props.word.modifiers[i]} table={' tableTile'}/>
-        )}
-      <div className='score-box'>{this.props.word.score}</div></span>
+      <span>{this.renderWords()}</span>
     )
   }
 }

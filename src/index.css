@@ -231,10 +231,11 @@ color: red;
 	width: 32px;
 	font-size: 20px;
 	top: 3px;
+	left: -2px;
 }
 .score.tableTile {
-	font-size: 12px;
-	top: 15px;
+	font-size: 10px;
+	top: 18px;
 }
 @keyframes blinker {  
   0% { opacity: 1; }

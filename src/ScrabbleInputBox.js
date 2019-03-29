@@ -3,6 +3,10 @@ import {resizeArray, scrabbleScore} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
 
+function isLetter(str) {
+  return str.length === 1 && str.match(/[a-z]/i);
+}
+
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
     super(props);
@@ -28,8 +32,14 @@ export class ScrabbleInputBox extends React.Component {
 
   handleHiddenInputChange(e) {
     let input = e.target.value;
-    let modifiers = resizeArray(this.state.modifiers, input.length, null);
-    this.setState({input: input, modifiers: modifiers});
+    let result='';
+    for ( let i = 0; i < input.length; i++) {
+      if (isLetter(input[i])) {
+        result+=input[i];
+      }
+    }
+    let modifiers = resizeArray(this.state.modifiers, result.length, null);
+    this.setState({input: result, modifiers: modifiers});
   }
 
   handleModifierChange(letter_index, modifier) {
@@ -58,7 +68,7 @@ export class ScrabbleInputBox extends React.Component {
       <div onClick={this.handleClick} className={`scrabble-input-box${this.state.input.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus && <div className='blinker'></div>}
         <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.state.input}
-               className='hidden-input' type='text' maxLength='30' autoComplete='off' /><br />
+               className='hidden-input' type='text' maxLength='15' autoComplete='off' /><br />
         <div className='scrabble-tiles'>
           {this.state.input.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
