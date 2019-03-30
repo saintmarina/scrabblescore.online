@@ -13,9 +13,9 @@ export default class ScrabbleTile extends React.Component {
   render() {
     /* TODO take out this.props.table */
     return (
-      <span className={'scrabble-letter ' + this.props.modifier + this.props.table}>
-        <span className={'letter' + this.props.table}>{this.props.letter.toUpperCase()}</span>
-        <span className={'score' + this.props.table}>{this.score}</span>
+      <span className={'scrabble-letter ' + this.props.modifier}>
+        <span className={'letter'}>{this.props.letter.toUpperCase()}</span>
+        <span className={'score'}>{this.score}</span>
       </span>
     )
   }

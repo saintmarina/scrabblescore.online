@@ -226,14 +226,16 @@ form#submit_word button {
 .scrabble-letter.triple-word {
 	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
 }
-.tableTile {
+.table .scrabble-letter {
 	height: 32px;
 	width: 32px;
+}
+.table .letter {
 	font-size: 20px;
 	top: 3px;
 	left: -2px;
 }
-.score.tableTile {
+.table .score {
 	font-size: 10px;
 	top: 18px;
 }

@@ -1,4 +1,4 @@
-import {resizeArray, scrabbleScore} from './Util.js';
+import {resizeArray} from './Util.js';
 
 class Turn {
   constructor(words, bingo) {

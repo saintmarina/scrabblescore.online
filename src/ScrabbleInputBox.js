@@ -1,5 +1,5 @@
 import React from 'react';
-import {resizeArray, scrabbleScore} from './Util.js';
+import {resizeArray} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
 
@@ -11,18 +11,11 @@ export class ScrabbleInputBox extends React.Component {
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
-    this.handleReset = this.handleReset.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
     this.state = {
       inFocus: false,
-      input: '',
-      modifiers: []
     }
-  }
-
-  handleReset(){
-    this.setState({ inFocus: false, input: '', modifiers: []})
   }
 
   handleClick() {
@@ -38,42 +31,26 @@ export class ScrabbleInputBox extends React.Component {
         result+=input[i];
       }
     }
-    let modifiers = resizeArray(this.state.modifiers, result.length, null);
-    this.setState({input: result, modifiers: modifiers});
+    let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
+    this.props.onChange({value: result, modifiers: modifiers})
   }
 
   handleModifierChange(letter_index, modifier) {
-    let modifiers = this.state.modifiers.slice();
-    modifiers = resizeArray(this.state.modifiers, this.state.input.length, null);
+    let modifiers = this.props.word.modifiers.slice();
     modifiers[letter_index] = modifier;
-    this.setState({modifiers: modifiers});
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.input === prevState.input &&
-        this.state.modifiers === prevState.modifiers)
-      return;
-
-    /* TODO rename wordObject */
-    let wordObject = {
-      value: this.state.input,
-      modifiers: this.state.modifiers,
-      score: scrabbleScore(this.state.input, this.state.modifiers)
-    };
-    this.props.onChange(wordObject);
+    this.props.onChange({value: this.props.word.value, modifiers: modifiers})
   }
 
   render() {
-    /* TODO take out the table="" props */
     return (
-      <div onClick={this.handleClick} className={`scrabble-input-box${this.state.input.length > 6 ? ' large' : ''}`}>
+      <div onClick={this.handleClick} className={`scrabble-input-box${this.props.word.value.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus && <div className='blinker'></div>}
-        <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.state.input}
+        <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.props.word.value}
                className='hidden-input' type='text' maxLength='15' autoComplete='off' /><br />
         <div className='scrabble-tiles'>
-          {this.state.input.split('').map((c, i) =>
+          {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c} modifier={this.state.modifiers[i]} table=""/>
+              <ScrabbleTile letter={c} modifier={this.props.word.modifiers[i]}/>
             </WithModifierPopover>
           )}
         </div>
