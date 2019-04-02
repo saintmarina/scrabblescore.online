@@ -39,7 +39,7 @@ export function scrabbleScore(word, modifiers) {
   const letterScore = letter => scoreList[letter] || 0;
   let result = 0;
   for (let i=0; i < word.length; i++) {
-    result += letterScore(word[i])
+    result += letterScore(word[i].toLowerCase())
   }
   return result;
 }

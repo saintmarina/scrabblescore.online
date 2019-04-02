@@ -180,6 +180,11 @@ form#submit_word button {
 .btn {
 	margin: 8px;
 }
+.custom-control-input:checked~.custom-control-label::before {
+	background-color:#17a2b8;
+	border-color:#17a2b8;
+}
+
 .modifier {
 	margin: 2px;
 	background-image: url('/modifier-frame.png');
@@ -234,10 +239,12 @@ form#submit_word button {
 	font-size: 20px;
 	top: 3px;
 	left: -2px;
+	font-weight: normal;
 }
 .table .score {
 	font-size: 10px;
 	top: 18px;
+	font-weight: normal;
 }
 @keyframes blinker {  
   0% { opacity: 1; }
@@ -251,6 +258,7 @@ form#submit_word button {
 .word-submit-button {
 	margin-top: 30px;
 }
+
 
 tr.head {
 	background-color: #48D1CC;

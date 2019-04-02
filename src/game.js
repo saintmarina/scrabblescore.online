@@ -11,6 +11,13 @@ class Turn {
   }
 
   get score() {
+    if (!this.words) {
+      return 0
+    }
+
+    if (this.words[0] === 'PASS') {
+      return 0
+    }
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
@@ -42,8 +49,16 @@ export default class Game {
   }
 
   endTurn(word) {
+    let newGame;
+    let players;
     let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
-    let players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
+    if (this.players[this.currentPlayerIndex][this.getCurrentTurnNumber()].words.length === 0) {
+      let passTurn = new Turn(['PASS'], this.getCurrentTurnNumber().bingo)
+      newGame = this._setTurn(passTurn)
+      players = newGame.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
+    } else {
+      players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
+    }
     return new Game(players, newPlayerIndex);
   }
 

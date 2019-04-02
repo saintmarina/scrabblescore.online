@@ -33,6 +33,7 @@ export class ScrabbleInputBox extends React.Component {
     }
     let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
     this.props.onChange({value: result, modifiers: modifiers})
+    this.setState({inFocus: false})
   }
 
   handleModifierChange(letter_index, modifier) {
