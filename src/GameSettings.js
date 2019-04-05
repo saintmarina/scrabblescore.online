@@ -51,7 +51,7 @@ class GameSettings extends React.Component {
         innovative and easy way, whilst playing the Scrabble board game.</p>
         <h3>Choose language:</h3>
         <div>
-          <select value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
+          <select id='language-select' value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
             <option value="en">English</option>
             <option value="ru">Russian</option>
             <option value="fr">French</option>
@@ -59,16 +59,16 @@ class GameSettings extends React.Component {
         </div>
         <h3>Choose number of players:</h3>
         <div>
-          <select value={this.state.numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
+          <select id='number-of-players-select' value={this.state.numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
         </div>
         <h3>Choose nicknames for players:</h3>
-        <div className="input_names">
+        <div>
           {this.getDefaultPlayerNames().map((name, i) => 
-            <input onChange={e => this.handleChangeOfName(i, e)}
+            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
                    key={i} type="text" className="form-control player-name"
                    placeholder={`Player ${i+1}`} value={name} /> )}
         </div>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "nightmare": "^3.0.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-popper-tooltip": "^2.8.1",
