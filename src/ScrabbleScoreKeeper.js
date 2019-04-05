@@ -1,13 +1,11 @@
 import React from 'react';
-import PlayerPicker from './PlayerPicker.js';
+import GameSettings from './GameSettings.js';
 import ScrabbleInputBox from './ScrabbleInputBox.js';
-import ScrabbleTile from './ScrabbleTile.js';
-import Tooltip from './Tooltip.js';
 import Game from './game.js';
 import {scrabbleScore} from './Util.js';
+import ScoreGrid from './ScoreGrid.js';
 
-const debug = true;
-let old_game;
+const debug = false; /* DONE you cannot have global variables that change */
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
@@ -19,64 +17,72 @@ class ScoreKeeper extends React.Component {
     this.handleBingo = this.handleBingo.bind(this);
 
     this.state = {
+      language: this.props.language,
       game: Game.createNewGame(this.props.playerNames.length),
       currentWord: {value: '', modifiers: [], score: 0},
+      games: []
     }
   }
 
+   _setGame(game) {
+    let newGames = this.state.games.slice();
+    newGames.push(this.state.game)
+    this.setState({games: newGames, game: game})
+  }
+
+  _resetCurrentWord() {
+    this.setState({currentWord: {value: '', modifiers: [], score: 0}})
+  }
+
   handleChange(word) {
-    word = {...word, score: scrabbleScore(word.value, word.modifiers)}
+    word = {...word, score: scrabbleScore(word.value, word.modifiers, this.state.language)}
     this.setState({currentWord: word});
   }
 
   handleEndTurn() {
-    if (this.state.currentWord.value.length !== 0) {
-      this.setState({game: this.state.game.addWord(this.state.currentWord).endTurn()})
-    } else {
-      this.setState({game: this.state.game.endTurn()})
-    }
-    this.setState({currentWord: {value: '', modifiers: [], score: 0}})
+  let game = this.state.game;
+  if (this.state.currentWord.value.length !== 0) {
+    game = game.addWord(this.state.currentWord)
+  }
+  this._setGame(game.endTurn())
+  this._resetCurrentWord()
   }
 
   handleUndo() {
-    this.setState({currentWord: {value: '', modifiers: [], score: 0}, game: old_game});
+    if (this.state.games.length === 0)
+      return;
+
+    let games = this.state.games.slice(0, -1)
+    let game = this.state.games[this.state.games.length - 1]
+    this.setState({game: game, games: games});
+    this._resetCurrentWord()
   }
 
   handleAddWord() {
-    if (this.state.currentWord.value.length !== 0) {
-      this.setState({game: this.state.game.addWord(this.state.currentWord)})
-    }
-    this.setState({currentWord: {value: '', modifiers: [], score: 0}})
+    this._setGame(this.state.game.addWord(this.state.currentWord))
+    this._resetCurrentWord()
   }
 
   handleBingo() {
-    this.setState({game: this.state.game.setBingo(!this.state.game._getCurrentTurn().bingo)});
-  }
-
-  setButtonState() {
-    if (this.state.currentWord.value === '') {
-      return true
-      } else {
-      return false
-    }
+    this._setGame(this.state.game.setBingo(!this.state.game.getCurrentTurn().bingo));
   }
 
   render() {
     return (
       <div className='score-keeper'>
         <br />
-        <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} />
+        <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.state.language}/>
         <div>
-          <p className="bold">Submit a word:</p>
-          <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord}/>
+          <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit a word:</p>
+          <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.state.language}/>
           <CurrentScore score={this.state.currentWord.score}/>
-          <button onClick={this.handleUndo}type="submit" className="btn btn-info word-submit-button">UNDO</button>
-          <button onClick={this.handleAddWord}type="submit" className="btn btn-info word-submit-button" disabled={this.setButtonState()}>+ ADD A WORD</button>
+          <button onClick={this.handleUndo}type="submit" className="btn btn-info word-submit-button" disabled={this.state.games.length === 0}>UNDO</button>
+          <button onClick={this.handleAddWord}type="submit" className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
           <button onClick={this.handleEndTurn}type="submit" className="btn btn-info word-submit-button">END TURN</button>
           <div className="custom-control custom-switch">
-            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="customSwitch1" checked={this.state.game._getCurrentTurn().bingo}/>
-            <label className="custom-control-label" htmlFor="customSwitch1">BINGO</label>
-          </div>     <br /><br />
+            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.state.game.getCurrentTurn().bingo}/>
+            <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
+          </div>
         </div>
       </div>
     )
@@ -86,118 +92,30 @@ class ScoreKeeper extends React.Component {
 class CurrentScore extends React.Component {
   render() {
     return(
-      <div id="score" className="card-header ">
+      <div id="score" className="card-header">
         Score is {this.props.score}
-        </div>
-    )
-  }
-}
-
-
-
-class ScoreGrid extends React.Component {
-
-  activePlayerClass(i, currentPlayerIndex) {
-    return i === currentPlayerIndex ? 'player-header current' : 'player-header';
-  }
-  render() {
-    return (
-      <table className="table table-bordered" align="center">
-          <thead>
-            <tr className="thead-rows">
-              <th id="move">Move</th>
-              {this.props.playerNames.map((player, i) =>
-              <th key={i} className={this.activePlayerClass(i, this.props.game.currentPlayerIndex)}>{player}</th>)}
-            </tr>
-          </thead>
-          <tbody className="tbody-rows">
-            {[...Array(this.props.game.getCurrentTurnNumber() + 1)].map((_, i) =>
-              <tr key={i}>
-                <th>{i+1}</th>
-                {this.props.game.players.map((player, j) =>
-                  <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} /> : null}</td>)}
-              </tr> )}
-            <tr className='total-score'>
-              <td>TOTAL</td>
-              {this.props.playerNames.map((_, i) =>
-                <td key={i}>{this.props.game.getTotalScore(i)}</td>)}
-            </tr>
-          </tbody>
-        </table>
-    )
-  }
-}
-
-class WordInTiles extends React.Component {
-  render() {
-    let letterTiles = this.props.word.value.split('').map((letter, i) => {
-          if (this.props.word.modifiers[i]) {
-            return <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>
-              <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} />
-            </Tooltip>
-          } else {
-            return <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} />
-          }})
-    return (
-      <div>
-        {letterTiles}
       </div>
-    )
-  }
-}
-
-
-class ScoreGridCell extends React.Component {
-  displayPass() {
-    let cell = [];
-    if (this.props.turn.words[0] !== 'PASS') {
-      let row = this.props.turn.words.map((word, i) => 
-                <tr key={i}>
-                <th><WordInTiles word={word}/></th>
-                <th><span className='score-box'>{word.score}</span></th>
-              </tr>)
-      let bingo = this.props.turn.bingo ? <tr><th>BINGO</th><th><span className='score-box'>50</span></th></tr> : null
-      cell.push(row)
-      cell.push(bingo)
-
-    } else {
-      let row = <tr>
-              <th>
-              {this.props.turn.words[0].split('').reverse().map(letter => 
-                <span className='score-box'>{letter}</span>)}
-              </th>
-            </tr>
-      cell.push(row)
-    }
-    return cell
-  }
-
-  render() {
-    return (
-      <table className='cell-table'>
-        <tbody>
-        {this.displayPass()}
-        </tbody>
-      </table>
     )
   }
 }
 
 class ScrabbleScoreKeeper extends React.Component {
   state = debug ? {
-    playerNames: ['Anna', 'Nico']
+    playerNames: ['Anna', 'Nico'],
+    language: 'English'
   } :
   {
-    playerNames: []
+    playerNames: [],
+    language: ''
   }
 
-  handleGameStart(playerNames) {
-    this.setState({playerNames: playerNames});
+  handleGameStart(playerNames, language) {
+    this.setState({playerNames: playerNames, language: language});
   }
   renderGame() {
-    return !debug ? 
-      <PlayerPicker onPlayersChosen={this.handleGameStart.bind(this)} /> :
-      <ScoreKeeper playerNames={this.state.playerNames} />;
+    return this.state.playerNames.length === 0 ? 
+      <GameSettings setGame={this.handleGameStart.bind(this)} /> :
+      <ScoreKeeper playerNames={this.state.playerNames} language={this.state.language} />;
   }
 
   render() {
@@ -213,19 +131,11 @@ class ScrabbleScoreKeeper extends React.Component {
 export default ScrabbleScoreKeeper;
 
 /*
-TODO
-X find TODO's by doing "git grep TODO" in your terminal
-X Take out class Turn and Game from this file
-X write tests for util's resizeArray() and scrableScore()
-x ScoreGrid should not take a currentTurn as prop. But use the game props for its needs.
-- Implement unlimited undos.
-- The Undo button should be disabled if it's not possible to undo
-X lowercase the inbox box
-X The bingo button should be toggleable
-X The add a word button should be disabled if no word is typed
-X CurrentScore should only take score as a prop.
-X When a player has passed, show "Passed" in the grid with (0) score.
-X If a player has bingo, show "Bingo" with (50) in the score.
-X Make ScrabbleInputBox a controlled componant (get rid of handleReset(), instead pass value=this.state.currentWord).
-X Bingo is buggy (cannot have two players doing bingo in a row)
+X Add the "wild/blank" tile modifier. It will make the score to disappear on the tile.
+X PlayerPicker componentn should renamed to GameSettings
+X GameSettings should no longer have two sections, but a single section with all the settings.
+X GameSettings should include a language setting.
+X In ScrabbleInputBox, filter out letters that are on the scorelist, instead of doing isLetter().
+X Instead of "Submit a word", let's have "PlayerName's turn".
+X When people score scrabble is above 50, add a "high-score" class in the score tile, Make the score tile red. We'll style it better later
 */

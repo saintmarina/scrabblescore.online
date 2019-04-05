@@ -1,9 +1,11 @@
 import {resizeArray} from './Util.js';
 
 class Turn {
-  constructor(words, bingo) {
+  /* DONE add a passed property instead of using the string PASS in the first word array */
+  constructor(words, bingo, passed=false) {
     this.words = words;
-    this.bingo = bingo
+    this.bingo = bingo;
+    this.passed = passed;
   }
 
   static empty() {
@@ -11,13 +13,10 @@ class Turn {
   }
 
   get score() {
-    if (!this.words) {
-      return 0
-    }
+    if (this.passed) return 0;
 
-    if (this.words[0] === 'PASS') {
-      return 0
-    }
+    if (!this.words) return 0;
+
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
@@ -43,27 +42,25 @@ export default class Game {
   }
 
   addWord(word) {
-    let currentTurn = this._getCurrentTurn()
+    let currentTurn = this.getCurrentTurn()
     let turn = new Turn([...currentTurn.words, word], currentTurn.bingo)
     return this._setTurn(turn)
   }
 
   endTurn(word) {
-    let newGame;
-    let players;
-    let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
-    if (this.players[this.currentPlayerIndex][this.getCurrentTurnNumber()].words.length === 0) {
-      let passTurn = new Turn(['PASS'], this.getCurrentTurnNumber().bingo)
-      newGame = this._setTurn(passTurn)
-      players = newGame.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
-    } else {
-      players = this.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
+    let newGame = this;
+    if (this.getCurrentTurn().words.length === 0) {
+      let newTurn = new Turn(this.getCurrentTurn().words, this.getCurrentTurn.bingo, true)
+      newGame = this._setTurn(newTurn)
     }
+    let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
+    /* DONE next line is duplicated in your if and else bodies. It should not */
+    let players = newGame.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
     return new Game(players, newPlayerIndex);
   }
 
   setBingo(value) {
-    let turn = new Turn(this._getCurrentTurn().words, value)
+    let turn = new Turn(this.getCurrentTurn().words, value)
     return this._setTurn(turn)
   }
 
@@ -74,12 +71,12 @@ export default class Game {
     return new Game (newPlayers, this.currentPlayerIndex)
   }
 
-  _getCurrentTurn() {
-    return this._getCurrentPlayer().slice(-1)[0];
-  }
-
   _getCurrentPlayer() {
     return this.players[this.currentPlayerIndex];
+  }
+
+  getCurrentTurn() {
+    return this._getCurrentPlayer().slice(-1)[0];
   }
 
   getCurrentTurnNumber() {

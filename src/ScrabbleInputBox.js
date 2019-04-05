@@ -1,11 +1,7 @@
 import React from 'react';
-import {resizeArray} from './Util.js';
+import {resizeArray, isInScoreList} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
-
-function isLetter(str) {
-  return str.length === 1 && str.match(/[a-z]/i);
-}
 
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -27,7 +23,7 @@ export class ScrabbleInputBox extends React.Component {
     let input = e.target.value;
     let result='';
     for (let i = 0; i < input.length; i++) {
-      if (isLetter(input[i])) {
+      if (isInScoreList(input[i])) {
         result+=input[i];
       }
     }
@@ -51,7 +47,7 @@ export class ScrabbleInputBox extends React.Component {
         <div className='scrabble-tiles'>
           {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c} modifier={this.props.word.modifiers[i]}/>
+              <ScrabbleTile letter={c} modifier={this.props.word.modifiers[i]} language={this.props.language}/>
             </WithModifierPopover>
           )}
         </div>
@@ -90,6 +86,7 @@ class WithModifierPopover extends React.Component {
                 <ModifierTile modifier='double-word'   onClick={this.handleClick}/>
                 <ModifierTile modifier='triple-letter' onClick={this.handleClick}/>
                 <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
+                <ModifierTile modifier='blank'         onClick={this.handleClick}/>
                </div>
             }>
       {this.props.children}
@@ -105,6 +102,7 @@ class ModifierTile extends React.Component {
       case 'double-word':    return 'Double word score';
       case 'triple-letter':  return 'Triple letter score';
       case 'triple-word':    return 'Triple word score';
+      case 'blank':          return 'Blank tile';
       default:               return null;
     }
   }

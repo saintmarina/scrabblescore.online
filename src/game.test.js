@@ -39,7 +39,6 @@ test('endTurn() changes player and turn number, and create an empty turn for the
 
 test('game should be immutable', () => {
 	let game = Game.createNewGame(2);
-
 	game.addWord(w1);
 	game.endTurn().addWord(w1);
 	game.setBingo(true);
@@ -106,10 +105,22 @@ test('getTotalScore of a player', () => {
 	expect(game.getTotalScore(1)).toEqual(51)
 });
 
+test('getCurrentTurn() is getting turn of the current player', () => {
+	let game = Game.createNewGame(2);
+	expect
+	game = game.addWord(w1);
+	game = game.endTurn().addWord(w1);
+	expect(game.getCurrentTurn().words).toEqual([w1])
 
+});
 
-
-
+test('setting passes turn', () => {
+	let game = Game.createNewGame(2);
+	game = game.endTurn();
+	game = game.endTurn();
+	expect(game.players[0][0].passed).toEqual(true)
+	expect(game.players[1][0].passed).toEqual(true)
+})
 
 
 

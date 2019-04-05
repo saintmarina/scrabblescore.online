@@ -14,6 +14,7 @@
 .container {
 	text-align: center;
 	background-color: #E0FFFF;
+	padding-bottom: 15px;
 	padding-right: 0;
 	padding-left: 0;
 }
@@ -166,8 +167,11 @@ form#submit_word button {
 	bottom: 0;
 	right: 3px;
 }
+.score-box.high {
+background-color: red;
+}
 
-#move {
+.move {
 	width: 75px;
 }
 .scrabble-tiles {
@@ -215,6 +219,10 @@ form#submit_word button {
 	background-color: #f74d13;
 	background-position: 69px 0px;
 }
+.modifier.blank {
+	background-image: url("/background.jpg");
+}
+
 .modifier:hover {
 	box-shadow: 0 0 15px red;
 	z-index: 10;
@@ -230,6 +238,9 @@ form#submit_word button {
 }
 .scrabble-letter.triple-word {
 	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
+}
+.scrabble-letter.blank .score {
+	font-size: 1px;
 }
 .table .scrabble-letter {
 	height: 32px;
