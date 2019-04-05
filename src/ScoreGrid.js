@@ -38,6 +38,8 @@ export default class ScoreGrid extends React.Component {
 class WordInTiles extends React.Component {
   render() {
     let letterTiles = this.props.word.value.split('').map((letter, i) => {
+      /* TODO Do not duplicate the scrableTile code */
+      /* TODO fix indentation */
           if (this.props.word.modifiers[i]) {
             return <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>
               <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} language={this.props.language}/>
@@ -55,6 +57,7 @@ class WordInTiles extends React.Component {
 
 class ScoreGridCell extends React.Component {
   renderPassed() {
+    /* TODO remove key */
     return(
       <tr key={0}>
         <td>
@@ -65,7 +68,10 @@ class ScoreGridCell extends React.Component {
   )}
 
   renderNormal() {
-    let cell = [];
+    /* TODO 50 should be a const up there */
+    /* TODO fix indentation of the inside map function */
+    let cell = []; /* TODO You don't need a cell variable */
+    /* TODO rename row -> rows */
     let row = this.props.turn.words.map((word, i) =>
               <tr key={i}>
                 <td><WordInTiles word={word} language={this.props.language}/></td>
@@ -73,6 +79,7 @@ class ScoreGridCell extends React.Component {
               </tr>)
     cell.push(row)
     if (this.props.turn.bingo) {
+      /* TODO fix identation */
         cell.push(<tr key='bingo'><td>BINGO</td><td><span className='score-box high'>50</span></td></tr>)
       }
     return cell

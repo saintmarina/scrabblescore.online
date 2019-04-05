@@ -1,10 +1,11 @@
 import {resizeArray, scrabbleScore} from './Util.js';
 
 let word = 'nonplussed' //13
-let e = 'English'
+let e = 'en'
 
 
-
+/* TODO rewrite to not have long words, and have just the right amount of tests to make it feel that it works */
+/* TODO wrap scrabbleScore in a describe block */
 test('scrabbleScore counts score without modifiers, multiple letters', () => {
 	expect(scrabbleScore('a', [null], e)).toEqual(1);
 });
@@ -50,29 +51,27 @@ test ('scrabbleScore counts complicated modifiers correctly', () => {
 });
 
 test ('scrabbleScore calculates French and Russian', () => {
-	expect(scrabbleScore('y', [null], 'French')).toEqual(10);
-	expect(scrabbleScore('ф', [null], 'Russian')).toEqual(10);
+	expect(scrabbleScore('y', [null], 'fr')).toEqual(10);
+	expect(scrabbleScore('ф', [null], 'ru')).toEqual(10);
 })
 
-/* DONE resizeArray should:
-	- make the array smaller if the requested length is smaller than original
-	- when expending an original array, it should preserve the elements that are already in it
-	- it should not change the original resizeArray
-	- if the requested length is the same, it should not change the array
+/* TODO test resizeArray should should not change the original array
 */
 
-test ('resizeArray makes correct length of an array', () => {
-	expect(resizeArray([], 2, 'a')).toEqual(['a', 'a'])
-	expect(resizeArray([1, 2, 3], 2, 4)).toEqual([1, 2])
-	expect(resizeArray(['a', 'a'], 2, 'a')).toEqual(['a', 'a'])
-});
+describe('resizeArray', () => {
+	test ('makes correct length of an array', () => {
+		expect(resizeArray([], 2, 'a')).toEqual(['a', 'a'])
+		expect(resizeArray([1, 2, 3], 2, 4)).toEqual([1, 2])
+		expect(resizeArray(['a', 'a'], 2, 'a')).toEqual(['a', 'a'])
+	});
 
-
-test ('resizeArray takes value of any type', () => {
-	expect(resizeArray([], 2, 1)).toEqual([1, 1])
-	expect(resizeArray([], 2, {a: 'b'})).toEqual([{a: 'b'}, {a: 'b'}])
-	expect(resizeArray([], 2, null)).toEqual([null, null])
-	expect(resizeArray([], 2, undefined)).toEqual([undefined, undefined])
-	expect(resizeArray([], 2, true)).toEqual([true, true])
-	expect(resizeArray([], 2, ['a'])).toEqual([['a'], ['a']])
-});
+	/* TODO do not overtest */
+	test ('takes value of any type', () => {
+		expect(resizeArray([], 2, 1)).toEqual([1, 1])
+		expect(resizeArray([], 2, {a: 'b'})).toEqual([{a: 'b'}, {a: 'b'}])
+		expect(resizeArray([], 2, null)).toEqual([null, null])
+		expect(resizeArray([], 2, undefined)).toEqual([undefined, undefined])
+		expect(resizeArray([], 2, true)).toEqual([true, true])
+		expect(resizeArray([], 2, ['a'])).toEqual([['a'], ['a']])
+	});
+})

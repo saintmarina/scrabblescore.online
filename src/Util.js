@@ -5,6 +5,11 @@ export function resizeArray(array, desiredLength, defaultValue) {
   return output;
 }
 
+/* TODO do not duplicate the score lists */
+/* TODO put all the score lists in a separate file */
+/* TODO find a way to only have the word "ru" once in your entire codebase. */
+
+/* TODO rename isLetterAllowed */
 export function isInScoreList(str) {
   const EnglishScoreList = { a: 1, e: 1, i: 1, o: 1, u: 1, l: 1, n: 1, r: 1, s: 1,
     t: 1, d: 2, g: 2, b: 3, c: 3, m: 3, p: 3, f: 4, h: 4, v: 4, w: 4, y: 4,
@@ -68,11 +73,12 @@ export function scrabbleScore(word, modifiers, language) {
   }
 
  switch(language) {
-  case 'English':
+  /* TODO no switches */
+  case 'en':
     scoreList = EnglishScoreList; break;
-  case 'French':
+  case 'fr':
     scoreList = FrenchScoreList; break;
-  case 'Russian':
+  case 'ru':
     scoreList = RussianScoreList; break;
   default:
       scoreList = EnglishScoreList;

@@ -13,10 +13,8 @@ class Turn {
   }
 
   get score() {
-    if (this.passed) return 0;
-
-    if (!this.words) return 0;
-
+   /* DONE remove */
+    /* DONE add new line before return */
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
@@ -50,11 +48,11 @@ export default class Game {
   endTurn(word) {
     let newGame = this;
     if (this.getCurrentTurn().words.length === 0) {
+      /* TODO test the bingo param and the passed feature */
       let newTurn = new Turn(this.getCurrentTurn().words, this.getCurrentTurn.bingo, true)
       newGame = this._setTurn(newTurn)
     }
     let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
-    /* DONE next line is duplicated in your if and else bodies. It should not */
     let players = newGame.players.map((history, playerIndex) => playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history)
     return new Game(players, newPlayerIndex);
   }
@@ -96,26 +94,3 @@ export default class Game {
     return result
   };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

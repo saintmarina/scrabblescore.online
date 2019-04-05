@@ -23,6 +23,7 @@ export class ScrabbleInputBox extends React.Component {
     let input = e.target.value;
     let result='';
     for (let i = 0; i < input.length; i++) {
+      /* TODO only allow the current language letters, and not other */
       if (isInScoreList(input[i])) {
         result+=input[i];
       }
@@ -59,12 +60,12 @@ export class ScrabbleInputBox extends React.Component {
 class WithModifierPopover extends React.Component {
   constructor(props) {
     super(props);
-    this.Tooltip = React.createRef();
+    this.Tooltip = React.createRef(); /* TODO remove */
     this.handleClick = this.handleClick.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
       modifier: null,
-      visibility: false
+      visibility: false /* TODO rename to tooltipShown */
     }
   }
 
@@ -79,6 +80,7 @@ class WithModifierPopover extends React.Component {
   }
 
   render() {
+    /* TODO fix indentation */
     return(
     <Tooltip onVisibilityChange={this.handleVisibilityChange} tooltipShown={this.state.visibility} placement="bottom" trigger="click" tooltip={
               <div>

@@ -5,7 +5,7 @@ import Game from './game.js';
 import {scrabbleScore} from './Util.js';
 import ScoreGrid from './ScoreGrid.js';
 
-const debug = false; /* DONE you cannot have global variables that change */
+const debug = false;
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
@@ -17,16 +17,17 @@ class ScoreKeeper extends React.Component {
     this.handleBingo = this.handleBingo.bind(this);
 
     this.state = {
-      language: this.props.language,
+      /* DONE language should not be in state */
       game: Game.createNewGame(this.props.playerNames.length),
+      /* TODO {value: '', modifiers: [], score: 0} should be a constant emptyWord or something */
       currentWord: {value: '', modifiers: [], score: 0},
       games: []
     }
   }
 
    _setGame(game) {
-    let newGames = this.state.games.slice();
-    newGames.push(this.state.game)
+    /* DONE Rewrite with the [... ] notation */
+    let newGames = [...this.state.games.slice(), this.state.game]
     this.setState({games: newGames, game: game})
   }
 
@@ -35,17 +36,18 @@ class ScoreKeeper extends React.Component {
   }
 
   handleChange(word) {
-    word = {...word, score: scrabbleScore(word.value, word.modifiers, this.state.language)}
+    word = {...word, score: scrabbleScore(word.value, word.modifiers, this.props.language)}
     this.setState({currentWord: word});
   }
 
   handleEndTurn() {
-  let game = this.state.game;
-  if (this.state.currentWord.value.length !== 0) {
-    game = game.addWord(this.state.currentWord)
-  }
-  this._setGame(game.endTurn())
-  this._resetCurrentWord()
+    /* DONE fix indentation */
+    let game = this.state.game;
+    if (this.state.currentWord.value.length !== 0) {
+      game = game.addWord(this.state.currentWord)
+    }
+    this._setGame(game.endTurn())
+    this._resetCurrentWord()
   }
 
   handleUndo() {
@@ -71,10 +73,10 @@ class ScoreKeeper extends React.Component {
     return (
       <div className='score-keeper'>
         <br />
-        <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.state.language}/>
+        <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.props.language}/>
         <div>
           <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit a word:</p>
-          <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.state.language}/>
+          <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language}/>
           <CurrentScore score={this.state.currentWord.score}/>
           <button onClick={this.handleUndo}type="submit" className="btn btn-info word-submit-button" disabled={this.state.games.length === 0}>UNDO</button>
           <button onClick={this.handleAddWord}type="submit" className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
@@ -102,7 +104,7 @@ class CurrentScore extends React.Component {
 class ScrabbleScoreKeeper extends React.Component {
   state = debug ? {
     playerNames: ['Anna', 'Nico'],
-    language: 'English'
+    language: 'en'
   } :
   {
     playerNames: [],
@@ -113,6 +115,7 @@ class ScrabbleScoreKeeper extends React.Component {
     this.setState({playerNames: playerNames, language: language});
   }
   renderGame() {
+    /* TODO rename the callback name to onXXX */
     return this.state.playerNames.length === 0 ? 
       <GameSettings setGame={this.handleGameStart.bind(this)} /> :
       <ScoreKeeper playerNames={this.state.playerNames} language={this.state.language} />;
@@ -131,11 +134,5 @@ class ScrabbleScoreKeeper extends React.Component {
 export default ScrabbleScoreKeeper;
 
 /*
-X Add the "wild/blank" tile modifier. It will make the score to disappear on the tile.
-X PlayerPicker componentn should renamed to GameSettings
-X GameSettings should no longer have two sections, but a single section with all the settings.
-X GameSettings should include a language setting.
 X In ScrabbleInputBox, filter out letters that are on the scorelist, instead of doing isLetter().
-X Instead of "Submit a word", let's have "PlayerName's turn".
-X When people score scrabble is above 50, add a "high-score" class in the score tile, Make the score tile red. We'll style it better later
 */
