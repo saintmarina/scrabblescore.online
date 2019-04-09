@@ -36,19 +36,19 @@ class GameSettings extends React.Component {
   /* DONE remove the target argument */
   setGameSettings() {
   /* DONE remove this line */
-    this.props.setGame(this.state.playerNames, this.state.language);
+    this.props.onGameStart(this.state.playerNames, this.state.language);
   }
 
   render() {
-    /* TODO Use two letter language codes */
+    /* DONE Use two letter language codes */
     /* DONE Remove the <br/>s */
-    /* TODO Fix indentation */
+    /* DONE Fix indentation */
     return (
       <div>
         <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
-       <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
-        Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
-        innovative and easy way, whilst playing the Scrabble board game.</p>
+        <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
+           Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
+           innovative and easy way, whilst playing the Scrabble board game.</p>
         <h3>Choose language:</h3>
         <div>
           <select id='language-select' value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
@@ -64,17 +64,17 @@ class GameSettings extends React.Component {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-        </div>
-        <h3>Choose nicknames for players:</h3>
-        <div>
-          {this.getDefaultPlayerNames().map((name, i) => 
-            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
-                   key={i} type="text" className="form-control player-name"
-                   placeholder={`Player ${i+1}`} value={name} /> )}
-        </div>
-        <div className='input-group'>
-          <button onClick={() => this.setGameSettings(this)} type="submit" className="btn btn-info">Next</button>
-        </div>
+          </div>
+          <h3>Choose nicknames for players:</h3>
+          <div>
+            {this.getDefaultPlayerNames().map((name, i) => 
+              <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
+                     key={i} type="text" className="form-control player-name"
+                     placeholder={`Player ${i+1}`} value={name} /> )}
+          </div>
+          <div className='input-group'>
+            <button onClick={() => this.setGameSettings(this)} type="submit" className="btn btn-info">Next</button>
+          </div>
       </div>
     )
   }

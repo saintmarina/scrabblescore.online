@@ -1,13 +1,12 @@
 import React from 'react';
-import {scrabbleScore} from './Util.js';
 
 export default class ScrabbleTile extends React.Component {
   render() {
-  	/* TODO props should only be letter and score */
+  	/* DONE props should only be letter and score */
     return (
       <span className={'scrabble-letter ' + this.props.modifier}>
         <span className='letter'>{this.props.letter.toUpperCase()}</span>
-        <span className={'score'}>{scrabbleScore(this.props.letter, [null], this.props.language)}</span>
+        <span className={'score'}>{this.props.score}</span>
       </span>
     )
   }

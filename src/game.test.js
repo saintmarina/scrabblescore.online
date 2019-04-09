@@ -106,21 +106,28 @@ test('getTotalScore of a player', () => {
 });
 
 test('getCurrentTurn() is getting turn of the current player', () => {
-	let game = Game.createNewGame(2);
-	expect /* TODO remove */
+	let game = Game.createNewGame(2); /* DONE remove unnecessary code */
 	game = game.addWord(w1);
-	game = game.endTurn().addWord(w1);
-	expect(game.getCurrentTurn().words).toEqual([w1]) /* TODO test does not test anything */
+	game = game.endTurn().addWord(w2);
+	expect(game.getCurrentTurn().words).toEqual([w2]) /* DONE test does not test anything */
 
 });
 
-/* TODO rename test to something better */
-test('setting passes turn', () => {
+/* DONE rename test to something better */
+test('toggles Turn.passed value', () => {
 	let game = Game.createNewGame(2);
 	game = game.endTurn();
-	game = game.endTurn();
+	game = game.addWord(w1).endTurn();
 	expect(game.players[0][0].passed).toEqual(true)
-	expect(game.players[1][0].passed).toEqual(true)
+	expect(game.players[1][0].passed).toEqual(false)
+})
+
+test('toggles Turn.bingo value', () => {
+	let game = Game.createNewGame(2);
+	game = game.setBingo(true)
+	expect(game.getCurrentTurn().bingo).toEqual(true)
+	game = game.setBingo(false)
+	expect(game.getCurrentTurn().bingo).toEqual(false)
 })
 
 

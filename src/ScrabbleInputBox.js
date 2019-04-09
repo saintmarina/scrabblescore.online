@@ -1,7 +1,8 @@
 import React from 'react';
-import {resizeArray, isInScoreList} from './Util.js';
+import {resizeArray, scrabbleScore} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
+import {scoreListsMap} from './scoreLists';
 
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -23,8 +24,8 @@ export class ScrabbleInputBox extends React.Component {
     let input = e.target.value;
     let result='';
     for (let i = 0; i < input.length; i++) {
-      /* TODO only allow the current language letters, and not other */
-      if (isInScoreList(input[i])) {
+      /* DONE only allow the current language letters, and not other */
+      if (scoreListsMap[this.props.language]()) {
         result+=input[i];
       }
     }
@@ -48,7 +49,7 @@ export class ScrabbleInputBox extends React.Component {
         <div className='scrabble-tiles'>
           {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c} modifier={this.props.word.modifiers[i]} language={this.props.language}/>
+              <ScrabbleTile letter={c} score={scrabbleScore(c, [null], this.props.language)} modifier={this.props.word.modifiers[i]}/>
             </WithModifierPopover>
           )}
         </div>
@@ -60,39 +61,41 @@ export class ScrabbleInputBox extends React.Component {
 class WithModifierPopover extends React.Component {
   constructor(props) {
     super(props);
-    this.Tooltip = React.createRef(); /* TODO remove */
+    /* DONE remove */
     this.handleClick = this.handleClick.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
       modifier: null,
-      visibility: false /* TODO rename to tooltipShown */
+      tooltipShown: false /* DONE rename to tooltipShown */
     }
   }
 
   handleClick(modifier) {
     let modifierValue = (modifier === this.state.modifier) ? null : modifier
-    this.setState({modifier: modifierValue, visibility: false});
+    this.setState({modifier: modifierValue, tooltipShown: false});
     this.props.onChange(modifierValue);
   }
 
   handleVisibilityChange(argument) {
-    this.setState({visibility: argument});
+    this.setState({tooltipShown: argument});
   }
 
   render() {
-    /* TODO fix indentation */
+    /* DONE fix indentation */
     return(
-    <Tooltip onVisibilityChange={this.handleVisibilityChange} tooltipShown={this.state.visibility} placement="bottom" trigger="click" tooltip={
-              <div>
-                <ModifierTile modifier='double-letter' onClick={this.handleClick}/>
-                <ModifierTile modifier='double-word'   onClick={this.handleClick}/>
-                <ModifierTile modifier='triple-letter' onClick={this.handleClick}/>
-                <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
-                <ModifierTile modifier='blank'         onClick={this.handleClick}/>
-               </div>
-            }>
-      {this.props.children}
-    </Tooltip>
+      <Tooltip onVisibilityChange={this.handleVisibilityChange} 
+               tooltipShown={this.state.tooltipShown} 
+               placement="bottom" trigger="click" 
+               tooltip={<div>
+                          <ModifierTile modifier='double-letter' onClick={this.handleClick}/>
+                          <ModifierTile modifier='double-word'   onClick={this.handleClick}/>
+                          <ModifierTile modifier='triple-letter' onClick={this.handleClick}/>
+                          <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
+                          <ModifierTile modifier='blank'         onClick={this.handleClick}/>
+                         </div>
+                        }>
+        {this.props.children}
+      </Tooltip>
     );
   }
 }

@@ -48,7 +48,7 @@ export default class Game {
   endTurn(word) {
     let newGame = this;
     if (this.getCurrentTurn().words.length === 0) {
-      /* TODO test the bingo param and the passed feature */
+      /* DONE test the bingo param and the passed feature */
       let newTurn = new Turn(this.getCurrentTurn().words, this.getCurrentTurn.bingo, true)
       newGame = this._setTurn(newTurn)
     }

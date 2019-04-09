@@ -55,7 +55,6 @@ form#submit_word button {
 .input-group-append {
 	display:block;
 }
-
 .input_names {
 	padding-bottom: 2px;
 }
@@ -77,13 +76,10 @@ form#submit_word button {
 	width: 375px;
 	border-radius: 20px;
 }
-
 .scrabble-input-box.large {
 	width: 600px;
 }
-
 .score-box {
-	float: right;
 	display: inline-block;
 	border: 1px solid grey;
 	background-color: white;
@@ -92,9 +88,7 @@ form#submit_word button {
 	border-radius: 5px;
 	padding-top: 1px;
 }
-
 .player-active { color: red; }
-
 .blinker {
 	position: absolute;
 	background-color: #335;
@@ -104,7 +98,6 @@ form#submit_word button {
 	height: 46px;
 	animation: blinker 1s linear infinite;
 }
-
 .hidden-input {
 	position: fixed;
 	top: -10px;
@@ -113,7 +106,6 @@ form#submit_word button {
 	border: none;
 
 }
-
 .scrabble-tiles {
 	height: 65;
 	text-align: left;
@@ -135,7 +127,6 @@ form#submit_word button {
     position: relative;
    	z-index: 1;
 }
-
 .letter {
 	width: 100%;
 	top: 6px;
@@ -160,7 +151,6 @@ form#submit_word button {
 	box-shadow: 0 0 15px red;
 	z-index: 10;
 }
-
 .score {
 	position: absolute;
 	text-align: right;
@@ -170,7 +160,6 @@ form#submit_word button {
 .score-box.high {
 background-color: red;
 }
-
 .move {
 	width: 75px;
 }
@@ -188,7 +177,6 @@ background-color: red;
 	background-color:#17a2b8;
 	border-color:#17a2b8;
 }
-
 .modifier {
 	margin: 2px;
 	background-image: url('/modifier-frame.png');
@@ -222,7 +210,6 @@ background-color: red;
 .modifier.blank {
 	background-image: url("/background.jpg");
 }
-
 .modifier:hover {
 	box-shadow: 0 0 15px red;
 	z-index: 10;
@@ -242,6 +229,7 @@ background-color: red;
 .scrabble-letter.blank .score {
 	font-size: 1px;
 }
+.table-bordered {table-layout: fixed;}
 .table .scrabble-letter {
 	height: 32px;
 	width: 32px;

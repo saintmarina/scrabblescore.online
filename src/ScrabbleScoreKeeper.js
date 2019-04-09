@@ -6,6 +6,7 @@ import {scrabbleScore} from './Util.js';
 import ScoreGrid from './ScoreGrid.js';
 
 const debug = false;
+const emptyWord = {value: '', modifiers: [], score: 0};
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
@@ -19,8 +20,8 @@ class ScoreKeeper extends React.Component {
     this.state = {
       /* DONE language should not be in state */
       game: Game.createNewGame(this.props.playerNames.length),
-      /* TODO {value: '', modifiers: [], score: 0} should be a constant emptyWord or something */
-      currentWord: {value: '', modifiers: [], score: 0},
+      /* DONE {value: '', modifiers: [], score: 0} should be a constant emptyWord or something */
+      currentWord: emptyWord,
       games: []
     }
   }
@@ -32,7 +33,7 @@ class ScoreKeeper extends React.Component {
   }
 
   _resetCurrentWord() {
-    this.setState({currentWord: {value: '', modifiers: [], score: 0}})
+    this.setState({currentWord: emptyWord})
   }
 
   handleChange(word) {
@@ -78,9 +79,9 @@ class ScoreKeeper extends React.Component {
           <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit a word:</p>
           <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language}/>
           <CurrentScore score={this.state.currentWord.score}/>
-          <button onClick={this.handleUndo}type="submit" className="btn btn-info word-submit-button" disabled={this.state.games.length === 0}>UNDO</button>
-          <button onClick={this.handleAddWord}type="submit" className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
-          <button onClick={this.handleEndTurn}type="submit" className="btn btn-info word-submit-button">END TURN</button>
+          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.state.games.length === 0}>UNDO</button>
+          <button onClick={this.handleAddWord} className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
+          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info word-submit-button">END TURN</button>
           <div className="custom-control custom-switch">
             <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.state.game.getCurrentTurn().bingo}/>
             <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
@@ -115,9 +116,9 @@ class ScrabbleScoreKeeper extends React.Component {
     this.setState({playerNames: playerNames, language: language});
   }
   renderGame() {
-    /* TODO rename the callback name to onXXX */
+    /* DONE rename the callback name to onXXX */
     return this.state.playerNames.length === 0 ? 
-      <GameSettings setGame={this.handleGameStart.bind(this)} /> :
+      <GameSettings onGameStart={this.handleGameStart.bind(this)} /> :
       <ScoreKeeper playerNames={this.state.playerNames} language={this.state.language} />;
   }
 
