@@ -1,11 +1,9 @@
-import {resizeArray, scrabbleScore} from './Util.js';
+import {resizeArray, scrabbleScore, isLetterAllowed} from './Util.js';
 
-let word = 'nonplussed' //13
-let e = 'en'
+/* DONE remove these variables */
 
+/* DONE Convert this file to use two space for tabs */
 
-/* DONE rewrite to not have long words, and have just the right amount of tests to make it feel that it works */
-/* DONE wrap scrabbleScore in a describe block */
 describe('scrabbleScore', () => {
 	test('counts score without modifiers', () => {
 		let word = 'happy' //13
@@ -25,9 +23,6 @@ describe('scrabbleScore', () => {
 	})
 })
 
-/* DONE test resizeArray should should not change the original array
-*/
-
 describe('resizeArray', () => {
 	test ('makes correct length of an array', () => {
 		expect(resizeArray([], 2, 'a')).toEqual(['a', 'a'])
@@ -35,14 +30,28 @@ describe('resizeArray', () => {
 		expect(resizeArray(['a', 'a'], 2, 'a')).toEqual(['a', 'a'])
 	});
 
-	/* DONE do not overtest */
-	test ('takes value of any type', () => {
+	/* DONE rename: takes a default value of any type */
+	test ('takes a default value of any type', () => {
 		expect(resizeArray([], 2, 1)).toEqual([1, 1])
 		expect(resizeArray([], 2, {a: 'b'})).toEqual([{a: 'b'}, {a: 'b'}])
 	});
-	test('doesn"t change the original array', () => {
+		/* DONE " -> ' */
+	test("doesn't change the original array", () => {
 		let tripleA = ['a', 'a', 'a']
 		resizeArray(tripleA, 4, 'a')
 		expect(tripleA).toEqual(['a', 'a', 'a'])
+	})
+})
+describe('isLetterAllowed', () => {
+	test('only allows letters', () => {
+		expect(isLetterAllowed('1', 'en')).toEqual(false)
+		expect(isLetterAllowed(' ', 'ru')).toEqual(false)
+		expect(isLetterAllowed('/', 'ru')).toEqual(false)
+		expect(isLetterAllowed('a', 'fr')).toEqual(true)
+	})
+	test('filters characters according to the language', () => {
+		expect(isLetterAllowed('a', 'en')).toEqual(true)
+		expect(isLetterAllowed('ф', 'ru')).toEqual(true)
+		expect(isLetterAllowed('f', 'ru')).toEqual(false)
 	})
 })

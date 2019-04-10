@@ -1,20 +1,18 @@
 import {resizeArray} from './Util.js';
 
 class Turn {
-  /* DONE add a passed property instead of using the string PASS in the first word array */
   constructor(words, bingo, passed=false) {
     this.words = words;
     this.bingo = bingo;
     this.passed = passed;
   }
+  /*TODO create a static function turn.passed*/
 
   static empty() {
     return new Turn([], false);
   }
 
   get score() {
-   /* DONE remove */
-    /* DONE add new line before return */
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score
@@ -48,8 +46,7 @@ export default class Game {
   endTurn(word) {
     let newGame = this;
     if (this.getCurrentTurn().words.length === 0) {
-      /* DONE test the bingo param and the passed feature */
-      let newTurn = new Turn(this.getCurrentTurn().words, this.getCurrentTurn.bingo, true)
+      let newTurn = new Turn(this.getCurrentTurn().words, false, true)
       newGame = this._setTurn(newTurn)
     }
     let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
@@ -60,6 +57,10 @@ export default class Game {
   setBingo(value) {
     let turn = new Turn(this.getCurrentTurn().words, value)
     return this._setTurn(turn)
+  }
+
+  countLeftOvers(leftovers) {
+    return 
   }
 
   _setTurn(turn) {

@@ -25,23 +25,18 @@ class GameSettings extends React.Component {
 
   handleChangeOfLanguage(e) {
     this.setState({language: e.target.value});
+    console.log(e.target.options[e.target.value])
   }
 
   getDefaultPlayerNames() {
     return resizeArray(this.state.playerNames, this.state.numberOfPlayers, '');
   }
 
-  /* DONE Remove dead code */
-
-  /* DONE remove the target argument */
   setGameSettings() {
-  /* DONE remove this line */
     this.props.onGameStart(this.state.playerNames, this.state.language);
   }
 
   render() {
-    /* DONE Use two letter language codes */
-    /* DONE Remove the <br/>s */
     /* DONE Fix indentation */
     return (
       <div>
@@ -64,17 +59,17 @@ class GameSettings extends React.Component {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          </div>
-          <h3>Choose nicknames for players:</h3>
-          <div>
-            {this.getDefaultPlayerNames().map((name, i) => 
-              <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
-                     key={i} type="text" className="form-control player-name"
-                     placeholder={`Player ${i+1}`} value={name} /> )}
-          </div>
-          <div className='input-group'>
-            <button onClick={() => this.setGameSettings(this)} type="submit" className="btn btn-info">Next</button>
-          </div>
+        </div>
+        <h3>Choose nicknames for players:</h3>
+        <div>
+          {this.getDefaultPlayerNames().map((name, i) => 
+            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
+                   key={i} type="text" className="form-control player-name"
+                   placeholder={`Player ${i+1}`} value={name} /> )}
+        </div>
+        <div className='input-group'>
+          <button onClick={() => this.setGameSettings(this)} type="submit" className="btn btn-info">Next</button>
+        </div>
       </div>
     )
   }

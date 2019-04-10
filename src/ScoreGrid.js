@@ -3,6 +3,9 @@ import ScrabbleTile from './ScrabbleTile.js';
 import Tooltip from './Tooltip.js';
 import {scrabbleScore} from './Util.js';
 
+const highScore = 50;
+const bingoScore = 50;
+
 export default class ScoreGrid extends React.Component {
   activePlayerClass(i, currentPlayerIndex) {
     return i === currentPlayerIndex ? 'player-header current' : 'player-header';
@@ -38,58 +41,52 @@ export default class ScoreGrid extends React.Component {
 
 class WordInTiles extends React.Component {
   render() {
-    /* DONE Do not duplicate the scrableTile code */
-    /* DONE fix indentation */
     let letterTiles = this.props.word.value.split('').map((letter, i) => {
       let tile = <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} score={scrabbleScore(letter, [null], this.props.language)}/> 
+      /* DONE take out else. Use the pattern of modifying the variable like the adding word in endTurn() */
       if (this.props.word.modifiers[i]) {
-        return <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
-      } else {
-        return tile
-      }})
-    return (
-      <div>
-        {letterTiles}
-      </div>
-    )
+        tile =  <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
+      }
+      return tile
+    })
+    /* DONE return statement on a single line */
+    return <div>{letterTiles}</div>
   }
 }
 
 class ScoreGridCell extends React.Component {
   renderPassed() {
-    /* DONE remove key */
+    /* DONE fix indentation */
     return(
       <tr>
         <td>
-        {"PASS".split('').map((letter,i) =>
-          <span key={i} className='score-box'>{letter}</span>)}
+          {"PASS".split('').map((letter,i) =>
+            <span key={i} className='score-box'>{letter}</span>)}
         </td>
       </tr>
   )}
 
   renderNormal() {
-    /* DONE 50 should be a const up there */
-    /* DONE fix indentation of the inside map function */
-    let highScore = 50; /* DONE You don't need a cell variable */
-    /* DONE rename row -> rows */
+    /* DONE let -> const. Put the const in the top of the file */
+    /* DONE have the BINGO score to be a const somehwere */
+    
     let rows = this.props.turn.words.map((word, i) =>
                 <tr key={i}>
                   <td><WordInTiles word={word} language={this.props.language}/></td>
                   <td><span className={word.score >= highScore ? 'score-box high':'score-box' }>{word.score}</span></td>
                 </tr>)
     if (this.props.turn.bingo) {
-    /* DONE fix identation */
-      rows.push(<tr key='bingo'><td>BINGO</td><td><span className='score-box high'>50</span></td></tr>)
+      rows.push(<tr key='bingo'><td>BINGO</td><td><span className='score-box high'>{bingoScore}</span></td></tr>)
     }
     return rows
   }
 
   render() {
-    /* DONE refactor like: this.props.turn.passed ? renderNormal() : renderPassed() */
+    /* DONE identation */
     return (
       <table className='cell-table'>
         <tbody>
-        {this.props.turn.passed ? this.renderPassed() : this.renderNormal()}
+          {this.props.turn.passed ? this.renderPassed() : this.renderNormal()}
         </tbody>
       </table>
     )

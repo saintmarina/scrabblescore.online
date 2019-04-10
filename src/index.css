@@ -63,6 +63,7 @@ form#submit_word button {
     margin: 0 auto;
     text-align: center;
 }
+.end-game {width: 242px;}
 .player-header.current {
 	color: rgb(238, 62, 128);
 }

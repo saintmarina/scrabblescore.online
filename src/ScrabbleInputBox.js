@@ -1,8 +1,7 @@
 import React from 'react';
-import {resizeArray, scrabbleScore} from './Util.js';
+import {resizeArray, scrabbleScore, isLetterAllowed} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
-import {scoreListsMap} from './scoreLists';
 
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -22,11 +21,12 @@ export class ScrabbleInputBox extends React.Component {
 
   handleHiddenInputChange(e) {
     let input = e.target.value;
-    let result='';
+    /* DONE style: spaces around = and += */
+    let result = '';
     for (let i = 0; i < input.length; i++) {
-      /* DONE only allow the current language letters, and not other */
-      if (scoreListsMap[this.props.language]()) {
-        result+=input[i];
+      /* DONE use isLetterAllowed(). Write the test first. */
+      if (isLetterAllowed(input[i], this.props.language)) {
+        result += input[i];
       }
     }
     let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
@@ -61,12 +61,11 @@ export class ScrabbleInputBox extends React.Component {
 class WithModifierPopover extends React.Component {
   constructor(props) {
     super(props);
-    /* DONE remove */
     this.handleClick = this.handleClick.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
       modifier: null,
-      tooltipShown: false /* DONE rename to tooltipShown */
+      tooltipShown: false
     }
   }
 
@@ -81,7 +80,7 @@ class WithModifierPopover extends React.Component {
   }
 
   render() {
-    /* DONE fix indentation */
+    /* DONE </div> indentation, and spaces before /> */
     return(
       <Tooltip onVisibilityChange={this.handleVisibilityChange} 
                tooltipShown={this.state.tooltipShown} 
@@ -92,7 +91,7 @@ class WithModifierPopover extends React.Component {
                           <ModifierTile modifier='triple-letter' onClick={this.handleClick}/>
                           <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
                           <ModifierTile modifier='blank'         onClick={this.handleClick}/>
-                         </div>
+                        </div>
                         }>
         {this.props.children}
       </Tooltip>

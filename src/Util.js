@@ -7,26 +7,14 @@ export function resizeArray(array, desiredLength, defaultValue) {
   return output;
 }
 
-/* DONE do not duplicate the score lists */
-/* DONE put all the score lists in a separate file */
 /* DONE find a way to only have the word "ru" once in your entire codebase. */
-
-/* DONE rename isLetterAllowed */
-/*export function isLetterAllowed(str, language) {
-  let list;
-  
-  switch (language) {
-    case 'en': list = EnglishScoreList;break;
-    case 'fr': list = FrenchScoreList;break;
-    case 'ru': list = RussianScoreList;break;
-    default: list = EnglishScoreList;break;
-  }
-
-  let Str = str.toLowerCase()
-  if (Str in list) 
-    return list
-}*/
-
+/* DONE isLetterAllowed() should be implemented */
+export function isLetterAllowed(letter, language) {
+  let isAllowed = false;
+  if (typeof scoreListsMap[language].scores[letter.toLowerCase()] === 'number') 
+    isAllowed = true
+  return isAllowed
+}
 
 export function scrabbleScore(word, modifiers, language) {
   for (let i = 0 ; i < word.length; i ++) {
@@ -55,13 +43,9 @@ export function scrabbleScore(word, modifiers, language) {
           word += '';
       }
     }
-  }
+  } 
 
- 
-  /* DONE no switches */
- 
-
-  const letterScore = letter => scoreListsMap[language]()[letter] || 0;
+  const letterScore = letter => scoreListsMap[language].scores[letter] || 0;
   let result = 0;
   for (let i=0; i < word.length; i++) {
     result += letterScore(word[i].toLowerCase())
