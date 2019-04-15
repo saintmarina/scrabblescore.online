@@ -131,44 +131,21 @@ test('setBingo() sets the bingo turn value', () => {
 	game = game.setBingo(false)
 	expect(game.getCurrentTurn().bingo).toEqual(false)
 })
+test ('endGame() sets this.gameOver to true', () => {
+	let game = Game.createNewGame(2);
+	game = game.addWord(w1).endTurn();
+	game = game.addWord(w2).endTurn();
+	game = game.endGame()
+	expect(game.leftOversTurnNumber).toEqual(1)
+	expect(game.isGameOver()).toEqual(true);
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+test('areLeftOversSubmitted', () => {
+	let game = Game.createNewGame(2);
+	game = game.addWord(w1).endTurn();
+	game = game.addWord(w2).endTurn();
+	game = game.endGame()
+	game = game.addWord(w2).endTurn();
+	game = game.addWord(w1).endTurn();
+	expect(game.areLeftOversSubmitted()).toEqual(true)
+});

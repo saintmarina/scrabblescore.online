@@ -49,7 +49,7 @@ export class ScrabbleInputBox extends React.Component {
         <div className='scrabble-tiles'>
           {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c} score={scrabbleScore(c, [null], this.props.language)} modifier={this.props.word.modifiers[i]}/>
+              <ScrabbleTile letter={c} score={scrabbleScore(c, [null], this.props.language)} modifier={this.props.word.modifiers[i]} />
             </WithModifierPopover>
           )}
         </div>
@@ -86,11 +86,11 @@ class WithModifierPopover extends React.Component {
                tooltipShown={this.state.tooltipShown} 
                placement="bottom" trigger="click" 
                tooltip={<div>
-                          <ModifierTile modifier='double-letter' onClick={this.handleClick}/>
-                          <ModifierTile modifier='double-word'   onClick={this.handleClick}/>
-                          <ModifierTile modifier='triple-letter' onClick={this.handleClick}/>
-                          <ModifierTile modifier='triple-word'   onClick={this.handleClick}/>
-                          <ModifierTile modifier='blank'         onClick={this.handleClick}/>
+                          <ModifierTile modifier='double-letter' onClick={this.handleClick} />
+                          <ModifierTile modifier='double-word'   onClick={this.handleClick} />
+                          <ModifierTile modifier='triple-letter' onClick={this.handleClick} />
+                          <ModifierTile modifier='triple-word'   onClick={this.handleClick} />
+                          <ModifierTile modifier='blank'         onClick={this.handleClick} />
                         </div>
                         }>
         {this.props.children}

@@ -5,49 +5,52 @@ import Game from './game.js';
 import {scrabbleScore} from './Util.js';
 import ScoreGrid from './ScoreGrid.js';
 
-const debug = false;
+/* TODO
+      Here we see that the endGame logic difference is really in the buttons.
+      So let's have two components that renders different buttons depending if we are in an endGame.
+      this component only handles undoes and displaying new games.
+      
+      scoreKepper exposes to his control childs the following functions as props:
+        * setGame(newGame)
+        * undoGame()
+      scoreKeeper also passes the props:
+        * language
+        * game
+
+
+
+      ScoreKeeper # keeps track of the undo logic, etc.
+        ScoreGrid
+        InGameControls 
+          ScrabbleInputBox
+          buttons
+          buttons
+        EndGameControls
+          ScrabbleInputBox
+          buttons
+          buttons
+    */
+
+const debug = true;
 const emptyWord = {value: '', modifiers: [], score: 0};
+
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
-    this.handleAddWord = this.handleAddWord.bind(this);
-    this.handleEndTurn = this.handleEndTurn.bind(this);
-    this.handleBingo = this.handleBingo.bind(this);
-    this.handleEndGame = this.handleEndGame.bind(this);
+    this._setGame = this._setGame.bind(this);
     this.state = {
       game: Game.createNewGame(this.props.playerNames.length),
       currentWord: emptyWord,
-      games: [],
-      gameOver: false
+      games: []
     }
   }
 
    _setGame(game) {
     let newGames = [...this.state.games.slice(), this.state.game]
+    console.log(game)
     this.setState({games: newGames, game: game})
-  }
-
-  _resetCurrentWord() {
-    this.setState({currentWord: emptyWord})
-  }
-
-  handleChange(word) {
-    let _word = {...word, score: scrabbleScore(word.value, word.modifiers, this.props.language)}
-    if (this.state.gameOve) 
-      _word =  {...word, score: (-scrabbleScore(word.value, word.modifiers, this.props.language))}
-    this.setState({currentWord: _word});
-  }
-
-  handleEndTurn() {
-    let game = this.state.game;
-    if (this.state.currentWord.value.length !== 0) {
-      game = game.addWord(this.state.currentWord)
-    }
-    this._setGame(game.endTurn())
-    this._resetCurrentWord()
   }
 
   handleUndo() {
@@ -57,29 +60,6 @@ class ScoreKeeper extends React.Component {
     let games = this.state.games.slice(0, -1)
     let game = this.state.games[this.state.games.length - 1]
     this.setState({game: game, games: games});
-    this._resetCurrentWord()
-  }
-
-  handleAddWord() {
-    this._setGame(this.state.game.addWord(this.state.currentWord))
-    this._resetCurrentWord()
-  }
-
-  handleBingo() {
-    this._setGame(this.state.game.setBingo(!this.state.game.getCurrentTurn().bingo));
-  }
-
-  handleEndGame() {
-    let game = this.state.game;
-    if (this.state.currentWord.value.length !== 0) {
-      game = game.addWord(this.state.currentWord)
-    }
-    this.setState({game: game, gameOver: true});
-  }
-
-  handleLeftOvers() {
-    
-    this._setGame(this.state.game.countLeftOvers())
   }
 
   render() {
@@ -88,28 +68,144 @@ class ScoreKeeper extends React.Component {
         <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.props.language} />
         <div>
           <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit a word:</p>
-          <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
-          <CurrentScore score={this.state.currentWord.score} />
-            {!this.state.gameOver ?
-            <div>
-              <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.state.games.length === 0}>UNDO</button>
-              <button onClick={this.handleAddWord} className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
-              <button onClick={this.handleEndTurn} type="submit" className="btn btn-info word-submit-button">END TURN</button>
-              <div className="custom-control custom-switch">
-                <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.state.game.getCurrentTurn().bingo} />
-                <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
-              </div>
-              <button onClick={this.handleEndGame} type="submit" className="btn btn-danger end-game">END GAME</button>
-            </div> :
-            <div>
-              <button onClick={this.handleLeftOvers.bind(this)} type="submit" className="btn btn-danger end-game">SUBMIT LEFTOVERS</button>
-            </div>
-            }
+            {!this.state.game.isGameOver() ? 
+              <InGameControls onSetGame={this._setGame} 
+                              onUndo={this.handleUndo} 
+                              games={this.state.games}
+                              game={this.state.game} 
+                              language={this.props.language} /> : 
+              <InGameOverControls onSetGame={this._setGame} 
+                                  game={this.state.game}
+                                  language={this.props.language}
+                                  moveIndex={this.state.game.getCurrentTurnNumber() - 1} />}
         </div>
       </div>
     )
   }
 }
+
+class InGameOverControls extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleLeftOvers = this.handleLeftOvers.bind(this);
+    this.state = {
+      currentWord: emptyWord,
+      lastMoveIndex: this.props.moveIndex
+    }
+  }
+
+  _resetCurrentWord() {
+    this.setState({currentWord: emptyWord})
+  }
+  _checkLeftOvers() {
+
+  }
+
+
+  handleChange(word) {
+    let _word = {...word, score: -scrabbleScore(word.value, word.modifiers, this.props.language)}
+    this.setState({currentWord: _word});
+  }
+
+  handleLeftOvers() {
+
+    let game = this.props.game;
+    if (this.state.currentWord.value.length !== 0) {
+      game = game.addWord(this.state.currentWord)
+    }
+    this.props.onSetGame(game.endTurn());
+    this._resetCurrentWord()
+  }
+
+  render() {
+    return (
+      <div>
+        <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
+        {console.log(this.props.game.getCurrentTurnNumber())}
+        <CurrentScore score={this.state.currentWord.score} />
+        {console.log(this.props.game.currentPlayerIndex)}
+        {!this.props.game.areLeftOversSubmitted() ? 
+        <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">SUBMIT LEFTOVERS</button> :
+        <h1> IT'S OVER</h1>}
+      </div>
+    )
+  }
+}
+
+
+class InGameControls extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUndo = this.handleUndo.bind(this);
+    this.handleEndTurn = this.handleEndTurn.bind(this);
+    this.handleEndGame = this.handleEndGame.bind(this);
+    this.handleAddWord =this.handleAddWord.bind(this);
+    this.handleBingo = this.handleBingo.bind(this);
+    this.state = {
+      currentWord: emptyWord
+    }
+  }
+  _resetCurrentWord() {
+    this.setState({currentWord: emptyWord})
+  }
+
+  handleChange(word) {
+    let _word = {...word, score: scrabbleScore(word.value, word.modifiers, this.props.language)}
+    this.setState({currentWord: _word});
+  }
+
+  handleUndo(){
+    this.props.onUndo();
+    this._resetCurrentWord()
+
+  }
+
+  handleAddWord() {
+    this.props.onSetGame(this.props.game.addWord(this.state.currentWord))
+    this._resetCurrentWord()
+  }
+
+  handleEndTurn() {
+    let game = this.props.game;
+    if (this.state.currentWord.value.length !== 0) {
+      game = game.addWord(this.state.currentWord)
+    }
+    this.props.onSetGame(game.endTurn());
+    this._resetCurrentWord()
+  }
+
+  handleBingo() {
+    this.props.onSetGame(this.props.game.setBingo(!this.props.game.getCurrentTurn().bingo))
+  }
+
+  handleEndGame() {
+    this.props.onSetGame(this.props.game.endGame())
+  }
+
+  render() {
+    return (
+      <div>
+        <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
+        <CurrentScore score={this.state.currentWord.score} />
+        <div>
+          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.games.length === 0}>UNDO</button>
+          <button onClick={this.handleAddWord} className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
+          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info word-submit-button">END TURN</button>
+          <div className="custom-control custom-switch">
+            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.props.game.getCurrentTurn().bingo} />
+            <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
+          </div>
+          <button onClick={this.handleEndGame} type="submit" className="btn btn-danger end-game" disabled={this.props.game.currentPlayerIndex !== 0 || this.props.game.getCurrentTurn().words.length === 1} >END GAME</button>
+          
+        </div>
+      </div>
+    )
+  }
+}
+
+
 
 class CurrentScore extends React.Component {
   render() {

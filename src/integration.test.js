@@ -4,7 +4,7 @@ import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
 
 const Nightmare = require('nightmare')
 
-/* TODO remove skip */
+/* skip because this test needs the dev server launched */
 describe.skip('Nightmare tests', () => {
 	it('selects players', (done) => {
 		const nightmare = Nightmare()

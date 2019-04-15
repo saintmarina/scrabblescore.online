@@ -4,7 +4,9 @@ import './index.css';
 import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
 import * as serviceWorker from './serviceWorker';
 
+
 ReactDOM.render(<ScrabbleScoreKeeper />, document.getElementById('content'));
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

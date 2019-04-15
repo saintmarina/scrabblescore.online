@@ -10,6 +10,7 @@ export default class ScoreGrid extends React.Component {
   activePlayerClass(i, currentPlayerIndex) {
     return i === currentPlayerIndex ? 'player-header current' : 'player-header';
   }
+
 /* DONE fix indentation */
   render() {
     return (
@@ -22,11 +23,11 @@ export default class ScoreGrid extends React.Component {
           </tr>
         </thead>
         <tbody className="tbody-rows">
-          {[...Array(this.props.game.getCurrentTurnNumber() + 1)].map((_, i) =>
+          {[...Array(this.props.game.getCurrentTurnNumber() + 1)].map((_, i) => 
             <tr className="move-row" key={i}>
               <th>{i+1}</th>
               {this.props.game.players.map((player, j) =>
-                <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language}/> : null}</td>)}
+                <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language} /> : null}</td>)}
             </tr> )}
           <tr className='total-score'>
             <td>TOTAL</td>
@@ -42,7 +43,7 @@ export default class ScoreGrid extends React.Component {
 class WordInTiles extends React.Component {
   render() {
     let letterTiles = this.props.word.value.split('').map((letter, i) => {
-      let tile = <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} score={scrabbleScore(letter, [null], this.props.language)}/> 
+      let tile = <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} score={scrabbleScore(letter, [null], this.props.language)} /> 
       /* DONE take out else. Use the pattern of modifying the variable like the adding word in endTurn() */
       if (this.props.word.modifiers[i]) {
         tile =  <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
@@ -72,7 +73,7 @@ class ScoreGridCell extends React.Component {
     
     let rows = this.props.turn.words.map((word, i) =>
                 <tr key={i}>
-                  <td><WordInTiles word={word} language={this.props.language}/></td>
+                  <td><WordInTiles word={word} language={this.props.language} /></td>
                   <td><span className={word.score >= highScore ? 'score-box high':'score-box' }>{word.score}</span></td>
                 </tr>)
     if (this.props.turn.bingo) {
