@@ -27,7 +27,7 @@ export default class ScoreGrid extends React.Component {
             <tr className="move-row" key={i}>
               <th>{i+1}</th>
               {this.props.game.players.map((player, j) =>
-                <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language} /> : null}</td>)}
+                <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language} game={this.props.game} /> : null}</td>)}
             </tr> )}
           <tr className='total-score'>
             <td>TOTAL</td>
@@ -87,7 +87,7 @@ class ScoreGridCell extends React.Component {
     return (
       <table className='cell-table'>
         <tbody>
-          {this.props.turn.passed ? this.renderPassed() : this.renderNormal()}
+          {this.props.turn.isPassed(this.props.game) ? this.renderPassed() : this.renderNormal()}
         </tbody>
       </table>
     )

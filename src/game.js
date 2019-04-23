@@ -1,16 +1,23 @@
-import {resizeArray} from './Util.js';
+import {resizeArray, indexesOf} from './Util.js';
 
 class Turn {
-  constructor(words, bingo, passed=false) {
+  /* DONE Add test for passed display in the scoregrid */
+  /* DONE once test are added, refactor to take out the passed variable from Turn */
+  constructor(words, bingo) {
     this.words = words;
     this.bingo = bingo;
-    this.passed = passed;
-    
   }
-  /*TODO create a static function turn.passed*/
 
   static empty() {
     return new Turn([], false);
+  }
+
+  isEmpty() {
+    return this.words.length === 0;
+  }
+
+  isPassed(game) {
+    return this.isEmpty() && this !== game.getCurrentTurn()
   }
 
   get score() {
@@ -23,6 +30,7 @@ class Turn {
     if (this.bingo) {
       result += 50;
     }
+
     return result
   }
 }
@@ -43,14 +51,13 @@ export default class Game {
   addWord(word) {
     let currentTurn = this.getCurrentTurn()
     let turn = new Turn([...currentTurn.words, word], currentTurn.bingo)
-    return this._setTurn(turn)
+    return this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), turn)
   }
 
   endTurn(word) {
     let newGame = this;
-    if (this.getCurrentTurn().words.length === 0) {
-      let newTurn = new Turn(this.getCurrentTurn().words, false, true)
-      newGame = this._setTurn(newTurn)
+    if (this.getCurrentTurn().isEmpty()) {
+      newGame = this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), Turn.empty())
     }
     let newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length
     let players = this.isGameOver() && (this._getCurrentPlayer() === this.players[this.players.length - 1]) ? newGame.players :
@@ -60,7 +67,7 @@ export default class Game {
 
   setBingo(value) {
     let turn = new Turn(this.getCurrentTurn().words, value)
-    return this._setTurn(turn)
+    return this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), turn)
   }
 
   endGame() {
@@ -72,16 +79,58 @@ export default class Game {
   }
 
   areLeftOversSubmitted() {
-    return this.isGameOver() && this.players[this.players.length - 1][this.leftOversTurnNumber] && this.currentPlayerIndex === 0
+    if (this.isGameOver() && this.players[this.players.length - 1][this.leftOversTurnNumber] && this.currentPlayerIndex === 0){
+      return true
+    } else {
+      return false
+    }
   }
 
-  _setTurn(turn) {
-    let currentPlayerCopy = this._getCurrentPlayer().slice();
-    currentPlayerCopy[this.getCurrentTurnNumber()] = turn;
-    let newPlayers = this.players.map((player, playerIndex) => playerIndex === this.currentPlayerIndex ? currentPlayerCopy : player);
-    return new Game (newPlayers, this.currentPlayerIndex, this.leftOversTurnNumber)
+  getReapers() {
+    let reaperIndexes = []
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i][this.leftOversTurnNumber].isEmpty()) {
+        reaperIndexes.push(i)
+      }
+    }
+    return reaperIndexes
   }
 
+  getSumOfLeftovers() {
+    let total = 0;
+    for (let i = 0; i < this.players.length; i++) {
+      total += Math.abs(this.players[i][this.leftOversTurnNumber].score)
+    }
+    return total
+  }
+
+  distributeLeftOversToReapers(reapers, totalLeftOverScore) {
+    let game = this;
+    reapers.forEach(reaperIndex => {
+      let turn =  new Turn([{value: '', modifiers: [], score: totalLeftOverScore}], false)
+      game = game._setTurn(reaperIndex, this.leftOversTurnNumber, turn) 
+    })
+    return game
+  }
+
+  /* DONE merge this code in getWinners 
+     DONE use map instead of for loop 
+     DONE Don't need this function. Caller can use getWinners() and see the length of the returned array 
+     DONE remove this function. getWinners()[0] do this for us 
+     DONE rename this: getWinners() */
+  getWinners(lastTurn=true) {
+    let totalScores = this.players.map((_, i) => this.getTotalScore(i, lastTurn))
+    return indexesOf(totalScores, Math.max(...totalScores))
+    
+  }
+
+  _setTurn(playerIndex, turnNumber, turn) {
+      let playerCopy = this.players[playerIndex].slice();
+      playerCopy[turnNumber] = turn;
+      let newPlayers = this.players.map((player, i) => i === playerIndex ? playerCopy : player);
+      return new Game (newPlayers, this.currentPlayerIndex, this.leftOversTurnNumber)
+  }
+  
   _getCurrentPlayer() {
     return this.players[this.currentPlayerIndex];
   }
@@ -98,12 +147,14 @@ export default class Game {
     return this.currentPlayerIndex;
   }
   
-  getTotalScore(playerIndex) {
-    let currentPlayer = this.players[playerIndex]
+  getTotalScore(playerIndex, lastTurn=true) {
+    let player = this.players[playerIndex]
     let result = 0
-    for (let i = 0; i < (currentPlayer.length); i++) {
-        result += currentPlayer[i].score
+    let numTurns = lastTurn ? player.length : player.length - 1
+    for (let i = 0; i < numTurns; i++) {
+        result += player[i].score
     }
     return result
   };
+
 }

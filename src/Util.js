@@ -7,6 +7,22 @@ export function resizeArray(array, desiredLength, defaultValue) {
   return output;
 }
 
+/*
+indexesOf(array, value)
+return an array of indexes  of the result verifies array[i] == value
+*/
+
+
+export function indexesOf(array, value) {
+  let result = []
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === value) {
+      result.push(i)
+    }
+  }
+  return result
+}
+
 /* DONE find a way to only have the word "ru" once in your entire codebase. */
 /* DONE isLetterAllowed() should be implemented */
 export function isLetterAllowed(letter, language) {

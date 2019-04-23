@@ -45,6 +45,12 @@ form#submit_word button {
 	border-radius: 10px;
 	margin-bottom: 10px;
 }
+.btn {
+	vertical-align: bottom;
+}
+.pass-endturn-button {
+	width: 106px;
+}
 .main {
 	width: 80%;
 	margin: 0 auto;

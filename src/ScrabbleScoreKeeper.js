@@ -31,7 +31,6 @@ import ScoreGrid from './ScoreGrid.js';
           buttons
     */
 
-const debug = true;
 const emptyWord = {value: '', modifiers: [], score: 0};
 
 
@@ -39,7 +38,8 @@ class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
     this.handleUndo = this.handleUndo.bind(this);
-    this._setGame = this._setGame.bind(this);
+    this.handleSetGame = this.handleSetGame.bind(this);
+    this.renderTieGame = this.renderTieGame.bind(this);
     this.state = {
       game: Game.createNewGame(this.props.playerNames.length),
       currentWord: emptyWord,
@@ -47,37 +47,69 @@ class ScoreKeeper extends React.Component {
     }
   }
 
-   _setGame(game) {
+  /* DONE rename to handleSetGame() */
+   handleSetGame(game) {
     let newGames = [...this.state.games.slice(), this.state.game]
-    console.log(game)
     this.setState({games: newGames, game: game})
   }
 
   handleUndo() {
-    if (this.state.games.length === 0)
-      return;
-
+    /* DONE take out these two lines */
     let games = this.state.games.slice(0, -1)
     let game = this.state.games[this.state.games.length - 1]
     this.setState({game: game, games: games});
   }
 
+  /* DONE remove. (see below) */
+  /* DONE do not use lastGame. Instead use getTotalScore() with a beforeLeftOvers argument.
+    getTotalScore() should take a second arguemnt that is the move number until you want to count the total.
+    */
+  /* DONE take out console.log */
+  renderTieGame() {
+    let result = []
+    let winners = this.state.game.getWinners(true)
+    if (winners.length > 1) {
+      result.push('Tie game: ')
+      for (let i = 0; i < winners.length; i++) {
+        result.push(`${this.props.playerNames[i]}: ${this.state.game.getTotalScore(i, true)}`)
+      }
+      result.join(',')
+    } else {
+      result.push(this.props.playerNames[[...winners]], ' WON')
+    }
+    return result
+  }
+
+  /* TODO do not pass the games variable to your children. Instead, have a undoDisabled prop */
   render() {
+    /* TODO Build a variable that has all the common props */
+    /* DONE take out moveIndex */
+    /* DONE Remove extra spaces in the h1 */
     return (
       <div className='score-keeper'>
         <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.props.language} />
         <div>
-          <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit a word:</p>
-            {!this.state.game.isGameOver() ? 
-              <InGameControls onSetGame={this._setGame} 
-                              onUndo={this.handleUndo} 
-                              games={this.state.games}
-                              game={this.state.game} 
-                              language={this.props.language} /> : 
-              <InGameOverControls onSetGame={this._setGame} 
-                                  game={this.state.game}
-                                  language={this.props.language}
-                                  moveIndex={this.state.game.getCurrentTurnNumber() - 1} />}
+          {!this.state.game.areLeftOversSubmitted() ?
+            <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit {!this.state.game.isGameOver() ? "a word:" : "your leftovers:"}</p> :
+            <div>
+            {this.state.game.getWinners().length > 1 ? 
+              <h1>{this.renderTieGame()}</h1> : 
+              <h1>{this.props.playerNames[[...this.state.game.getWinners()]]}, WON</h1>
+            }
+            </div>
+          }
+          {!this.state.game.isGameOver() ?
+            <InGameControls onSetGame={this.handleSetGame}
+                            onUndo={this.handleUndo}
+                            undoDisabled={this.state.games.length === 0}
+                            game={this.state.game} 
+                            language={this.props.language} /> :
+            <InGameOverControls onSetGame={this.handleSetGame}
+                                onUndo={this.handleUndo}
+                                game={this.state.game}
+                                undoDisabled={this.state.games.length === 0}
+                                language={this.props.language} />
+          }
         </div>
       </div>
     )
@@ -88,20 +120,22 @@ class InGameOverControls extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handleUndo = this.handleUndo.bind(this);
     this.handleLeftOvers = this.handleLeftOvers.bind(this);
+   
     this.state = {
       currentWord: emptyWord,
-      lastMoveIndex: this.props.moveIndex
     }
+  }
+
+  handleUndo(){
+    this.props.onUndo();
+    this._resetCurrentWord()
   }
 
   _resetCurrentWord() {
     this.setState({currentWord: emptyWord})
   }
-  _checkLeftOvers() {
-
-  }
-
 
   handleChange(word) {
     let _word = {...word, score: -scrabbleScore(word.value, word.modifiers, this.props.language)}
@@ -109,25 +143,34 @@ class InGameOverControls extends React.Component {
   }
 
   handleLeftOvers() {
-
     let game = this.props.game;
     if (this.state.currentWord.value.length !== 0) {
       game = game.addWord(this.state.currentWord)
     }
-    this.props.onSetGame(game.endTurn());
+    game = game.endTurn()
+    /* DONE refactor (no else), and the big line needs to be broken down */
+    if (this.props.game.currentPlayerIndex === this.props.game.players.length - 1) {
+      game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
+    } 
+    this.props.onSetGame(game)
     this._resetCurrentWord()
   }
 
   render() {
+    /* TODO the button "submit leftovers" should say "submit no leftovers" */
     return (
       <div>
+      {!this.props.game.areLeftOversSubmitted() ? 
+        <div>
         <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
-        {console.log(this.props.game.getCurrentTurnNumber())}
         <CurrentScore score={this.state.currentWord.score} />
-        {console.log(this.props.game.currentPlayerIndex)}
-        {!this.props.game.areLeftOversSubmitted() ? 
-        <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">SUBMIT LEFTOVERS</button> :
-        <h1> IT'S OVER</h1>}
+          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+          <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">SUBMIT LEFTOVERS</button>
+        </div> :
+        <div>
+          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+        </div>
+      }
       </div>
     )
   }
@@ -159,7 +202,6 @@ class InGameControls extends React.Component {
   handleUndo(){
     this.props.onUndo();
     this._resetCurrentWord()
-
   }
 
   handleAddWord() {
@@ -177,6 +219,7 @@ class InGameControls extends React.Component {
   }
 
   handleBingo() {
+    /* TODO split this big line */
     this.props.onSetGame(this.props.game.setBingo(!this.props.game.getCurrentTurn().bingo))
   }
 
@@ -190,15 +233,14 @@ class InGameControls extends React.Component {
         <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
         <CurrentScore score={this.state.currentWord.score} />
         <div>
-          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.games.length === 0}>UNDO</button>
+          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
           <button onClick={this.handleAddWord} className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
-          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info word-submit-button">END TURN</button>
+          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{(this.props.game.getCurrentTurn().isEmpty()) && (this.state.currentWord.value === '') ? 'PASS' : 'END TURN'}</button>
           <div className="custom-control custom-switch">
             <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.props.game.getCurrentTurn().bingo} />
             <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
           </div>
-          <button onClick={this.handleEndGame} type="submit" className="btn btn-danger end-game" disabled={this.props.game.currentPlayerIndex !== 0 || this.props.game.getCurrentTurn().words.length === 1} >END GAME</button>
-          
+          <button onClick={this.handleEndGame} type="submit" className="btn btn-danger end-game" disabled={this.props.game.currentPlayerIndex !== 0 || this.props.game.getCurrentTurn().score > 0} >END GAME</button>
         </div>
       </div>
     )
@@ -218,14 +260,19 @@ class CurrentScore extends React.Component {
 }
 
 class ScrabbleScoreKeeper extends React.Component {
-  state = debug ? {
-    playerNames: ['Anna', 'Nico'],
-    language: 'en',
-  } :
-  {
-    playerNames: [],
-    language: '',
+  constructor(props) {
+    super(props);
+    this.state = props.debug ?
+      {
+        playerNames: ['Anna', 'Nico'],
+        language: 'en',
+      } :
+      {
+        playerNames: [],
+        language: '',
+      }
   }
+
 
   handleGameStart(playerNames, language) {
     this.setState({playerNames: playerNames, language: language});
@@ -253,4 +300,12 @@ export default ScrabbleScoreKeeper;
 X In ScrabbleInputBox, filter out letters that are on the scorelist, instead of doing isLetter().
 - Think about implementing the end of the game.
 - Write more integration tests
+*/
+
+/*
+DONE fixme: end game button shows up when I add two words on the first turn
+DONE End turn should say "PASS" if the turn is empty and word won't be added. The button should not change size when the label chagnes
+DONE Undo button for the end game situation
+DONE show results should happen automatically, and only undo should appear.
+DONE show results crashes when everyone has leftovers
 */
