@@ -5,7 +5,7 @@ import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
 const Nightmare = require('nightmare')
 
 /* skip because this test needs the dev server launched */
-describe.skip('Nightmare tests', () => {
+describe('Nightmare tests', () => {
 	it('selects players', (done) => {
 		const nightmare = Nightmare()
 		nightmare
@@ -23,9 +23,43 @@ describe.skip('Nightmare tests', () => {
 		    	done()
 		    })
 	})
+	it("blinker appears, when we click on Scrabble Input Box and disappears when we click outside the Scrabble Input Box", () => {
+		const nightmare = Nightmare()
+		nightmare
+			.goto('http://localhost:3000')
+			.type('#player-name-input-0', 'Anna')
+			.type('#player-name-input-1', 'Nico')
+			.click('button')
+			.wait('.scrabble-input-box')
+			.exists('.blinker')
+			.then(function(blinker) {
+				if (!blinker) return nightmare.goto('http://localhost:3000')
+																			.type('#player-name-input-0', 'Anna')
+																			.type('#player-name-input-1', 'Nico')
+																			.click('button')
+																			.wait('.scrabble-input-box')
+																			.click('.scrabble-input-box')
+																			.exists('.blinker')
+			})
+			.then(function(blinker) {
+				if (blinker) return nightmare.goto('http://localhost:3000')
+																			.type('#player-name-input-0', 'Anna')
+																			.type('#player-name-input-1', 'Nico')
+																			.click('button')
+																			.wait('.scrabble-input-box')
+																			.click('.scrabble-input-box')
+																			.exists('.blinker')
+																			.click('body')
+																			.exists('.blinker')
+			})
+			.then(function(result) {
+				if (!result) return "Blinker disappeared!"
+
+			})
+	})
 })
 
-describe('Game',() => {
+describe('Game', () => {
 
 	function fillPlayers(wrapper, numOfPlayers) {
 		const players = ["Anna", "Nico", "Kyle", "Sofi"]
@@ -36,6 +70,51 @@ describe('Game',() => {
 
 		wrapper.find('button').simulate('click')
 	}
+
+	const typeInputBox = (wrapper, input) => wrapper.find('.scrabble-input-box input').simulate('change', {target: {value: input}})
+	const clickButton = (wrapper, regex) => wrapper.find('button').filterWhere(n => n.text().match(regex)).simulate('click')
+	const clickAddWord = wrapper => clickButton(wrapper, /add.*word/i)
+	const clickUndo = wrapper => clickButton(wrapper, /undo/i)
+	const clickEndTurn = wrapper => clickButton(wrapper, /end turn/i)
+	const clickPass = wrapper => clickButton(wrapper, /pass/i)
+	const clickEndGame = wrapper => clickButton(wrapper, /end.*game/i)
+	const clickSubmitLeftovers = wrapper => clickButton(wrapper, /submit.*leftovers/i)
+	const clickBingo = wrapper => wrapper.find('#bingoToggle').simulate('change')
+	const clickLetterModifier = (wrapper, letterIndex, modifier) => {
+		wrapper.find('.scrabble-input-box .scrabble-letter').at(letterIndex).simulate('click')
+		wrapper.find('.tooltip-container .modifier.' + modifier).simulate('click')
+	}
+	const clickUndoMultipleTimes = (wrapper, numTimes) => {
+		for ( let i = 0; i < numTimes; i++) {
+			clickUndo(wrapper)
+		}
+	}
+	const getCurrentPlayer = wrapper => {
+		return wrapper.find('.bold').text()
+	}
+	const getCurrentWordScore = wrapper => {
+		return wrapper.find('CurrentScore').find('div#score').text()
+	}
+	const getMoveNumber = (grid, moveIndex) => { 
+		return grid.find("tbody tr.move-row").at(moveIndex).find('th').text()
+	}
+	const getTotal = grid => {
+		return grid.find('ScoreGrid').find('tr.total-score').find('th').text()
+	}
+	const getTotalCell = (grid, playerIndex) => {
+		return grid.find('ScoreGrid').find('tr.total-score').find('td').at(playerIndex).text()
+	} 
+	const getScoreGridCell = (grid, moveIndex, playerIndex) => {
+		return grid.find("tbody tr.move-row").at(moveIndex).find("ScoreGridCell").at(playerIndex)
+	}
+	const getWordAt = (grid, moveIndex, playerIndex, wordIndex) => {
+		return getScoreGridCell(grid, moveIndex, playerIndex).find("WordInTiles").at(wordIndex).props().word.value
+	}
+	const getWinner = wrapper => {
+		return wrapper.find('.winner').find('h1').text()
+	}
+
+
 
 	it('fills Players', () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
@@ -48,99 +127,166 @@ describe('Game',() => {
 		expect(wrapper.find('th.player-header').at(3).text()).toEqual('Sofi')
 	})
 
-
-	it('works', () => {
+	it('types inside the scrabble input box', () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
-		fillPlayers(wrapper, 2)
-		
+		fillPlayers(wrapper, 3)
+		typeInputBox(wrapper, 'quizzify')
 
-		expect(wrapper.find('th.player-header').length).toEqual(3)
-		expect(wrapper.find('th.player-header').at(0).text()).toEqual('Anna')
-		expect(wrapper.find('th.player-header').at(1).text()).toEqual('Nico')
+		/* TODO you can probably just do find('ScrabbleInputBox').find('ScrabbleTitle').at(3) */
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(0).find('ScrabbleTile')).toHaveText("Q10")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(1).find('ScrabbleTile')).toHaveText("U1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(2).find('ScrabbleTile')).toHaveText("I1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(3).find('ScrabbleTile')).toHaveText("Z10")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(4).find('ScrabbleTile')).toHaveText("Z10")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(5).find('ScrabbleTile')).toHaveText("I1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(6).find('ScrabbleTile')).toHaveText("F4")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(7).find('ScrabbleTile')).toHaveText("Y4")
+	})
 
-		const typeInputBox = input => wrapper.find('.scrabble-input-box input').simulate('change', {target: {value: input}})
-		const clickButton = regex => wrapper.find('button').filterWhere(n => n.text().match(regex)).simulate('click')
-		const clickAddWord = () => clickButton(/add.*word/i)
-		const clickUndo = () => clickButton(/undo/i)
-		const clickEndTurn = () => clickButton(/end turn/i)
-		const clickBingo = () => wrapper.find('#bingoToggle').simulate('change')
+	it("case insensitive and doesn't allow any characters except letters inside Scrabble Input Box", () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 3)
+		typeInputBox(wrapper, '!1q uetzAls=')
 
-		// Move 0, Player 0: rose, honey
-		typeInputBox("rose")
-		clickAddWord()
-		typeInputBox("honey")
-		clickAddWord()
-		clickEndTurn()
-		// Move 0, Player 1: coconut
-		typeInputBox("coconut")
-		clickEndTurn()
-		// Move 1, Player 0: lemon, BINGO
-		typeInputBox("lemon")
-		clickBingo()
-		clickEndTurn()
-		// Move 1, Player 1: PASS
-		clickEndTurn()
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(0).find('ScrabbleTile')).toHaveText("Q10")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(1).find('ScrabbleTile')).toHaveText("U1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(2).find('ScrabbleTile')).toHaveText("E1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(3).find('ScrabbleTile')).toHaveText("T1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(4).find('ScrabbleTile')).toHaveText("Z10")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(5).find('ScrabbleTile')).toHaveText("A1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(6).find('ScrabbleTile')).toHaveText("L1")
+		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(7).find('ScrabbleTile')).toHaveText("S1")
+	})
 
+	it(`In game controls: addWord, endTurn, PASS, toggleBingo, endGame --- work properly;
+		scoreGrid: move number, submitted words, total --- display correctly;
+		currentPlayer: currnet player name/inGame & inGameOver sentence changes correctly;
+		currentWordScore: display score for current word;
+		unlimited undoes;`, () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 4)
+		typeInputBox(wrapper, 'aalii') //p0: 5
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'ouguiya') //p0: 16
+		clickAddWord(wrapper)
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'jota') // p1: 11
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'kex') //p2: 14
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'ziti') //p3: 13
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'knickknack') // p0: 46
+		clickAddWord(wrapper)
+		clickBingo(wrapper)
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'pizza') //p1: 36
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'oorie') //p2: 19
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'ourie') //p3: 18               
+		clickEndTurn(wrapper)
+		clickPass(wrapper) //p0: 91 PASS
+		typeInputBox(wrapper, 'za') //p1: 47
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'muzjiks') //p1: 76
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'aerie') //p1: 81
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'caziques') //p2: 47
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'faqir') //p2: 64
+		clickAddWord(wrapper)
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'jousted') //p3:33
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'quixotry') //p3: 60
+		clickAddWord(wrapper)
+		typeInputBox(wrapper, 'jukebox') // p3: 89
+		clickEndTurn(wrapper)
 
 		const grid = wrapper.find('ScoreGrid')
 
-		///console.log("things", grid.find("WordInTiles").debug())
-
-		const getScoreGridCell = (moveIndex, playerIndex) => {
-			return grid.find("tbody tr.move-row").at(moveIndex).find("ScoreGridCell").at(playerIndex)
-		}
-		const getWordAt = (moveIndex, playerIndex, wordIndex) => {
-			return getScoreGridCell(moveIndex, playerIndex).find("WordInTiles").at(wordIndex).props().word.value
-		}
-
-		expect(getWordAt(0, 0, 0)).toEqual("rose")
-		expect(getWordAt(0, 0, 1)).toEqual("honey")
-
-		expect(getWordAt(0, 1, 0)).toEqual("coconut")
-
-		expect(getWordAt(1, 0, 0)).toEqual("lemon")
-		expect(getScoreGridCell(1, 0).find("tr").at(1).text()).toMatch(/BINGO/)
-
-		expect(getScoreGridCell(1, 1)).toHaveText("PASS")
-	});
-
-	it("adds 'PASS' to the cell if player submitted empty word", () => {
-		const wrapper = mount(<ScrabbleScoreKeeper />)
-		wrapper.find('#player-name-input-0').simulate('change', {target: {value: 'Anna'}})
-		wrapper.find('#player-name-input-1').simulate('change', {target: {value: 'Nico'}})
-		wrapper.find('button').simulate('click')
-
-		expect(wrapper.find('th.player-header').length).toEqual(2)
-		expect(wrapper.find('th.player-header').at(0).text()).toEqual('Anna')
-		expect(wrapper.find('th.player-header').at(1).text()).toEqual('Nico')
-
 		
-		const typeInputBox = input => wrapper.find('.scrabble-input-box input').simulate('change', {target: {value: input}})
-		const clickButton = regex => wrapper.find('button').filterWhere(n => n.text().match(regex)).simulate('click')
-		const clickAddWord = () => clickButton(/add.*word/i)
-		const clickUndo = () => clickButton(/undo/i)
-		const clickEndTurn = () => clickButton(/end turn/i)
-		const clickBingo = () => wrapper.find('#bingoToggle').simulate('change')
-		//Move 0, player 0: passes
-		clickEndTurn()
-		//Move 0, player 1: pomegranat
-		typeInputBox("pomegranat")
-		clickEndTurn()
-		//Move 1, player 0: chocolate
-		typeInputBox("chocolate")
-		clickEndTurn()
-		//Move 1, player 1: passes
-		clickEndTurn()
+//                   move, player, word
+		expect(getMoveNumber(grid, 0)).toEqual('1')
+		expect(getWordAt(grid, 0, 0, 0)).toEqual('aalii')
+		expect(getWordAt(grid, 0, 0, 1)).toEqual('ouguiya')
+		expect(getWordAt(grid, 0, 1, 0)).toEqual('jota')
+		expect(getWordAt(grid, 0, 2, 0)).toEqual('kex')
+		expect(getWordAt(grid, 0, 3, 0)).toEqual('ziti')
+		expect(getMoveNumber(grid, 1)).toEqual('2')
+		expect(getWordAt(grid, 1, 0, 0)).toEqual('knickknack')
+		expect(getScoreGridCell(grid, 1, 0).find("tr").at(1).text()).toMatch(/BINGO/)
+		expect(getWordAt(grid, 1, 1, 0)).toEqual('pizza')
+		expect(getWordAt(grid, 1, 2, 0)).toEqual('oorie')
+		expect(getWordAt(grid, 1, 3, 0)).toEqual('ourie')
+		expect(getMoveNumber(grid, 2)).toEqual('3')
+		expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit a word:')
+		expect(getTotalCell(grid, 0)).toEqual('96')
+		expect(getTotalCell(grid, 1)).toEqual('81')
+		expect(getTotalCell(grid, 2)).toEqual('64')
+		expect(getTotalCell(grid, 3)).toEqual('87')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is 0')
+		typeInputBox(wrapper, 'jukebox')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is 27')
+		clickEndGame(wrapper)
+		expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit your leftovers:')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is 0')
+		typeInputBox(wrapper, 'lii')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is -3')
+		clickSubmitLeftovers(wrapper)
+		expect(getCurrentPlayer(wrapper)).toEqual('Nico, submit your leftovers:')
+		typeInputBox(wrapper, 'd')
+		clickSubmitLeftovers(wrapper)
+		expect(getTotalCell(grid, 1)).toEqual('79')
+		typeInputBox(wrapper, 'a')
+		clickSubmitLeftovers(wrapper)
+		expect(getCurrentPlayer(wrapper)).toEqual('Sofi, submit your leftovers:')
+		clickSubmitLeftovers(wrapper)
+		expect(getTotalCell(grid, 0)).toEqual('93')
+		expect(getTotalCell(grid, 1)).toEqual('79')
+		expect(getTotalCell(grid, 2)).toEqual('63')
+		expect(getTotalCell(grid, 3)).toEqual('93')
+		expect(getWinner(wrapper)).toEqual("Anna WON")
+		clickUndo(wrapper)
+		typeInputBox(wrapper, 'f')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is -4')
+		clickSubmitLeftovers(wrapper)
+		expect(getWinner(wrapper)).toEqual("Anna WON")
+		clickUndoMultipleTimes(wrapper, 4)
+		
+		typeInputBox(wrapper, 'zax')
+		expect(getCurrentWordScore(wrapper)).toEqual('Score is -19')
+		clickSubmitLeftovers(wrapper)
+		typeInputBox(wrapper, 'd')
+		clickSubmitLeftovers(wrapper)
+		typeInputBox(wrapper, 'a')
+		clickSubmitLeftovers(wrapper)
+		clickSubmitLeftovers(wrapper)
+		expect(getWinner(wrapper)).toEqual("Sofi WON")
+		expect(getTotalCell(grid, 3)).toEqual('109')
+		clickUndoMultipleTimes(wrapper, 5)
+		clickPass(wrapper)
+		typeInputBox(wrapper, 'backers')
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, 'queue')
+		clickEndTurn(wrapper)
+		clickPass(wrapper)
+		clickEndGame(wrapper)
+		typeInputBox(wrapper, 'a')
+		clickSubmitLeftovers(wrapper)
+		typeInputBox(wrapper, 'a')
+		clickSubmitLeftovers(wrapper)
+		clickSubmitLeftovers(wrapper)
+		clickSubmitLeftovers(wrapper)
+		expect(getWinner(wrapper)).toEqual("Tie game: Anna: 96Nico: 96")
+		clickUndoMultipleTimes(wrapper, 31)
+		expect(getTotalCell(grid, 0)).toEqual('0')
+		expect(getTotalCell(grid, 1)).toEqual('0')
+		expect(getTotalCell(grid, 2)).toEqual('0')
+		expect(getTotalCell(grid, 3)).toEqual('0')
+		expect(getTotal(grid)).toEqual('TOTAL')
 
-		const grid = wrapper.find('ScoreGrid')
-		const getScoreGridCell = (moveIndex, playerIndex) => {
-			return grid.find("tbody tr.move-row").at(moveIndex).find("ScoreGridCell").at(playerIndex)
-		}
-		const getWordAt = (moveIndex, playerIndex, wordIndex) => {
-			return getScoreGridCell(moveIndex, playerIndex).find("WordInTiles").at(wordIndex).props().word.value
-		}
-
-		expect(getScoreGridCell(0, 0)).toHaveText("PASS")
-		expect(getScoreGridCell(1, 1)).toHaveText("PASS")
-	});
-})
+	})
+}) 

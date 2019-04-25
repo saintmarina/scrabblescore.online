@@ -63,7 +63,7 @@ class GameSettings extends React.Component {
         <h3>Choose nicknames for players:</h3>
         <div>
           {this.getDefaultPlayerNames().map((name, i) => 
-            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i} 
+            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i}
                    key={i} type="text" className="form-control player-name"
                    placeholder={`Player ${i+1}`} value={name} /> )}
         </div>

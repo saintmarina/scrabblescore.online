@@ -67,11 +67,12 @@ class ScoreKeeper extends React.Component {
   /* DONE take out console.log */
   renderTieGame() {
     let result = []
-    let winners = this.state.game.getWinners(true)
+    let winners = this.state.game.getWinners(false)
+    console.log(winners)
     if (winners.length > 1) {
       result.push('Tie game: ')
       for (let i = 0; i < winners.length; i++) {
-        result.push(`${this.props.playerNames[i]}: ${this.state.game.getTotalScore(i, true)}`)
+        result.push(`${this.props.playerNames[i]}: ${this.state.game.getTotalScore(winners[i], false)}`)
       }
       result.join(',')
     } else {
@@ -91,10 +92,10 @@ class ScoreKeeper extends React.Component {
         <div>
           {!this.state.game.areLeftOversSubmitted() ?
             <p className="bold">{this.props.playerNames[this.state.game.currentPlayerIndex]}, submit {!this.state.game.isGameOver() ? "a word:" : "your leftovers:"}</p> :
-            <div>
+            <div className='winner'>
             {this.state.game.getWinners().length > 1 ? 
               <h1>{this.renderTieGame()}</h1> : 
-              <h1>{this.props.playerNames[[...this.state.game.getWinners()]]}, WON</h1>
+              <h1>{this.props.playerNames[[...this.state.game.getWinners()]]} WON</h1>
             }
             </div>
           }

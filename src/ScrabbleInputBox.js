@@ -2,6 +2,7 @@ import React from 'react';
 import {resizeArray, scrabbleScore, isLetterAllowed} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
+import onClickOutside from "react-onclickoutside";
 
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -38,6 +39,10 @@ export class ScrabbleInputBox extends React.Component {
     let modifiers = this.props.word.modifiers.slice();
     modifiers[letter_index] = modifier;
     this.props.onChange({value: this.props.word.value, modifiers: modifiers})
+  }
+
+  handleClickOutside() {
+    this.setState({inFocus: false})
   }
 
   render() {
@@ -117,4 +122,4 @@ class ModifierTile extends React.Component {
   }
 }
 
-export default ScrabbleInputBox;
+export default onClickOutside(ScrabbleInputBox);

@@ -30,7 +30,7 @@ export default class ScoreGrid extends React.Component {
                 <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language} game={this.props.game} /> : null}</td>)}
             </tr> )}
           <tr className='total-score'>
-            <td>TOTAL</td>
+            <th>TOTAL</th>
             {this.props.playerNames.map((_, i) =>
               <td key={i}>{this.props.game.getTotalScore(i)}</td>)}
           </tr>

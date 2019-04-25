@@ -232,6 +232,22 @@ test( "getWinners() when tie of 3 players", () => {
 	expect(game.getWinners()).toEqual([0, 1, 2])
 })
 
+test( "getWinners() when tie of 4 players", () => {
+	let game = Game.createNewGame(4);
+	game = game.addWord(w4).endTurn(); //7
+	game = game.addWord(w4).endTurn(); //7
+	game = game.addWord(w4).endTurn(); //7
+	game = game.addWord(w4).endTurn(); //7
+	game = game.endGame()
+	game = game.endTurn()
+	game = game.endTurn()
+	game = game.endTurn()
+	game = game.endTurn()
+	game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers());
+	expect(game.isGameOver()).toEqual(true)
+	expect(game.areLeftOversSubmitted()).toEqual(true)
+	expect(game.getWinners()).toEqual([0, 1, 2, 3])
+})
 
 test('getWinners() when tie of two players', () => {
 	let game = Game.createNewGame(3);
