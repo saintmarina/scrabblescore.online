@@ -145,19 +145,14 @@ describe('Game', () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 3)
 		typeInputBox(wrapper, 'quizzify')
-
-		/* TODO you can probably just do find('ScrabbleInputBox').find('ScrabbleTitle').at(3) */
-		let letterTiles = ["Q10", "U1", "I1", "Z10", "Z10", "I1", "F4", "Y4"]
-		checkLetterTiles(wrapper, letterTiles)
+		checkLetterTiles(wrapper, ["Q10", "U1", "I1", "Z10", "Z10", "I1", "F4", "Y4"])
 	})
 
 	it("case insensitive and doesn't allow any characters except letters inside Scrabble Input Box", () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 3)
 		typeInputBox(wrapper, '!1q uetzAls=')
-		//checkLetterTiles
-		let letterTiles = ["Q10", "U1", "E1", "T1", "Z10", "A1", "L1", "S1"]
-		checkLetterTiles(wrapper, letterTiles)
+		checkLetterTiles(wrapper, ["Q10", "U1", "E1", "T1", "Z10", "A1", "L1", "S1"])
 	})
 
 	it(`In game controls: addWord, endTurn, PASS, toggleBingo, endGame --- work properly;
