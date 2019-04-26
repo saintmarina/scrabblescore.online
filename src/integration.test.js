@@ -117,6 +117,14 @@ describe('Game', () => {
 	const getLetterModifier = (wrapper, letterIndex, modifier)  => {
 		return wrapper.find('WithModifierPopover').at(letterIndex).find('.scrabble-letter').hasClass(modifier)
 	}
+	const getTile = (wrapper, letterIndex) => {
+		return wrapper.find('ScrabbleInputBox').find('ScrabbleTile').at(letterIndex)
+	}
+	const checkLetterTiles = (wrapper, letterTiles) => {
+		letterTiles.forEach(function(tile, i) {
+			expect(getTile(wrapper, i)).toHaveText(tile)
+		})
+	}
 
 	/*.tap(n => console.log(n.debug()))*/
 
@@ -139,29 +147,17 @@ describe('Game', () => {
 		typeInputBox(wrapper, 'quizzify')
 
 		/* TODO you can probably just do find('ScrabbleInputBox').find('ScrabbleTitle').at(3) */
-		expect(wrapper.find('ScrabbleInputBox').find('ScrabbleTile').at(0)).toHaveText("Q10")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(1).find('ScrabbleTile')).toHaveText("U1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(2).find('ScrabbleTile')).toHaveText("I1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(3).find('ScrabbleTile')).toHaveText("Z10")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(4).find('ScrabbleTile')).toHaveText("Z10")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(5).find('ScrabbleTile')).toHaveText("I1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(6).find('ScrabbleTile')).toHaveText("F4")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(7).find('ScrabbleTile')).toHaveText("Y4")
+		let letterTiles = ["Q10", "U1", "I1", "Z10", "Z10", "I1", "F4", "Y4"]
+		checkLetterTiles(wrapper, letterTiles)
 	})
 
 	it("case insensitive and doesn't allow any characters except letters inside Scrabble Input Box", () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 3)
 		typeInputBox(wrapper, '!1q uetzAls=')
-
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(0).find('ScrabbleTile')).toHaveText("Q10")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(1).find('ScrabbleTile')).toHaveText("U1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(2).find('ScrabbleTile')).toHaveText("E1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(3).find('ScrabbleTile')).toHaveText("T1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(4).find('ScrabbleTile')).toHaveText("Z10")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(5).find('ScrabbleTile')).toHaveText("A1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(6).find('ScrabbleTile')).toHaveText("L1")
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(7).find('ScrabbleTile')).toHaveText("S1")
+		//checkLetterTiles
+		let letterTiles = ["Q10", "U1", "E1", "T1", "Z10", "A1", "L1", "S1"]
+		checkLetterTiles(wrapper, letterTiles)
 	})
 
 	it(`In game controls: addWord, endTurn, PASS, toggleBingo, endGame --- work properly;
