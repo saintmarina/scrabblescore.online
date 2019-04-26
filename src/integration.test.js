@@ -5,7 +5,7 @@ import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
 const Nightmare = require('nightmare')
 
 /* skip because this test needs the dev server launched */
-describe('Nightmare tests', () => {
+describe.skip('Nightmare tests', () => {
 	it('selects players', (done) => {
 		const nightmare = Nightmare()
 		nightmare
@@ -81,8 +81,9 @@ describe('Game', () => {
 	const clickSubmitLeftovers = wrapper => clickButton(wrapper, /submit.*leftovers/i)
 	const clickBingo = wrapper => wrapper.find('#bingoToggle').simulate('change')
 	const clickLetterModifier = (wrapper, letterIndex, modifier) => {
-		wrapper.find('.scrabble-input-box .scrabble-letter').at(letterIndex).simulate('click')
-		wrapper.find('.tooltip-container .modifier.' + modifier).simulate('click')
+		wrapper.find('WithModifierPopover').at(letterIndex).find('Tooltip').prop('onVisibilityChange')(true)
+		wrapper.update()
+		wrapper.find('WithModifierPopover').at(letterIndex).find('Tooltip').find('.modifier.' + modifier).simulate('click')
 	}
 	const clickUndoMultipleTimes = (wrapper, numTimes) => {
 		for ( let i = 0; i < numTimes; i++) {
@@ -113,6 +114,11 @@ describe('Game', () => {
 	const getWinner = wrapper => {
 		return wrapper.find('.winner').find('h1').text()
 	}
+	const getLetterModifier = (wrapper, letterIndex, modifier)  => {
+		return wrapper.find('WithModifierPopover').at(letterIndex).find('.scrabble-letter').hasClass(modifier)
+	}
+
+	/*.tap(n => console.log(n.debug()))*/
 
 
 
@@ -133,7 +139,7 @@ describe('Game', () => {
 		typeInputBox(wrapper, 'quizzify')
 
 		/* TODO you can probably just do find('ScrabbleInputBox').find('ScrabbleTitle').at(3) */
-		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(0).find('ScrabbleTile')).toHaveText("Q10")
+		expect(wrapper.find('ScrabbleInputBox').find('ScrabbleTile').at(0)).toHaveText("Q10")
 		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(1).find('ScrabbleTile')).toHaveText("U1")
 		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(2).find('ScrabbleTile')).toHaveText("I1")
 		expect(wrapper.find('ScrabbleInputBox').find('WithModifierPopover').at(3).find('ScrabbleTile')).toHaveText("Z10")
@@ -287,6 +293,25 @@ describe('Game', () => {
 		expect(getTotalCell(grid, 2)).toEqual('0')
 		expect(getTotalCell(grid, 3)).toEqual('0')
 		expect(getTotal(grid)).toEqual('TOTAL')
+	})
 
+	it(`modifier toolpit works;
+			adds modifiers tooltip to the tiles in the InputBox and alters the score;
+			adds modifiers tooltip to the tiles in the TableCells;`, () => {
+			const wrapper = mount(<ScrabbleScoreKeeper />)
+			fillPlayers(wrapper, 2)
+			typeInputBox(wrapper, 'reapers') //p0: 8
+			clickLetterModifier(wrapper, 3, 'triple-word')
+			expect(getLetterModifier(wrapper, 3, 'triple-word')).toEqual(true)
+			clickLetterModifier(wrapper, 6, 'double-letter')
+			expect(getLetterModifier(wrapper, 3, 'triple-word')).toEqual(true)
+			clickLetterModifier(wrapper, 0, 'triple-letter')
+			expect(getLetterModifier(wrapper, 0, 'triple-letter')).toEqual(true)
+			clickLetterModifier(wrapper, 2, 'double-word')
+			expect(getLetterModifier(wrapper, 2, 'double-word')).toEqual(true)
+			clickLetterModifier(wrapper, 5, 'blank')
+			expect(getLetterModifier(wrapper, 5, 'blank')).toEqual(true)
+			clickLetterModifier(wrapper, 5, 'blank')
+			expect(getLetterModifier(wrapper, 5, 'blank')).toEqual(false)
 	})
 }) 

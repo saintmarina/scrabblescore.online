@@ -68,7 +68,6 @@ class ScoreKeeper extends React.Component {
   renderTieGame() {
     let result = []
     let winners = this.state.game.getWinners(false)
-    console.log(winners)
     if (winners.length > 1) {
       result.push('Tie game: ')
       for (let i = 0; i < winners.length; i++) {

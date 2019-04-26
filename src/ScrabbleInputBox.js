@@ -87,9 +87,9 @@ class WithModifierPopover extends React.Component {
   render() {
     /* DONE </div> indentation, and spaces before /> */
     return(
-      <Tooltip onVisibilityChange={this.handleVisibilityChange} 
-               tooltipShown={this.state.tooltipShown} 
-               placement="bottom" trigger="click" 
+      <Tooltip onVisibilityChange={this.handleVisibilityChange}
+               tooltipShown={this.state.tooltipShown}
+               placement="bottom" trigger="click"
                tooltip={<div>
                           <ModifierTile modifier='double-letter' onClick={this.handleClick} />
                           <ModifierTile modifier='double-word'   onClick={this.handleClick} />

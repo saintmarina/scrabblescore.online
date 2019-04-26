@@ -21,7 +21,6 @@ class Turn {
   }
 
   get score() {
-    //console.log('turn', this)
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {
       result += this.words[i].score

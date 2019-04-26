@@ -25,7 +25,6 @@ class GameSettings extends React.Component {
 
   handleChangeOfLanguage(e) {
     this.setState({language: e.target.value});
-    console.log(e.target.options[e.target.value])
   }
 
   getDefaultPlayerNames() {
