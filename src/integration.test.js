@@ -4,9 +4,43 @@ import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
 
 const Nightmare = require('nightmare')
 
+Nightmare.action('realClick', function(name, options, parent, win, renderer, done) {
+  parent.respondTo('realClick', function(x, y, done) {
+    win.webContents.sendInputEvent({
+      type: 'mousedown',
+      x: x,
+      y: y,
+      clickCount: 1
+    });
+    win.webContents.sendInputEvent({
+      type: 'mouseup',
+      x: x,
+      y: y
+    });
+    setTimeout(function() { done(); }, 50);
+  });
+  done();
+}, function(selector, done) {
+  var child = this.child;
+  this.evaluate_now(function(selector) {
+    var bounds =  document.querySelector(selector).getBoundingClientRect();
+    return {
+      left: bounds.left,
+      top: bounds.top,
+      width: bounds.width,
+      height: bounds.height
+    };
+  }, function(error, bounds) {
+    if (error) return done(error);
+    var x = bounds.left + bounds.width / 2;
+    var y = bounds.top + bounds.height / 2;
+    child.call('realClick', x, y, done);
+  }, selector);
+});
+
 /* skip because this test needs the dev server launched */
 describe.skip('Nightmare tests', () => {
-	it('selects players', (done) => {
+	it('selects players', async () => {
 		const nightmare = Nightmare()
 		nightmare
 			.goto('http://localhost:3000')
@@ -16,46 +50,32 @@ describe.skip('Nightmare tests', () => {
 			.wait('.scrabble-input-box')
 			.click('.scrabble-input-box')
 			.type('body', 'rose')
-			.evaluate(() => document.querySelector(".scrabble-input-box").textContent)
-			.end()
-		    .then(textContent => {
-		    	expect(textContent.toLowerCase().replace(/[0-9]/g, '')).toEqual('rose')
-		    	done()
-		    })
-	})
-	it("blinker appears, when we click on Scrabble Input Box and disappears when we click outside the Scrabble Input Box", () => {
-		const nightmare = Nightmare()
-		nightmare
-			.goto('http://localhost:3000')
-			.type('#player-name-input-0', 'Anna')
-			.type('#player-name-input-1', 'Nico')
-			.click('button')
-			.wait('.scrabble-input-box')
-			.exists('.blinker')
-			.then(function(blinker) {
-				if (!blinker) return nightmare.goto('http://localhost:3000')
-																			.type('#player-name-input-0', 'Anna')
-																			.type('#player-name-input-1', 'Nico')
-																			.click('button')
-																			.wait('.scrabble-input-box')
-																			.click('.scrabble-input-box')
-																			.exists('.blinker')
-			})
-			.then(function(blinker) {
-				if (blinker) return nightmare.goto('http://localhost:3000')
-																			.type('#player-name-input-0', 'Anna')
-																			.type('#player-name-input-1', 'Nico')
-																			.click('button')
-																			.wait('.scrabble-input-box')
-																			.click('.scrabble-input-box')
-																			.exists('.blinker')
-																			.click('body')
-																			.exists('.blinker')
-			})
-			.then(function(result) {
-				if (!result) return "Blinker disappeared!"
 
-			})
+		const textContent = await nightmare.evaluate(() => document.querySelector(".scrabble-input-box").textContent)
+		expect(textContent.toLowerCase().replace(/[0-9]/g, '')).toEqual('rose')
+
+		nightmare.end()
+	})
+
+	it("blinker appears, when we click on Scrabble Input Box and disappears when we click outside the Scrabble Input Box", async () => {
+			const nightmare = Nightmare()
+			nightmare
+				.goto('http://localhost:3000')
+				.type('#player-name-input-0', 'Anna')
+				.type('#player-name-input-1', 'Nico')
+				.click('button')
+				.wait('.scrabble-input-box')
+
+			expect(await nightmare.exists('.blinker')).toBe(false)
+
+			nightmare
+				.click('.scrabble-input-box')
+				.wait('.blinker')
+				.realClick('.pass-endturn-button')
+
+			expect(await nightmare.exists('.blinker')).toBe(false)
+
+			nightmare.end()
 	})
 })
 
@@ -69,6 +89,10 @@ describe('Game', () => {
 		}
 
 		wrapper.find('button').simulate('click')
+	}
+
+	function chooseLanguage(wrapper, language) {
+		wrapper.find('#language-select').simulate('change', {target: {value: language}})
 	}
 
 	const typeInputBox = (wrapper, input) => wrapper.find('.scrabble-input-box input').simulate('change', {target: {value: input}})
@@ -114,8 +138,11 @@ describe('Game', () => {
 	const getWinner = wrapper => {
 		return wrapper.find('.winner').find('h1').text()
 	}
-	const getLetterModifier = (wrapper, letterIndex, modifier)  => {
-		return wrapper.find('WithModifierPopover').at(letterIndex).find('.scrabble-letter').hasClass(modifier)
+	const getLetterModifier = (wrapper, letterIndex)  => {
+		return wrapper.find('WithModifierPopover').at(letterIndex).find('ScrabbleTile').prop('modifier')
+	}
+	const getTableLetterModifier = (grid, moveIndex, playerIndex, wordIndex, letterIndex) => {
+		return getScoreGridCell(grid, moveIndex, playerIndex).find("WordInTiles").at(wordIndex).find('ScrabbleTile').at(letterIndex).prop('modifier')
 	}
 	const getTile = (wrapper, letterIndex) => {
 		return wrapper.find('ScrabbleInputBox').find('ScrabbleTile').at(letterIndex)
@@ -124,6 +151,9 @@ describe('Game', () => {
 		letterTiles.forEach(function(tile, i) {
 			expect(getTile(wrapper, i)).toHaveText(tile)
 		})
+	}
+	const getCurrentLanguage = wrapper => {
+		return wrapper.find('ScoreKeeper').prop('language')
 	}
 
 	/*.tap(n => console.log(n.debug()))*/
@@ -287,22 +317,42 @@ describe('Game', () => {
 	})
 
 	it(`modifier toolpit works;
-			adds modifiers tooltip to the tiles in the InputBox and alters the score;
+			adds modifiers tooltip to the tiles in the InputBox;
 			adds modifiers tooltip to the tiles in the TableCells;`, () => {
 			const wrapper = mount(<ScrabbleScoreKeeper />)
 			fillPlayers(wrapper, 2)
 			typeInputBox(wrapper, 'reapers') //p0: 8
 			clickLetterModifier(wrapper, 3, 'triple-word')
-			expect(getLetterModifier(wrapper, 3, 'triple-word')).toEqual(true)
+			expect(getLetterModifier(wrapper, 3)).toEqual('triple-word')
 			clickLetterModifier(wrapper, 6, 'double-letter')
-			expect(getLetterModifier(wrapper, 3, 'triple-word')).toEqual(true)
+			expect(getLetterModifier(wrapper, 3)).toEqual('triple-word')
 			clickLetterModifier(wrapper, 0, 'triple-letter')
-			expect(getLetterModifier(wrapper, 0, 'triple-letter')).toEqual(true)
+			expect(getLetterModifier(wrapper, 0)).toEqual('triple-letter')
 			clickLetterModifier(wrapper, 2, 'double-word')
-			expect(getLetterModifier(wrapper, 2, 'double-word')).toEqual(true)
+			expect(getLetterModifier(wrapper, 2)).toEqual('double-word')
 			clickLetterModifier(wrapper, 5, 'blank')
-			expect(getLetterModifier(wrapper, 5, 'blank')).toEqual(true)
+			expect(getLetterModifier(wrapper, 5)).toEqual('blank')
 			clickLetterModifier(wrapper, 5, 'blank')
-			expect(getLetterModifier(wrapper, 5, 'blank')).toEqual(false)
+			expect(getLetterModifier(wrapper, 5)).toEqual(null)
+			clickAddWord(wrapper)
+			const grid = wrapper.find('ScoreGrid')
+			expect(getTableLetterModifier(grid, 0, 0, 0, 0)).toEqual('triple-letter') //(grid, moveIndex, playerIndex, wordIndex, letterIndex)
+			expect(getTableLetterModifier(grid, 0, 0, 0, 1)).toEqual(null)
 	})
-}) 
+
+	it("changes languages: ru, fr; can't type other characters exept the current language", () => {
+		const wrapper1 = mount(<ScrabbleScoreKeeper />)
+		chooseLanguage(wrapper1, 'ru')
+		fillPlayers(wrapper1, 2)
+		expect(getCurrentLanguage(wrapper1)).toEqual('ru')
+		typeInputBox(wrapper1, 'quizzifyф')
+		checkLetterTiles(wrapper1, ['Ф10'])
+
+		const wrapper2 = mount(<ScrabbleScoreKeeper />)
+		chooseLanguage(wrapper2, 'fr')
+		fillPlayers(wrapper2, 2)
+		expect(getCurrentLanguage(wrapper2)).toEqual('fr')
+		typeInputBox(wrapper2, 'фываqk')
+		checkLetterTiles(wrapper2, ['Q8', 'K10'])
+	})
+})

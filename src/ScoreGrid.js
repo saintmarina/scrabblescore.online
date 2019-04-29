@@ -46,7 +46,7 @@ class WordInTiles extends React.Component {
       let tile = <ScrabbleTile key={i} letter={letter} modifier={this.props.word.modifiers[i]} score={scrabbleScore(letter, [null], this.props.language)} /> 
       /* DONE take out else. Use the pattern of modifying the variable like the adding word in endTurn() */
       if (this.props.word.modifiers[i]) {
-        tile =  <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
+        tile = <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
       }
       return tile
     })
