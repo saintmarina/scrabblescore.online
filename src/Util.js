@@ -61,7 +61,7 @@ export function scrabbleScore(word, modifiers, language) {
     }
   } 
 
-  const letterScore = letter => scoreListsMap[language].scores[letter] || 0;
+  const letterScore = letter => scoreListsMap[language].scores[letter];
   let result = 0;
   for (let i=0; i < word.length; i++) {
     result += letterScore(word[i].toLowerCase())
