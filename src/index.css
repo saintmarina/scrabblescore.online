@@ -114,9 +114,10 @@ form#submit_word button {
 
 }
 .scrabble-tiles {
-	height: 65;
 	text-align: left;
 	left: 15px;
+	position: relative;
+	bottom: -1px;
 }
 /*double-letter linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg")
   double-word linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg")
@@ -170,10 +171,7 @@ background-color: red;
 .move {
 	width: 75px;
 }
-.scrabble-tiles {
-	position: relative;
-	bottom: 23px;
-}
+
 .scrabble-letter {
 	cursor: pointer;
 }

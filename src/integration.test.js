@@ -311,58 +311,162 @@ describe('Game', () => {
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is 0')
 		typeInputBox(wrapper, 'jukebox')
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is 27')
+		typeInputBox(wrapper, '')
+
 		clickEndGame(wrapper)
+		//END GAME
+
 		expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit your leftovers:')
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is 0')
-		typeInputBox(wrapper, 'lii')
+		typeInputBox(wrapper, 'lii') //p0: -3
+
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is -3')
 		clickSubmitLeftovers(wrapper)
+		//ENDGAME
+		//P0 - 93
+		//P1 - 81
+		//P2 - 64
+		//P3 - 87
 		expect(getCurrentPlayer(wrapper)).toEqual('Nico, submit your leftovers:')
-		typeInputBox(wrapper, 'd')
+		typeInputBox(wrapper, 'd') //p1: -2
 		clickSubmitLeftovers(wrapper)
+		//ENDGAME
+		//P0 - 93
+		//P1 - 79
+		//P2 - 64
+		//P3 - 87
 		expect(getTotalCell(grid, 1)).toEqual('79')
-		typeInputBox(wrapper, 'a')
+		typeInputBox(wrapper, 'a') //p2: -1
 		clickSubmitLeftovers(wrapper)
+		//ENDGAME
+		//P0 - 93
+		//P1 - 79
+		//P2 - 63
+		//P3 - 87
 		expect(getCurrentPlayer(wrapper)).toEqual('Sofi, submit your leftovers:')
-		clickSubmitLeftovers(wrapper)
+		clickSubmitLeftovers(wrapper) //p3: +6
+		//ENDGAME
+		//P0 - 93
+		//P1 - 79
+		//P2 - 63
+		//P3 - 93
+
 		expect(getTotalCell(grid, 0)).toEqual('93')
 		expect(getTotalCell(grid, 1)).toEqual('79')
 		expect(getTotalCell(grid, 2)).toEqual('63')
 		expect(getTotalCell(grid, 3)).toEqual('93')
-		expect(getWinner(wrapper)).toEqual("Anna WON")
+		expect(getWinner(wrapper)).toEqual("Anna WON") // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 WON, Anna WON
 		clickUndo(wrapper)
-		typeInputBox(wrapper, 'f')
+		// UNDO: 1
+		//ENDGAME
+		//P0 - 93
+		//P1 - 79
+		//P2 - 63
+		//P3 - 87
+		typeInputBox(wrapper, 'f') //p3: -4
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is -4')
 		clickSubmitLeftovers(wrapper)
-		expect(getWinner(wrapper)).toEqual("Anna WON")
+		//ENDGAME
+		//P0 - 93
+		//P1 - 79
+		//P2 - 63
+		//P3 - 83
+		expect(getWinner(wrapper)).toEqual("Anna WON") //P0: 93 max points ---> P0 WON, Anna WON
 		clickUndoMultipleTimes(wrapper, 4)
+		//ENDGAME
+		//P0 - 96
+		//P1 - 81
+		//P2 - 64
+		//P3 - 87
 		
-		typeInputBox(wrapper, 'zax')
+		typeInputBox(wrapper, 'zax') //p0: -19
 		expect(getCurrentWordScore(wrapper)).toEqual('Score is -19')
 		clickSubmitLeftovers(wrapper)
-		typeInputBox(wrapper, 'd')
+		//ENDGAME
+		//P0 - 77
+		//P1 - 81
+		//P2 - 64
+		//P3 - 87
+		typeInputBox(wrapper, 'd') //p1: -2
 		clickSubmitLeftovers(wrapper)
-		typeInputBox(wrapper, 'a')
+		//ENDGAME
+		//P0 - 77
+		//P1 - 79
+		//P2 - 64
+		//P3 - 87
+		typeInputBox(wrapper, 'a') //p2: -1
 		clickSubmitLeftovers(wrapper)
-		clickSubmitLeftovers(wrapper)
-		expect(getWinner(wrapper)).toEqual("Sofi WON")
+		//ENDGAME
+		//P0 - 77
+		//P1 - 79
+		//P2 - 63
+		//P3 - 87
+		clickSubmitLeftovers(wrapper) //p3: +22
+		//ENDGAME
+		//P0 - 77
+		//P1 - 79
+		//P2 - 63
+		//P3 - 109
+		expect(getWinner(wrapper)).toEqual("Sofi WON")//P3: 109 max points ---> P3 WON, Sofi WON
 		expect(getTotalCell(grid, 3)).toEqual('109')
 		clickUndoMultipleTimes(wrapper, 5)
-		clickPass(wrapper)
-		typeInputBox(wrapper, 'backers')
+		//Move 2: P0 - 96
+		//				P1 - 81
+		//				P2 - 64
+		//				P3 - 87
+		clickPass(wrapper) //p0: PASS
+		//Move 3: P0 - 96
+		//				P1 - 81
+		//				P2 - 64
+		//				P3 - 87
+		typeInputBox(wrapper, 'backers') //p1: 15
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'queue')
+		//Move 3: P0 - 96
+		//				P1 - 96
+		//				P2 - 64
+		//				P3 - 87
+		typeInputBox(wrapper, 'queue') //p2: 14
 		clickEndTurn(wrapper)
-		clickPass(wrapper)
+		//Move 3: P0 - 96
+		//				P1 - 96
+		//				P2 - 78
+		//				P3 - 87
+		clickPass(wrapper) //p3: PASS
+		//Move 3: P0 - 96
+		//				P1 - 96
+		//				P2 - 78
+		//				P3 - 87
 		clickEndGame(wrapper)
-		typeInputBox(wrapper, 'a')
+		//END GAME
+		typeInputBox(wrapper, 'a') //p0: -1
 		clickSubmitLeftovers(wrapper)
-		typeInputBox(wrapper, 'a')
+		//ENDGAME
+		//P0 - 95
+		//P1 - 79
+		//P2 - 78
+		//P3 - 87
+		typeInputBox(wrapper, 'a') //p1: -1
 		clickSubmitLeftovers(wrapper)
-		clickSubmitLeftovers(wrapper)
-		clickSubmitLeftovers(wrapper)
-		expect(getWinner(wrapper)).toEqual("Tie game: Anna: 96Nico: 96")
+		//ENDGAME
+		//P0 - 95
+		//P1 - 95
+		//P2 - 78
+		//P3 - 87
+		clickSubmitLeftovers(wrapper) //p2: +2
+		//ENDGAME
+		//P0 - 95
+		//P1 - 95
+		//P2 - 80
+		//P3 - 87
+		clickSubmitLeftovers(wrapper)//p2: +2
+		//ENDGAME
+		//P0 - 95
+		//P1 - 95
+		//P2 - 80
+		//P3 - 89
+		expect(getWinner(wrapper)).toEqual("Anna: 96, Nico: 96") // Tie game P0: 95 and P1: 95 ---> Before leftovers P0: 96 and P1: 96 ---> Tie game: P0 and P1 (Anna and Nico
 		clickUndoMultipleTimes(wrapper, 31)
+		//UNDO TO THE BEGINNING OF THE GAME
 		expect(getTotalCell(grid, 0)).toEqual('0')
 		expect(getTotalCell(grid, 1)).toEqual('0')
 		expect(getTotalCell(grid, 2)).toEqual('0')
@@ -370,7 +474,7 @@ describe('Game', () => {
 		expect(getTotal(grid)).toEqual('TOTAL')
 	})
 
-	it(`modifier toolpit works;
+	it(`modifier tooltip works;
 			adds modifiers tooltip to the tiles in the InputBox;
 			adds modifiers tooltip to the tiles in the TableCells;`, () => {
 			const wrapper = mount(<ScrabbleScoreKeeper />)
@@ -410,3 +514,4 @@ describe('Game', () => {
 		checkLetterTiles(wrapper2, ['Q8', 'K10'])
 	})
 })
+

@@ -7,12 +7,6 @@ export function resizeArray(array, desiredLength, defaultValue) {
   return output;
 }
 
-/*
-indexesOf(array, value)
-return an array of indexes  of the result verifies array[i] == value
-*/
-
-
 export function indexesOf(array, value) {
   let result = []
   for (let i = 0; i < array.length; i++) {
@@ -23,13 +17,9 @@ export function indexesOf(array, value) {
   return result
 }
 
-/* DONE find a way to only have the word "ru" once in your entire codebase. */
-/* DONE isLetterAllowed() should be implemented */
+
 export function isLetterAllowed(letter, language) {
-  let isAllowed = false;
-  if (typeof scoreListsMap[language].scores[letter.toLowerCase()] === 'number') 
-    isAllowed = true
-  return isAllowed
+  return letter.toLowerCase() in scoreListsMap[language].scores
 }
 
 export function scrabbleScore(word, modifiers, language) {

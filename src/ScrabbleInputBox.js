@@ -2,7 +2,6 @@ import React from 'react';
 import {resizeArray, scrabbleScore, isLetterAllowed} from './Util.js';
 import Tooltip from './Tooltip.js';
 import ScrabbleTile from './ScrabbleTile.js';
-import onClickOutside from "react-onclickoutside";
 
 export class ScrabbleInputBox extends React.Component {
   constructor(props) {
@@ -23,34 +22,25 @@ export class ScrabbleInputBox extends React.Component {
   handleHiddenInputChange(e) {
     let input = e.target.value;
     /* DONE style: spaces around = and += */
-    let result = '';
-    for (let i = 0; i < input.length; i++) {
-      /* DONE use isLetterAllowed(). Write the test first. */
-      if (isLetterAllowed(input[i], this.props.language)) {
-        result += input[i];
-      }
-    }
+    let result = input.split('').map(letter => isLetterAllowed(letter, this.props.language) ? letter : '');
+    
     let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
-    this.props.onChange({value: result, modifiers: modifiers})
+    this.props.onChange({value: result.join(''), modifiers: modifiers})
     this.setState({inFocus: false})
   }
 
-  handleModifierChange(letter_index, modifier) {
+  handleModifierChange(letterIndex, modifier) {
     let modifiers = this.props.word.modifiers.slice();
-    modifiers[letter_index] = modifier;
+    modifiers[letterIndex] = modifier;
     this.props.onChange({value: this.props.word.value, modifiers: modifiers})
-  }
-
-  handleClickOutside() {
-    this.setState({inFocus: false})
   }
 
   render() {
     return (
       <div onClick={this.handleClick} className={`scrabble-input-box${this.props.word.value.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus && <div className='blinker'></div>}
-        <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.props.word.value}
-               className='hidden-input' type='text' maxLength='15' autoComplete='off' /><br />
+          <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.props.word.value}
+                 className='hidden-input' onBlur={() => this.setState({inFocus: false})} type='text' maxLength='15' autoComplete='off' />
         <div className='scrabble-tiles'>
           {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
@@ -97,7 +87,7 @@ class WithModifierPopover extends React.Component {
                           <ModifierTile modifier='triple-word'   onClick={this.handleClick} />
                           <ModifierTile modifier='blank'         onClick={this.handleClick} />
                         </div>
-                        }>
+                       }>
         {this.props.children}
       </Tooltip>
     );
@@ -122,4 +112,4 @@ class ModifierTile extends React.Component {
   }
 }
 
-export default onClickOutside(ScrabbleInputBox);
+export default ScrabbleInputBox
