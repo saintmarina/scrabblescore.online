@@ -114,11 +114,20 @@ describe('Game', () => {
 			clickUndo(wrapper)
 		}
 	}
+	const getPlayerNames = (wrapper, playerIndex) => {
+		return wrapper.find('th.player-header').at(playerIndex).text()
+	}
+	const getNumberOfPlayers = wrapper => {
+		return wrapper.find('th.player-header').length
+	}
 	const getCurrentPlayer = wrapper => {
 		return wrapper.find('.bold').text()
 	}
 	const getCurrentWordScore = wrapper => {
 		return wrapper.find('CurrentScore').find('div#score').text()
+	}
+	const getValue = (grid, moveIndex, playerIndex, wordIndex) => {
+		return getScoreGridCell(grid, moveIndex, playerIndex).find('tr').at(wordIndex).text()
 	}
 	const getMoveNumber = (grid, moveIndex) => { 
 		return grid.find("tbody tr.move-row").at(moveIndex).find('th').text()
@@ -164,11 +173,11 @@ describe('Game', () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 4)
 		
-		expect(wrapper.find('th.player-header').length).toEqual(4)
-		expect(wrapper.find('th.player-header').at(0).text()).toEqual('Anna')
-		expect(wrapper.find('th.player-header').at(1).text()).toEqual('Nico')
-		expect(wrapper.find('th.player-header').at(2).text()).toEqual('Kyle')
-		expect(wrapper.find('th.player-header').at(3).text()).toEqual('Sofi')
+		expect(getNumberOfPlayers(wrapper)).toEqual(4)
+		expect(getPlayerNames(wrapper, 0)).toEqual('Anna')
+		expect(getPlayerNames(wrapper, 1)).toEqual('Nico')
+		expect(getPlayerNames(wrapper, 2)).toEqual('Kyle')
+		expect(getPlayerNames(wrapper, 3)).toEqual('Sofi')
 	})
 
 	it('types inside the scrabble input box', () => {
@@ -192,45 +201,89 @@ describe('Game', () => {
 		unlimited undoes;`, () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 4)
-		typeInputBox(wrapper, 'aalii') //p0: 5
+
+		typeInputBox(wrapper, 'aalii') // p0: 5
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'ouguiya') //p0: 16
+		typeInputBox(wrapper, 'ouguiya') // p0: 11
 		clickAddWord(wrapper)
 		clickEndTurn(wrapper)
+		//Move 0: P0 - 16
 		typeInputBox(wrapper, 'jota') // p1: 11
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'kex') //p2: 14
+		//Move 0: P0 - 16
+		//				P1 - 11
+		typeInputBox(wrapper, 'kex') // p2: 14
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'ziti') //p3: 13
+		//Move 0: P0 - 16
+		//				P1 - 11
+		//				P2 - 14
+		typeInputBox(wrapper, 'ziti') // p3: 13
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'knickknack') // p0: 46
+		//Move 0: P0 - 16
+		//				P1 - 11
+		//				P2 - 14
+		//				P3 - 13
+		typeInputBox(wrapper, 'knickknack') // p0: 30
 		clickAddWord(wrapper)
-		clickBingo(wrapper)
+		clickBingo(wrapper)		//p0: BINGO
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'pizza') //p1: 36
+		//Move 1: P0 - 96
+		//				P1 - 11
+		//				P2 - 14
+		//				P3 - 13
+		typeInputBox(wrapper, 'pizza') // p1: 25
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'oorie') //p2: 19
+		//Move 1: P0 - 96
+		//				P1 - 36
+		//				P2 - 14
+		//				P3 - 13
+		typeInputBox(wrapper, 'oorie') // p2: 5
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'ourie') //p3: 18               
+		//Move 1: P0 - 96
+		//				P1 - 36
+		//				P2 - 19
+		//				P3 - 13
+		typeInputBox(wrapper, 'ourie') // p3: 5             
 		clickEndTurn(wrapper)
-		clickPass(wrapper) //p0: 91 PASS
-		typeInputBox(wrapper, 'za') //p1: 47
+		//Move 1: P0 - 96
+		//				P1 - 36
+		//				P2 - 19
+		//				P3 - 18
+
+		clickPass(wrapper) // p0: PASS
+		//Move 2: P0 - 96
+		//				P1 - 36
+		//				P2 - 19
+		//				P3 - 18
+		typeInputBox(wrapper, 'za') //p1:  11
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'muzjiks') //p1: 76
+		typeInputBox(wrapper, 'muzjiks') //p1:  29
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'aerie') //p1: 81
+		typeInputBox(wrapper, 'aerie') //p1:  5
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'caziques') //p2: 47
+		//Move 2: P0 - 96
+		//				P1 - 81
+		//				P2 - 19
+		//				P3 - 18
+		typeInputBox(wrapper, 'caziques') //p2:  28
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'faqir') //p2: 64
+		typeInputBox(wrapper, 'faqir') //p2: 17
 		clickAddWord(wrapper)
 		clickEndTurn(wrapper)
-		typeInputBox(wrapper, 'jousted') //p3:33
+		//Move 2: P0 - 96
+		//				P1 - 81
+		//				P2 - 64
+		//				P3 - 18
+		typeInputBox(wrapper, 'jousted') //p3:  15
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'quixotry') //p3: 60
+		typeInputBox(wrapper, 'quixotry') //p3: 27
 		clickAddWord(wrapper)
-		typeInputBox(wrapper, 'jukebox') // p3: 89
+		typeInputBox(wrapper, 'jukebox') // p3: 27
 		clickEndTurn(wrapper)
+		//Move 2: P0 - 96
+		//				P1 - 81
+		//				P2 - 64
+		//				P3 - 87
 
 		const grid = wrapper.find('ScoreGrid')
 
@@ -244,7 +297,8 @@ describe('Game', () => {
 		expect(getWordAt(grid, 0, 3, 0)).toEqual('ziti')
 		expect(getMoveNumber(grid, 1)).toEqual('2')
 		expect(getWordAt(grid, 1, 0, 0)).toEqual('knickknack')
-		expect(getScoreGridCell(grid, 1, 0).find("tr").at(1).text()).toMatch(/BINGO/)
+		expect(getValue(grid, 1, 0, 1)).toMatch(/BINGO/)
+		expect(getValue(grid, 2, 0, 0)).toMatch(/PASS/)
 		expect(getWordAt(grid, 1, 1, 0)).toEqual('pizza')
 		expect(getWordAt(grid, 1, 2, 0)).toEqual('oorie')
 		expect(getWordAt(grid, 1, 3, 0)).toEqual('ourie')
