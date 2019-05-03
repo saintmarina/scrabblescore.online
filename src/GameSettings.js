@@ -20,7 +20,9 @@ class GameSettings extends React.Component {
   handleChangeOfName(i, e) {
     let names = this.state.playerNames.slice();
     names[i] = e.target.value;
-    for (let j = 0; j < names.length; i++) names[j] = !names[j] ? '': names[j]
+    for (let j = 0; j < names.length; j++) {
+      if (!names[j]) names[j] = ''
+    }
     this.setState({playerNames: names});
   }
 
@@ -33,7 +35,8 @@ class GameSettings extends React.Component {
   }
 
   setGameSettings() {
-    this.props.onGameStart(this.getDefaultPlayerNames(), this.state.language);
+    console.log(this.getDefaultPlayerNames())
+    this.props.onGameStart(this.getDefaultPlayerNames().map((name, i) => name ? name : `Player ${i+1}`), this.state.language);
   }
 
   render() {
