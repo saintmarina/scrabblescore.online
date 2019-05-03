@@ -41,11 +41,13 @@ class ScoreKeeper extends React.Component {
     const callPlayerToAction = `${this.props.playerNames[this.state.game.currentPlayerIndex]}, submit ${!this.state.game.isGameOver() ?
       "a word:" : "your leftovers:"}`
 
+/* TODO  const game = this.state.game */
+      /*TODO call this controlsProps */
     const props = {onSetGame: this.handleSetGame,
-                 onUndo: this.handleUndo,
-                 undoDisabled: this.state.games.length === 0,
-                 game: this.state.game,
-                 language: this.props.language}
+                   onUndo: this.handleUndo,
+                   undoDisabled: this.state.games.length === 0,
+                   game: this.state.game,
+                   language: this.props.language}
     return (
       <div className='score-keeper'>
         <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.props.language} />
@@ -204,6 +206,7 @@ class CurrentScore extends React.Component {
   }
 }
 
+/* TODO take out debug mode */
 class ScrabbleScoreKeeper extends React.Component {
   constructor(props) {
     super(props);

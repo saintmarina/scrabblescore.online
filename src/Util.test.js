@@ -1,4 +1,6 @@
+/* eslint-ignore default-case */
 import {resizeArray, scrabbleScore, isLetterAllowed} from './Util.js';
+import {scoreListsMap} from './scoreLists';
 
 /* DONE remove these variables */
 
@@ -42,6 +44,7 @@ describe('resizeArray', () => {
 		expect(tripleA).toEqual(['a', 'a', 'a'])
 	})
 })
+
 describe('isLetterAllowed', () => {
 	test('only allows letters', () => {
 		expect(isLetterAllowed('1', 'en')).toEqual(false)
