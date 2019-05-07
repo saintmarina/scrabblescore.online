@@ -81,12 +81,14 @@ class InGameControls extends React.Component {
     this.handleEndGame = this.handleEndGame.bind(this);
     this.handleAddWord =this.handleAddWord.bind(this);
     this.handleBingo = this.handleBingo.bind(this);
+    this.input = React.createRef()
     this.state = {
       currentWord: emptyWord
     }
   }
   _resetCurrentWord() {
     this.setState({currentWord: emptyWord})
+    this.input.current.focus()
   }
 
   _onSetGame(game) {
@@ -121,13 +123,17 @@ class InGameControls extends React.Component {
   handleEndGame() {
     this.props.onSetGame(this.props.game.endGame())
   }
+
+  componentDidMount() {
+    this.input.current.focus()
+  }
   
   render() {
     const endTurnButtonText = this.props.game.getCurrentTurn().isEmpty() && this.state.currentWord.value === '' ? 'PASS' : 'END TURN'
     const isEndGameButtonDisabled = this.props.game.currentPlayerIndex !== 0 || this.state.currentWord.value !== '' || this.props.game.getCurrentTurn().score > 0
     return (
       <form>
-        <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
+        <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
         <CurrentScore score={this.state.currentWord.score} />
         <div>
           <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
@@ -150,6 +156,7 @@ class InGameOverControls extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleLeftOvers = this.handleLeftOvers.bind(this);
+    this.input = React.createRef()
     this.state = {
       currentWord: emptyWord,
     }
@@ -157,6 +164,7 @@ class InGameOverControls extends React.Component {
 
   _resetCurrentWord() {
     this.setState({currentWord: emptyWord})
+    this.input.current.focus()
   }
 
   handleUndo(){
@@ -179,13 +187,17 @@ class InGameOverControls extends React.Component {
     this._resetCurrentWord()
   }
 
+  componentDidMount() {
+    this.input.current.focus()
+  }
+
   render() {
     const submitButtonText = this.state.currentWord.value.length > 0 ? "SUBMIT LEFTOVERS" : "SUBMIT NO LEFTOVERS"; 
     return (
       <div>
         {!this.props.game.areLeftOversSubmitted() ? 
           <form>
-            <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
+            <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
             <CurrentScore score={this.state.currentWord.score} />
             <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
             <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">{submitButtonText}</button>

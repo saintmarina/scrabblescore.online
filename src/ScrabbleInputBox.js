@@ -7,16 +7,11 @@ export class ScrabbleInputBox extends React.Component {
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
-    this.handleClick = this.handleClick.bind(this);
+    this.focus = this.focus.bind(this);
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
     this.state = {
       inFocus: false,
     }
-  }
-
-  handleClick() {
-    this.textHiddenInput.current.focus();
-    this.setState({inFocus: true});
   }
 
   handleHiddenInputChange(e) {
@@ -26,7 +21,6 @@ export class ScrabbleInputBox extends React.Component {
     
     let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
     this.props.onChange({value: result.join(''), modifiers: modifiers})
-    this.setState({inFocus: false})
   }
 
   handleModifierChange(letterIndex, modifier) {
@@ -35,12 +29,16 @@ export class ScrabbleInputBox extends React.Component {
     this.props.onChange({value: this.props.word.value, modifiers: modifiers})
   }
 
+  focus() {
+    this.textHiddenInput.current.focus()
+  }
+
   render() {
     return (
-      <div onClick={this.handleClick} className={`scrabble-input-box${this.props.word.value.length > 6 ? ' large' : ''}`}>
+      <div onClick={this.focus} className={`scrabble-input-box${this.props.word.value.length > 6 ? ' large' : ''}`}>
         {this.state.inFocus && <div className='blinker'></div>}
           <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.props.word.value}
-                 className='hidden-input' onBlur={() => this.setState({inFocus: false})} type='text' maxLength='15' autoComplete='off' />
+                 className='hidden-input' onBlur={() => this.setState({inFocus: false})} onFocus={() => this.setState({inFocus: true})} type='text' maxLength='15' autoComplete='off' />
         <div className='scrabble-tiles'>
           {this.props.word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
