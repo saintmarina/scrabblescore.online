@@ -9,29 +9,24 @@ class GameSettings extends React.Component {
     this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
     this.state = {
       numberOfPlayers: 2,
-      playerNames: [],
+      playerNames: ['', ''],
       language: 'en'
     }
   }
   handleChangeOfNumber(e) {
-    this.setState({numberOfPlayers: parseInt(e.target.value)});
+    const numberOfPlayers = parseInt(e.target.value)
+    const playerNames = resizeArray(this.state.playerNames, numberOfPlayers, '')
+    this.setState({numberOfPlayers, playerNames});
   }
 
   handleChangeOfName(i, e) {
     let names = this.state.playerNames.slice();
     names[i] = e.target.value;
-    for (let j = 0; j < names.length; j++) {
-      if (!names[j]) names[j] = ''
-    }
     this.setState({playerNames: names});
   }
 
   handleChangeOfLanguage(e) {
     this.setState({language: e.target.value});
-  }
-
-  getDefaultPlayerNames() {
-    return resizeArray(this.state.playerNames, this.state.numberOfPlayers, '');
   }
 
   setGameSettings() {
@@ -40,7 +35,6 @@ class GameSettings extends React.Component {
   }
 
   render() {
-    /* DONE Fix indentation */
     return (
       <div>
         <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
@@ -65,7 +59,7 @@ class GameSettings extends React.Component {
         </div>
         <h3>Choose nicknames for players:</h3>
         <div>
-          {this.getDefaultPlayerNames().map((name, i) => 
+          {this.state.playerNames.map((name, i) =>
             <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i}
                    key={i} type="text" className="form-control player-name"
                    placeholder={`Player ${i+1}`} value={name} /> )}
