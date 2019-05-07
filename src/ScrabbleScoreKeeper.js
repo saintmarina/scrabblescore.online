@@ -103,7 +103,8 @@ class InGameControls extends React.Component {
     this._resetCurrentWord()
   }
 
-  handleAddWord() {
+  handleAddWord(e) {
+    e.preventDefault()  /* prevent form submission */
     this._onSetGame(this.props.game.addWord(this.state.currentWord))
   }
 
@@ -124,20 +125,20 @@ class InGameControls extends React.Component {
     const endTurnButtonText = this.props.game.getCurrentTurn().isEmpty() && this.state.currentWord.value === '' ? 'PASS' : 'END TURN'
     const isEndGameButtonDisabled = this.props.game.currentPlayerIndex !== 0 || this.state.currentWord.value !== '' || this.props.game.getCurrentTurn().score > 0
     return (
-      <div>
+      <form>
         <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
         <CurrentScore score={this.state.currentWord.score} />
         <div>
-          <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
-          <button onClick={this.handleAddWord} className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
-          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
+          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+          <button onClick={this.handleAddWord} type="submit" className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
+          <button onClick={this.handleEndTurn} type="button" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
           <div className="custom-control custom-switch">
             <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.props.game.getCurrentTurn().bingo} />
             <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
           </div>
-          <button onClick={this.handleEndGame} type="submit" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
+          <button onClick={this.handleEndGame} type="button" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
         </div>
-      </div>
+      </form>
     )
   }
 }
@@ -167,7 +168,8 @@ class InGameOverControls extends React.Component {
     this.setState({currentWord: _word});
   }
 
-  handleLeftOvers() {
+  handleLeftOvers(e) {
+    e.preventDefault() /* prevent form submission */
     let game = this.state.currentWord.value.length !== 0 ? this.props.game.addWord(this.state.currentWord) : this.props.game;
     game = game.endTurn()
     game = this.props.game.currentPlayerIndex === this.props.game.players.length - 1 ? 
@@ -181,14 +183,14 @@ class InGameOverControls extends React.Component {
     return (
       <div>
         {!this.props.game.areLeftOversSubmitted() ? 
-          <div>
+          <form>
             <ScrabbleInputBox onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
             <CurrentScore score={this.state.currentWord.score} />
-            <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
             <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">{submitButtonText}</button>
-          </div> :
+          </form> :
           <div>
-            <button onClick={this.handleUndo} type="submit" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
           </div>
         }
       </div>

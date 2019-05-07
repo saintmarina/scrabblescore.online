@@ -7,6 +7,8 @@ class GameSettings extends React.Component {
     this.handleChangeOfNumber = this.handleChangeOfNumber.bind(this);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
     this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
+    this.handleGameStart = this.handleGameStart.bind(this);
+
     this.state = {
       numberOfPlayers: 2,
       playerNames: ['', ''],
@@ -29,9 +31,9 @@ class GameSettings extends React.Component {
     this.setState({language: e.target.value});
   }
 
-  setGameSettings() {
-    console.log(this.getDefaultPlayerNames())
-    this.props.onGameStart(this.getDefaultPlayerNames().map((name, i) => name ? name : `Player ${i+1}`), this.state.language);
+  handleGameStart(e) {
+    e.preventDefault() /* prevent form submission */
+    this.props.onGameStart(this.state.playerNames.map((name, i) => name ? name : `Player ${i+1}`), this.state.language);
   }
 
   render() {
@@ -41,32 +43,34 @@ class GameSettings extends React.Component {
         <p>Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
            Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in an 
            innovative and easy way, whilst playing the Scrabble board game.</p>
-        <h3>Choose language:</h3>
-        <div>
-          <select id='language-select' value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
-            <option value="fr">French</option>
-          </select>
-        </div>
-        <h3>Choose number of players:</h3>
-        <div>
-          <select id='number-of-players-select' value={this.state.numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-        <h3>Choose nicknames for players:</h3>
-        <div>
-          {this.state.playerNames.map((name, i) =>
-            <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i}
-                   key={i} type="text" className="form-control player-name"
-                   placeholder={`Player ${i+1}`} value={name} /> )}
-        </div>
-        <div className='input-group'>
-          <button onClick={() => this.setGameSettings(this)} type="submit" className="btn btn-info">Next</button>
-        </div>
+        <form>
+          <h3>Choose language:</h3>
+          <div>
+            <select id='language-select' value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
+              <option value="en">English</option>
+              <option value="ru">Russian</option>
+              <option value="fr">French</option>
+            </select>
+          </div>
+          <h3>Choose number of players:</h3>
+          <div>
+            <select id='number-of-players-select' value={this.state.numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <h3>Choose nicknames for players:</h3>
+          <div>
+            {this.state.playerNames.map((name, i) =>
+              <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i}
+                     key={i} type="text" className="form-control player-name"
+                     placeholder={`Player ${i+1}`} /> )}
+          </div>
+          <div className='input-group'>
+            <button onClick={this.handleGameStart} type="submit" className="btn btn-info">Next</button>
+          </div>
+        </form>
       </div>
     )
   }
