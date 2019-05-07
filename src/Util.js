@@ -26,7 +26,8 @@ export function scrabbleScore(word, modifiers, language) {
   let result = 0;
   
   word.split('').forEach((letter, i) => {
-    let score = scoreListsMap[language].scores[letter];
+    let score = scoreListsMap[language].scores[letter.toLowerCase()];
+    // eslint-disable-next-line
     switch (modifiers[i]) {
       case 'blank':         score *= 0; break;
       case 'double-letter': score *= 2; break;
@@ -36,6 +37,7 @@ export function scrabbleScore(word, modifiers, language) {
   })
 
   modifiers.forEach(modifier => {
+    // eslint-disable-next-line
     switch (modifier) {
       case 'double-word': result *= 2; break;
       case 'triple-word': result *= 3; break;
