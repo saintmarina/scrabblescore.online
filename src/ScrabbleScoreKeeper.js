@@ -41,29 +41,30 @@ class ScoreKeeper extends React.Component {
     const callPlayerToAction = `${this.props.playerNames[this.state.game.currentPlayerIndex]}, submit ${!this.state.game.isGameOver() ?
       "a word:" : "your leftovers:"}`
 
-/* TODO  const game = this.state.game */
-      /*TODO call this controlsProps */
-    const props = {onSetGame: this.handleSetGame,
+/* DONE  const game = this.state.game */
+      /*DONE call this controlsProps */
+    const game = this.state.game
+    const controlProps = {onSetGame: this.handleSetGame,
                    onUndo: this.handleUndo,
                    undoDisabled: this.state.games.length === 0,
-                   game: this.state.game,
+                   game: game,
                    language: this.props.language}
     return (
       <div className='score-keeper'>
-        <ScoreGrid playerNames={this.props.playerNames} game={this.state.game} language={this.props.language} />
+        <ScoreGrid playerNames={this.props.playerNames} game={game} language={this.props.language} />
         <div>
-          {!this.state.game.areLeftOversSubmitted() ?
+          {!game.areLeftOversSubmitted() ?
             <p className="bold">{callPlayerToAction}</p> :
             <div className='winner'>
-            {this.state.game.getWinners().length > 1 ? 
+            {game.getWinners().length > 1 ?
               <h1>{this.renderTieGame()}</h1> : 
-              <h1>{this.props.playerNames[[...this.state.game.getWinners()]]} WON</h1>
+              <h1>{this.props.playerNames[[...game.getWinners()]]} WON</h1>
             }
             </div>
           }
-          {!this.state.game.isGameOver() ?
-            <InGameControls {...props} /> :
-            <InGameOverControls {...props} />
+          {!game.isGameOver() ?
+            <InGameControls {...controlProps} /> :
+            <InGameOverControls {...controlProps} />
           }
         </div>
       </div>
