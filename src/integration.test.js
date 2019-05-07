@@ -164,6 +164,12 @@ describe('Game', () => {
 	const getCurrentLanguage = wrapper => {
 		return wrapper.find('ScoreKeeper').prop('language')
 	}
+	const checkIfButtonDisabled = (wrapper, regex) => {
+		return wrapper.find('button').filterWhere(n => n.text().match(regex)).prop('disabled')
+	}
+	const getbuttonText = (wrapper, buttonIndex) => {
+		return wrapper.find('button').at(buttonIndex).text()
+	}
 
 	/*.tap(n => console.log(n.debug()))*/
 
@@ -178,6 +184,67 @@ describe('Game', () => {
 		expect(getPlayerNames(wrapper, 1)).toEqual('Nico')
 		expect(getPlayerNames(wrapper, 2)).toEqual('Kyle')
 		expect(getPlayerNames(wrapper, 3)).toEqual('Sofi')
+	})
+
+	it('if no name, prints "Player " + playerIndex', () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		wrapper.find('button').simulate('click')
+
+		expect(getNumberOfPlayers(wrapper)).toEqual(2)
+		expect(getPlayerNames(wrapper, 0)).toEqual('Player 1')
+		expect(getPlayerNames(wrapper, 1)).toEqual('Player 2')
+	})
+
+	it('disables Undo button, if no games played', () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 4)
+		typeInputBox(wrapper, 'ouguiya')
+
+		expect(checkIfButtonDisabled(wrapper, /undo/i)).toEqual(true)
+		clickAddWord(wrapper)
+		expect(checkIfButtonDisabled(wrapper, /undo/i)).toEqual(false)
+	})
+
+	it('disables Add Word button, if no letters typed', () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 4)
+		expect(checkIfButtonDisabled(wrapper, /add.*word/i)).toEqual(true)
+		typeInputBox(wrapper, 'ouguiya')
+		expect(checkIfButtonDisabled(wrapper, /add.*word/i)).toEqual(false)
+	})
+
+	it("disables End Game button, if it's not the first player's turn and he didn't type any letters yet", () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 2)
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(false)
+		typeInputBox(wrapper, 'quizzify')
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true)
+		clickEndTurn(wrapper)
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true)
+		typeInputBox(wrapper, 'oouiya')
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true)
+		clickEndTurn(wrapper)
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(false)
+	})
+
+	it('if no leftovers typed inside input box, button will say "submit no leftovers"', () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 3)
+		clickEndGame(wrapper)
+
+		expect(getbuttonText(wrapper, 1)).toEqual('SUBMIT NO LEFTOVERS')
+
+		typeInputBox(wrapper, 'q')
+		expect(getbuttonText(wrapper, 1)).toEqual('SUBMIT LEFTOVERS')
+
+	})
+
+	it('if no word typed, End Game button displays "PASS"', () => {
+		const wrapper = mount(<ScrabbleScoreKeeper />)
+		fillPlayers(wrapper, 3)
+		expect(getbuttonText(wrapper, 2)).toEqual('PASS')
+		typeInputBox(wrapper, 'q')
+		expect(getbuttonText(wrapper, 2)).toEqual('END TURN')
 	})
 
 	it('types inside the scrabble input box', () => {
