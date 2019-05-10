@@ -1,16 +1,3 @@
-.card-header {
-	background-color: white;
-}
-.footer {
-	width: 100%;
-	background-color: #AFEEEE;
-	text-align: center;
-	padding: .75em;
-
-}
-.footer p {
- 	margin: 0;
-}
 .container {
 	text-align: center;
 	background-color: #E0FFFF;
@@ -18,6 +5,21 @@
 	padding-right: 0;
 	padding-left: 0;
 }
+
+body {
+	text-align: center;
+}
+
+h1 {
+	color: rgb(238, 62, 128);
+}
+
+.input-group {
+  display: inline-block;
+	margin: 0 auto;
+  
+}
+
 .nav {
 	background-color: #17a2b8;
 }
@@ -29,252 +31,14 @@
 	color: rgb(243, 106, 152);
 	text-decoration: underline;
 }
-form#submit_word .bold{
-	font-weight: bold;
-	font-size: 150%;
-}
-form#submit_word button {
-	margin-left:10px;
-}
-.card-header#score {
-	margin-left: 34%;
-	margin-top: 33px;
-	width: 19rem;
-	font-weight: bold;
-	background-color: rgb(243, 106, 152);
-	border-radius: 10px;
-	margin-bottom: 10px;
-}
-.btn {
-	vertical-align: bottom;
-}
-.pass-endturn-button {
-	width: 106px;
-}
-.main {
-	width: 80%;
-	margin: 0 auto;
-}
-.tooltip-container {
-	width: 165px;
-}
-.input-group-append {
-	display:block;
-}
-.input_names {
-	padding-bottom: 2px;
-}
-.input-group {
-	display: inline-block;
-    margin: 0 auto;
-    text-align: center;
-}
-.end-game {width: 242px;}
 
-.player-header.current {
-	color: rgb(238, 62, 128);
-}
-.scrabble-input-box {
-	position: relative;
-	margin: auto;
-	margin-bottom: 10px;
-	border: 1px solid grey;
-	background-color: white;
-	height: 65px;
-	width: 375px;
-	border-radius: 20px;
-}
-.hidden-input {
-	position: absolute;
-	caret-color: transparent;
-	bottom: 18px;
-	right: 80px;
-	z-index: -50;
-}
-.scrabble-input-box.large {
-	width: 600px;
-}
-.score-box {
-	display: inline-block;
-	border: 1px solid grey;
-	background-color: white;
-	height: 30px;
-	width: 30px;
-	border-radius: 5px;
-	padding-top: 1px;
-}
-.player-active { color: red; }
-
-.scrabble-tiles {
-	text-align: left;
-	left: 15px;
-	position: relative;
-	bottom: -1px;
-}
-/*double-letter linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg")
-  double-word linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg")
-  triple-letter linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg")
-  triple-word linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg")
-*/
-.scrabble-letter {
-	background-image: url("/background.jpg");
-	border: 5px;
-	border: black;
-	background-size: 56px;
-	display: inline-block;
-    width: 56px;
-    height: 60px;
-    position: relative;
-   	z-index: 1;
-}
-
-.scrabble-tiles.blinker:last-child:after {
-	content: '';
-	position: absolute;
-	background-color: #335;
-	margin-left: 5px;
-	top: 7px;
-	width: 3px;
-	height: 46px;
-	animation: blinker 1s linear infinite;
-
-}
-.letter {
+.footer {
 	width: 100%;
-	top: 6px;
-	display: block;
+	background-color: #AFEEEE;
 	text-align: center;
-	line-height: normal;
-	font-size: 36px;
-	position: absolute;
+	padding: .75em;
 
 }
-.popover-header {
-	text-align: center;
+.footer p {
+ 	margin: 0;
 }
-.popover-body {
-	width: 200px;
-}
-.popover {
-	width: 172px;
-	height: 202px;
-}
-.scrabble-letter:hover {
-	box-shadow: 0 0 15px red;
-	z-index: 10;
-}
-.score {
-	position: absolute;
-	text-align: right;
-	bottom: 0;
-	right: 3px;
-}
-.score-box.high {
-background-color: red;
-}
-.move {
-	width: 75px;
-}
-
-.scrabble-letter {
-	cursor: pointer;
-}
-.btn {
-	margin: 8px;
-}
-.custom-control-input:checked~.custom-control-label::before {
-	background-color:#17a2b8;
-	border-color:#17a2b8;
-}
-.modifier {
-	margin: 2px;
-	background-image: url('/modifier-frame.png');
-	background-size: 138px 69px;
-	width: 69px;
-	height: 69px;
-	display: inline-block;
-	text-align: center;
-	font-family: sans-serif;
-	line-height: 120%;
-	padding-top: 13px;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 12px;
-	cursor: pointer;
-}
-.modifier.double-letter {
-	background-color: #9fcae0;
-}
-.modifier.double-word {
-	background-color: #eda498;
-}							
-.modifier.triple-letter {
-	background-color: #18a3e1;
-	background-position: 69px 0px;
-}
-.modifier.triple-word {
-	background-color: #f74d13;
-	background-position: 69px 0px;
-}
-.modifier.blank {
-	background-image: url("/background.jpg");
-}
-.modifier:hover {
-	box-shadow: 0 0 15px red;
-	z-index: 10;
-}
-.scrabble-letter.double-letter {
-	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg");
-}
-.scrabble-letter.double-word {
-	background-image: linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg");
-}
-.scrabble-letter.triple-letter {
-	background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg");
-}
-.scrabble-letter.triple-word {
-	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
-}
-.scrabble-letter.blank .score {
-	font-size: 1px;
-}
-.table-bordered {table-layout: fixed;}
-.table .scrabble-letter {
-	height: 32px;
-	width: 32px;
-}
-.table .letter {
-	font-size: 20px;
-	top: 3px;
-	left: -2px;
-	font-weight: normal;
-}
-.table .score {
-	font-size: 10px;
-	top: 18px;
-	font-weight: normal;
-}
-@keyframes blinker {  
-  0% { opacity: 1; }
-  49% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 0; }
-}
-.child {
-	top: 8px;
-}
-.word-submit-button {
-	margin-top: 30px;
-}
-
-
-tr.head {
-	background-color: #48D1CC;
-}
-h1 {
-	color: rgb(238, 62, 128);
-}
-body {
-	text-align: center;
-}
-

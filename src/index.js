@@ -1,7 +1,8 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ScrabbleScoreKeeper from './ScrabbleScoreKeeper.js';
+import ScrabbleScoreKeeper from './components/ScrabbleScoreKeeper.js';
 import * as serviceWorker from './serviceWorker';
 
 
