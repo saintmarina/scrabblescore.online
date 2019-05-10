@@ -1,0 +1,41 @@
+.btn {
+	text-align: center;
+	margin: 8px;
+	vertical-align: bottom;
+}
+
+.word-submit-button {
+	margin-top: 30px;
+}
+
+.pass-endturn-button {
+	width: 106px;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+	background-color:#17a2b8;
+	border-color:#17a2b8;
+}
+
+.end-game {
+	width: 242px;
+}
+
+.card-header {
+	background-color: white;
+}
+
+.main {
+	width: 80%;
+	margin: 0 auto;
+}
+.card-header.current_score {
+	margin: auto;
+	margin-top: 33px;
+	width: 19rem;
+	font-weight: bold;
+	background-color: rgb(243, 106, 152);
+	border-radius: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}

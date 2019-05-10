@@ -1,0 +1,54 @@
+.scrabble-letter {
+	background-image: url("/background.jpg");
+	border: 5px;
+	border: black;
+	background-size: 56px;
+	display: inline-block;
+  width: 56px;
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.scrabble-letter:hover {
+	box-shadow: 0 0 15px red;
+	z-index: 10;
+}
+
+.scrabble-letter.double-letter {
+	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg");
+}
+
+.scrabble-letter.double-word {
+	background-image: linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg");
+}
+
+.scrabble-letter.triple-letter {
+	background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg");
+}
+
+.scrabble-letter.triple-word {
+	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
+}
+
+.scrabble-letter.blank .score {
+	font-size: 1px;
+}
+
+.letter {
+	width: 100%;
+	top: 6px;
+	display: block;
+	text-align: center;
+	line-height: normal;
+	font-size: 36px;
+	position: absolute;
+}
+
+.score {
+	position: absolute;
+	text-align: right;
+	bottom: 0;
+	right: 3px;
+}

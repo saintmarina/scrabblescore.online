@@ -1,0 +1,41 @@
+.move {
+	width: 75px;
+}
+
+.score-box {
+	display: inline-block;
+	border: 1px solid grey;
+	background-color: white;
+	height: 30px;
+	width: 30px;
+	border-radius: 5px;
+	padding-top: 1px;
+}
+
+.score-box.high {
+background-color: red;
+}
+
+.table-bordered {
+	table-layout: fixed;
+}
+
+.player-header.current {
+	color: rgb(238, 62, 128);
+}
+
+.table .scrabble-letter {
+	height: 32px;
+	width: 32px;
+}
+.table .letter {
+	font-size: 20px;
+	top: 3px;
+	left: -2px;
+	font-weight: normal;
+}
+.table .score {
+	font-size: 10px;
+	top: 18px;
+	font-weight: normal;
+}

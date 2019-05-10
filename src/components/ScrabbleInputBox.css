@@ -1,0 +1,92 @@
+.scrabble-input-box {
+	position: relative;
+	margin: auto;
+	margin-bottom: 10px;
+	border: 1px solid grey;
+	background-color: white;
+	height: 65px;
+	width: 375px;
+	border-radius: 20px;
+}
+
+.scrabble-input-box.large {
+	width: 600px;
+}
+
+.hidden-input {
+	position: absolute;
+	caret-color: transparent;
+	bottom: 18px;
+	right: 80px;
+	z-index: -50;
+}
+
+.scrabble-tiles {
+	text-align: left;
+	left: 15px;
+	position: relative;
+	bottom: -1px;
+}
+
+.scrabble-tiles.blinker:last-child:after {
+	content: '';
+	position: absolute;
+	background-color: #335;
+	margin-left: 5px;
+	top: 7px;
+	width: 3px;
+	height: 46px;
+	animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  0% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.modifier {
+	margin: 2px;
+	background-image: url('/modifier-frame.png');
+	background-size: 138px 69px;
+	width: 69px;
+	height: 69px;
+	display: inline-block;
+	text-align: center;
+	font-family: sans-serif;
+	line-height: 120%;
+	padding-top: 13px;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.modifier.double-letter {
+	background-color: #9fcae0;
+}
+
+.modifier.double-word {
+	background-color: #eda498;
+}
+
+.modifier.triple-letter {
+	background-color: #18a3e1;
+	background-position: 69px 0px;
+}
+
+.modifier.triple-word {
+	background-color: #f74d13;
+	background-position: 69px 0px;
+}
+
+.modifier.blank {
+	background-image: url("/background.jpg");
+}
+
+.modifier:hover {
+	box-shadow: 0 0 15px red;
+	z-index: 10;
+}
+
