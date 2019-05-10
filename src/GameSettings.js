@@ -32,11 +32,13 @@ class GameSettings extends React.Component {
   }
 
   handleGameStart(e) {
+    const { playerNames, language } = this.state;
     e.preventDefault() /* prevent form submission */
-    this.props.onGameStart(this.state.playerNames.map((name, i) => name ? name : `Player ${i+1}`), this.state.language);
+    this.props.onGameStart(playerNames.map((name, i) => name ? name : `Player ${i+1}`), language);
   }
 
   render() {
+    const { language, numberOfPlayers, playerNames } = this.state;
     return (
       <div>
         <img id="logo" src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width='750' height='200'/>
@@ -46,7 +48,7 @@ class GameSettings extends React.Component {
         <form>
           <h3>Choose language:</h3>
           <div>
-            <select id='language-select' value={this.state.language} onChange={this.handleChangeOfLanguage} className="custom-select">
+            <select id='language-select' value={language} onChange={this.handleChangeOfLanguage} className="custom-select">
               <option value="en">English</option>
               <option value="ru">Russian</option>
               <option value="fr">French</option>
@@ -54,7 +56,7 @@ class GameSettings extends React.Component {
           </div>
           <h3>Choose number of players:</h3>
           <div>
-            <select id='number-of-players-select' value={this.state.numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
+            <select id='number-of-players-select' value={numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -62,7 +64,7 @@ class GameSettings extends React.Component {
           </div>
           <h3>Choose nicknames for players:</h3>
           <div>
-            {this.state.playerNames.map((name, i) =>
+            {playerNames.map((name, i) =>
               <input onChange={e => this.handleChangeOfName(i, e)} id={'player-name-input-' + i}
                      key={i} type="text" className="form-control player-name"
                      placeholder={`Player ${i+1}`} /> )}

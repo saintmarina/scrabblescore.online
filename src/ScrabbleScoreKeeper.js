@@ -19,46 +19,49 @@ class ScoreKeeper extends React.Component {
     }
   }
 
-  handleSetGame(game) {
-    let newGames = [...this.state.games.slice(), this.state.game]
-    this.setState({games: newGames, game: game})
+  handleSetGame(myGame) {
+    const { game, games } = this.state;
+    let newGames = [...games.slice(), game]
+    this.setState({games: newGames, game: myGame})
   }
 
   handleUndo() {
-    let games = this.state.games.slice(0, -1)
-    let game = this.state.games[this.state.games.length - 1]
-    this.setState({game: game, games: games});
+    const { games } = this.state;
+    let myGames = games.slice(0, -1)
+    let myGame = games[games.length - 1]
+    this.setState({game: myGame, games: myGames});
   }
 
   renderTieGame() {
-    let winners = this.state.game.getWinners(false)
-    return winners.map(winnerIndex => winners.length > 1 ? 
-      `${this.props.playerNames[winnerIndex]}: ${this.state.game.getTotalScore(winnerIndex, false)}` :
-      `${this.props.playerNames[winnerIndex]} WON`).join(', ') 
+    const { game } = this.state;
+    const { playerNames } = this.props;
+    let winners = game.getWinners(false);
+    return winners.map(winnerIndex => winners.length > 1 ?
+      `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, false)}` :
+      `${playerNames[winnerIndex]} WON`).join(', ');
   }
 
   render() {
-    const callPlayerToAction = `${this.props.playerNames[this.state.game.currentPlayerIndex]}, submit ${!this.state.game.isGameOver() ?
+    const { game, games } = this.state; 
+    const { playerNames, language } = this.props
+    const callPlayerToAction = `${playerNames[game.currentPlayerIndex]}, submit ${!game.isGameOver() ?
       "a word:" : "your leftovers:"}`
 
-/* DONE  const game = this.state.game */
-      /*DONE call this controlsProps */
-    const game = this.state.game
     const controlProps = {onSetGame: this.handleSetGame,
                    onUndo: this.handleUndo,
-                   undoDisabled: this.state.games.length === 0,
+                   undoDisabled: games.length === 0,
                    game: game,
-                   language: this.props.language}
+                   language: language}
     return (
       <div className='score-keeper'>
-        <ScoreGrid playerNames={this.props.playerNames} game={game} language={this.props.language} />
+        <ScoreGrid playerNames={playerNames} game={game} language={language} />
         <div>
           {!game.areLeftOversSubmitted() ?
             <p className="bold">{callPlayerToAction}</p> :
             <div className='winner'>
             {game.getWinners().length > 1 ?
               <h1>{this.renderTieGame()}</h1> : 
-              <h1>{this.props.playerNames[[...game.getWinners()]]} WON</h1>
+              <h1>{playerNames[[...game.getWinners()]]} WON</h1>
             }
             </div>
           }
@@ -106,18 +109,22 @@ class InGameControls extends React.Component {
     this._resetCurrentWord()
   }
 
-  handleAddWord(e) {
-    e.preventDefault()  /* prevent form submission */
+  handleAddWord() {
+    
     this._onSetGame(this.props.game.addWord(this.state.currentWord))
   }
 
-  handleEndTurn() {
-    let game = this.state.currentWord.value.length !== 0 ? this.props.game.addWord(this.state.currentWord) : this.props.game;
-    this._onSetGame(game.endTurn());
+  handleEndTurn(e) {
+    const { currentWord } = this.state;
+    const { game } = this.props;
+    e.preventDefault()  /* prevent form submission */
+    let myGame = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
+    this._onSetGame(myGame.endTurn());
   }
 
   handleBingo() {
-    this.props.onSetGame(this.props.game.setBingo(!this.props.game.getCurrentTurn().bingo))
+    const { game } = this.props;
+    this.props.onSetGame(game.setBingo(!game.getCurrentTurn().bingo))
   }
 
   handleEndGame() {
@@ -129,18 +136,20 @@ class InGameControls extends React.Component {
   }
   
   render() {
-    const endTurnButtonText = this.props.game.getCurrentTurn().isEmpty() && this.state.currentWord.value === '' ? 'PASS' : 'END TURN'
-    const isEndGameButtonDisabled = this.props.game.currentPlayerIndex !== 0 || this.state.currentWord.value !== '' || this.props.game.getCurrentTurn().score > 0
+    const { currentWord } = this.state;
+    const { game, language, undoDisabled } = this.props;
+    const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN'
+    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0
     return (
-      <form>
-        <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
-        <CurrentScore score={this.state.currentWord.score} />
+      <form autoComplete='off'>
+        <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={currentWord} language={language} />
+        <CurrentScore score={currentWord.score} />
         <div>
-          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
-          <button onClick={this.handleAddWord} type="submit" className="btn btn-info word-submit-button" disabled={this.state.currentWord.value === ''}>+ ADD A WORD</button>
-          <button onClick={this.handleEndTurn} type="button" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
+          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
+          <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button" disabled={currentWord.value === ''}>+ ADD A WORD</button>
+          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
           <div className="custom-control custom-switch">
-            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={this.props.game.getCurrentTurn().bingo} />
+            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
             <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
           </div>
           <button onClick={this.handleEndGame} type="button" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
@@ -164,7 +173,7 @@ class InGameOverControls extends React.Component {
 
   _resetCurrentWord() {
     this.setState({currentWord: emptyWord})
-    this.input.current.focus()
+    //this.input.current.focus() --- ???????????????????????????????????? Do I need this line or not?
   }
 
   handleUndo(){
@@ -178,12 +187,13 @@ class InGameOverControls extends React.Component {
   }
 
   handleLeftOvers(e) {
+    const {game, onSetGame} = this.props;
     e.preventDefault() /* prevent form submission */
-    let game = this.state.currentWord.value.length !== 0 ? this.props.game.addWord(this.state.currentWord) : this.props.game;
-    game = game.endTurn()
-    game = this.props.game.currentPlayerIndex === this.props.game.players.length - 1 ? 
-    game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers()) : game;
-    this.props.onSetGame(game)
+    let myGame = this.state.currentWord.value.length !== 0 ? game.addWord(this.state.currentWord) : game;
+    myGame = myGame.endTurn()
+    myGame = game.currentPlayerIndex === game.players.length - 1 ? 
+    myGame.distributeLeftOversToReapers(myGame.getReapers(), myGame.getSumOfLeftovers()) : myGame;
+    onSetGame(myGame)
     this._resetCurrentWord()
   }
 
@@ -192,18 +202,20 @@ class InGameOverControls extends React.Component {
   }
 
   render() {
-    const submitButtonText = this.state.currentWord.value.length > 0 ? "SUBMIT LEFTOVERS" : "SUBMIT NO LEFTOVERS"; 
+    const { currentWord } = this.state;
+    const { game, language, undoDisabled } = this.props
+    const submitButtonText = currentWord.value.length > 0 ? "SUBMIT LEFTOVERS" : "SUBMIT NO LEFTOVERS"; 
     return (
       <div>
-        {!this.props.game.areLeftOversSubmitted() ? 
-          <form>
-            <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={this.state.currentWord} language={this.props.language} />
-            <CurrentScore score={this.state.currentWord.score} />
-            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+        {!game.areLeftOversSubmitted() ? 
+          <form autoComplete='off'>
+            <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={currentWord} language={language} />
+            <CurrentScore score={currentWord.score} />
+            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
             <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">{submitButtonText}</button>
           </form> :
           <div>
-            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={this.props.undoDisabled}>UNDO</button>
+            <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
           </div>
         }
       </div>
@@ -221,16 +233,10 @@ class CurrentScore extends React.Component {
   }
 }
 
-/* TODO take out debug mode */
 class ScrabbleScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.debug ?
-      {
-        playerNames: ['Anna', 'Nico'],
-        language: 'en',
-      } :
-      {
+    this.state = {
         playerNames: [],
         language: '',
       }
@@ -241,9 +247,10 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   renderGame() {
-    return this.state.playerNames.length === 0 ? 
+    const { playerNames, language } = this.state;
+    return playerNames.length === 0 ? 
       <GameSettings onGameStart={this.handleGameStart.bind(this)} /> :
-      <ScoreKeeper playerNames={this.state.playerNames} language={this.state.language} />
+      <ScoreKeeper playerNames={playerNames} language={language} />
   }
 
   render() {
@@ -257,3 +264,10 @@ class ScrabbleScoreKeeper extends React.Component {
 }
 
 export default ScrabbleScoreKeeper;
+
+/*TODO:
+- use lint to correct the code format (use airbnb plug in)
+- research on how to organize files in src directory (make a css file per component). 
+- use airbnb js style guide to refactor your code 
+X change all this.state to ==>   const { width } = this.state;
+- fix blinker bug*/

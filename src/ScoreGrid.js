@@ -11,29 +11,29 @@ export default class ScoreGrid extends React.Component {
     return i === currentPlayerIndex ? 'player-header current' : 'player-header';
   }
 
-/* DONE fix indentation */
   render() {
+    const { playerNames, game, language } = this.props;
     return (
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
             <th className='move'>Move</th>
-              {this.props.playerNames.map((player, i) =>
-              <th key={i} className={this.activePlayerClass(i, this.props.game.currentPlayerIndex)}>{player}</th>)}
+              {playerNames.map((player, i) =>
+              <th key={i} className={this.activePlayerClass(i, game.currentPlayerIndex)}>{player}</th>)}
           </tr>
         </thead>
         <tbody className="tbody-rows">
-          {[...Array(this.props.game.getCurrentTurnNumber() + 1)].map((_, i) => 
+          {[...Array(game.getCurrentTurnNumber() + 1)].map((_, i) => 
             <tr className="move-row" key={i}>
               <th>{i+1}</th>
-                {this.props.game.players.map((player, j) =>
-                  <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={this.props.language} game={this.props.game} /> :
+                {game.players.map((player, j) =>
+                  <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} /> :
                   null}</td>)}
             </tr> )}
             <tr className='total-score'>
               <th>TOTAL</th>
-                {this.props.playerNames.map((_, i) =>
-                  <td key={i}>{this.props.game.getTotalScore(i)}</td>)}
+                {playerNames.map((_, i) =>
+                  <td key={i}>{game.getTotalScore(i)}</td>)}
             </tr>
         </tbody>
       </table>
@@ -43,14 +43,15 @@ export default class ScoreGrid extends React.Component {
 
 class WordInTiles extends React.Component {
   render() {
-    let letterTiles = this.props.word.value.split('').map((letter, i) => {
+    const { word, language } = this.props;
+    let letterTiles = word.value.split('').map((letter, i) => {
       let tile = <ScrabbleTile key={i}
                                letter={letter}
-                               modifier={this.props.word.modifiers[i]}
-                               score={scrabbleScore(letter, [null], this.props.language)} /> 
+                               modifier={word.modifiers[i]}
+                               score={scrabbleScore(letter, [null], language)} /> 
       /* DONE take out else. Use the pattern of modifying the variable like the adding word in endTurn() */
-      if (this.props.word.modifiers[i]) {
-        tile = <Tooltip key={i} placement="top" trigger="hover" tooltip={this.props.word.modifiers[i]}>{tile}</Tooltip>
+      if (word.modifiers[i]) {
+        tile = <Tooltip key={i} placement="top" trigger="hover" tooltip={word.modifiers[i]}>{tile}</Tooltip>
       }
       return tile
     })
@@ -74,13 +75,13 @@ class ScoreGridCell extends React.Component {
   renderNormal() {
     /* DONE let -> const. Put the const in the top of the file */
     /* DONE have the BINGO score to be a const somehwere */
-    
-    let rows = this.props.turn.words.map((word, i) =>
+    const { turn, language } = this.props;
+    let rows = turn.words.map((word, i) =>
                 <tr key={i}>
-                  <td><WordInTiles word={word} language={this.props.language} /></td>
+                  <td><WordInTiles word={word} language={language} /></td>
                   <td><span className={word.score >= highScore ? 'score-box high':'score-box' }>{word.score}</span></td>
                 </tr>)
-    if (this.props.turn.bingo) {
+    if (turn.bingo) {
       rows.push(<tr key='bingo'>
                   <td>BINGO</td>
                   <td>
@@ -93,11 +94,11 @@ class ScoreGridCell extends React.Component {
   }
 
   render() {
-    /* DONE identation */
+    const { turn, game } = this.props;
     return (
       <table className='cell-table'>
         <tbody>
-          {this.props.turn.isPassed(this.props.game) ? this.renderPassed() : this.renderNormal()}
+          {turn.isPassed(game) ? this.renderPassed() : this.renderNormal()}
         </tbody>
       </table>
     )

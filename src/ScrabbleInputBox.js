@@ -15,18 +15,18 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   handleHiddenInputChange(e) {
+    const { language, word, onChange} = this.props;
     let input = e.target.value;
-    /* DONE style: spaces around = and += */
-    let result = input.split('').map(letter => isLetterAllowed(letter, this.props.language) ? letter : '');
-    
-    let modifiers = resizeArray(this.props.word.modifiers, result.length, null);
-    this.props.onChange({value: result.join(''), modifiers: modifiers})
+    let result = input.split('').map(letter => isLetterAllowed(letter, language) ? letter : '');
+    let modifiers = resizeArray(word.modifiers, result.length, null);
+    onChange({value: result.join(''), modifiers: modifiers})
   }
 
   handleModifierChange(letterIndex, modifier) {
-    let modifiers = this.props.word.modifiers.slice();
+    const { word, onChange} = this.props;
+    let modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
-    this.props.onChange({value: this.props.word.value, modifiers: modifiers})
+    onChange({value: word.value, modifiers: modifiers})
   }
 
   focus() {
@@ -34,15 +34,16 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   render() {
+    const { language, word } = this.props;
     return (
-      <div onClick={this.focus} className={`scrabble-input-box${this.props.word.value.length > 6 ? ' large' : ''}`}>
-        {this.state.inFocus && <div className='blinker'></div>}
-          <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={this.props.word.value}
-                 className='hidden-input' onBlur={() => this.setState({inFocus: false})} onFocus={() => this.setState({inFocus: true})} type='text' maxLength='15' autoComplete='off' />
-        <div className='scrabble-tiles'>
-          {this.props.word.value.split('').map((c, i) =>
+      <div onClick={this.focus} className={`scrabble-input-box${word.value.length > 6 ? ' large' : ''}`}>
+        <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={word.value}
+               className='hidden-input' onBlur={() => this.setState({inFocus: false})} onFocus={() => this.setState({inFocus: true})}
+               type='text' maxLength='15' autoComplete='off' autoCapitalize="off" spellCheck="false" autoCorrect="off" />
+        <div className={this.state.inFocus ? 'scrabble-tiles blinker' : 'scrabble-tiles'}>
+          {word.value.split('').map((c, i) =>
             <WithModifierPopover onChange={(modifier) => this.handleModifierChange(i, modifier)} key={i} >
-              <ScrabbleTile letter={c} score={scrabbleScore(c, [null], this.props.language)} modifier={this.props.word.modifiers[i]} />
+              <ScrabbleTile letter={c} score={scrabbleScore(c, [null], language)} modifier={word.modifiers[i]} />
             </WithModifierPopover>
           )}
         </div>
@@ -104,8 +105,11 @@ class ModifierTile extends React.Component {
     }
   }
   render() {
+    const { onClick, modifier } = this.props;
     return(
-      <span onClick={() => this.props.onClick(this.props.modifier)} className={'modifier ' + this.props.modifier}>{this.tileText()}</span>
+      <span onClick={() => onClick(modifier)} onTouchStart={() => onClick(modifier)} className={'modifier ' + modifier}>
+        {this.tileText()}
+      </span>
     )
   }
 }

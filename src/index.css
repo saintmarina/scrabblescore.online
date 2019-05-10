@@ -70,6 +70,7 @@ form#submit_word button {
     text-align: center;
 }
 .end-game {width: 242px;}
+
 .player-header.current {
 	color: rgb(238, 62, 128);
 }
@@ -82,6 +83,13 @@ form#submit_word button {
 	height: 65px;
 	width: 375px;
 	border-radius: 20px;
+}
+.hidden-input {
+	position: absolute;
+	caret-color: transparent;
+	bottom: 18px;
+	right: 80px;
+	z-index: -50;
 }
 .scrabble-input-box.large {
 	width: 600px;
@@ -96,23 +104,7 @@ form#submit_word button {
 	padding-top: 1px;
 }
 .player-active { color: red; }
-.blinker {
-	position: absolute;
-	background-color: #335;
-	top: 7px;
-	left: 15px;
-	width: 3px;
-	height: 46px;
-	animation: blinker 1s linear infinite;
-}
-.hidden-input {
-	position: fixed;
-	top: -10px;
-	width: 0px;
-	height: 0px;
-	border: none;
 
-}
 .scrabble-tiles {
 	text-align: left;
 	left: 15px;
@@ -134,6 +126,18 @@ form#submit_word button {
     height: 60px;
     position: relative;
    	z-index: 1;
+}
+
+.scrabble-tiles.blinker:last-child:after {
+	content: '';
+	position: absolute;
+	background-color: #335;
+	margin-left: 5px;
+	top: 7px;
+	width: 3px;
+	height: 46px;
+	animation: blinker 1s linear infinite;
+
 }
 .letter {
 	width: 100%;
