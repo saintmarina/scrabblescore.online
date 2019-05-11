@@ -32,13 +32,13 @@ class GameSettings extends React.Component {
   }
 
   handleGameStart(e) {
-    const { playerNames, language } = this.state;
+    const {playerNames, language} = this.state;
     e.preventDefault() /* prevent form submission */
     this.props.onGameStart(playerNames.map((name, i) => name ? name : `Player ${i+1}`), language);
   }
 
   render() {
-    const { language, numberOfPlayers, playerNames } = this.state;
+    const {language, numberOfPlayers, playerNames} = this.state;
     return (
       <div>
         <img src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width="750" height="200"/>

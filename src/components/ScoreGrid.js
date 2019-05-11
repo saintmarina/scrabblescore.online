@@ -13,7 +13,7 @@ export default class ScoreGrid extends React.Component {
   }
 
   render() {
-    const { playerNames, game, language } = this.props;
+    const {playerNames, game, language} = this.props;
     return (
       <table className="table table-bordered" align="center">
         <thead>
@@ -44,7 +44,7 @@ export default class ScoreGrid extends React.Component {
 
 class WordInTiles extends React.Component {
   render() {
-    const { word, language } = this.props;
+    const {word, language} = this.props;
     let letterTiles = word.value.split("").map((letter, i) => {
       let tile = <ScrabbleTile 
                     key={i}
@@ -104,7 +104,7 @@ class ScoreGridCell extends React.Component {
   }
 
   render() {
-    const { turn, game } = this.props;
+    const {turn, game} = this.props;
     return (
       <table className="cell-table">
         <tbody>

@@ -21,21 +21,21 @@ class ScoreKeeper extends React.Component {
   }
 
   handleSetGame(myGame) {
-    const { game, games } = this.state;
+    const {game, games} = this.state;
     let newGames = [...games.slice(), game]
     this.setState({games: newGames, game: myGame})
   }
 
   handleUndo() {
-    const { games } = this.state;
+    const {games} = this.state;
     let myGames = games.slice(0, -1)
     let myGame = games[games.length - 1]
     this.setState({game: myGame, games: myGames});
   }
 
   renderTieGame() {
-    const { game } = this.state;
-    const { playerNames } = this.props;
+    const {game} = this.state;
+    const {playerNames} = this.props;
     let winners = game.getWinners(false);
     return winners.map(winnerIndex => winners.length > 1 ?
       `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, false)}` :
@@ -43,8 +43,8 @@ class ScoreKeeper extends React.Component {
   }
 
   render() {
-    const { game, games } = this.state; 
-    const { playerNames, language } = this.props
+    const {game, games} = this.state; 
+    const {playerNames, language} = this.props
     const callPlayerToAction = `${playerNames[game.currentPlayerIndex]}, submit ${!game.isGameOver() ?
       "a word:" : "your leftovers:"}`
 
@@ -116,15 +116,15 @@ class InGameControls extends React.Component {
   }
 
   handleEndTurn(e) {
-    const { currentWord } = this.state;
-    const { game } = this.props;
+    const {currentWord} = this.state;
+    const {game} = this.props;
     e.preventDefault()  /* prevent form submission */
     let myGame = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this._onSetGame(myGame.endTurn());
   }
 
   handleBingo() {
-    const { game } = this.props;
+    const {game} = this.props;
     this.props.onSetGame(game.setBingo(!game.getCurrentTurn().bingo))
   }
 
@@ -137,8 +137,8 @@ class InGameControls extends React.Component {
   }
   
   render() {
-    const { currentWord } = this.state;
-    const { game, language, undoDisabled } = this.props;
+    const {currentWord} = this.state;
+    const {game, language, undoDisabled} = this.props;
     const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === "" ? "PASS" : "END TURN"
     const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== "" || game.getCurrentTurn().score > 0
     return (
@@ -202,8 +202,8 @@ class InGameOverControls extends React.Component {
   }
 
   render() {
-    const { currentWord } = this.state;
-    const { game, language, undoDisabled } = this.props
+    const {currentWord} = this.state;
+    const {game, language, undoDisabled} = this.props
     const submitButtonText = currentWord.value.length > 0 ? "SUBMIT LEFTOVERS" : "SUBMIT NO LEFTOVERS"; 
     return (
       <div>

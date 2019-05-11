@@ -16,7 +16,7 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   handleHiddenInputChange(e) {
-    const { language, word, onChange} = this.props;
+    const {language, word, onChange} = this.props;
     let input = e.target.value;
     let result = input.split("").map(letter => isLetterAllowed(letter, language) ? letter : "");
     let modifiers = resizeArray(word.modifiers, result.length, null);
@@ -24,7 +24,7 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   handleModifierChange(letterIndex, modifier) {
-    const { word, onChange} = this.props;
+    const {word, onChange} = this.props;
     let modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
     onChange({value: word.value, modifiers: modifiers})
@@ -35,7 +35,7 @@ export class ScrabbleInputBox extends React.Component {
   }
 
   render() {
-    const { language, word } = this.props;
+    const {language, word} = this.props;
     return (
       <div onClick={this.focus} className={`scrabble-input-box${word.value.length > 6 ? " large" : ""}`}>
         <input ref={this.textHiddenInput} onChange={this.handleHiddenInputChange} value={word.value}
@@ -107,7 +107,7 @@ class ModifierTile extends React.Component {
     }
   }
   render() {
-    const { onClick, modifier } = this.props;
+    const {onClick, modifier} = this.props;
     return(
       <span onClick={() => onClick(modifier)} onTouchStart={() => onClick(modifier)} className={"modifier " + modifier}>
         {this.tileText()}
