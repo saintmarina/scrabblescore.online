@@ -236,6 +236,7 @@ class CurrentScore extends React.Component {
 class ScrabbleScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
+    this.handleGameStart = this.handleGameStart.bind(this);
     this.state = {
         playerNames: [],
         language: "",
@@ -249,7 +250,7 @@ class ScrabbleScoreKeeper extends React.Component {
   renderGame() {
     const { playerNames, language } = this.state;
     return playerNames.length === 0 ? 
-      <GameSettings onGameStart={this.handleGameStart.bind(this)} /> :
+      <GameSettings onGameStart={this.handleGameStart} /> :
       <ScoreKeeper playerNames={playerNames} language={language} />
   }
 
