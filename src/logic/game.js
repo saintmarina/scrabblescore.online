@@ -1,4 +1,4 @@
-import {resizeArray, indexesOf} from './util.js';
+import {resizeArray, indexesOf} from "./util.js";
 
 class Turn {
   /* DONE Add test for passed display in the scoregrid */
@@ -106,17 +106,12 @@ export default class Game {
   distributeLeftOversToReapers(reapers, totalLeftOverScore) {
     let game = this;
     reapers.forEach(reaperIndex => {
-      let turn =  new Turn([{value: '', modifiers: [], score: totalLeftOverScore}], false)
+      let turn =  new Turn([{value: "", modifiers: [], score: totalLeftOverScore}], false)
       game = game._setTurn(reaperIndex, this.leftOversTurnNumber, turn) 
     })
     return game
   }
 
-  /* DONE merge this code in getWinners 
-     DONE use map instead of for loop 
-     DONE Don't need this function. Caller can use getWinners() and see the length of the returned array 
-     DONE remove this function. getWinners()[0] do this for us 
-     DONE rename this: getWinners() */
   getWinners(lastTurn=true) {
     let totalScores = this.players.map((_, i) => this.getTotalScore(i, lastTurn))
     return indexesOf(totalScores, Math.max(...totalScores))
@@ -155,5 +150,4 @@ export default class Game {
     }
     return result
   };
-
 }

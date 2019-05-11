@@ -1,19 +1,19 @@
-import Game from './game.js';
+import Game from "./game.js";
 
-const w1 = {value:'rose', modifiers: [null, null, null, null], score: 8}
-const w2 = {value:'time', modifiers: [null, null, null, null], score: 10}
-const w3 = {value:'lost', modifiers: [null, null, null, null], score: 1}
-const w4 = {value:'lost', modifiers: [null, null, null, null], score: 7}
-const w1A = {value:'rose', modifiers: [null, null, null, null], score: -1}
-const w2A = {value:'time', modifiers: [null, null, null, null], score: -1}
-const emptyWord = {value:'', modifiers: [null], score: 0}
+const w1 = {value:"rose", modifiers: [null, null, null, null], score: 8}
+const w2 = {value:"time", modifiers: [null, null, null, null], score: 10}
+const w3 = {value:"lost", modifiers: [null, null, null, null], score: 1}
+const w4 = {value:"lost", modifiers: [null, null, null, null], score: 7}
+const w1A = {value:"rose", modifiers: [null, null, null, null], score: -1}
+const w2A = {value:"time", modifiers: [null, null, null, null], score: -1}
+const emptyWord = {value:"", modifiers: [null], score: 0}
 
-test('Game can be created with some number of players', () => {
+test("Game can be created with some number of players", () => {
 	let game = Game.createNewGame(3);
   	expect(game.players.length).toBe(3);
 });
 
-test('Game is adding words for current player', () => {
+test("Game is adding words for current player", () => {
 	let game = Game.createNewGame(3);
 	expect(game.players[0].length).toEqual(1)
 	expect(game.players[0][0].words).toEqual([])
@@ -29,7 +29,7 @@ test('Game is adding words for current player', () => {
 	expect(game.players[1][0].words).toEqual([w3])
 });
 
-test('endTurn() changes player and turn number, and create an empty turn for the next player', () => {
+test("endTurn() changes player and turn number, and create an empty turn for the next player", () => {
 	let numPlayers = 3;
 	let game = Game.createNewGame(numPlayers);
 
@@ -41,7 +41,7 @@ test('endTurn() changes player and turn number, and create an empty turn for the
 	}
 });
 
-test('game should be immutable', () => {
+test("game should be immutable", () => {
 	let game = Game.createNewGame(2);
 	game.addWord(w1);
 	game.endTurn().addWord(w1);
@@ -52,7 +52,7 @@ test('game should be immutable', () => {
 	expect(game.players[1].length).toEqual(0)
 });
 
-test('test setBingo()', () => {
+test("test setBingo()", () => {
 	let game = Game.createNewGame(2);
 	game = game.addWord(w1)
 	expect(game.players[0][0].words).toEqual([w1])
@@ -65,7 +65,7 @@ test('test setBingo()', () => {
 	expect(game.players[0][0].bingo).toBe(true)
 });
 
-test('get score of the Turn', () => {
+test("get score of the Turn", () => {
 	let game = Game.createNewGame(2)
 	expect(game.players[0][0].score).toEqual(0)
 	game = game.addWord(w1)
@@ -83,7 +83,7 @@ test('get score of the Turn', () => {
 });
 
 
-test('getTotalScore() without last turn', () => {
+test("getTotalScore() without last turn", () => {
 	let game = Game.createNewGame(3)
 	game = game.addWord(w4).endTurn() //p0:7
 	game = game.addWord(w4).endTurn() //p1:7
@@ -111,7 +111,7 @@ test('getTotalScore() without last turn', () => {
 	
 })
 
-test('getCurrentTurn() is getting turn of the current player', () => {
+test("getCurrentTurn() is getting turn of the current player", () => {
 	let game = Game.createNewGame(2);
 	game = game.addWord(w1);
 	game = game.endTurn().addWord(w2);
@@ -119,23 +119,21 @@ test('getCurrentTurn() is getting turn of the current player', () => {
 
 });
 
-/* DONE rename test to something better (e.g, endTurn() without words passes the turn) */
-test('endTurn() on an empty word ands just an empty array', () => {
+test("endTurn() on an empty word ands just an empty array", () => {
 	let game = Game.createNewGame(2);
 	game = game.endTurn();
 	game = game.addWord(w1).endTurn();
 	expect(game.players[0][0].words).toEqual([])
 })
 
-/* DONE rename: e.g., setBingo() sets the bingo turn value */
-test('setBingo() sets the bingo turn value', () => {
+test("setBingo() sets the bingo turn value", () => {
 	let game = Game.createNewGame(2);
 	game = game.setBingo(true)
 	expect(game.getCurrentTurn().bingo).toEqual(true)
 	game = game.setBingo(false)
 	expect(game.getCurrentTurn().bingo).toEqual(false)
 })
-test ('endGame() sets this.gameOver to true', () => {
+test ("endGame() sets this.gameOver to true", () => {
 	let game = Game.createNewGame(2);
 	game = game.addWord(w1).endTurn();
 	game = game.addWord(w2).endTurn();
@@ -144,7 +142,7 @@ test ('endGame() sets this.gameOver to true', () => {
 	expect(game.isGameOver()).toEqual(true);
 });
 
-test ('isLeftOversComplete', () => {
+test ("isLeftOversComplete", () => {
 	function isLeftOversComplete (players, lastMoveIndex) {
 		let result = 0;
 		for (let i=0; i < players.length; i++) {
@@ -161,7 +159,7 @@ test ('isLeftOversComplete', () => {
 	game = game.addWord(w1).endTurn();
 	expect(isLeftOversComplete(game.players, 1)).toEqual(true)
 })
-test('areLeftOversSubmitted', () => {
+test("areLeftOversSubmitted", () => {
 	let game = Game.createNewGame(2);
 	game = game.addWord(w1).endTurn();
 	game = game.addWord(w2).endTurn();
@@ -171,7 +169,7 @@ test('areLeftOversSubmitted', () => {
 	expect(game.areLeftOversSubmitted()).toEqual(true)
 })
 
-test('getReapers()', () => {
+test("getReapers()", () => {
 	let game = Game.createNewGame(3);
 	//All players submitted one word:
 	game = game.addWord(w1).endTurn();//Player 0, score 8
@@ -185,7 +183,7 @@ test('getReapers()', () => {
 	expect(game.getReapers()).toEqual([0, 1])
 })
 
-test('getSumOfLeftovers()', () => {
+test("getSumOfLeftovers()", () => {
 	let game = Game.createNewGame(3);
 	//All players submitted one word:
 	game = game.addWord(w1).endTurn();//8
@@ -199,7 +197,7 @@ test('getSumOfLeftovers()', () => {
 	expect(game.getSumOfLeftovers()).toEqual(2)
 })
 
-test('distributeLeftOversToReapers', () => {
+test("distributeLeftOversToReapers", () => {
 	let game = Game.createNewGame(3);
 	//All players submitted one word:
 	game = game.addWord(w1).endTurn();//Player 0, score 8
@@ -249,7 +247,7 @@ test( "getWinners() when tie of 4 players", () => {
 	expect(game.getWinners()).toEqual([0, 1, 2, 3])
 })
 
-test('getWinners() when tie of two players', () => {
+test("getWinners() when tie of two players", () => {
 	let game = Game.createNewGame(3);
 	game = game.addWord(w4).endTurn(); //7
 	game = game.addWord(w4).endTurn(); //7
@@ -265,7 +263,7 @@ test('getWinners() when tie of two players', () => {
 	
 })
 
-test('getWinners() one winner', () => {
+test("getWinners() one winner", () => {
 	let game = Game.createNewGame(3);
 	game = game.addWord(w4).endTurn(); //7
 	game = game.addWord(w4).endTurn(); //7
