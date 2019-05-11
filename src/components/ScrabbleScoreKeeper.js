@@ -267,7 +267,12 @@ export default ScrabbleScoreKeeper;
 
 /*TODO:
 - use lint to correct the code format (use airbnb plug in)
-- research on how to organize files in src directory (make a css file per component). 
+X research on how to organize files in src directory (make a css file per component). 
 - use airbnb js style guide to refactor your code 
 X change all this.state to ==>   const { width } = this.state;
-- fix blinker bug*/
+X fix blinker bug
+X css for every component
+
+
+
+*/
