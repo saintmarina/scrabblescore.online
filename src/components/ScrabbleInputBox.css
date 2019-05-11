@@ -29,7 +29,7 @@
 }
 
 .scrabble-tiles.blinker:last-child:after {
-	content: '';
+	content: "";
 	position: absolute;
 	background-color: #335;
 	margin-left: 5px;
@@ -48,7 +48,7 @@
 
 .modifier {
 	margin: 2px;
-	background-image: url('/modifier-frame.png');
+	background-image: url("/modifier-frame.png");
 	background-size: 138px 69px;
 	width: 69px;
 	height: 69px;

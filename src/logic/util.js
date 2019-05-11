@@ -1,4 +1,4 @@
-import {scoreListsMap} from './scoreLists';
+import {scoreListsMap} from './scoreLists.js';
 
 export function resizeArray(array, desiredLength, defaultValue) {
   let output = array.slice(0, desiredLength);

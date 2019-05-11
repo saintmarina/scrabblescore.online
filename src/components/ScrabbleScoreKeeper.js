@@ -1,12 +1,12 @@
-import React from 'react';
-import GameSettings from './GameSettings';
-import ScrabbleInputBox from './ScrabbleInputBox';
-import Game from '../logic/game';
-import {scrabbleScore} from '../logic/util';
-import ScoreGrid from './ScoreGrid';
-import './ScrabbleScoreKeeper.css';
+import React from "react";
+import GameSettings from "./GameSettings";
+import ScrabbleInputBox from "./ScrabbleInputBox";
+import Game from "../logic/game";
+import {scrabbleScore} from "../logic/util";
+import ScoreGrid from "./ScoreGrid";
+import "./ScrabbleScoreKeeper.css";
 
-const emptyWord = {value: '', modifiers: [], score: 0};
+const emptyWord = {value: "", modifiers: [], score: 0};
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class ScoreKeeper extends React.Component {
     let winners = game.getWinners(false);
     return winners.map(winnerIndex => winners.length > 1 ?
       `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, false)}` :
-      `${playerNames[winnerIndex]} WON`).join(', ');
+      `${playerNames[winnerIndex]} WON`).join(", ");
   }
 
   render() {
@@ -54,12 +54,12 @@ class ScoreKeeper extends React.Component {
                    game: game,
                    language: language}
     return (
-      <div className='score-keeper'>
+      <div className="score-keeper">
         <ScoreGrid playerNames={playerNames} game={game} language={language} />
         <div>
           {!game.areLeftOversSubmitted() ?
             <p className="bold">{callPlayerToAction}</p> :
-            <div className='winner'>
+            <div className="winner">
             {game.getWinners().length > 1 ?
               <h1>{this.renderTieGame()}</h1> : 
               <h1>{playerNames[[...game.getWinners()]]} WON</h1>
@@ -139,15 +139,15 @@ class InGameControls extends React.Component {
   render() {
     const { currentWord } = this.state;
     const { game, language, undoDisabled } = this.props;
-    const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN'
-    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0
+    const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === "" ? "PASS" : "END TURN"
+    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== "" || game.getCurrentTurn().score > 0
     return (
-      <form autoComplete='off'>
+      <form autoComplete="off">
         <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={currentWord} language={language} />
         <CurrentScore score={currentWord.score} />
         <div>
           <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
-          <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button" disabled={currentWord.value === ''}>+ ADD A WORD</button>
+          <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button" disabled={currentWord.value === ""}>+ ADD A WORD</button>
           <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
           <div className="custom-control custom-switch">
             <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
@@ -208,7 +208,7 @@ class InGameOverControls extends React.Component {
     return (
       <div>
         {!game.areLeftOversSubmitted() ? 
-          <form autoComplete='off'>
+          <form autoComplete="off">
             <ScrabbleInputBox ref={this.input} onChange={this.handleChange} word={currentWord} language={language} />
             <CurrentScore score={currentWord.score} />
             <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
@@ -238,7 +238,7 @@ class ScrabbleScoreKeeper extends React.Component {
     super(props);
     this.state = {
         playerNames: [],
-        language: '',
+        language: "",
       }
   }
 
@@ -255,7 +255,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   render() {
     return (
-      <div className='main'>
+      <div className="main">
         <h1> Scrabble score keeper</h1>
         {this.renderGame()}
       </div>

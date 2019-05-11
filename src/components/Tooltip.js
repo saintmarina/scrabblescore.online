@@ -1,7 +1,7 @@
-import React from 'react';
-import TooltipTrigger from 'react-popper-tooltip';
-import 'react-popper-tooltip/dist/styles.css';
-import './Tooltip.css';
+import React from "react";
+import TooltipTrigger from "react-popper-tooltip";
+import "react-popper-tooltip/dist/styles.css";
+import "./Tooltip.css";
 
 const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
   <TooltipTrigger
@@ -17,15 +17,15 @@ const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
       <div
         {...getTooltipProps({
           ref: tooltipRef,
-          className: 'tooltip-container',
+          className: "tooltip-container",
         })}
       >
         {!hideArrow && (
           <div
             {...getArrowProps({
               ref: arrowRef,
-              className: 'tooltip-arrow',
-              'data-placement': placement
+              className: "tooltip-arrow",
+              "data-placement": placement
             })}
           />
         )}
@@ -37,7 +37,7 @@ const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
       <span
         {...getTriggerProps({
           ref: triggerRef,
-          className: 'trigger'
+          className: "trigger"
         })}
       >
         {children}
@@ -47,17 +47,3 @@ const Tooltip = ({children, tooltip, hideArrow, ...props}) => (
 );
 
 export default Tooltip;
-
-
-/*
-class PArent:
-render()
-  <MiddleChild onCLick=handleonlick>
-
-
-class MiddleChild:
-  <Child {...this.props}>
-
-
-class Child:
-  this.props.onClock()*/

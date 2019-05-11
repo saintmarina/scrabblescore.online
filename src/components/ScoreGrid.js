@@ -1,15 +1,15 @@
-import React from 'react';
-import ScrabbleTile from './ScrabbleTile';
-import Tooltip from './Tooltip';
-import {scrabbleScore} from '../logic/util';
-import './ScoreGrid.css';
+import React from "react";
+import ScrabbleTile from "./ScrabbleTile";
+import Tooltip from "./Tooltip";
+import {scrabbleScore} from "../logic/util";
+import "./ScoreGrid.css";
 
 const highScore = 50;
 const bingoScore = 50;
 
 export default class ScoreGrid extends React.Component {
   activePlayerClass(i, currentPlayerIndex) {
-    return i === currentPlayerIndex ? 'player-header current' : 'player-header';
+    return i === currentPlayerIndex ? "player-header current" : "player-header";
   }
 
   render() {
@@ -18,7 +18,7 @@ export default class ScoreGrid extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className='move'>Move</th>
+            <th className="move">Move</th>
               {playerNames.map((player, i) =>
               <th key={i} className={this.activePlayerClass(i, game.currentPlayerIndex)}>{player}</th>)}
           </tr>
@@ -31,7 +31,7 @@ export default class ScoreGrid extends React.Component {
                   <td key={j}>{player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} /> :
                   null}</td>)}
             </tr> )}
-            <tr className='total-score'>
+            <tr className="total-score">
               <th>TOTAL</th>
                 {playerNames.map((_, i) =>
                   <td key={i}>{game.getTotalScore(i)}</td>)}
@@ -45,7 +45,7 @@ export default class ScoreGrid extends React.Component {
 class WordInTiles extends React.Component {
   render() {
     const { word, language } = this.props;
-    let letterTiles = word.value.split('').map((letter, i) => {
+    let letterTiles = word.value.split("").map((letter, i) => {
       let tile = <ScrabbleTile 
                     key={i}
                     letter={letter}
@@ -76,8 +76,8 @@ class ScoreGridCell extends React.Component {
     return(
       <tr>
         <td>
-          {"PASS".split('').map((letter,i) =>
-            <span key={i} className='score-box'>{letter}</span>)}
+          {"PASS".split("").map((letter,i) =>
+            <span key={i} className="score-box">{letter}</span>)}
         </td>
       </tr>
   )}
@@ -89,13 +89,13 @@ class ScoreGridCell extends React.Component {
     let rows = turn.words.map((word, i) =>
                 <tr key={i}>
                   <td><WordInTiles word={word} language={language} /></td>
-                  <td><span className={word.score >= highScore ? 'score-box high':'score-box' }>{word.score}</span></td>
+                  <td><span className={word.score >= highScore ? "score-box high" : "score-box" }>{word.score}</span></td>
                 </tr>)
     if (turn.bingo) {
-      rows.push(<tr key='bingo'>
+      rows.push(<tr key="bingo">
                   <td>BINGO</td>
                   <td>
-                    <span className='score-box high'>{bingoScore}</span>
+                    <span className="score-box high">{bingoScore}</span>
                   </td>
                 </tr>
                 )
@@ -106,7 +106,7 @@ class ScoreGridCell extends React.Component {
   render() {
     const { turn, game } = this.props;
     return (
-      <table className='cell-table'>
+      <table className="cell-table">
         <tbody>
           {turn.isPassed(game) ? this.renderPassed() : this.renderNormal()}
         </tbody>
