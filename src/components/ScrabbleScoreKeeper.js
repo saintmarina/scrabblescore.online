@@ -90,6 +90,11 @@ class InGameControls extends React.Component {
       currentWord: emptyWord
     }
   }
+
+  componentDidMount() {
+    this.input.current.focus()
+  }
+
   resetCurrentWord() {
     this.setState({currentWord: emptyWord})
     this.input.current.focus()
@@ -132,10 +137,6 @@ class InGameControls extends React.Component {
     this.props.onSetGame(this.props.game.endGame())
   }
 
-  componentDidMount() {
-    this.input.current.focus()
-  }
-  
   render() {
     const {currentWord} = this.state;
     const {game, language, undoDisabled} = this.props;
@@ -172,6 +173,10 @@ class InGameOverControls extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.input.current.focus()
+  }
+
   resetCurrentWord() {
     this.setState({currentWord: emptyWord})
   }
@@ -195,10 +200,6 @@ class InGameOverControls extends React.Component {
     myGame.distributeLeftOversToReapers(myGame.getReapers(), myGame.getSumOfLeftovers()) : myGame;
     onSetGame(myGame)
     this.resetCurrentWord()
-  }
-
-  componentDidMount() {
-    this.input.current.focus()
   }
 
   render() {
