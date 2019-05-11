@@ -90,29 +90,29 @@ class InGameControls extends React.Component {
       currentWord: emptyWord
     }
   }
-  _resetCurrentWord() {
+  resetCurrentWord() {
     this.setState({currentWord: emptyWord})
     this.input.current.focus()
   }
 
-  _onSetGame(game) {
+  onSetGame(game) {
     this.props.onSetGame(game)
-    this._resetCurrentWord()
+    this.resetCurrentWord()
   }
 
   handleChange(word) {
-    let _word = {...word, score: scrabbleScore(word.value, word.modifiers, this.props.language)}
-    this.setState({currentWord: _word});
+    let myWord = {...word, score: scrabbleScore(word.value, word.modifiers, this.props.language)}
+    this.setState({currentWord: myWord});
   }
 
   handleUndo(){
     this.props.onUndo();
-    this._resetCurrentWord()
+    this.resetCurrentWord()
   }
 
   handleAddWord() {
     
-    this._onSetGame(this.props.game.addWord(this.state.currentWord))
+    this.onSetGame(this.props.game.addWord(this.state.currentWord))
   }
 
   handleEndTurn(e) {
@@ -120,7 +120,7 @@ class InGameControls extends React.Component {
     const {game} = this.props;
     e.preventDefault()  /* prevent form submission */
     let myGame = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
-    this._onSetGame(myGame.endTurn());
+    this.onSetGame(myGame.endTurn());
   }
 
   handleBingo() {
@@ -172,18 +172,18 @@ class InGameOverControls extends React.Component {
     }
   }
 
-  _resetCurrentWord() {
+  resetCurrentWord() {
     this.setState({currentWord: emptyWord})
   }
 
   handleUndo(){
     this.props.onUndo();
-    this._resetCurrentWord()
+    this.resetCurrentWord()
   }
 
   handleChange(word) {
-    let _word = {...word, score: -scrabbleScore(word.value, word.modifiers, this.props.language)}
-    this.setState({currentWord: _word});
+    let myWord = {...word, score: -scrabbleScore(word.value, word.modifiers, this.props.language)}
+    this.setState({currentWord: myWord});
   }
 
   handleLeftOvers(e) {
@@ -194,7 +194,7 @@ class InGameOverControls extends React.Component {
     myGame = game.currentPlayerIndex === game.players.length - 1 ? 
     myGame.distributeLeftOversToReapers(myGame.getReapers(), myGame.getSumOfLeftovers()) : myGame;
     onSetGame(myGame)
-    this._resetCurrentWord()
+    this.resetCurrentWord()
   }
 
   componentDidMount() {
