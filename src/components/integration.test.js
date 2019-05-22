@@ -1,6 +1,6 @@
 import React from "react"
 import {mount, shallow} from "enzyme"
-import ScrabbleScoreKeeper from "./ScrabbleScoreKeeper.js";
+import ScrabbleScoreKeeper from "./ScrabbleScoreKeeper/ScrabbleScoreKeeper";
 
 const Nightmare = require("nightmare")
 

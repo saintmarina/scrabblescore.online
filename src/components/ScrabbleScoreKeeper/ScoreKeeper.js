@@ -18,17 +18,17 @@ class ScoreKeeper extends React.Component {
     };
   }
 
-  handleSetGame(myGame) {
-    const { game, games } = this.state;
-    const newGames = [...games.slice(), game];
-    this.setState({ games: newGames, game: myGame });
+  handleSetGame(currentGame) {
+    let { game, games } = this.state;
+    games = [...games.slice(), game];
+    this.setState({ games, game: currentGame });
   }
 
   handleUndo() {
     const { games } = this.state;
-    const myGames = games.slice(0, -1);
-    const myGame = games[games.length - 1];
-    this.setState({ game: myGame, games: myGames });
+    const previousGames = games.slice(0, -1);
+    const game = games[games.length - 1];
+    this.setState({ game, games: previousGames });
   }
 
   renderTieGame() {

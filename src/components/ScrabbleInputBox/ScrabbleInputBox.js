@@ -26,7 +26,7 @@ class ScrabbleInputBox extends React.Component {
 
   handleModifierChange(letterIndex, modifier) {
     const { word, onChange } = this.props;
-    const modifiers = word.modifiers.slice();
+    let modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
     onChange({ value: word.value, modifiers });
   }

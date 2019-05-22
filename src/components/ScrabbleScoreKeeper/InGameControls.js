@@ -37,8 +37,8 @@ class InGameControls extends React.Component {
 
   handleChange(word) {
     const { language } = this.props;
-    const myWord = { ...word, score: scrabbleScore(word.value, word.modifiers, language) };
-    this.setState({ currentWord: myWord });
+    const currentWord = { ...word, score: scrabbleScore(word.value, word.modifiers, language) };
+    this.setState({ currentWord });
   }
 
   handleUndo() {
@@ -55,10 +55,10 @@ class InGameControls extends React.Component {
 
   handleEndTurn(e) {
     const { currentWord } = this.state;
-    const { game } = this.props;
+    let { game } = this.props;
     e.preventDefault(); /* prevent form submission */
-    const myGame = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
-    this.onSetGame(myGame.endTurn());
+    game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
+    this.onSetGame(game.endTurn());
   }
 
   handleBingo() {

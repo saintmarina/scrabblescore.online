@@ -24,10 +24,10 @@ class GameSettings extends React.Component {
   }
 
   handleChangeOfName(i, e) {
-    const { playerNames } = this.state;
-    const names = playerNames.slice();
-    names[i] = e.target.value;
-    this.setState({ playerNames: names });
+    let { playerNames } = this.state;
+    playerNames = playerNames.slice();
+    playerNames[i] = e.target.value;
+    this.setState({ playerNames });
   }
 
   handleChangeOfLanguage(e) {

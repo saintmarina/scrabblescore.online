@@ -33,21 +33,21 @@ class InGameOverControls extends React.Component {
 
   handleChange(word) {
     const { language } = this.props;
-    const myWord = { ...word, score: -scrabbleScore(word.value, word.modifiers, language) };
-    this.setState({ currentWord: myWord });
+    const currentWord = { ...word, score: -scrabbleScore(word.value, word.modifiers, language) };
+    this.setState({ currentWord });
   }
 
   handleLeftOvers(e) {
     const { currentWord } = this.state;
-    const { game, onSetGame } = this.props;
+    let { game, onSetGame } = this.props;
     e.preventDefault(); /* prevent form submission */
-    let myGame = currentWord.value.length !== 0
+    game = currentWord.value.length !== 0
       ? game.addWord(currentWord) : game;
-    myGame = myGame.endTurn();
-    myGame = game.currentPlayerIndex === game.players.length - 1
-      ? myGame.distributeLeftOversToReapers(myGame.getReapers(), myGame.getSumOfLeftovers())
-      : myGame;
-    onSetGame(myGame);
+    game = game.endTurn();
+    game = game.currentPlayerIndex === game.players.length - 1
+      ? game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
+      : game;
+    onSetGame(game);
     this.resetCurrentWord();
   }
 
