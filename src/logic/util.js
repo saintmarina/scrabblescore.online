@@ -1,48 +1,47 @@
-import {scoreListsMap} from "./scoreLists.js";
+import { scoreListsMap } from './scoreLists';
 
 export function resizeArray(array, desiredLength, defaultValue) {
-  let output = array.slice(0, desiredLength);
-  while (output.length < desiredLength)
-    output.push(defaultValue);
+  const output = array.slice(0, desiredLength);
+  while (output.length < desiredLength) output.push(defaultValue);
   return output;
 }
 
 export function indexesOf(array, value) {
-  let result = []
+  const result = [];
   for (let i = 0; i < array.length; i++) {
     if (array[i] === value) {
-      result.push(i)
+      result.push(i);
     }
   }
-  return result
+  return result;
 }
 
 export function isLetterAllowed(letter, language) {
-  return letter.toLowerCase() in scoreListsMap[language].scores
+  return letter.toLowerCase() in scoreListsMap[language].scores;
 }
 
 export function scrabbleScore(word, modifiers, language) {
   let result = 0;
-  
-  word.split("").forEach((letter, i) => {
+
+  word.split('').forEach((letter, i) => {
     let score = scoreListsMap[language].scores[letter.toLowerCase()];
     // eslint-disable-next-line
     switch (modifiers[i]) {
-      case "blank":         score *= 0; break;
-      case "double-letter": score *= 2; break;
-      case "triple-letter": score *= 3; break;
+      case 'blank': score *= 0; break;
+      case 'double-letter': score *= 2; break;
+      case 'triple-letter': score *= 3; break;
     }
-    result += score
-  })
+    result += score;
+  });
 
-  modifiers.forEach(modifier => {
+  modifiers.forEach((modifier) => {
     // eslint-disable-next-line
     switch (modifier) {
-      case "double-word": result *= 2; break;
-      case "triple-word": result *= 3; break;
+      case 'double-word': result *= 2; break;
+      case 'triple-word': result *= 3; break;
     }
-  })
-  return result
+  });
+  return result;
 }
 
 export default null;
