@@ -5,12 +5,6 @@ const highScore = 50;
 const bingoScore = 50;
 
 class ScoreGridCell extends React.Component {
-  constructor(props) {
-    super(props);
-    this.renderPassed = this.renderPassed.bind(this);
-    this.renderNormal = this.renderNormal.bind(this);
-  }
-
   renderPassed() {
     return (
       <tr>
