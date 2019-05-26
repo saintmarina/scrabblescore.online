@@ -11,6 +11,12 @@
   cursor: pointer;
 }
 
+.mobile .scrabble-letter {
+	left: -10px;
+	height: 45px;
+	width: 41px;
+}
+
 .scrabble-letter:hover {
 	box-shadow: 0 0 15px red;
 	z-index: 10;
@@ -46,9 +52,21 @@
 	position: absolute;
 }
 
+.mobile .letter {
+	top: 0px;
+	font-size: 32px;
+
+}
+
 .score {
 	position: absolute;
 	text-align: right;
 	bottom: 0;
 	right: 3px;
+}
+
+.mobile .score {
+	bottom: 0;
+	right: 1px;
+	font-size: 13px;
 }

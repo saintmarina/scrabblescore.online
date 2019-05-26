@@ -1,0 +1,45 @@
+.desktop #language-select {
+	width: 110px;
+}
+
+.desktop #number-of-players-select {
+	width: 110px;
+}
+
+.desktop .form-control.player-name {
+	width: 130px;
+}
+
+.desktop form {
+text-align: left;
+}
+
+.desktop .language-choice {
+	width: 30%;
+	float: left;
+}
+
+.desktop .number-of-players-choice {
+	width: 30%;
+	float: left;
+}
+
+.desktop  .player-names-choice {
+	text-align: right;
+	float: right;
+}
+.desktop .input-group {
+	text-align: center;
+}
+.desktop button {
+	width: 131px;
+	height: 46px;
+	font-size: 21px;
+	margin: 2rem;
+}
+.mobile button {
+	width: 150px;
+	height: 55px;
+	font-size: 25px;
+	margin: 1.5rem;
+}

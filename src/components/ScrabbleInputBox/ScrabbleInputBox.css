@@ -5,12 +5,21 @@
 	border: 1px solid grey;
 	background-color: white;
 	height: 65px;
-	width: 375px;
+	width: 480px;
 	border-radius: 20px;
+}
+.mobile .scrabble-input-box {
+	border-radius: 10px;
+	width: 340px;
+	height: 50px;
 }
 
 .scrabble-input-box.large {
-	width: 600px;
+	height: 131px;
+}
+
+.mobile .scrabble-input-box.large {
+	height: 101px;
 }
 
 .hidden-input {
@@ -38,6 +47,12 @@
 	height: 46px;
 	animation: blinker 1s linear infinite;
 }
+.mobile .scrabble-tiles.blinker:last-child:after {
+	margin-left: -10px;
+	top: 2px;
+	width: 2px;
+	height: 40px;
+}
 
 @keyframes blinker {  
   0% { opacity: 1; }
@@ -61,6 +76,13 @@
 	font-weight: bold;
 	font-size: 12px;
 	cursor: pointer;
+}
+
+.mobile .modifier {
+	background-size: 100px 40px;
+	width: 45px;
+	height: 45px;
+	font-size: 9px;
 }
 
 .modifier.double-letter {

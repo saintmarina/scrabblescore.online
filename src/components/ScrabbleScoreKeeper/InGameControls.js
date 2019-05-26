@@ -76,23 +76,28 @@ class InGameControls extends React.Component {
     const { game, language, undoDisabled } = this.props;
     const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN';
     const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0;
+    const props = {
+      ref: this.input,
+      onChange: this.handleChange,
+      word: currentWord,
+      language,
+    };
     return (
       <form autoComplete="off">
-        <ScrabbleInputBox
-          ref={this.input}
-          onChange={this.handleChange}
-          word={currentWord}
-          language={language}
-        />
+        <ScrabbleInputBox {...props} />
         <CurrentScore score={currentWord.score} />
         <div>
-          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
+        <div>
           <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button" disabled={currentWord.value === ''}>+ ADD A WORD</button>
-          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
           <div className="custom-control custom-switch">
             <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
             <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
           </div>
+        </div>
+        <div>
+          <button onClick={this.handleEndTurn} type="submit" className="btn btn-info pass-endturn-button">{endTurnButtonText}</button>
+        </div>
+          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
           <button onClick={this.handleEndGame} type="button" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
         </div>
       </form>

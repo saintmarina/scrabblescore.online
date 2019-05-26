@@ -9,7 +9,6 @@ import InGameOverControls from './InGameOverControls';
 class ScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
-    this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleSetGame = this.handleSetGame.bind(this);
     this.renderTieGame = this.renderTieGame.bind(this);
@@ -17,21 +16,8 @@ class ScoreKeeper extends React.Component {
     this.state = {
       game: Game.createNewGame(playerNames.length),
       games: [],
-      width: window.innerWidth,
     };
   }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
-  }
-
-  handleWindowSizeChange() {
-    this.setState({ width: window.innerWidth });
-  };
 
   handleSetGame(currentGame) {
     let { game, games } = this.state;
@@ -56,9 +42,8 @@ class ScoreKeeper extends React.Component {
   }
 
   render() {
-    const { game, games, width } = this.state;
-    const { playerNames, language } = this.props;
-    const isMobile = width <= 500;
+    const { game, games } = this.state;
+    const { playerNames, language, isMobile } = this.props;
     const callPlayerToAction = `${playerNames[game.currentPlayerIndex]}, submit ${!game.isGameOver()
       ? 'a word:' : 'your leftovers:'}`;
 
@@ -66,15 +51,16 @@ class ScoreKeeper extends React.Component {
       onSetGame: this.handleSetGame,
       onUndo: this.handleUndo,
       undoDisabled: games.length === 0,
+      isMobile,
       game,
       language,
     };
     return (
       <div className="score-keeper">
-        {isMobile
-          ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
-          : <ScoreGrid playerNames={playerNames} game={game} language={language} />
-        }
+      {isMobile
+        ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
+        : <ScoreGrid playerNames={playerNames} game={game} language={language} />
+      }
         <div>
           {!game.areLeftOversSubmitted()
             ? <p className="bold">{callPlayerToAction}</p>

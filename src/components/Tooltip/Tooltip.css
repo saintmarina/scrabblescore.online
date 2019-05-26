@@ -1,3 +1,7 @@
 .tooltip-container {
 	width: 165px;
 }
+
+.mobile .tooltip-container {
+	width: 300px;
+}

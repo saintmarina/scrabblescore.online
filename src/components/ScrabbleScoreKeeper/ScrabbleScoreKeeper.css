@@ -9,7 +9,12 @@
 }
 
 .pass-endturn-button {
-	width: 106px;
+	width: 230px;
+}
+
+.custom-control {
+	display: inline-block;
+	padding-bottom: 1rem;
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -18,7 +23,7 @@
 }
 
 .end-game {
-	width: 242px;
+	width: 144px;
 }
 
 .card-header {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { resizeArray } from '../../logic/util';
+import './GameSettings.css';
 
 class GameSettings extends React.Component {
   constructor(props) {
@@ -52,24 +53,24 @@ class GameSettings extends React.Component {
           an innovative and easy way, whilst playing the Scrabble board game.
         </p>
         <form>
-          <h3>Choose language:</h3>
-          <div>
+          <div className="language-choice">
+            <h6>Choose language:</h6>
             <select id="language-select" value={language} onChange={this.handleChangeOfLanguage} className="custom-select">
               <option value="en">English</option>
               <option value="ru">Russian</option>
               <option value="fr">French</option>
             </select>
           </div>
-          <h3>Choose number of players:</h3>
-          <div>
+          <div className="number-of-players-choice">
+            <h6>Choose number of players:</h6>
             <select id="number-of-players-select" value={numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
           </div>
-          <h3>Choose nicknames for players:</h3>
-          <div>
+          <div className="player-names-choice">
+            <h6>Choose nicknames for players:</h6>
             {playerNames.map((name, i) => (
               <input
                 onChange={e => this.handleChangeOfName(i, e)}

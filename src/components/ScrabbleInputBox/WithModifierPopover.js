@@ -34,6 +34,7 @@ class WithModifierPopover extends React.Component {
         tooltipShown={tooltipShown}
         placement="bottom"
         trigger="click"
+        portalContainer={document.getElementsByClassName("main")[0]}
         tooltip={(
           <div>
             <ModifierTile modifier="double-letter" onClick={this.handleClick} />
