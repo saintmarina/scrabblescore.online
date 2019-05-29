@@ -31,10 +31,11 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   renderGame() {
-    const { playerNames, language } = this.state;
+    const { playerNames, language, width } = this.state;
+    const isMobile = width <= 700;
     return playerNames.length === 0
             ? <GameSettings onGameStart={this.handleGameStart} />
-            : <ScoreKeeper playerNames={playerNames} language={language} />
+            : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile}/>
   }
 
   render() {

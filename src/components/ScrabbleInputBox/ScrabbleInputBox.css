@@ -37,7 +37,7 @@
 	bottom: -1px;
 }
 
-.scrabble-tiles.blinker:last-child:after {
+.scrabble-input-box .scrabble-tiles.blinker:last-child:after {
 	content: "";
 	position: absolute;
 	background-color: #335;
@@ -47,9 +47,28 @@
 	height: 46px;
 	animation: blinker 1s linear infinite;
 }
+
+.scrabble-input-box.large .scrabble-tiles.blinker:last-child:after {
+	content: "";
+	position: absolute;
+	background-color: #335;
+	margin-left: 5px;
+	top: 74px;
+	width: 3px;
+	height: 46px;
+	animation: blinker 1s linear infinite;
+}
+
 .mobile .scrabble-tiles.blinker:last-child:after {
 	margin-left: -10px;
 	top: 2px;
+	width: 2px;
+	height: 40px;
+}
+
+.mobile .scrabble-input-box.large .scrabble-tiles.blinker:last-child:after {
+	margin-left: -10px;
+	top: 54px;
 	width: 2px;
 	height: 40px;
 }
