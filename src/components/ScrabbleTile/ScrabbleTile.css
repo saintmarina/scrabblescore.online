@@ -2,7 +2,7 @@
 	background-image: url("/background.jpg");
 	border: 5px;
 	border: black;
-	background-size: 56px;
+	background-size: 55.7px;
 	display: inline-block;
   width: 56px;
   height: 60px;
@@ -12,6 +12,7 @@
 }
 
 .mobile .scrabble-letter {
+	background-size: 41px 45px;
 	left: -10px;
 	height: 45px;
 	width: 41px;

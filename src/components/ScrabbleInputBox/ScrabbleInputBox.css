@@ -54,6 +54,7 @@
 	height: 40px;
 }
 
+
 @keyframes blinker {  
   0% { opacity: 1; }
   49% { opacity: 1; }
@@ -78,13 +79,6 @@
 	cursor: pointer;
 }
 
-.mobile .modifier {
-	background-size: 100px 40px;
-	width: 45px;
-	height: 45px;
-	font-size: 9px;
-}
-
 .modifier.double-letter {
 	background-color: #9fcae0;
 }
@@ -102,9 +96,36 @@
 	background-color: #f74d13;
 	background-position: 69px 0px;
 }
-
 .modifier.blank {
 	background-image: url("/background.jpg");
+	background-size: 68.9px 68.9px;
+
+}
+
+.mobile .modifier.triple-letter {
+	background-color: #18a3e1;
+	background-position: 69px 0px;
+}
+
+.mobile .modifier.triple-word {
+	background-color: #f74d13;
+	background-position: 69px 0px;
+}
+
+.mobile .modifier.blank {
+	position: relative;
+	bottom: 15px;
+}
+
+.modifier.blank span{
+	position: relative;
+	top: 7px;
+}
+
+
+.mobile .modifier.blank span{
+	position: relative;
+	top: 8px;
 }
 
 .modifier:hover {

@@ -11,6 +11,7 @@ class ScrabbleInputBox extends React.Component {
     this.textHiddenInput = React.createRef();
     this.focus = this.focus.bind(this);
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
+    this.handleTileClick = this.handleTileClick.bind(this);
     this.state = {
       inFocus: false,
     };
@@ -31,6 +32,11 @@ class ScrabbleInputBox extends React.Component {
     onChange({ value: word.value, modifiers });
   }
 
+  handleTileClick() {
+    this.focus()
+    this.setState({ inFocus: true })
+  }
+
   focus() {
     this.textHiddenInput.current.focus();
   }
@@ -39,7 +45,7 @@ class ScrabbleInputBox extends React.Component {
     const { language, word } = this.props;
     const { inFocus } = this.state;
     return (
-      <div role="textbox" onClick={this.focus} onKeyDown={this.focus} className={`scrabble-input-box${word.value.length > 6 ? ' large' : ''}`}>
+      <div role="textbox" onClick={this.focus} className={`scrabble-input-box${word.value.length > 8 ? ' large' : ''}`}>
         <input
           ref={this.textHiddenInput}
           onChange={this.handleHiddenInputChange}
@@ -61,6 +67,7 @@ class ScrabbleInputBox extends React.Component {
               key={i}
             >
               <ScrabbleTile
+                onClick={this.handleTileClick}
                 letter={c}
                 score={scrabbleScore(c, [null], language)}
                 modifier={word.modifiers[i]}

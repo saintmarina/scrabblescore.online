@@ -23,7 +23,9 @@ class ModifierTile extends React.Component {
         onTouchStart={() => onClick(modifier)}
         className={`modifier ${modifier}`}
       >
-        {this.tileText()}
+        <span>
+          {this.tileText()}
+        </span>
       </span>
     );
   }
