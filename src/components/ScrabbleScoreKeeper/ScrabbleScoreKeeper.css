@@ -4,17 +4,41 @@
 	vertical-align: bottom;
 }
 
-.word-submit-button {
+.add-word {
+	height: 46px;
+	font-size: 21px;
 	margin-top: 30px;
+	width: 229px;
+	margin-left:200px;
 }
+
+.mobile .add-word {
+	height: 46px;
+	font-size: 21px;
+	margin-top: 30px;
+	width: 203px;
+	margin-left: -4px;
+}
+
 
 .pass-endturn-button {
 	width: 230px;
+	height: 46px;
+	font-size: 21px;
+}
+
+.mobile .pass-endturn-button {
+	width: 326px;
+	height: 46px;
+	font-size: 21px;
+	margin-left: 2px;
 }
 
 .custom-control {
 	display: inline-block;
-	padding-bottom: 1rem;
+	padding-bottom: 20px;
+	padding-left: 67px;
+
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -22,8 +46,35 @@
 	border-color:#17a2b8;
 }
 
+.pass-endturn-button {
+	margin-left: 200px;
+	width: 380px;
+}
+.undo {
+	height: 46px;
+	width: 180px;
+	margin-top: 10px;
+	margin-left: 200px;
+}
+
+.mobile .undo {
+	height: 46px;
+	width: 148px;
+	margin-top: 10px;
+	font-size: 21px;
+	margin-left: 0px;
+}
+
 .end-game {
-	width: 144px;
+	height: 46px;
+	width: 180px;
+	font-size: 21px;
+}
+
+.mobile .end-game {
+	height: 46px;
+	width: 148px;
+	font-size: 21px;
 }
 
 .card-header {

@@ -31,13 +31,13 @@ text-align: left;
 .desktop .input-group {
 	text-align: center;
 }
-.desktop button {
+.desktop .btn.btn-info.next {
 	width: 131px;
 	height: 46px;
 	font-size: 21px;
 	margin: 2rem;
 }
-.mobile button {
+.mobile .btn.btn-info.next {
 	width: 150px;
 	height: 55px;
 	font-size: 25px;

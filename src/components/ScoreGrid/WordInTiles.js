@@ -15,18 +15,6 @@ class WordInTiles extends React.Component {
           score={scrabbleScore(letter, [null], language)}
         />
       );
-      if (word.modifiers[i]) {
-        tile = (
-          <Tooltip
-            key={i}
-            placement="top"
-            trigger="hover"
-            tooltip={word.modifiers[i]}
-          >
-            {tile}
-          </Tooltip>
-        );
-      }
       return tile;
     });
     return <div>{letterTiles}</div>;

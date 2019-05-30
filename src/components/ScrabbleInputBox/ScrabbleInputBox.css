@@ -49,14 +49,7 @@
 }
 
 .scrabble-input-box.large .scrabble-tiles.blinker:last-child:after {
-	content: "";
-	position: absolute;
-	background-color: #335;
-	margin-left: 5px;
 	top: 74px;
-	width: 3px;
-	height: 46px;
-	animation: blinker 1s linear infinite;
 }
 
 .mobile .scrabble-tiles.blinker:last-child:after {

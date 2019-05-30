@@ -27,13 +27,22 @@ background-color: red;
 .table .scrabble-letter {
 	height: 32px;
 	width: 32px;
+	cursor: default;
 }
+
 .table .letter {
 	font-size: 20px;
 	top: 3px;
 	left: -2px;
 	font-weight: normal;
+	cursor: default;
 }
+
+.table .scrabble-letter:hover {
+	box-shadow: 0 0 0px ;
+	z-index: 0;
+}
+
 .table .score {
 	font-size: 10px;
 	top: 18px;
