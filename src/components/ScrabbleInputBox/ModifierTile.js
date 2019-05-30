@@ -18,9 +18,8 @@ class ModifierTile extends React.Component {
     return (
       <span
         role="button"
-        onClick={() => onClick(modifier)}
-        onKeyDown={() => onClick(modifier)}
-        onTouchStart={() => onClick(modifier)}
+        onClick={(e) => onClick(modifier,e)}
+        onTouchEnd={(e) => onClick(modifier,e)}
         className={`modifier ${modifier}`}
       >
         <span>

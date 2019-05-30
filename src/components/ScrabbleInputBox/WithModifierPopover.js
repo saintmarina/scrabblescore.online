@@ -13,12 +13,14 @@ class WithModifierPopover extends React.Component {
     };
   }
 
-  handleClick(modifiertype) {
+  handleClick(modifiertype, e) {
     const { modifier } = this.state;
     const { onChange } = this.props;
     const modifierValue = (modifiertype === modifier) ? null : modifiertype;
     this.setState({ modifier: modifierValue, tooltipShown: false });
     onChange(modifierValue);
+    e.preventDefault();
+    e.stopPropagation();
   }
 
   handleVisibilityChange(argument) {
@@ -34,7 +36,7 @@ class WithModifierPopover extends React.Component {
         tooltipShown={tooltipShown}
         placement="bottom"
         trigger="click"
-        portalContainer={document.getElementsByClassName("main")[0]}
+        portalContainer={document.getElementsByClassName("buttons")[0]}
         tooltip={(
           <div>
             <ModifierTile modifier="double-letter" onClick={this.handleClick} />

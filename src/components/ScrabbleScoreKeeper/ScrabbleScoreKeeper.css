@@ -7,17 +7,15 @@
 .add-word {
 	height: 46px;
 	font-size: 21px;
-	margin-top: 30px;
-	width: 229px;
-	margin-left:200px;
+	width: 237px;
+	
 }
 
 .mobile .add-word {
 	height: 46px;
 	font-size: 21px;
 	margin-top: 30px;
-	width: 203px;
-	margin-left: -4px;
+	width: 200px;
 }
 
 
@@ -28,17 +26,19 @@
 }
 
 .mobile .pass-endturn-button {
-	width: 326px;
+	width: 316px;
 	height: 46px;
 	font-size: 21px;
-	margin-left: 2px;
 }
 
 .custom-control {
 	display: inline-block;
 	padding-bottom: 20px;
-	padding-left: 67px;
+	padding-left: 78px;
+}
 
+.custom-control {
+	padding-left: 54px;
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -47,22 +47,24 @@
 }
 
 .pass-endturn-button {
-	margin-left: 200px;
 	width: 380px;
 }
+
 .undo {
 	height: 46px;
 	width: 180px;
 	margin-top: 10px;
-	margin-left: 200px;
 }
 
 .mobile .undo {
 	height: 46px;
-	width: 148px;
+	width: 149px;
 	margin-top: 10px;
 	font-size: 21px;
-	margin-left: 0px;
+}
+
+.mobile .in-game-controls {
+	margin-left: 1%;
 }
 
 .end-game {
@@ -73,7 +75,7 @@
 
 .mobile .end-game {
 	height: 46px;
-	width: 148px;
+	width: 149px;
 	font-size: 21px;
 }
 
@@ -83,8 +85,13 @@
 
 .main {
 	width: 80%;
-	margin: 0 auto;
+	margin: auto;
+	text-align: center;
 }
+.main.mobile {
+	width: 100%;
+}
+
 .card-header.current_score {
 	margin: auto;
 	margin-top: 33px;

@@ -89,19 +89,23 @@ class InGameControls extends React.Component {
           ? null
           : <CurrentScore score={currentWord.score} />
         }
-        <div>
-        <div>
-          <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
-          <div className="custom-control custom-switch">
-            <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
-            <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
+        <div className="buttons">
+          <div className="in-game-controls">
+            <div>
+              <button onClick={this.handleAddWord} type="button" className="btn btn-info word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
+              <span className="custom-control custom-switch">
+                <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
+                <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
+              </span>
+            </div>
+            <div>
+              <button onClick={this.handleEndTurn} type="submit" className="btn btn-danger pass-endturn-button">{endTurnButtonText}</button>
+            </div>
+            <div>
+              <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+              <button onClick={this.handleEndGame} type="button" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
+            </div>
           </div>
-        </div>
-        <div>
-          <button onClick={this.handleEndTurn} type="submit" className="btn btn-danger pass-endturn-button">{endTurnButtonText}</button>
-        </div>
-          <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button undo" disabled={undoDisabled}>UNDO</button>
-          <button onClick={this.handleEndGame} type="button" className="btn btn-danger end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
         </div>
       </form>
     );
