@@ -13,11 +13,14 @@ class ScoreGridMobile extends React.Component {
             <th className="playerTurn">Player Turn</th>
            </tr>
         </thead>
-        <tbody className="tbody-rows">
           {game._getCurrentPlayer().map((_, i) => (
             game.players.map((player, j) => (
-              player[i]
-                  ? <tr key={i}>
+              player[i] 
+              ? <tbody key='tbody' className="tbody-rows">
+                   <tr key={i+10}>
+                    {j===0 ? <td colSpan="2">{`Move ${i+1}`}</td> : null}
+                   </tr>
+                    <tr key={i}>
                       <td>
                         {playerNames[j]}
                       </td>
@@ -25,11 +28,13 @@ class ScoreGridMobile extends React.Component {
                         <ScoreGridCell turn={player[i]} language={language} game={game} />
                       </td>
                     </tr>
+                    </tbody>
                   : null
+                  
               ))
             ))
           }
-        </tbody>
+        
       </table>
     )
   }

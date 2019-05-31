@@ -61,7 +61,7 @@ class ScoreKeeper extends React.Component {
         ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
         : <ScoreGrid playerNames={playerNames} game={game} language={language} />
       }
-        <div>
+        <div key="leftOversSubmitted">
           {!game.areLeftOversSubmitted()
             ? <p className="bold">{callPlayerToAction}</p>
             : (
