@@ -48,3 +48,9 @@ background-color: red;
 	top: 18px;
 	font-weight: normal;
 }
+.mobile .playerNames {
+	width: 70px;
+	height: 40px;
+	text-align: center;
+	padding: 0px;
+}

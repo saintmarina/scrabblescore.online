@@ -92,6 +92,7 @@
 	width: 100%;
 }
 
+
 .card-header.current_score {
 	margin: auto;
 	margin-top: 33px;
@@ -100,5 +101,8 @@
 	background-color: rgb(243, 106, 152);
 	border-radius: 10px;
 	margin-bottom: 10px;
+	text-align: center;
+}
+.desktop form {
 	text-align: center;
 }

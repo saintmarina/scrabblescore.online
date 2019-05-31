@@ -1,5 +1,4 @@
 import React from 'react';
-import Tooltip from '../Tooltip/Tooltip';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleTile from '../ScrabbleTile/ScrabbleTile';
 

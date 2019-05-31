@@ -9,8 +9,7 @@ class ScoreGridMobile extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className="move">Move</th>
-            <th className="playerNames">Player Names</th>
+            <th className="playerNames">Players</th>
             <th className="playerTurn">Player Turn</th>
            </tr>
         </thead>
@@ -18,10 +17,7 @@ class ScoreGridMobile extends React.Component {
           {game._getCurrentPlayer().map((_, i) => (
             game.players.map((player, j) => (
               player[i]
-                  ? <tr>
-                      <th>
-                        {i+1}
-                      </th>
+                  ? <tr key={i}>
                       <td>
                         {playerNames[j]}
                       </td>

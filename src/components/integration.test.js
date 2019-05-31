@@ -242,9 +242,9 @@ describe("Game", () => {
 	it("if no word typed, End Game button displays 'PASS'", () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 3)
-		expect(getbuttonText(wrapper, 2)).toEqual("PASS")
+		expect(getbuttonText(wrapper, 1)).toEqual("PASS")
 		typeInputBox(wrapper, "q")
-		expect(getbuttonText(wrapper, 2)).toEqual("END TURN")
+		expect(getbuttonText(wrapper, 1)).toEqual("END TURN")
 	})
 
 	it("types inside the scrabble input box", () => {
