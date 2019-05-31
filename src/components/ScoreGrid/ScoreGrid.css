@@ -1,5 +1,27 @@
-.move {
-	width: 75px;
+.move-cell {
+	width: 65px;
+}
+
+.table th {
+	height: 45px;
+	vertical-align: middle;
+}
+
+.table thead th {
+	vertical-align: middle;
+}
+
+.table td {
+	vertical-align: middle;
+}
+.mobile .table td {
+	text-align: left;
+	padding: 0px 0px;
+	vertical-align: middle;
+	padding-top: 2px;
+}
+.mobile .table th {
+	padding: 5px 0px;
 }
 
 .score-box {
@@ -10,7 +32,23 @@
 	width: 30px;
 	border-radius: 5px;
 	padding-top: 1px;
+	text-align: center;
 }
+
+.score-grid-cell .word-cell {
+	text-align: left;
+}
+
+.score-grid-cell .score-cell {
+	text-align: right;
+}
+
+.mobile .move-row td {
+	padding: 0px 1px;
+	text-align: center;
+}
+
+
 
 .score-box.high {
 background-color: red;
@@ -49,11 +87,24 @@ background-color: red;
 	font-weight: normal;
 }
 .mobile .playerNames {
-	width: 70px;
+	width: 61px;
 	height: 40px;
 	text-align: center;
 	padding: 0px;
 }
 .mobile .mobile-move {
-	
+
+}
+
+.score-grid-cell td {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+.score-grid-cell {
+	margin: 0;
+	padding: 0;
+	width: 100%;
 }

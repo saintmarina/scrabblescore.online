@@ -18,9 +18,9 @@ class ScoreGridCell extends React.Component {
   renderNormal() {
     const { turn, language } = this.props;
     const rows = turn.words.map((word, i) => (
-      <tr key={i}>
-        <td><WordInTiles word={word} language={language} /></td>
-        <td><span className={word.score >= highScore ? 'score-box high' : 'score-box'}>{word.score}</span></td>
+      <tr key={`row-word-${i}`} className="word-row">
+        <td className="word-cell"><WordInTiles word={word} language={language} /></td>
+        <td className="score-cell"><span className={word.score >= highScore ? 'score-box high' : 'score-box'}>{word.score}</span></td>
       </tr>
     ));
     if (turn.bingo) {
@@ -39,7 +39,7 @@ class ScoreGridCell extends React.Component {
   render() {
     const { turn, game } = this.props;
     return (
-      <table className="cell-table">
+      <table className="score-grid-cell">
         <tbody>
           {turn.isPassed(game) ? this.renderPassed() : this.renderNormal()}
         </tbody>

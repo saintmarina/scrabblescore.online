@@ -9,32 +9,32 @@ class ScoreGridMobile extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className="playerNames">Players</th>
+            <th className="playerNames">Names</th>
             <th className="playerTurn">Player Turn</th>
            </tr>
         </thead>
-          {game._getCurrentPlayer().map((_, i) => (
-            game.players.map((player, j) => (
-              player[i] 
-              ? <tbody key='tbody' className="tbody-rows">
-                   <tr key={i+10}>
-                    {j===0 ? <td colSpan="2">{`Move ${i+1}`}</td> : null}
-                   </tr>
-                    <tr key={i}>
-                      <td>
-                        {playerNames[j]}
-                      </td>
-                      <td>
-                        <ScoreGridCell turn={player[i]} language={language} game={game} />
-                      </td>
-                    </tr>
-                    </tbody>
-                  : null
-                  
+        <tbody key='tbody' className="tbody-rows">
+          {game._getCurrentPlayer().map((_, i) => {
+            const moveRow = <tr key={`moverow${i}`} className="move-row">
+                              <td colSpan="2">
+                                {`Move ${i+1}`}
+                              </td>
+                            </tr>;
+            const playerRows = game.players.map((player, j) => (
+              player[i]
+                ? <tr key={`move${i}_player${j}`}>
+                    <td>
+                      {playerNames[j]}
+                    </td>
+                    <td>
+                      <ScoreGridCell turn={player[i]} language={language} game={game} />
+                    </td>
+                  </tr>     
+                : null
               ))
-            ))
-          }
-        
+            return [moveRow, playerRows]
+          })}
+        </tbody>
       </table>
     )
   }

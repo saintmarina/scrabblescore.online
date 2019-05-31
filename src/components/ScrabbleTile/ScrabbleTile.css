@@ -17,6 +17,9 @@
 	height: 45px;
 	width: 41px;
 }
+.mobile .table .scrabble-letter {
+	left: 0px;
+}
 
 .scrabble-letter:hover {
 	box-shadow: 0 0 15px red;

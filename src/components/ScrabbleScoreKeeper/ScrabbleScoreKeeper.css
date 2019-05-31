@@ -84,12 +84,12 @@
 }
 
 .main {
-	width: 80%;
+	width: 89%;
 	margin: auto;
 	text-align: center;
 }
 .main.mobile {
-	width: 100%;
+	width: 95%;
 }
 
 

@@ -13,7 +13,7 @@ class ScoreGrid extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className="move">Move</th>
+            <th className="move-cell">Move</th>
             {playerNames.map((player, i) => (
               <th
                 key={i}
@@ -27,7 +27,7 @@ class ScoreGrid extends React.Component {
         <tbody className="tbody-rows">
           {[...Array(game.getCurrentTurnNumber() + 1)].map((_, i) => (
             <tr className="move-row" key={i}>
-              <th>{i + 1}</th>
+              <th className="move">{i + 1}</th>
               {game.players.map((player, j) => (
                 <td key={j}>
                   {player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} />
@@ -37,7 +37,7 @@ class ScoreGrid extends React.Component {
             </tr>
           ))}
           <tr className="total-score">
-            <th>TOTAL</th>
+            <th className="move">TOTAL</th>
             {playerNames.map((_, i) => <td key={i}>{game.getTotalScore(i)}</td>)}
           </tr>
         </tbody>
