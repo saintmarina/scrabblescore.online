@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Game from '../../logic/game';
 import ScoreGrid from '../ScoreGrid/ScoreGrid';
+import TotalGridMobile from '../ScoreGrid/TotalGridMobile';
 import ScoreGridMobile from '../ScoreGrid/ScoreGridMobile';
 import InGameControls from './InGameControls';
 import InGameOverControls from './InGameOverControls';
@@ -44,8 +45,12 @@ class ScoreKeeper extends React.Component {
   render() {
     const { game, games } = this.state;
     const { playerNames, language, isMobile } = this.props;
-    const callPlayerToAction = `${playerNames[game.currentPlayerIndex]}, submit ${!game.isGameOver()
-      ? 'a word:' : 'your leftovers:'}`;
+    const callPlayerToAction = isMobile 
+                                ? <TotalGridMobile playerNames={playerNames} game={game} />
+                                : `${playerNames[game.currentPlayerIndex]}, submit ${!game.isGameOver()
+                                  ? 'a word:'
+                                  : 'your leftovers:'}`
+                                 
 
     const controlProps = {
       onSetGame: this.handleSetGame,
@@ -61,7 +66,7 @@ class ScoreKeeper extends React.Component {
         ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
         : <ScoreGrid playerNames={playerNames} game={game} language={language} />
       }
-        <div key="leftOversSubmitted">
+        <div>
           {!game.areLeftOversSubmitted()
             ? <p className="bold">{callPlayerToAction}</p>
             : (
