@@ -112,6 +112,14 @@ test('getCurrentTurn() is getting turn of the current player', () => {
   expect(game.getCurrentTurn().words).toEqual([w2]);
 });
 
+test('gerCurrentPlayer() is getting an array of turns of current player', () => {
+  let game = Game.createNewGame(2);
+  game = game.addWord(w1).endTurn();
+  game = game.addWord(w2).endTurn();
+  game = game.addWord(w2).endTurn();
+  game = game.addWord(w1).endTurn();
+  expect(game.getCurrentPlayer()).toEqual([{"bingo": false, "words": [{"modifiers": [null, null, null, null], "score": 8, "value": "rose"}]}, {"bingo": false, "words": [{"modifiers": [null, null, null, null], "score": 10, "value": "time"}]}, {"bingo": false, "words": []}]); });
+
 test('endTurn() on an empty word ands just an empty array', () => {
   let game = Game.createNewGame(2);
   game = game.endTurn();

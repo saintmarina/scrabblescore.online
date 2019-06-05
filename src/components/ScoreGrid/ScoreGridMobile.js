@@ -14,7 +14,7 @@ class ScoreGridMobile extends React.Component {
            </tr>
         </thead>
         <tbody key='tbody' className="tbody-rows">
-          {game._getCurrentPlayer().map((_, i) => {
+          {game.getCurrentPlayer().map((_, i) => {
             const moveRow = <tr key={`moverow${i}`} className="move-row">
                               <td colSpan="2">
                                 {`Move ${i+1}`}

@@ -59,7 +59,7 @@ export default class Game {
       newGame = this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), Turn.empty());
     }
     const newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
-    const players = this.isGameOver() && (this._getCurrentPlayer() === this.players[this.players.length - 1]) ? newGame.players
+    const players = this.isGameOver() && (this.getCurrentPlayer() === this.players[this.players.length - 1]) ? newGame.players
       : newGame.players.map((history, playerIndex) => (playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history));
     return new Game(players, newPlayerIndex, this.leftOversTurnNumber);
   }
@@ -123,12 +123,12 @@ export default class Game {
     return new Game(newPlayers, this.currentPlayerIndex, this.leftOversTurnNumber);
   }
 
-  _getCurrentPlayer() {
+  getCurrentPlayer() {
     return this.players[this.currentPlayerIndex];
   }
 
   getCurrentTurn() {
-    return this._getCurrentPlayer().slice(-1)[0];
+    return this.getCurrentPlayer().slice(-1)[0];
   }
 
   getCurrentTurnNumber() {
