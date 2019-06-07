@@ -9,23 +9,23 @@ const w2A = { value: 'time', modifiers: [null, null, null, null], score: -1 };
 
 test('Game can be created with some number of players', () => {
   const game = Game.createNewGame(3);
-  	expect(game.players.length).toBe(3);
+  	expect(game.playersTurns.length).toBe(3);
 });
 
 test('Game is adding words for current player', () => {
   let game = Game.createNewGame(3);
-  expect(game.players[0].length).toEqual(1);
-  expect(game.players[0][0].words).toEqual([]);
+  expect(game.playersTurns[0].length).toEqual(1);
+  expect(game.playersTurns[0][0].words).toEqual([]);
   game = game.addWord(w1);
-  expect(game.players[0].length).toEqual(1);
-  expect(game.players[0][0].words).toEqual([w1]);
+  expect(game.playersTurns[0].length).toEqual(1);
+  expect(game.playersTurns[0][0].words).toEqual([w1]);
   game = game.addWord(w2);
-  expect(game.players[0].length).toEqual(1);
-  expect(game.players[0][0].words).toEqual([w1, w2]);
+  expect(game.playersTurns[0].length).toEqual(1);
+  expect(game.playersTurns[0][0].words).toEqual([w1, w2]);
   game = game.endTurn();
   game = game.addWord(w3);
-  expect(game.players[0][0].words).toEqual([w1, w2]);
-  expect(game.players[1][0].words).toEqual([w3]);
+  expect(game.playersTurns[0][0].words).toEqual([w1, w2]);
+  expect(game.playersTurns[1][0].words).toEqual([w3]);
 });
 
 test('endTurn() changes player and turn number, and create an empty turn for the next player', () => {
@@ -35,7 +35,7 @@ test('endTurn() changes player and turn number, and create an empty turn for the
   for (let i = 0; i < 10; i++) {
     expect(game.getCurrentPlayerIndex()).toEqual(i % numPlayers);
     expect(game.getCurrentTurnNumber()).toEqual(Math.floor(i / numPlayers));
-    expect(game.players[game.getCurrentPlayerIndex()][game.getCurrentTurnNumber()].words).toEqual([]);
+    expect(game.playersTurns[game.getCurrentPlayerIndex()][game.getCurrentTurnNumber()].words).toEqual([]);
     game = game.endTurn();
   }
 });
@@ -45,39 +45,39 @@ test('game should be immutable', () => {
   game.addWord(w1);
   game.endTurn().addWord(w1);
   game.setBingo(true);
-  expect(game.players[0].length).toEqual(1);
-  expect(game.players[0][0].words).toEqual([]);
-  expect(game.players[0][0].bingo).toEqual(false);
-  expect(game.players[1].length).toEqual(0);
+  expect(game.playersTurns[0].length).toEqual(1);
+  expect(game.playersTurns[0][0].words).toEqual([]);
+  expect(game.playersTurns[0][0].bingo).toEqual(false);
+  expect(game.playersTurns[1].length).toEqual(0);
 });
 
 test('test setBingo()', () => {
   let game = Game.createNewGame(2);
   game = game.addWord(w1);
-  expect(game.players[0][0].words).toEqual([w1]);
+  expect(game.playersTurns[0][0].words).toEqual([w1]);
   game = game.setBingo(false);
-  expect(game.players[0][0].bingo).toBe(false);
+  expect(game.playersTurns[0][0].bingo).toBe(false);
   game = game.setBingo(true);
-  expect(game.players[0][0].bingo).toBe(true);
+  expect(game.playersTurns[0][0].bingo).toBe(true);
   game = game.addWord(w1);
-  expect(game.players[0][0].words).toEqual([w1, w1]);
-  expect(game.players[0][0].bingo).toBe(true);
+  expect(game.playersTurns[0][0].words).toEqual([w1, w1]);
+  expect(game.playersTurns[0][0].bingo).toBe(true);
 });
 
 test('get score of the Turn', () => {
   let game = Game.createNewGame(2);
-  expect(game.players[0][0].score).toEqual(0);
+  expect(game.playersTurns[0][0].score).toEqual(0);
   game = game.addWord(w1);
   game = game.addWord(w2);
-  expect(game.players[0][0].score).toEqual(18);
+  expect(game.playersTurns[0][0].score).toEqual(18);
   game = game.setBingo(true);
-  expect(game.players[0][0].score).toEqual(68);
+  expect(game.playersTurns[0][0].score).toEqual(68);
   game = game.endTurn();
-  expect(game.players[0][0].score).toEqual(68);
-  expect(game.players[1][0].score).toEqual(0);
+  expect(game.playersTurns[0][0].score).toEqual(68);
+  expect(game.playersTurns[1][0].score).toEqual(0);
   game = game.addWord(w3);
-  expect(game.players[0][0].score).toEqual(68);
-  expect(game.players[1][0].score).toEqual(1);
+  expect(game.playersTurns[0][0].score).toEqual(68);
+  expect(game.playersTurns[1][0].score).toEqual(1);
 });
 
 
@@ -124,7 +124,7 @@ test('endTurn() on an empty word ands just an empty array', () => {
   let game = Game.createNewGame(2);
   game = game.endTurn();
   game = game.addWord(w1).endTurn();
-  expect(game.players[0][0].words).toEqual([]);
+  expect(game.playersTurns[0][0].words).toEqual([]);
 });
 
 test('setBingo() sets the bingo turn value', () => {
@@ -158,7 +158,7 @@ test('isLeftOversComplete', () => {
   game = game.addWord(w2).endTurn();
   game = game.addWord(w2).endTurn();
   game = game.addWord(w1).endTurn();
-  expect(isLeftOversComplete(game.players, 1)).toEqual(true);
+  expect(isLeftOversComplete(game.playersTurns, 1)).toEqual(true);
 });
 test('areLeftOversSubmitted', () => {
   let game = Game.createNewGame(2);
@@ -210,8 +210,8 @@ test('distributeLeftOversToReapers', () => {
   game = game.endTurn();						 // Player 1, score 10 + 1 (11)
   game = game.addWord(w2A).endTurn();// Player 2, score 1 - 1 (0)
   game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers());
-  expect(game.players[0][1].words[0].score).toEqual(1);
-  expect(game.players[1][1].words[0].score).toEqual(1);
+  expect(game.playersTurns[0][1].words[0].score).toEqual(1);
+  expect(game.playersTurns[1][1].words[0].score).toEqual(1);
   expect(game.getTotalScore(0)).toEqual(9);
   expect(game.getTotalScore(1)).toEqual(11);
 });

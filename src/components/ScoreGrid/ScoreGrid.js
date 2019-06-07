@@ -28,7 +28,7 @@ class ScoreGrid extends React.Component {
           {[...Array(game.getCurrentTurnNumber() + 1)].map((_, i) => (
             <tr className="move-row" key={i}>
               <th className="move">{i + 1}</th>
-              {game.players.map((player, j) => (
+              {game.playersTurns.map((player, j) => (
                 <td key={j}>
                   {player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} />
                     : null}

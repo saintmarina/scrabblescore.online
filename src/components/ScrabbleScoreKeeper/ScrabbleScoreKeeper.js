@@ -32,7 +32,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   renderGame() {
     const { playerNames, language, width } = this.state;
-    const isMobile = width <= 700;
+    const isMobile = width <= 815;
     return playerNames.length === 0
             ? <GameSettings onGameStart={this.handleGameStart} />
             : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile}/>
@@ -40,7 +40,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   render() {
     const { width } = this.state;
-    const isMobile = width <= 700;
+    const isMobile = width <= 815;
     return (
       <div className={"main " + (isMobile ? "mobile" : "desktop")}>
         <h1> Scrabble score keeper</h1>

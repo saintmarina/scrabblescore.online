@@ -37,7 +37,7 @@ class Turn {
 export default class Game {
   constructor(players, currentPlayerIndex, leftOversTurnNumber) {
     this.currentPlayerIndex = currentPlayerIndex;
-    this.players = players;
+    this.playersTurns = players;
     this.leftOversTurnNumber = leftOversTurnNumber;
   }
 
@@ -58,9 +58,9 @@ export default class Game {
     if (this.getCurrentTurn().isEmpty()) {
       newGame = this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), Turn.empty());
     }
-    const newPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
-    const players = this.isGameOver() && (this.getCurrentPlayer() === this.players[this.players.length - 1]) ? newGame.players
-      : newGame.players.map((history, playerIndex) => (playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history));
+    const newPlayerIndex = (this.currentPlayerIndex + 1) % this.playersTurns.length;
+    const players = this.isGameOver() && (this.getCurrentPlayer() === this.playersTurns[this.playersTurns.length - 1]) ? newGame.playersTurns
+      : newGame.playersTurns.map((history, playerIndex) => (playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history));
     return new Game(players, newPlayerIndex, this.leftOversTurnNumber);
   }
 
@@ -70,7 +70,7 @@ export default class Game {
   }
 
   endGame() {
-    return new Game(this.players, this.currentPlayerIndex, this.getCurrentTurnNumber());
+    return new Game(this.playersTurns, this.currentPlayerIndex, this.getCurrentTurnNumber());
   }
 
   isGameOver() {
@@ -78,7 +78,7 @@ export default class Game {
   }
 
   areLeftOversSubmitted() {
-    if (this.isGameOver() && this.players[this.players.length - 1][this.leftOversTurnNumber] && this.currentPlayerIndex === 0) {
+    if (this.isGameOver() && this.playersTurns[this.playersTurns.length - 1][this.leftOversTurnNumber] && this.currentPlayerIndex === 0) {
       return true;
     }
     return false;
@@ -86,8 +86,8 @@ export default class Game {
 
   getReapers() {
     const reaperIndexes = [];
-    for (let i = 0; i < this.players.length; i++) {
-      if (this.players[i][this.leftOversTurnNumber].isEmpty()) {
+    for (let i = 0; i < this.playersTurns.length; i++) {
+      if (this.playersTurns[i][this.leftOversTurnNumber].isEmpty()) {
         reaperIndexes.push(i);
       }
     }
@@ -96,8 +96,8 @@ export default class Game {
 
   getSumOfLeftovers() {
     let total = 0;
-    for (let i = 0; i < this.players.length; i++) {
-      total += Math.abs(this.players[i][this.leftOversTurnNumber].score);
+    for (let i = 0; i < this.playersTurns.length; i++) {
+      total += Math.abs(this.playersTurns[i][this.leftOversTurnNumber].score);
     }
     return total;
   }
@@ -112,19 +112,19 @@ export default class Game {
   }
 
   getWinners(lastTurn = true) {
-    const totalScores = this.players.map((_, i) => this.getTotalScore(i, lastTurn));
+    const totalScores = this.playersTurns.map((_, i) => this.getTotalScore(i, lastTurn));
     return indexesOf(totalScores, Math.max(...totalScores));
   }
 
   _setTurn(playerIndex, turnNumber, turn) {
-    const playerCopy = this.players[playerIndex].slice();
+    const playerCopy = this.playersTurns[playerIndex].slice();
     playerCopy[turnNumber] = turn;
-    const newPlayers = this.players.map((player, i) => (i === playerIndex ? playerCopy : player));
+    const newPlayers = this.playersTurns.map((player, i) => (i === playerIndex ? playerCopy : player));
     return new Game(newPlayers, this.currentPlayerIndex, this.leftOversTurnNumber);
   }
 
   getCurrentPlayer() {
-    return this.players[this.currentPlayerIndex];
+    return this.playersTurns[this.currentPlayerIndex];
   }
 
   getCurrentTurn() {
@@ -132,7 +132,7 @@ export default class Game {
   }
 
   getCurrentTurnNumber() {
-    return this.players[0].length - 1;
+    return this.playersTurns[0].length - 1;
   }
 
   getCurrentPlayerIndex() {
@@ -140,7 +140,7 @@ export default class Game {
   }
 
   getTotalScore(playerIndex, lastTurn = true) {
-    const player = this.players[playerIndex];
+    const player = this.playersTurns[playerIndex];
     let result = 0;
     const numTurns = lastTurn ? player.length : player.length - 1;
     for (let i = 0; i < numTurns; i++) {

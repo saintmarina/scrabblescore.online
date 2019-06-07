@@ -1,6 +1,6 @@
 import React from 'react';
 import ScoreGridCell from './ScoreGridCell';
-//import './ScoreGrid.css';
+import './ScoreGrid.css';
 
 class ScoreGridMobile extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class ScoreGridMobile extends React.Component {
                                 {`Move ${i+1}`}
                               </td>
                             </tr>;
-            const playerRows = game.players.map((player, j) => (
+            const playerRows = game.playersTurns.map((player, j) => (
               player[i]
                 ? <tr key={`move${i}_player${j}`}>
                     <td>
