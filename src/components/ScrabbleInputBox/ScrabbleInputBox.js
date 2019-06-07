@@ -23,6 +23,7 @@ class ScrabbleInputBox extends React.Component {
     const result = input.split('').map(letter => (isLetterAllowed(letter, language) ? letter : ''));
     const modifiers = resizeArray(word.modifiers, result.length, null);
     onChange({ value: result.join(''), modifiers });
+    if (document.getElementsByClassName("hidden-input")[0]) { document.getElementsByClassName("hidden-input")[0].click(); console.log('yes') }
   }
 
   handleModifierChange(letterIndex, modifier) {
@@ -30,7 +31,7 @@ class ScrabbleInputBox extends React.Component {
     let modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
     onChange({ value: word.value, modifiers });
-  }
+      }
 
   handleTileClick() {
     this.focus()

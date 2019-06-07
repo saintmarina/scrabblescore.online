@@ -42,6 +42,9 @@
 	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
 }
 
+.scrabble-letter.blank {
+	opacity: 0.77;
+}
 .scrabble-letter.blank .score {
 	font-size: 1px;
 }

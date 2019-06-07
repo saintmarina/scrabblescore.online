@@ -15,8 +15,7 @@
 	vertical-align: middle;
 }
 .mobile .table td {
-	text-align: left;
-	padding: 0px 0px;
+	padding: 0px 1px;
 	vertical-align: middle;
 	padding-top: 2px;
 }
@@ -39,8 +38,8 @@
 	text-align: left;
 }
 
-.score-grid-cell .score-cell {
-	text-align: right;
+.score-cell {
+	text-align: right !important;
 }
 
 .mobile .move-row td {

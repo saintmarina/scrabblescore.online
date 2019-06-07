@@ -1,6 +1,6 @@
 import React from 'react';
 import ScoreGridCell from './ScoreGridCell';
-import './ScoreGrid.css';
+//import './ScoreGrid.css';
 
 class ScoreGridMobile extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class ScoreGridMobile extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className="playerNames">Names</th>
+            <th className="playerNames">Names<br />(Total)</th>
             <th className="playerTurn">Player Turn</th>
            </tr>
         </thead>
@@ -24,8 +24,9 @@ class ScoreGridMobile extends React.Component {
               player[i]
                 ? <tr key={`move${i}_player${j}`}>
                     <td>
-                      {playerNames[j]}
+                      {playerNames[j]}<br />{game.getTotalScore(j)}
                     </td>
+
                     <td>
                       <ScoreGridCell turn={player[i]} language={language} game={game} />
                     </td>
