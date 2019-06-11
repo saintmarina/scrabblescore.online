@@ -5,7 +5,7 @@ import './index.css';
 import ScrabbleScoreKeeper from './components/ScrabbleScoreKeeper/ScrabbleScoreKeeper';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<ScrabbleScoreKeeper/>, document.getElementById('content'));
+ReactDOM.render(<ScrabbleScoreKeeper/>, document.getElementsByClassName('container')[0]);
 
 
 // If you want your app to work offline and load faster, you can change

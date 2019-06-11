@@ -46,21 +46,23 @@ class GameSettings extends React.Component {
     const { language, numberOfPlayers, playerNames } = this.state;
     return (
       <div>
-        <img src="/scrabble_upper.jpg" className="img-fluid rounded" alt="A scrabble game." width="750" height="200" />
-        <p>
+        <nav className="navbar navbar-expand-md navbar-light">
+            <ul className="navbar-nav ml-auto">
+                 <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage} >
+                    <option value="en">English</option>
+                    <option value="ru">Russian</option>
+                    <option value="fr">French</option>
+                  </select>
+            </ul>
+        </nav>
+
+        <div className='LoGo'></div>
+        <p className="description">
           Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
           Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in
           an innovative and easy way, whilst playing the Scrabble board game.
         </p>
         <form>
-          <div className="language-choice">
-            <h6>Choose language:</h6>
-            <select id="language-select" value={language} onChange={this.handleChangeOfLanguage} className="custom-select">
-              <option value="en">English</option>
-              <option value="ru">Russian</option>
-              <option value="fr">French</option>
-            </select>
-          </div>
           <div className="number-of-players-choice">
             <h6>Choose number of players:</h6>
             <select id="number-of-players-select" value={numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">

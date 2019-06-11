@@ -43,7 +43,6 @@ class ScrabbleScoreKeeper extends React.Component {
     const isMobile = width <= 815;
     return (
       <div className={"main " + (isMobile ? "mobile" : "desktop")}>
-        <h1> Scrabble score keeper</h1>
         {this.renderGame()}
       </div>
     )

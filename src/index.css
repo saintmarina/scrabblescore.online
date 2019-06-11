@@ -1,6 +1,6 @@
 .container {
 	text-align: center;
-	background-color: #E0FFFF;
+	background-color: #F5F5F5;
 	padding-bottom: 15px;
 	padding-right: 0;
 	padding-left: 0;
@@ -20,17 +20,7 @@ h1 {
   
 }
 
-.nav {
-	background-color: #17a2b8;
-}
-.nav a  {
-	color: white;
-	cursor: pointer;
-}
-.nav a:hover  {
-	color: rgb(243, 106, 152);
-	text-decoration: underline;
-}
+
 
 .footer {
 	width: 100%;

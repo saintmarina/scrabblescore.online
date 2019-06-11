@@ -1,7 +1,3 @@
-.desktop #language-select {
-	width: 110px;
-}
-
 .desktop #number-of-players-select {
 	width: 110px;
 }
@@ -14,11 +10,6 @@
 text-align: left;
 }
 
-.desktop .language-choice {
-	width: 30%;
-	float: left;
-}
-
 .desktop .number-of-players-choice {
 	width: 30%;
 	float: left;
@@ -28,18 +19,54 @@ text-align: left;
 	text-align: right;
 	float: right;
 }
+
 .desktop .input-group {
 	text-align: center;
 }
+
 .desktop .btn.btn-info.next {
 	width: 131px;
 	height: 46px;
 	font-size: 21px;
 	margin: 2rem;
 }
+
 .mobile .btn.btn-info.next {
 	width: 150px;
 	height: 55px;
 	font-size: 25px;
 	margin: 1.5rem;
 }
+
+nav {
+	background-color: #A9A9A9;
+	margin-right: -53px;
+	margin-left: -53px;
+}
+
+.nav a  {
+	color: white;
+	cursor: pointer;
+}
+.nav a:hover  {
+	color: rgb(243, 106, 152);
+	text-decoration: underline;
+}
+
+.LoGo {
+width: 670px;
+height: 250px;
+background: #C0C0C0;
+display: inline-block;
+margin: 15px;
+}
+
+.description {
+	width: 670px;
+	display: inline-block;
+
+}
+
+
+
+
