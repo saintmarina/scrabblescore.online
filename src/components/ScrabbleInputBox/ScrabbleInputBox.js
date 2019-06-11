@@ -34,8 +34,7 @@ class ScrabbleInputBox extends React.Component {
       }
 
   handleTileClick() {
-    this.focus()
-    this.setState({ inFocus: true })
+    this.focus();
   }
 
   focus() {

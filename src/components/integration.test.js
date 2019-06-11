@@ -66,14 +66,11 @@ describe.skip("Nightmare tests", () => {
 				.click("button")
 				.wait(".scrabble-input-box")
 
+			expect(await nightmare.exists(".blinker")).toBe(true)
+			nightmare.realClick("h1")
 			expect(await nightmare.exists(".blinker")).toBe(false)
-
-			nightmare
-				.click(".scrabble-input-box")
-				.wait(".blinker")
-				.realClick(".pass-endturn-button")
-
-			expect(await nightmare.exists(".blinker")).toBe(false)
+			nightmare.click(".scrabble-input-box")
+			expect(await nightmare.exists(".blinker")).toBe(true)
 
 			nightmare.end()
 	})

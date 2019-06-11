@@ -44,7 +44,7 @@ class InGameOverControls extends React.Component {
     game = currentWord.value.length !== 0
       ? game.addWord(currentWord) : game;
     game = game.endTurn();
-    game = game.currentPlayerIndex === game.players.length - 1
+    game = game.currentPlayerIndex === game.playersTurns.length - 1
       ? game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
       : game;
     onSetGame(game);
