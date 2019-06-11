@@ -5,23 +5,15 @@ import './GameSettings.css';
 class GameSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChangeOfNumber = this.handleChangeOfNumber.bind(this);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
     this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
     this.handleGameStart = this.handleGameStart.bind(this);
 
     this.state = {
-      numberOfPlayers: 2,
+      numberOfPlayers: 4,
       playerNames: ['', ''],
       language: 'en',
     };
-  }
-
-  handleChangeOfNumber(e) {
-    let { playerNames } = this.state;
-    const numberOfPlayers = parseInt(e.target.value, 10);
-    playerNames = resizeArray(playerNames, numberOfPlayers, '');
-    this.setState({ numberOfPlayers, playerNames });
   }
 
   handleChangeOfName(i, e) {
@@ -30,6 +22,8 @@ class GameSettings extends React.Component {
     playerNames[i] = e.target.value;
     this.setState({ playerNames });
   }
+
+
 
   handleChangeOfLanguage(e) {
     this.setState({ language: e.target.value });
@@ -55,7 +49,6 @@ class GameSettings extends React.Component {
                   </select>
             </ul>
         </nav>
-
         <div className='LoGo'></div>
         <p className="description">
           Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
@@ -63,29 +56,20 @@ class GameSettings extends React.Component {
           an innovative and easy way, whilst playing the Scrabble board game.
         </p>
         <form>
-          <div className="number-of-players-choice">
-            <h6>Choose number of players:</h6>
-            <select id="number-of-players-select" value={numberOfPlayers} onChange={this.handleChangeOfNumber} className="custom-select">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
           <div className="player-names-choice">
-            <h6>Choose nicknames for players:</h6>
-            {playerNames.map((name, i) => (
+            {[...Array(numberOfPlayers)].map((_, i) => (
               <input
                 onChange={e => this.handleChangeOfName(i, e)}
                 id={`player-name-input-${i}`}
                 key={i}
                 type="text"
-                className="form-control player-name"
+                className={playerNames[i] && playerNames[i].length > 0 ? "form-control player-name filled" : "form-control player-name"}
                 placeholder={`Player ${i + 1}`}
               />
             ))}
           </div>
           <div className="input-group">
-            <button onClick={this.handleGameStart} type="submit" className="btn btn-info next">Next</button>
+            <button onClick={this.handleGameStart} type="submit" className="btn next">Next</button>
           </div>
         </form>
       </div>

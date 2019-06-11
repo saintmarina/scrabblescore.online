@@ -64,9 +64,37 @@ margin: 15px;
 .description {
 	width: 670px;
 	display: inline-block;
-
 }
 
+.player-names-choice {
+	text-align: center;
+	float: none;
+}
 
+.form-control.player-name {
+	margin: 25px;
+	display: inline-block;
+	border-style: dashed;
+	border-width: 5px;
+}
+
+.form-control.player-name.filled {
+	border-style: solid;
+	border-width: 5px;
+}
+
+.btn.next {
+	border: solid;
+  border-color: #C0C0C0;
+  width: 90px;
+}
+
+.mobile .form-control.player-name {
+	margin: 6px;
+	border-width: 4px;
+	width: 216px;
+  height: 48px;
+  font-size: 30px;
+}
 
 
