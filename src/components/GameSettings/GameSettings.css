@@ -54,7 +54,7 @@ nav {
 }
 
 .LoGo {
-width: 670px;
+width: 90%;
 height: 250px;
 background: #C0C0C0;
 display: inline-block;
@@ -62,11 +62,11 @@ margin: 15px;
 }
 
 .description {
-	width: 670px;
+	width: 90%;
 	display: inline-block;
 }
 
-.player-names-choice {
+.desktop  .player-names-choice {
 	text-align: center;
 	float: none;
 }
@@ -94,7 +94,18 @@ margin: 15px;
 	border-width: 4px;
 	width: 216px;
   height: 48px;
-  font-size: 30px;
+ 	font-size: 1.2em;
+}
+
+.game-settings {
+	width: 100%;
+}
+
+.custom-select {
+	width: 130px;
+	float: right;
+	margin-top: -44px;
+	position: relative;
 }
 
 

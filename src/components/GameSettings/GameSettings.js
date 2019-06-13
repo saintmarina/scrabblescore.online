@@ -1,5 +1,4 @@
 import React from 'react';
-import { resizeArray } from '../../logic/util';
 import './GameSettings.css';
 
 class GameSettings extends React.Component {
@@ -23,8 +22,6 @@ class GameSettings extends React.Component {
     this.setState({ playerNames });
   }
 
-
-
   handleChangeOfLanguage(e) {
     this.setState({ language: e.target.value });
   }
@@ -39,21 +36,19 @@ class GameSettings extends React.Component {
   render() {
     const { language, numberOfPlayers, playerNames } = this.state;
     return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-light">
-            <ul className="navbar-nav ml-auto">
-                 <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage} >
-                    <option value="en">English</option>
-                    <option value="ru">Russian</option>
-                    <option value="fr">French</option>
-                  </select>
-            </ul>
-        </nav>
+      <div className="game-settings">
+        <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage} >
+          <option value="en">English</option>
+          <option value="ru">Russian</option>
+          <option value="fr">French</option>
+        </select> 
         <div className='LoGo'></div>
         <p className="description">
-          Counting points when playing Scrabble can be tedious and sometimes riddled with mistakes.
-          Scrabble score keeper is a simple tool, that helps Scrabble players to count the score in
-          an innovative and easy way, whilst playing the Scrabble board game.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan sit amet ipsum eu vehicula.
+          Integer ac purus eu tellus pretium tempus. Vestibulum viverra augue at sem feugiat, eget cursus orci fermentum.
+          Morbi a quam ac neque tempus facilisis id vitae felis. Nam pulvinar eu dui at pharetra.
+          Nullam suscipit justo quis odio iaculis, in consectetur libero hendrerit.
+          Mauris bibendum, lacus quis consectetur dapibus, urna turpis dictum augue, nec luctus mauris ex quis magna.
         </p>
         <form>
           <div className="player-names-choice">

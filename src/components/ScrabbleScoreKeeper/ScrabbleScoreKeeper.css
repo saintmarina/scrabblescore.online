@@ -1,21 +1,14 @@
 .btn {
-	text-align: center;
+	border: solid;
+  border-color: #C0C0C0;
 	margin: 8px;
-	vertical-align: bottom;
+	cursor: pointer;
+	font-size: 21px;
 }
 
 .add-word {
-	height: 46px;
-	font-size: 21px;
-	width: 237px;
-	
-}
-
-.mobile .add-word {
-	height: 46px;
-	font-size: 21px;
-	margin-top: 30px;
-	width: 200px;
+	height: 50px;
+	width: 233px;
 }
 
 
@@ -34,7 +27,6 @@
 
 
 .custom-control {
-	padding-left: 54px;
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -60,9 +52,8 @@
 }
 
 .mobile .in-game-controls {
-	margin-left: 1%;
+	width: 100%;	
 }
-
 .end-game {
 	height: 46px;
 	width: 180px;
@@ -88,17 +79,34 @@
 	width: 95%;
 }
 
-
-.card-header.current_score {
-	margin: auto;
-	margin-top: 33px;
-	width: 19rem;
-	font-weight: bold;
-	background-color: rgb(243, 106, 152);
-	border-radius: 10px;
-	margin-bottom: 10px;
-	text-align: center;
+.current-score {
+  width: 3rem;
+  height: 50px;
+  font-weight: bold;
+  background-color: white;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid grey;
+  margin-top: -68px;
+  padding-top: 10px;
+  float: right;
+  text-align: center;
 }
-.desktop form {
+
+.in-game-controls {
+	display: inline-block;
+	width: 57%;
+}
+
+
+.add-word-and-bingo-btns-container {
+}
+
+.custom-control.custom-switch {
+	display: inline-block;
+	padding-left: 39px;
+}
+
+.buttons {
 	text-align: center;
 }

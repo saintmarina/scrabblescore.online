@@ -55,6 +55,7 @@ background-color: red;
 
 .table-bordered {
 	table-layout: fixed;
+	margin-top: 5%;
 }
 
 .player-header.current {
