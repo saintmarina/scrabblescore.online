@@ -18,6 +18,7 @@ class ScoreGridCell extends React.Component {
   renderNormal() {
     const { turn, language } = this.props;
     const rows = turn.words.map((word, i) => (
+
       <tr key={`row-word-${i}`} className="word-row">
         <td className="word-cell"><WordInTiles word={word} language={language} /></td>
         {i === 0

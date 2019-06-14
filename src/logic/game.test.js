@@ -98,11 +98,11 @@ test('getTotalScore() without last turn', () => {
   game = game.addWord(w1A).endTurn(); // 7
   game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers());
   expect(game.getTotalScore(0)).toEqual(24);
-  expect(game.getTotalScore(0, false)).toEqual(22);
+  expect(game.getTotalScore(0, 2)).toEqual(22);
   expect(game.getTotalScore(1)).toEqual(16);
-  expect(game.getTotalScore(1, false)).toEqual(17);
+  expect(game.getTotalScore(1, 2)).toEqual(17);
   expect(game.getTotalScore(2)).toEqual(7);
-  expect(game.getTotalScore(2, false)).toEqual(8);
+  expect(game.getTotalScore(2, 2)).toEqual(8);
 });
 
 test('getCurrentTurn() is getting turn of the current player', () => {

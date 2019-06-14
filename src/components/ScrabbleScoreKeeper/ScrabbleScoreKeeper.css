@@ -4,6 +4,8 @@
 	margin: 8px;
 	cursor: pointer;
 	font-size: 21px;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 16px;
 }
 
 .add-word {
@@ -15,18 +17,19 @@
 .pass-endturn-button {
 	width: 230px;
 	height: 46px;
-	font-size: 21px;
+  font-size: 16px;
 }
 
 .mobile .pass-endturn-button {
 	width: 316px;
 	height: 46px;
-	font-size: 21px;
+	font-size: 16px;
 }
 
-
-
 .custom-control {
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 16px;
+
 }
 
 .custom-control-input:checked~.custom-control-label::before {
@@ -36,34 +39,37 @@
 
 .pass-endturn-button {
 	width: 380px;
+  font-size: 16px;
 }
 
 .undo {
 	height: 46px;
 	width: 180px;
 	margin-top: 10px;
+  font-size: 16px;
 }
 
 .mobile .undo {
 	height: 46px;
 	width: 149px;
 	margin-top: 10px;
-	font-size: 21px;
+	font-size: 16px;
 }
 
 .mobile .in-game-controls {
 	width: 100%;	
 }
+
 .end-game {
 	height: 46px;
 	width: 180px;
-	font-size: 21px;
+	font-size: 16px;
 }
 
 .mobile .end-game {
 	height: 46px;
 	width: 149px;
-	font-size: 21px;
+	font-size: 16px;
 }
 
 .card-header {
@@ -109,4 +115,18 @@
 
 .buttons {
 	text-align: center;
+}
+
+th {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
+
+.bold {
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 16px;
+}
+
+.main {
+  padding: 0px !important;
 }

@@ -64,7 +64,7 @@ class GameSettings extends React.Component {
             ))}
           </div>
           <div className="input-group">
-            <button onClick={this.handleGameStart} type="submit" className="btn next">Next</button>
+            <button onClick={this.handleGameStart} type="submit" className="btn next"><span>Next</span></button>
           </div>
         </form>
       </div>

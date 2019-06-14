@@ -111,8 +111,8 @@ export default class Game {
     return game;
   }
 
-  getWinners(lastTurn = true) {
-    const totalScores = this.playersTurns.map((_, i) => this.getTotalScore(i, lastTurn));
+  getWinners(upToMove) {
+    const totalScores = this.playersTurns.map((_, i) => this.getTotalScore(i, upToMove));
     return indexesOf(totalScores, Math.max(...totalScores));
   }
 
@@ -139,13 +139,21 @@ export default class Game {
     return this.currentPlayerIndex;
   }
 
-  getTotalScore(playerIndex, lastTurn = true) {
+  getRunningTotals(playerIndex) {
     const player = this.playersTurns[playerIndex];
-    let result = 0;
-    const numTurns = lastTurn ? player.length : player.length - 1;
-    for (let i = 0; i < numTurns; i++) {
-      result += player[i].score;
+    let result = [];
+    let totalScore = 0;
+    for (let i = 0; i < player.length; i++) {
+      totalScore += player[i].score
+      result.push(totalScore);
     }
     return result;
+  }
+  
+  getTotalScore(playerIndex, upToMove) {
+    let totals = this.getRunningTotals(playerIndex);
+    if (upToMove !== undefined)
+      return totals[upToMove];
+    return totals.length === 0 ? 0 : totals[totals.length - 1];
   }
 }

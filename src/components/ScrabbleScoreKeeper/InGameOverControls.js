@@ -41,12 +41,14 @@ class InGameOverControls extends React.Component {
     const { currentWord } = this.state;
     let { game, onSetGame } = this.props;
     e.preventDefault(); /* prevent form submission */
-    game = currentWord.value.length !== 0
-      ? game.addWord(currentWord) : game;
+
+    if (currentWord.value.length !== 0)
+      game = game.addWord(currentWord);
     game = game.endTurn();
-    game = game.currentPlayerIndex === game.playersTurns.length - 1
-      ? game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
-      : game;
+
+    if (game.currentPlayerIndex === 0)
+      game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
+
     onSetGame(game);
     this.resetCurrentWord();
   }

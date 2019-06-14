@@ -64,6 +64,8 @@ margin: 15px;
 .description {
 	width: 90%;
 	display: inline-block;
+	font-family: Verdana,Geneva,sans-serif;
+	font-size: 16px;
 }
 
 .desktop  .player-names-choice {
@@ -76,6 +78,7 @@ margin: 15px;
 	display: inline-block;
 	border-style: dashed;
 	border-width: 5px;
+	font-family: Verdana,Geneva,sans-serif;
 }
 
 .form-control.player-name.filled {
@@ -87,6 +90,12 @@ margin: 15px;
 	border: solid;
   border-color: #C0C0C0;
   width: 90px;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 16px;
+}
+.form-control.player-name {
+	font-size: 16px;
+ 	font-family: Verdana,Geneva,sans-serif;
 }
 
 .mobile .form-control.player-name {
@@ -94,7 +103,8 @@ margin: 15px;
 	border-width: 4px;
 	width: 216px;
   height: 48px;
- 	font-size: 1.2em;
+ 	font-size: 16px;
+ 	font-family: Verdana,Geneva,sans-serif;
 }
 
 .game-settings {
@@ -106,6 +116,8 @@ margin: 15px;
 	float: right;
 	margin-top: -44px;
 	position: relative;
+	font-family: Verdana,Geneva,sans-serif;
+	font-size: 16px;
 }
 
 

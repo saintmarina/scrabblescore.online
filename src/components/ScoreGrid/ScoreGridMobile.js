@@ -5,6 +5,11 @@ import './ScoreGrid.css';
 class ScoreGridMobile extends React.Component {
   render() {
     const { playerNames, game, language } = this.props;
+    const totalScores = [...Array(playerNames.length)].map((_, j) => {
+      return game.getRunningTotals(j)
+    });
+    console.log(totalScores)
+
     return (
       <table className="table table-bordered" align="center">
         <thead>
@@ -24,7 +29,7 @@ class ScoreGridMobile extends React.Component {
               player[i]
                 ? <tr key={`move${i}_player${j}`}>
                     <td>
-                      {playerNames[j]}<br />{game.getTotalScore(j)}
+                      {playerNames[j]}<br />{totalScores[j][i]}
                     </td>
 
                     <td>
