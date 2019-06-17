@@ -1,84 +1,82 @@
-.desktop #number-of-players-select {
-	width: 110px;
-}
 
-.desktop .form-control.player-name {
-	width: 130px;
-}
 
-.desktop form {
-text-align: left;
-}
 
-.desktop .number-of-players-choice {
-	width: 30%;
-	float: left;
-}
 
-.desktop  .player-names-choice {
-	text-align: right;
-	float: right;
-}
 
-.desktop .input-group {
-	text-align: center;
-}
 
-.desktop .btn.btn-info.next {
-	width: 131px;
-	height: 46px;
-	font-size: 21px;
-	margin: 2rem;
-}
 
-.mobile .btn.btn-info.next {
-	width: 150px;
-	height: 55px;
-	font-size: 25px;
-	margin: 1.5rem;
-}
 
-nav {
-	background-color: #A9A9A9;
-	margin-right: -53px;
-	margin-left: -53px;
-}
 
-.nav a  {
-	color: white;
-	cursor: pointer;
-}
-.nav a:hover  {
-	color: rgb(243, 106, 152);
-	text-decoration: underline;
-}
+
+
 
 .LoGo {
-width: 90%;
+width: 100%;
 height: 250px;
 background: #C0C0C0;
 display: inline-block;
-margin: 15px;
 }
 
 .description {
-	width: 90%;
-	display: inline-block;
 	font-family: Verdana,Geneva,sans-serif;
 	font-size: 16px;
 }
 
-.desktop  .player-names-choice {
+/*Design for LANGUAGE SELECT*/
+
+.custom-select {
+  padding-top: 4px;
+  width: 130px;
+  float: right;
+  margin-top: -44px;
+  position: relative;
+  font-family: Verdana,Geneva,sans-serif;
+  font-size: 18px;
+}
+
+
+/*Design for "START BUTTON"*/
+
+.start-btn-container {
+	text-align: center;
+}
+
+button.start {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #C0C0C0;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 27px;
+  font-family: "Times New Roman",Times,serif;
+  width: 160px;
+  height: 50px;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin: 5px;
+ }
+
+ .mobile button.start {
+ 	margin-top: 15px;
+ }
+
+ /*Design for PLAYERS' NAMES INPUT lines*/
+
+.desktop  .player-names-choice-container {
 	text-align: center;
 	float: none;
 }
 
 .form-control.player-name {
-	margin: 25px;
+ 	width: 160px;
+ 	height: 47px;
+	margin: 19px;
 	display: inline-block;
 	border-style: dashed;
 	border-width: 5px;
-	font-family: Verdana,Geneva,sans-serif;
+	font-family: Verdana,Geneva,sans-serif !important;
+	font-size: 19px;
 }
 
 .form-control.player-name.filled {
@@ -86,38 +84,13 @@ margin: 15px;
 	border-width: 5px;
 }
 
-.btn.next {
-	border: solid;
-  border-color: #C0C0C0;
-  width: 90px;
-  font-family: Verdana,Geneva,sans-serif;
-  font-size: 16px;
-}
-.form-control.player-name {
-	font-size: 16px;
- 	font-family: Verdana,Geneva,sans-serif;
-}
-
 .mobile .form-control.player-name {
 	margin: 6px;
 	border-width: 4px;
 	width: 216px;
   height: 48px;
- 	font-size: 16px;
+ 	font-size: 18px;
  	font-family: Verdana,Geneva,sans-serif;
-}
-
-.game-settings {
-	width: 100%;
-}
-
-.custom-select {
-	width: 130px;
-	float: right;
-	margin-top: -44px;
-	position: relative;
-	font-family: Verdana,Geneva,sans-serif;
-	font-size: 16px;
 }
 
 

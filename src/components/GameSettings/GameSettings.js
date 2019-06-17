@@ -51,7 +51,7 @@ class GameSettings extends React.Component {
           Mauris bibendum, lacus quis consectetur dapibus, urna turpis dictum augue, nec luctus mauris ex quis magna.
         </p>
         <form>
-          <div className="player-names-choice">
+          <div className="player-names-choice-container">
             {[...Array(numberOfPlayers)].map((_, i) => (
               <input
                 onChange={e => this.handleChangeOfName(i, e)}
@@ -63,8 +63,8 @@ class GameSettings extends React.Component {
               />
             ))}
           </div>
-          <div className="input-group">
-            <button onClick={this.handleGameStart} type="submit" className="btn next"><span>Next</span></button>
+          <div className="start-btn-container">
+            <button onClick={this.handleGameStart} className="btn start">START</button>
           </div>
         </form>
       </div>

@@ -76,14 +76,7 @@
 	background-color: white;
 }
 
-.main {
-	width: 89%;
-	margin: auto;
-	text-align: center;
-}
-.main.mobile {
-	width: 95%;
-}
+
 
 .current-score {
   width: 3rem;
@@ -127,6 +120,3 @@ th {
   font-size: 16px;
 }
 
-.main {
-  padding: 0px !important;
-}
