@@ -43,13 +43,11 @@ class GameSettings extends React.Component {
           <option value="fr">French</option>
         </select> 
         <div className='LoGo'></div>
-        <p className="description">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan sit amet ipsum eu vehicula.
-          Integer ac purus eu tellus pretium tempus. Vestibulum viverra augue at sem feugiat, eget cursus orci fermentum.
-          Morbi a quam ac neque tempus facilisis id vitae felis. Nam pulvinar eu dui at pharetra.
-          Nullam suscipit justo quis odio iaculis, in consectetur libero hendrerit.
-          Mauris bibendum, lacus quis consectetur dapibus, urna turpis dictum augue, nec luctus mauris ex quis magna.
-        </p>
+        <span className="description">
+          <p>Hello and welcome to Scrabble Score Online. This is an easy-to-use tool that replaces pen-and-paper for keeping track of Scrabble scores.</p>
+          <p>Simply fill in the players’ names in order that they will take turns and press the “START” button.</p>
+          <p>Relax and enjoy your game, now you don’t need to do any math!</p>
+        </span>
         <form>
           <div className="player-names-choice-container">
             {[...Array(numberOfPlayers)].map((_, i) => (

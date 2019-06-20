@@ -5,6 +5,26 @@
 	padding-right: 0;
 	padding-left: 0;
 }*/
+.get-in-touch {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 75px;
+}
+.email.contact-link {
+	margin-top: 4px;
+}
+.copyright {
+	margin-top: 30px;
+}
+.contact-link {
+	margin: 0 10px;
+}
+
+.logoimage {
+	width: 35px;
+	height: 35px;
+	border-radius: 10%
+}
 
 .navbar {
 	width: 100%;
@@ -27,6 +47,7 @@ img.scrabble-logo {
 }
 
 footer {
+	margin-top: 40px;
 	width: 100%;
 	background-color: #A9A9A9;
 	text-align: center;
