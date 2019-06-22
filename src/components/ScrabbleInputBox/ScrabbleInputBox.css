@@ -23,6 +23,8 @@
 }
 
 .hidden-input {
+	background-color:transparent;
+  border: none;
 	position: absolute;
 	caret-color: transparent;
 	bottom: 18px;

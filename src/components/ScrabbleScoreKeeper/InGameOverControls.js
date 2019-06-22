@@ -55,7 +55,7 @@ class InGameOverControls extends React.Component {
 
   render() {
     const { currentWord } = this.state;
-    const { game, language, undoDisabled } = this.props;
+    const { game, language, undoDisabled, isMobile } = this.props;
     const submitButtonText = currentWord.value.length > 0 ? 'SUBMIT LEFTOVERS' : 'SUBMIT NO LEFTOVERS';
     return (
       <div>
@@ -68,7 +68,10 @@ class InGameOverControls extends React.Component {
                 word={currentWord}
                 language={language}
               />
-              <CurrentScore score={currentWord.score} />
+              {isMobile
+                ? null
+                : <CurrentScore score={currentWord.score} />
+              }
               <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
               <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">{submitButtonText}</button>
             </form>
