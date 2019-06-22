@@ -6,5 +6,13 @@ if [[ ! -z $(git status -s) ]]; then
   exit 1
 fi
 
+rm -rf build
 npm run build
 git checkout gh-pages
+rm -rf static *.js *.png *.jpg *.html
+
+mv build/* .
+git add .
+git commit -am Deploy
+git push
+git checkout master
