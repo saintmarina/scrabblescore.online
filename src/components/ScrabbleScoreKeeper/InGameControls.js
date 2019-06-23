@@ -15,10 +15,16 @@ class InGameControls extends React.Component {
     this.handleEndGame = this.handleEndGame.bind(this);
     this.handleAddWord = this.handleAddWord.bind(this);
     this.handleBingo = this.handleBingo.bind(this);
+    this._scrollInputToTheMiddle = this._scrollInputToTheMiddle.bind(this);
     this.input = React.createRef();
     this.state = {
       currentWord: emptyWord,
     };
+  }
+  _scrollInputToTheMiddle() {
+    const elements = document.getElementsByClassName("add-word");
+    if (elements.length !== 0)
+    elements[0].scrollIntoView({block: "center"});
   }
 
   componentDidMount() {
@@ -46,34 +52,35 @@ class InGameControls extends React.Component {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
+    this._scrollInputToTheMiddle();
   }
 
   handleAddWord() {
     const { currentWord } = this.state;
     const { game } = this.props;
     this.onSetGame(game.addWord(currentWord));
+    this._scrollInputToTheMiddle();
   }
 
   handleEndTurn(e) {
     const { currentWord } = this.state;
-    const elements = document.getElementsByClassName("add-word")
     let { game } = this.props;
     e.preventDefault(); /* prevent form submission */
     game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this.onSetGame(game.endTurn());
-
-    if (elements.length !== 0)
-    elements[0].scrollIntoView({block: "center"});
+    this._scrollInputToTheMiddle();
   }
 
   handleBingo() {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
+    this._scrollInputToTheMiddle();
   }
 
   handleEndGame() {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
+    this._scrollInputToTheMiddle();
   }
 
   render() {
