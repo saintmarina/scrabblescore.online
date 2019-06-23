@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import CurrentScore from './CurrentScore';
@@ -55,11 +56,14 @@ class InGameControls extends React.Component {
 
   handleEndTurn(e) {
     const { currentWord } = this.state;
+    const elements = document.getElementsByClassName("add-word")
     let { game } = this.props;
     e.preventDefault(); /* prevent form submission */
     game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this.onSetGame(game.endTurn());
-    //ReactDOM.findDOMNode(this.input.current).scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+
+    if (elements.length !== 0)
+    elements[0].scrollIntoView({block: "center"});
   }
 
   handleBingo() {
