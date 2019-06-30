@@ -20,6 +20,13 @@ class ScoreKeeper extends React.Component {
     };
   }
 
+  componentDidMount() {
+    window.addEventListener('beforeunload', function (e) {
+      e.preventDefault();
+      e.returnValue = 'You will lose this page if you quit.';
+    });
+  }
+
   handleSetGame(currentGame) {
     let { game, games } = this.state;
     games = [...games.slice(), game];
