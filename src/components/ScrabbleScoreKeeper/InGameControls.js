@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import CurrentScore from './CurrentScore';

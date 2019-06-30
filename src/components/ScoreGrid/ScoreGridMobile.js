@@ -1,5 +1,6 @@
 import React from 'react';
 import ScoreGridCell from './ScoreGridCell';
+import CallPlayerToAction from '../ScrabbleScoreKeeper/CallPlayerToAction';
 import './ScoreGrid.css';
 
 class ScoreGridMobile extends React.Component {
@@ -8,7 +9,7 @@ class ScoreGridMobile extends React.Component {
     const totalScores = [...Array(playerNames.length)].map((_, j) => {
       return game.getRunningTotals(j)
     });
-    console.log(totalScores)
+    var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() && player[turnIndex].isEmpty() && !player[turnIndex].isPassed(game)
 
     return (
       <table className="table table-bordered" align="center">
@@ -29,11 +30,14 @@ class ScoreGridMobile extends React.Component {
               player[i]
                 ? <tr key={`move${i}_player${j}`}>
                     <td>
-                      {playerNames[j]}<br />{totalScores[j][i]}
+                      {playerNames[j]}<br />{isCurrentPlayersTurn(player, i) ? null : totalScores[j][i]}
                     </td>
 
                     <td>
-                      <ScoreGridCell turn={player[i]} language={language} game={game} />
+                      {isCurrentPlayersTurn(player, i) 
+                        ? <CallPlayerToAction game={game} playerNames={playerNames} isMobile={true}/>
+                        : <ScoreGridCell turn={player[i]} language={language} game={game} />
+                      }
                     </td>
                   </tr>     
                 : null
