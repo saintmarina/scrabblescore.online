@@ -10,7 +10,7 @@ class CallPlayerToAction extends React.Component {
                                           ? 'a word'
                                           : 'your leftovers'}`
 
-    return <span class="call-player-to-action">{callPlayerToAction}</span>;
+    return <span className="call-player-to-action">{callPlayerToAction}</span>;
   }
 }
 

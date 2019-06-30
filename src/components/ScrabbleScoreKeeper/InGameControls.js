@@ -86,7 +86,8 @@ class InGameControls extends React.Component {
     const { currentWord } = this.state;
     const { game, language, undoDisabled, isMobile } = this.props;
     const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN';
-    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0;
+    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
+  
     const props = {
       ref: this.input,
       onChange: this.handleChange,
