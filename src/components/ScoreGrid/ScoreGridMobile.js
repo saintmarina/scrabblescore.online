@@ -9,7 +9,7 @@ class ScoreGridMobile extends React.Component {
     const totalScores = [...Array(playerNames.length)].map((_, j) => {
       return game.getRunningTotals(j)
     });
-    var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() && player[turnIndex].isEmpty() && !player[turnIndex].isPassed(game)
+    var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() && player[turnIndex].isEmpty() && !player[turnIndex].isPassed(game) && !player[turnIndex].bingo
 
     return (
       <table className="table table-bordered" align="center">
