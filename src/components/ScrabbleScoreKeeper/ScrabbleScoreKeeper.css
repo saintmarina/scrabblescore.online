@@ -1,3 +1,4 @@
+
 .btn {
 	border: solid;
   border-color: #C0C0C0;
@@ -9,8 +10,8 @@
 }
 
 .add-word {
-	height: 50px;
-	width: 233px;
+	height: 46px;
+  width: 180px;
 }
 
 
@@ -24,17 +25,6 @@
 	width: 316px;
 	height: 46px;
 	font-size: 16px;
-}
-
-.custom-control {
-  font-family: Verdana,Geneva,sans-serif;
-  font-size: 16px;
-
-}
-
-.custom-control-input:checked~.custom-control-label::before {
-	background-color:#17a2b8;
-	border-color:#17a2b8;
 }
 
 .pass-endturn-button {
@@ -54,6 +44,11 @@
 	width: 149px;
 	margin-top: 10px;
 	font-size: 16px;
+}
+.mobile .add-word {
+  padding: inherit;
+  height: 46px;
+  width: 149px;
 }
 
 .mobile .in-game-controls {
@@ -76,8 +71,6 @@
 	background-color: white;
 }
 
-
-
 .current-score {
   width: 3rem;
   height: 50px;
@@ -97,15 +90,6 @@
 	width: 57%;
 }
 
-
-.add-word-and-bingo-btns-container {
-}
-
-.custom-control.custom-switch {
-	display: inline-block;
-	padding-left: 39px;
-}
-
 .buttons {
 	text-align: center;
 }
@@ -120,3 +104,80 @@ th {
   font-size: 16px;
 }
 
+.bingo-toggle-switch {
+  display: inline-block;
+  margin: 8px;
+  width: 180px;
+  height: 46px;
+}
+
+label {
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  width: 180px;
+  height: 46px;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.mobile label {
+    height: 46px;
+    width: 149px;
+}
+
+.bingo-toggle {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: all 600ms;
+  transition: all 600ms;
+  z-index: 1000000000;
+}
+
+.mobile .bingo-toggle-switch {
+  height: 46px;
+  width: 149px;
+}
+
+.bingo-toggle div {
+  margin-top: 50px;
+  font-family: Verdana,Geneva,sans-serif;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  line-height: 41px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 2px;
+}
+
+.bingo-toggle .back {
+  background: #A9A9A9;
+  color: black;
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  border: solid;
+  border-color: grey;
+}
+.bingo-toggle .front {
+  border: solid;
+  border-color: #C0C0C0;
+}
+
+.bingo-toggle-switch input {
+  display: none;
+}
+
+:checked + .bingo-toggle {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+ 

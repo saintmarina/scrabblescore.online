@@ -95,7 +95,7 @@ class InGameControls extends React.Component {
       language,
     };
     return (
-      <form autoComplete="off">
+      <form>
         <ScrabbleInputBox {...props} />
         {isMobile
           ? null
@@ -105,9 +105,14 @@ class InGameControls extends React.Component {
           <div className="in-game-controls">
             <div className="add-word-and-bingo-btns-container">
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
-              <div className="custom-control custom-switch">
-                <input onChange={this.handleBingo} type="checkbox" className="custom-control-input" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
-                <label className="custom-control-label" htmlFor="bingoToggle">BINGO</label>
+              <div className="bingo-toggle-switch">
+                <label htmlFor="bingoToggle">
+                    <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
+                    <div className="bingo-toggle">
+                        <div className="front">Bingo OFF</div>
+                        <div className="back">Bingo ON</div>
+                    </div>
+                </label>
               </div>
             </div>
             <div className="submit-btn-container">
