@@ -9,18 +9,21 @@ class ScoreGridMobile extends React.Component {
     const totalScores = [...Array(playerNames.length)].map((_, j) => {
       return game.getRunningTotals(j)
     });
-    var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() && player[turnIndex].isEmpty() && !player[turnIndex].isPassed(game) && !player[turnIndex].bingo
-
+    var isNotComplete = (player, turn) => player === game.getCurrentPlayer() && turn === game.getCurrentTurn();
+    var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() &&
+                                                      player[turnIndex].isEmpty() &&
+                                                      !player[turnIndex].isPassed(game) &&
+                                                      !player[turnIndex].bingo;
     return (
-      <table className="table table-bordered" align="center">
+      <table className="table table-bordered">
         <thead>
           <tr className="thead-rows">
-            <th className="playerNames">Names<br />(Total)</th>
-            <th className="playerTurn">Player Turn</th>
+            <th className="playerNames" scope="col">Names<br />(Total)</th>
+            <th className="playerTurn" scope="col">Player Turn</th>
            </tr>
         </thead>
         <tbody key='tbody' className="tbody-rows">
-          {game.getCurrentPlayer().map((_, i) => {
+          {game.getCurrentPlayer().map((turn, i) => {
             const moveRow = <tr key={`moverow${i}`} className="move-row">
                               <td colSpan="2">
                                 {`Move ${i+1}`}
@@ -30,7 +33,7 @@ class ScoreGridMobile extends React.Component {
               player[i]
                 ? <tr key={`move${i}_player${j}`}>
                     <td>
-                      {playerNames[j]}<br />{isCurrentPlayersTurn(player, i) ? null : totalScores[j][i]}
+                      {playerNames[j]}<br />{isNotComplete(player, turn) ? null : totalScores[j][i]}
                     </td>
 
                     <td>

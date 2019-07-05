@@ -64,30 +64,30 @@ class ScoreKeeper extends React.Component {
     };
     return (
       <div className="score-keeper">
-      {isMobile
-        ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
-        : <ScoreGrid playerNames={playerNames} game={game} language={language} />
-      }
-        <div>
-          {!game.areLeftOversSubmitted()
-            ? isMobile ? null : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
-            : (
-              <div className="winner">
-                {game.getWinners().length > 1
-                  ? <h1>{this.renderTieGame()}</h1>
-                  : (
-                    <h1>
-                      {`${playerNames[[...game.getWinners()]]} WON`}
-                    </h1>
-                  )
-                }
-              </div>
-            )
+        <div className="container">
+          {isMobile
+            ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
+            : <ScoreGrid playerNames={playerNames} game={game} language={language} />
           }
-          {!game.isGameOver()
-            ? <InGameControls {...controlProps} />
-            : <InGameOverControls {...controlProps} />
-          }
+              {!game.areLeftOversSubmitted()
+                ? isMobile ? null : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
+                : (
+                  <div className="winner">
+                    {game.getWinners().length > 1
+                      ? <h1>{this.renderTieGame()}</h1>
+                      : (
+                        <h1>
+                          {`${playerNames[[...game.getWinners()]]} WON`}
+                        </h1>
+                      )
+                    }
+                  </div>
+                )
+              }
+              {!game.isGameOver()
+                ? <InGameControls {...controlProps} />
+                : <InGameOverControls {...controlProps} />
+              }
         </div>
       </div>
     );

@@ -5,6 +5,7 @@
 .table th {
 	height: 45px;
 	vertical-align: middle;
+  text-align: center;
 }
 
 .table thead th {

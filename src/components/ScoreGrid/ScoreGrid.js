@@ -13,9 +13,10 @@ class ScoreGrid extends React.Component {
       <table className="table table-bordered" align="center">
         <thead>
           <tr className="thead-rows">
-            <th className="move-cell">Move</th>
+            <th scope="col" className="move-cell" >Move</th>
             {playerNames.map((player, i) => (
               <th
+                scope="col"
                 key={i}
                 className={this.activePlayerClass(i, game.currentPlayerIndex)}
               >
