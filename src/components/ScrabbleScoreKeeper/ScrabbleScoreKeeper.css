@@ -4,8 +4,11 @@
   border-color: #C0C0C0;
 	margin: 4px;
 	cursor: pointer;
-	font-size: 21px;
-  font-family: Verdana,Geneva,sans-serif;
+  font-family: "Times New Roman",Times,serif;
+  font-size: 18px;
+  line-height: 0.6;
+}
+.mobile .btn {
   font-size: 16px;
 }
 
@@ -18,11 +21,7 @@
   width: 149px;
 }
 
-.pass-endturn-button {
-	width: 230px;
-	height: 46px;
-  font-size: 16px;
-}
+
 
 .mobile .pass-endturn-button {
 	width: 308px;
@@ -30,7 +29,8 @@
 
 .pass-endturn-button {
 	width: 369px;
-  font-size: 16px;
+  font-size: 24px;
+  height: 46px;
 }
 
 .undo {
@@ -91,24 +91,37 @@
 .buttons {
 	text-align: center;
 }
+.bingo-toggle {
+  line-height: 1.7;
+}
 
-table th {
+table {
+ font-family: "Times New Roman", Times, serif; 
+}
+
+.mobile table {
+  font-size: 14px;
+  font-family: "Times New Roman", Times, serif;
+}
+.mobile .move-row {
+  font-weight: bold;
+}
+.mobile .player-name {
   text-align: center;
 }
 
 th {
+  text-align: center;
   font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
 }
-
-.bold {
-  font-family: Verdana,Geneva,sans-serif;
-  font-size: 16px;
+.call-player-to-action {
+  font-family: "Times New Roman", Times, serif;
 }
 
 .add-word-and-bingo-btns-container input {
   display: none;
 }
+
 
 label {
   padding: .375rem .75rem;

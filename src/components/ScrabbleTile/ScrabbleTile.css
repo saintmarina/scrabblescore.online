@@ -9,6 +9,7 @@
   position: relative;
   z-index: 1;
   cursor: pointer;
+  font-family: Verdana,Geneva,sans-serif !important;
 }
 
 .mobile .scrabble-letter {

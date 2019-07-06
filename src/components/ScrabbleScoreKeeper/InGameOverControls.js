@@ -72,15 +72,25 @@ class InGameOverControls extends React.Component {
                 ? null
                 : <CurrentScore score={currentWord.score} />
               }
-              <div class="ingameover-buttons">
-                <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
-                <button onClick={this.handleLeftOvers} type="submit" className="btn btn-danger end-game">{submitButtonText}</button>
+              <div className="buttons">
+                <div className="in-game-controls">
+                  <div className="undo-and-end-game-btns-container">
+                    <button onClick={this.handleLeftOvers} type="submit" className="btn pass-endturn-button">{submitButtonText}</button>
+                  </div>
+                  <div className="submit-btn-container">
+                    <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+                  </div>
+                </div>
               </div>
             </form>
           )
           : (
-            <div>
-              <button onClick={this.handleUndo} type="button" className="btn btn-info word-submit-button" disabled={undoDisabled}>UNDO</button>
+            <div className="buttons">
+              <div className="in-game-controls">
+                <div className="undo-and-end-game-btns-container">
+                  <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+                </div>
+              </div>
             </div>
           )
         }

@@ -2,14 +2,14 @@ X 1. write text ~ 3 hours 0.5 days
      -main text
      -footer
 X 2.  deploy ~ ?? -- 1 day
-3. make a deploy script for scrabble
-3. move input box lower (iphone bug)
-3. fix auto scrolling bug
-4. mobile version grid: don't display score until you haven't end turn
-5. "Player 2 submit a word" 
+X 3. make a deploy script for scrabble
+X 3. move input box lower (iphone bug)
+X 3. fix auto scrolling bug on mobile !!!!!
+X 4. mobile version grid: don't display score until you haven't end turn
+X 5. "Player 2 submit a word" 
 
-6. Don't let user end game without playing at least one round
-7. Dialog asking if the player is sure to exit the page ~ 1 hours -- 0.5 days
+X 6. Don't let user end game without playing at least one round
+X 7. Dialog asking if the player is sure to exit the page ~ 1 hours -- 0.5 days
 8. layout/grid 
       - create grid
       - organize elements in the grid
@@ -17,7 +17,8 @@ X 2.  deploy ~ ?? -- 1 day
 9. create logo ~ 4 hours -- 1 day 
 10. font/sizing choose font for every element, and size of the font for every element,  ~ 5 hours -- 1 day
     - text
-    - buttons/bingo switch
+    - buttons
+    X - bingo switch
     - score table
 11. color/ and shape ~ 10 hours -- 2 days
     - background
@@ -29,7 +30,6 @@ X 2.  deploy ~ ?? -- 1 day
 14. Something to detect crashes. When someone crashes the app receive an email or simillar.
 15. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
 16. make input correctly move coursor when clicking on arrows
-
-
+17. callPlayerToAction can be simplified
 
 

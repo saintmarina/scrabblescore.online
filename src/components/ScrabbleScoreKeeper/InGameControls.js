@@ -106,7 +106,7 @@ class InGameControls extends React.Component {
             <div className="add-word-and-bingo-btns-container">
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>              
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
-              <label htmlFor="bingoToggle">
+              <label className="btn" htmlFor="bingoToggle">
                 <div className="bingo-toggle">BINGO</div>
               </label>
             </div>

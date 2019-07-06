@@ -31,7 +31,7 @@ class ScoreGridMobile extends React.Component {
                             </tr>;
             const playerRows = game.playersTurns.map((player, j) => (
               player[i]
-                ? <tr key={`move${i}_player${j}`}>
+                ? <tr key={`move${i}_player${j}`} className="player-name">
                     <td>
                       {playerNames[j]}<br />{isNotComplete(player, turn) ? null : totalScores[j][i]}
                     </td>
