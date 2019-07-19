@@ -49,7 +49,10 @@ class GameSettings extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <div className='LoGo'></div>
+            <div className='logo'>
+              <div className="line-one">Scrabble Score</div>
+              <div className="line-two"><p>online</p></div>
+            </div>
             <span className="description">
               <p>Hello and welcome to Scrabble Score Online. This is an easy-to-use tool that replaces pen-and-paper for keeping track of Scrabble scores.</p>
               <p>Simply fill in the players’ names in order that they will take turns and press the “START” button.</p>

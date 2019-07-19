@@ -1,4 +1,5 @@
 .scrabble-input-box {
+	color: black;
 	position: relative;
 	margin: auto;
 	margin-bottom: 10px;
@@ -79,6 +80,7 @@
 }
 
 .modifier {
+	color: black;
 	margin: 2px;
 	background-image: url("/modifier-frame.png");
 	background-size: 138px 69px;
@@ -145,7 +147,7 @@
 }
 
 .modifier:hover {
-	box-shadow: 0 0 15px red;
+	box-shadow: 0 0 15px #de322a;
 	z-index: 10;
 }
 

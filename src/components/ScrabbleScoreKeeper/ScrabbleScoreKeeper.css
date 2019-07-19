@@ -1,13 +1,21 @@
 
 .btn {
-	border: solid;
-  border-color: #C0C0C0;
+	border: solid 1px #980c10;
+  color: white;
 	margin: 4px;
 	cursor: pointer;
   font-family: "Times New Roman",Times,serif;
   font-size: 18px;
   line-height: 0.6;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
+  text-shadow: 1px 1px rgba(0,0,0,0.8);
 }
+.btn:hover {
+  text-shadow: none;
+  color: white;
+  text-shadow: 1px 1px rgba(0,0,0,0.8);
+}
+
 .mobile .btn {
   font-size: 16px;
 }
@@ -15,6 +23,12 @@
 .add-word {
 	height: 46px;
   width: 180px;
+}
+
+.add-word:hover, .end-game:hover, .undo:hover  {
+color: white;
+text-shadow: 1px 1px rgba(0,0,0,0.8);
+cursor: default;
 }
 .mobile .add-word {
   padding: inherit;
@@ -74,6 +88,7 @@
   height: 3rem;
   font-weight: bold;
   background-color: white;
+  color: black;
   border-radius: 3px;
   display: inline-block;
   border: 1px solid grey;
@@ -116,8 +131,12 @@ th {
 }
 .call-player-to-action {
   font-family: "Times New Roman", Times, serif;
+  margin-bottom: 15px;
 }
 
+.desktop .call-player-to-action {
+  margin-bottom: 15px;
+}
 .add-word-and-bingo-btns-container input {
   display: none;
 }
@@ -139,6 +158,13 @@ label {
 
 :checked + label {
   background-color: #F0F0F0;
+}
+
+.winner {
+  color: white;
+  text-align: center;
+  margin: 20px;
+
 }
 
 

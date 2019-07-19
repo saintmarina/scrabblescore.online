@@ -47,7 +47,7 @@ class ScoreKeeper extends React.Component {
     const winners = game.getWinners(turnBeforeLeftOvers);
     return winners.map(winnerIndex => (winners.length > 1
       ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)}`
-      : `${playerNames[winnerIndex]} WON`)).join(', ');
+      : `${playerNames[winnerIndex]} won!`)).join(', ');
   }
 
   render() {
@@ -77,7 +77,7 @@ class ScoreKeeper extends React.Component {
                       ? <h1>{this.renderTieGame()}</h1>
                       : (
                         <h1>
-                          {`${playerNames[[...game.getWinners()]]} WON`}
+                          {`${playerNames[[...game.getWinners()]]} won!`}
                         </h1>
                       )
                     }

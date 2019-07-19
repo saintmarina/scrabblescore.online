@@ -92,7 +92,7 @@ describe("Game", () => {
 	}
 
 	const typeInputBox = (wrapper, input) => wrapper.find(".scrabble-input-box input").simulate("change", {target: {value: input}})
-	const clickButton = (wrapper, regex) => wrapper.find("button").filterWhere(n => n.text().match(regex)).simulate("click")
+	const clickButton = (wrapper, regex) => wrapper.find(".btn").filterWhere(n => n.text().match(regex)).simulate("click")
 	const clickAddWord = wrapper => clickButton(wrapper, /add.*word/i)
 	const clickUndo = wrapper => clickButton(wrapper, /undo/i)
 	const clickEndTurn = wrapper => clickButton(wrapper, /end turn/i)
@@ -117,7 +117,7 @@ describe("Game", () => {
 		return wrapper.find("th.player-header").length
 	}
 	const getCurrentPlayer = wrapper => {
-		return wrapper.find(".bold").text()
+		return wrapper.find(".call-player-to-action").text()
 	}
 	const getCurrentWordScore = wrapper => {
 		return wrapper.find("CurrentScore").find(".current-score").text()
@@ -212,7 +212,7 @@ describe("Game", () => {
 	it("disables End Game button, if it's not the first player's turn and he didn't type any letters yet", () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 2)
-		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(false)
+		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true)
 		typeInputBox(wrapper, "quizzify")
 		expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true)
 		clickEndTurn(wrapper)
@@ -226,10 +226,21 @@ describe("Game", () => {
 	it("if no leftovers typed inside input box, button will say 'submit no leftovers'", () => {
 		const wrapper = mount(<ScrabbleScoreKeeper />)
 		fillPlayers(wrapper, 3)
+		
+
+		expect(getbuttonText(wrapper, 1)).toEqual("PASS")
+
+		typeInputBox(wrapper, "aalii") // p0: 5
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, "jota") // p1: 11
+		clickEndTurn(wrapper)
+		typeInputBox(wrapper, "kex") // p2: 14
+		clickEndTurn(wrapper)
+
 		clickEndGame(wrapper)
 
+		//END GAME
 		expect(getbuttonText(wrapper, 1)).toEqual("SUBMIT NO LEFTOVERS")
-
 		typeInputBox(wrapper, "q")
 		expect(getbuttonText(wrapper, 1)).toEqual("SUBMIT LEFTOVERS")
 
@@ -366,7 +377,7 @@ describe("Game", () => {
 		expect(getWordAt(grid, 1, 2, 0)).toEqual("oorie")
 		expect(getWordAt(grid, 1, 3, 0)).toEqual("ourie")
 		expect(getMoveNumber(grid, 2)).toEqual("3")
-		expect(getCurrentPlayer(wrapper)).toEqual("Anna, submit a word:")
+		expect(getCurrentPlayer(wrapper)).toEqual("Anna, submit a word or end turn")
 		expect(getTotalCell(grid, 0)).toEqual("96")
 		expect(getTotalCell(grid, 1)).toEqual("81")
 		expect(getTotalCell(grid, 2)).toEqual("64")
@@ -379,7 +390,7 @@ describe("Game", () => {
 		clickEndGame(wrapper)
 		//END GAME
 
-		expect(getCurrentPlayer(wrapper)).toEqual("Anna, submit your leftovers:")
+		expect(getCurrentPlayer(wrapper)).toEqual("Anna, submit your leftovers")
 		expect(getCurrentWordScore(wrapper)).toEqual("0")
 		typeInputBox(wrapper, "lii") //p0: -3
 
@@ -390,7 +401,7 @@ describe("Game", () => {
 		//P1 - 81
 		//P2 - 64
 		//P3 - 87
-		expect(getCurrentPlayer(wrapper)).toEqual("Nico, submit your leftovers:")
+		expect(getCurrentPlayer(wrapper)).toEqual("Nico, submit your leftovers")
 		typeInputBox(wrapper, "d") //p1: -2
 		clickSubmitLeftovers(wrapper)
 		//ENDGAME
@@ -406,7 +417,7 @@ describe("Game", () => {
 		//P1 - 79
 		//P2 - 63
 		//P3 - 87
-		expect(getCurrentPlayer(wrapper)).toEqual("Sofi, submit your leftovers:")
+		expect(getCurrentPlayer(wrapper)).toEqual("Sofi, submit your leftovers")
 		clickSubmitLeftovers(wrapper) //p3: +6
 		//ENDGAME
 		//P0 - 93
@@ -418,7 +429,7 @@ describe("Game", () => {
 		expect(getTotalCell(grid, 1)).toEqual("79")
 		expect(getTotalCell(grid, 2)).toEqual("63")
 		expect(getTotalCell(grid, 3)).toEqual("93")
-		expect(getWinner(wrapper)).toEqual("Anna WON") // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 WON, Anna WON
+		expect(getWinner(wrapper)).toEqual("Anna won!") // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 won!, Anna won!
 		clickUndo(wrapper)
 		// UNDO: 1
 		//ENDGAME
@@ -434,7 +445,7 @@ describe("Game", () => {
 		//P1 - 79
 		//P2 - 63
 		//P3 - 83
-		expect(getWinner(wrapper)).toEqual("Anna WON") //P0: 93 max points ---> P0 WON, Anna WON
+		expect(getWinner(wrapper)).toEqual("Anna won!") //P0: 93 max points ---> P0 won!, Anna won!
 		clickUndoMultipleTimes(wrapper, 4)
 		//ENDGAME
 		//P0 - 96
@@ -470,7 +481,7 @@ describe("Game", () => {
 		//P1 - 79
 		//P2 - 63
 		//P3 - 109
-		expect(getWinner(wrapper)).toEqual("Sofi WON")//P3: 109 max points ---> P3 WON, Sofi WON
+		expect(getWinner(wrapper)).toEqual("Sofi won!")//P3: 109 max points ---> P3 won!, Sofi won!
 		expect(getTotalCell(grid, 3)).toEqual("109")
 		clickUndoMultipleTimes(wrapper, 5)
 		//Move 2: P0 - 96

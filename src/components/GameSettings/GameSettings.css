@@ -7,8 +7,23 @@
 
 
 
+.logo {
+  text-align: center;
+  margin-bottom: 65px;
+   text-shadow: 2px 2px black;
+}
 
+.line-one {
+  font-size: 6rem;
+  margin-top: -35px;
+}
+.line-two {
+  font-style: italic;
+  font-size: 2.5rem;
+  margin-top: -39px;
+  margin-left: 29rem;
 
+}
 
 .LoGo {
 width: 100%;
@@ -51,12 +66,10 @@ display: inline-block;
 button.start {
   display: inline-block;
   border-radius: 4px;
-  background-color: #C0C0C0;
-  border: none;
-  color: #FFFFFF;
   text-align: center;
   font-size: 24px;
   font-family: "Times New Roman",Times,serif;
+  color: white;
   width: 160px;
   height: 50px;
   transition: all 0.3s;

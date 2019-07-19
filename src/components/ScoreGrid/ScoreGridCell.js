@@ -2,7 +2,6 @@ import React from 'react';
 import WordInTiles from './WordInTiles';
 
 const highScore = 50;
-const bingoScore = 50;
 
 class ScoreGridCell extends React.Component {
   renderPassed() {
@@ -35,11 +34,7 @@ class ScoreGridCell extends React.Component {
       rows.push(
         <tr key="bingo">
           <td>BINGO</td>
-          <td>
-            <span className="score-box high">{bingoScore}</span>
-          </td>
-
-        </tr>,
+        </tr>
       );
     }
     return rows;
