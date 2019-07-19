@@ -12,7 +12,7 @@ class ScoreKeeper extends React.Component {
     super(props);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleSetGame = this.handleSetGame.bind(this);
-    this.renderTieGame = this.renderTieGame.bind(this);
+    this.renderWinner = this.renderWinner.bind(this);
     const { playerNames } = this.props;
     this.state = {
       game: Game.createNewGame(playerNames.length),
@@ -40,14 +40,19 @@ class ScoreKeeper extends React.Component {
     this.setState({ game, games: previousGames });
   }
 
-  renderTieGame() {
+  renderWinner() {
     const { game } = this.state;
     const { playerNames } = this.props;
     const turnBeforeLeftOvers = game.leftOversTurnNumber - 1;
-    const winners = game.getWinners(turnBeforeLeftOvers);
-    return winners.map(winnerIndex => (winners.length > 1
-      ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)}`
-      : `${playerNames[winnerIndex]} won!`)).join(', ');
+    const winners = game.getWinners()
+    const winnersTie = game.getWinners(turnBeforeLeftOvers);
+    if (winners.length > 1) {
+      return winnersTie.map(winnerIndex => (winnersTie.length > 1
+              ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points`
+              : `${playerNames[winnerIndex]} won with ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points!`)).join(', ')
+    } else {
+      return `${playerNames[[...game.getWinners()]]} won with ${game.getTotalScore([...game.getWinners()])} points!`
+    }
   }
 
   render() {
@@ -62,6 +67,7 @@ class ScoreKeeper extends React.Component {
       game,
       language,
     };
+
     return (
       <div className="score-keeper">
         <div className="container">
@@ -73,14 +79,7 @@ class ScoreKeeper extends React.Component {
                 ? isMobile ? null : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
                 : (
                   <div className="winner">
-                    {game.getWinners().length > 1
-                      ? <h1>{this.renderTieGame()}</h1>
-                      : (
-                        <h1>
-                          {`${playerNames[[...game.getWinners()]]} won!`}
-                        </h1>
-                      )
-                    }
+                    <h1>{this.renderWinner()}</h1>
                   </div>
                 )
               }

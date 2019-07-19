@@ -240,9 +240,9 @@ describe("Game", () => {
 		clickEndGame(wrapper)
 
 		//END GAME
-		expect(getbuttonText(wrapper, 1)).toEqual("SUBMIT NO LEFTOVERS")
+		expect(getbuttonText(wrapper, 0)).toEqual("SUBMIT NO LEFTOVERS")
 		typeInputBox(wrapper, "q")
-		expect(getbuttonText(wrapper, 1)).toEqual("SUBMIT LEFTOVERS")
+		expect(getbuttonText(wrapper, 0)).toEqual("SUBMIT LEFTOVERS")
 
 	})
 
@@ -429,7 +429,7 @@ describe("Game", () => {
 		expect(getTotalCell(grid, 1)).toEqual("79")
 		expect(getTotalCell(grid, 2)).toEqual("63")
 		expect(getTotalCell(grid, 3)).toEqual("93")
-		expect(getWinner(wrapper)).toEqual("Anna won!") // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 won!, Anna won!
+		expect(getWinner(wrapper)).toEqual("Anna won with 96 points!") // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 won!, Anna won!
 		clickUndo(wrapper)
 		// UNDO: 1
 		//ENDGAME
@@ -445,7 +445,7 @@ describe("Game", () => {
 		//P1 - 79
 		//P2 - 63
 		//P3 - 83
-		expect(getWinner(wrapper)).toEqual("Anna won!") //P0: 93 max points ---> P0 won!, Anna won!
+		expect(getWinner(wrapper)).toEqual("Anna won with 93 points!") //P0: 93 max points ---> P0 won!, Anna won!
 		clickUndoMultipleTimes(wrapper, 4)
 		//ENDGAME
 		//P0 - 96
@@ -481,7 +481,7 @@ describe("Game", () => {
 		//P1 - 79
 		//P2 - 63
 		//P3 - 109
-		expect(getWinner(wrapper)).toEqual("Sofi won!")//P3: 109 max points ---> P3 won!, Sofi won!
+		expect(getWinner(wrapper)).toEqual("Sofi won with 109 points!")//P3: 109 max points ---> P3 won!, Sofi won!
 		expect(getTotalCell(grid, 3)).toEqual("109")
 		clickUndoMultipleTimes(wrapper, 5)
 		//Move 2: P0 - 96
@@ -538,7 +538,7 @@ describe("Game", () => {
 		//P1 - 95
 		//P2 - 80
 		//P3 - 89
-		expect(getWinner(wrapper)).toEqual("Anna: 96, Nico: 96") // Tie game P0: 95 and P1: 95 ---> Before leftovers P0: 96 and P1: 96 ---> Tie game: P0 and P1 (Anna and Nico
+		expect(getWinner(wrapper)).toEqual("Anna: 96 points, Nico: 96 points") // Tie game P0: 95 and P1: 95 ---> Before leftovers P0: 96 and P1: 96 ---> Tie game: P0 and P1 (Anna and Nico
 		clickUndoMultipleTimes(wrapper, 31)
 		//UNDO TO THE BEGINNING OF THE GAME
 		expect(getTotalCell(grid, 0)).toEqual("0")
@@ -570,6 +570,8 @@ describe("Game", () => {
 		typeInputBox(wrapper, "no") // p0: -2
 		clickSubmitLeftovers(wrapper)
 		expect(getTotalCell(grid, 2)).toEqual("-2")
+
+		expect(getWinner(wrapper)).toEqual("Kyle won with -2 points!")
 	})
 
 
