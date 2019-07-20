@@ -4,12 +4,24 @@ import CallPlayerToAction from '../ScrabbleScoreKeeper/CallPlayerToAction';
 import './ScoreGrid.css';
 
 class ScoreGridMobile extends React.Component {
+  moveRowText(i) {
+    const { game } = this.props;
+    return game.isGameOver() &&  game.leftOversTurnNumber === i ? 'Leftovers Accounting' : `Move ${i+1}`
+  }
   render() {
     const { playerNames, game, language } = this.props;
     const totalScores = [...Array(playerNames.length)].map((_, j) => {
       return game.getRunningTotals(j)
     });
-    var isNotComplete = (player, turn) => player === game.getCurrentPlayer() && turn === game.getCurrentTurn();
+    console.log(game.getCurrentTurn())
+    var toDisplayTotals = turn => {
+      if(!game.areLeftOversSubmitted()) {
+        return turn.isComplete(game)
+      } else {
+        return true
+      }
+    }
+                                          
     var isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer() &&
                                                       player[turnIndex].isEmpty() &&
                                                       !player[turnIndex].isPassed(game) &&
@@ -23,17 +35,17 @@ class ScoreGridMobile extends React.Component {
            </tr>
         </thead>
         <tbody key='tbody' className="tbody-rows">
-          {game.getCurrentPlayer().map((turn, i) => {
+          {game.getCurrentPlayer().map((_, i) => {
             const moveRow = <tr key={`moverow${i}`} className="move-row">
                               <td colSpan="2">
-                                {`Move ${i+1}`}
+                                {this.moveRowText(i)}
                               </td>
                             </tr>;
             const playerRows = game.playersTurns.map((player, j) => (
               player[i]
                 ? <tr key={`move${i}_player${j}`} className="player-name">
                     <td>
-                      {playerNames[j]}<br />{isNotComplete(player, turn) ? null : totalScores[j][i]}
+                      {playerNames[j]}<br />{toDisplayTotals(player[i]) ? totalScores[j][i] : null}
                     </td>
 
                     <td>

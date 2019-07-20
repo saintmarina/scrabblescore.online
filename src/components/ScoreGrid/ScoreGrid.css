@@ -3,7 +3,7 @@
 }
 
 .table th {
-	height: 45px;
+	height: 57px;
 	vertical-align: middle;
   text-align: center;
 }
@@ -52,6 +52,8 @@
 
 
 
+
+
 /*.score-box.high {
 background-color: red;
 }*/
@@ -67,8 +69,13 @@ background-color: red;
 	text-shadow: 1px 1px rgba(0,0,0,0.8);
 }
 
-.player-header.current {
+.player-header.active {
 	text-decoration: underline;
+}
+
+.player-turn.active {
+  border: 4px solid white;
+
 }
 
 .table .scrabble-letter {

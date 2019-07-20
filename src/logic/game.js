@@ -20,6 +20,10 @@ class Turn {
     return this.isEmpty() && this !== game.getCurrentTurn();
   }
 
+  isComplete(game) {
+    return this !== game.getCurrentTurn()
+  }
+
   get score() {
     let result = 0;
     for (let i = 0; i < this.words.length; i++) {

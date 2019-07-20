@@ -4,7 +4,11 @@ import './ScoreGrid.css';
 
 class ScoreGrid extends React.Component {
   activePlayerClass(i, currentPlayerIndex) {
-    return i === currentPlayerIndex ? 'player-header current' : 'player-header';
+    return i === currentPlayerIndex ? 'player-header active' : 'player-header';
+  }
+
+  activeTurnClass(turn, currentTurn) {
+    return turn === currentTurn ? 'player-turn active' : 'player-turn';
   }
 
   render() {
@@ -30,7 +34,7 @@ class ScoreGrid extends React.Component {
             <tr className="move-row" key={i}>
               <th className="move">{i + 1}</th>
               {game.playersTurns.map((player, j) => (
-                <td key={j}>
+                <td key={j} className={this.activeTurnClass(player[i], game.getCurrentTurn())}>
                   {player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} />
                     : null}
                 </td>
