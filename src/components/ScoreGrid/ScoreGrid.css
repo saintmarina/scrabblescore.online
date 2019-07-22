@@ -21,6 +21,10 @@
 }
 .mobile .table th {
 	padding: 5px 0px;
+  border-bottom-style: inherit;
+}
+.desktop thead th {
+  border-bottom-style: inherit;
 }
 
 .score-box {
@@ -49,17 +53,28 @@
 	text-align: center;
 	background-color: rgb(98,37,40, 0.4)
 }
+.mobile tr .word-row:first-child .word-cell{
+  padding-top: 6px;
+}
 
+.mobile tr .word-row:last-child .word-cell{
+  padding-bottom: 6px;
+}
 
+.row.bingo-row {
+  text-align: center;
+  padding: 9px;
+}
 
+.bingo-cell {
+  width: 100%;
+  height: 100%
+}
 
-
-/*.score-box.high {
-background-color: red;
-}*/
-
-
-
+.bingo {
+  text-align: center;
+  vertical-align: middle;
+}
 
 .table-bordered {
 
@@ -142,6 +157,10 @@ th.move {
 	text-align: center;
 }
 
+th {
+
+
+}
 
 /*
 

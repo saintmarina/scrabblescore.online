@@ -13,7 +13,6 @@ class ScoreGridMobile extends React.Component {
     const totalScores = [...Array(playerNames.length)].map((_, j) => {
       return game.getRunningTotals(j)
     });
-    console.log(game.getCurrentTurn())
     var toDisplayTotals = turn => {
       if(!game.areLeftOversSubmitted()) {
         return turn.isComplete(game)

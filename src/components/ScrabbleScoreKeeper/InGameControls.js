@@ -1,7 +1,6 @@
 import React from 'react';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
-import CurrentScore from './CurrentScore';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
@@ -27,7 +26,7 @@ class InGameControls extends React.Component {
   }
 
   componentDidMount() {
-    this.input.current.focus();
+    if (this.input.current) this.input.current.focus();
   }
 
   onSetGame(game) {
@@ -38,7 +37,7 @@ class InGameControls extends React.Component {
 
   resetCurrentWord() {
     this.setState({ currentWord: emptyWord });
-    this.input.current.focus();
+    if (this.input.current) this.input.current.focus();
   }
 
   handleChange(word) {
@@ -84,7 +83,7 @@ class InGameControls extends React.Component {
 
   render() {
     const { currentWord } = this.state;
-    const { game, language, undoDisabled, isMobile } = this.props;
+    const { game, language, undoDisabled } = this.props;
     const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN';
     const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
   
@@ -97,16 +96,12 @@ class InGameControls extends React.Component {
     return (
       <form>
         <ScrabbleInputBox {...props} />
-        {isMobile
-          ? null
-          : <CurrentScore score={currentWord.score} />
-        }
         <div className="buttons">
           <div className="in-game-controls">
             <div className="add-word-and-bingo-btns-container">
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>              
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
-              <label className="btn" htmlFor="bingoToggle">
+              <label className="btn bingo" htmlFor="bingoToggle">
                 <div className="bingo-toggle">BINGO</div>
               </label>
             </div>

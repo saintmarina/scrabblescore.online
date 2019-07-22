@@ -110,6 +110,10 @@ cursor: default;
   line-height: 1.7;
 }
 
+input[type="checkbox"]:checked + label {
+  background-color: #ff0000;
+}
+
 table {
  font-family: "Times New Roman", Times, serif; 
 }
@@ -156,10 +160,6 @@ label {
   border-radius: .25rem;
 }
 
-:checked + label {
-  background-color: #F0F0F0;
-}
-
 .winner {
   color: white;
   text-align: center;
@@ -169,6 +169,9 @@ label {
 span.line {
   display: inline-block;
 }
+
+
+
 
 
  

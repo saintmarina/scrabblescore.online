@@ -32,6 +32,10 @@
 body {
 	background-image: radial-gradient(circle at center, #de322a 60%, #622528 100%);
 	background-repeat: no-repeat;
+  font-size: 18px;
+  font-family: Times, serif;
+  color: white;
+  text-shadow: 1px 1px rgba(0,0,0,0.8)
 }
 
 .vertical-stretch {
@@ -52,13 +56,6 @@ body {
 }
 .vertical-stretch > bottom {
   flex: 0 1;
-}
-
-
-body {
-	font-size: 18px;
-	font-family: Times, serif;
-	color: white;
 }
 
 

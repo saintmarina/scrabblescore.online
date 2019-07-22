@@ -1,5 +1,4 @@
 import React from 'react';
-import CurrentScore from './CurrentScore';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 
@@ -18,12 +17,12 @@ class InGameOverControls extends React.Component {
   }
 
   componentDidMount() {
-    this.input.current.focus();
+    if (this.input.current) this.input.current.focus();
   }
 
   resetCurrentWord() {
     this.setState({ currentWord: emptyWord });
-    this.input.current.focus();
+    if (this.input.current) this.input.current.focus();
   }
 
   handleUndo() {
@@ -56,7 +55,7 @@ class InGameOverControls extends React.Component {
 
   render() {
     const { currentWord } = this.state;
-    const { game, language, undoDisabled, isMobile } = this.props;
+    const { game, language, undoDisabled } = this.props;
     const submitButtonText = currentWord.value.length > 0 ? 'SUBMIT LEFTOVERS' : 'SUBMIT NO LEFTOVERS';
     return (
       <div>
@@ -69,10 +68,6 @@ class InGameOverControls extends React.Component {
                 word={currentWord}
                 language={language}
               />
-              {isMobile
-                ? null
-                : <CurrentScore score={currentWord.score} />
-              }
               <div className="buttons">
                 <div className="in-game-controls">
                   <div className="undo-and-end-game-btns-container">

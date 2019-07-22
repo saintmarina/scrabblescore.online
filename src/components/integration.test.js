@@ -119,9 +119,7 @@ describe("Game", () => {
 	const getCurrentPlayer = wrapper => {
 		return wrapper.find(".call-player-to-action").text()
 	}
-	const getCurrentWordScore = wrapper => {
-		return wrapper.find("CurrentScore").find(".current-score").text()
-	}
+
 	const getValue = (grid, moveIndex, playerIndex, wordIndex) => {
 		return getScoreGridCell(grid, moveIndex, playerIndex).find("tr").at(wordIndex).text()
 	}
@@ -382,19 +380,15 @@ describe("Game", () => {
 		expect(getTotalCell(grid, 1)).toEqual("81")
 		expect(getTotalCell(grid, 2)).toEqual("64")
 		expect(getTotalCell(grid, 3)).toEqual("87")
-		expect(getCurrentWordScore(wrapper)).toEqual("0")
+		
 		typeInputBox(wrapper, "jukebox")
-		expect(getCurrentWordScore(wrapper)).toEqual("27")
 		typeInputBox(wrapper, "")
 
 		clickEndGame(wrapper)
 		//END GAME
 
 		expect(getCurrentPlayer(wrapper)).toEqual("Anna, submit your leftovers")
-		expect(getCurrentWordScore(wrapper)).toEqual("0")
 		typeInputBox(wrapper, "lii") //p0: -3
-
-		expect(getCurrentWordScore(wrapper)).toEqual("-3")
 		clickSubmitLeftovers(wrapper)
 		//ENDGAME
 		//P0 - 93
@@ -438,7 +432,6 @@ describe("Game", () => {
 		//P2 - 63
 		//P3 - 87
 		typeInputBox(wrapper, "f") //p3: -4
-		expect(getCurrentWordScore(wrapper)).toEqual("-4")
 		clickSubmitLeftovers(wrapper)
 		//ENDGAME
 		//P0 - 93
@@ -454,7 +447,6 @@ describe("Game", () => {
 		//P3 - 87
 		
 		typeInputBox(wrapper, "zax") //p0: -19
-		expect(getCurrentWordScore(wrapper)).toEqual("-19")
 		clickSubmitLeftovers(wrapper)
 		//ENDGAME
 		//P0 - 77
