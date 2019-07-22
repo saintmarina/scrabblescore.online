@@ -23,6 +23,7 @@ class InGameOverControls extends React.Component {
 
   resetCurrentWord() {
     this.setState({ currentWord: emptyWord });
+    this.input.current.focus();
   }
 
   handleUndo() {
