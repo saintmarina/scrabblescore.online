@@ -42,12 +42,12 @@ class ScoreGridMobile extends React.Component {
                             </tr>;
             const playerRows = game.playersTurns.map((player, j) => (
               player[i]
-                ? <tr key={`move${i}_player${j}`} className="player-name">
-                    <td>
+                ? <tr key={`move${i}_player${j}`} className="player-move-row">
+                    <td className="player-name">
                       {playerNames[j]}<br />{toDisplayTotals(player[i]) ? totalScores[j][i] : null}
                     </td>
 
-                    <td>
+                    <td className="player-turn">
                       {isCurrentPlayersTurn(player, i) 
                         ? <CallPlayerToAction game={game} playerNames={playerNames} isMobile={true}/>
                         : <ScoreGridCell turn={player[i]} language={language} game={game} />

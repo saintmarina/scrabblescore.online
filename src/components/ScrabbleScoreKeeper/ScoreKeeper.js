@@ -70,6 +70,7 @@ class ScoreKeeper extends React.Component {
     return (
       <div className="score-keeper">
         <div className="container">
+        <h1 className="title">Scrabble Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
             : <ScoreGrid playerNames={playerNames} game={game} language={language} />

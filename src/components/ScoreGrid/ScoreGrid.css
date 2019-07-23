@@ -1,4 +1,4 @@
-.move-cell {
+.move-header {
 	width: 65px;
 }
 
@@ -28,7 +28,6 @@
 }
 
 .score-box {
-	
 	text-shadow: none;
 	display: inline-block;
 	border: 1px solid grey;
@@ -48,7 +47,7 @@
 	text-align: right !important;
 }
 
-.mobile .move-row td {
+.mobile .turn-row td {
 	padding: 0px 1px;
 	text-align: center;
 	background-color: rgb(98,37,40, 0.4)
@@ -77,20 +76,13 @@
 }
 
 .table-bordered {
-
 	table-layout: fixed;
-	
 	background-color: rgb(98,37,40, 0.4);
 	text-shadow: 1px 1px rgba(0,0,0,0.8);
 }
 
-.player-header.active {
-	text-decoration: underline;
-}
-
 .player-turn.active {
   border: 4px solid white;
-
 }
 
 .table .scrabble-letter {
@@ -134,7 +126,6 @@
 	padding: 0;
 }
 
-
 .score-grid-cell {
 	margin: 0;
 	padding: 0;
@@ -142,7 +133,7 @@
 	text-align: center;
 }
 
-th.move {
+th.move-number {
   padding: 0px !important;
 }
 
@@ -156,10 +147,8 @@ th.move {
 .total-score td {
 	text-align: center;
 }
-
-th {
-
-
+.mobile .move-row {
+  text-align: center;
 }
 
 /*

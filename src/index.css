@@ -58,7 +58,10 @@ body {
   flex: 0 1;
 }
 
+a {
+  text-shadow: none;
 
+}
 
 .navbar {
 	width: 100%;

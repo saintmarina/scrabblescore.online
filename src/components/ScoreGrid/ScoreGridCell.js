@@ -1,8 +1,6 @@
 import React from 'react';
 import WordInTiles from './WordInTiles';
 
-const highScore = 50;
-
 class ScoreGridCell extends React.Component {
   renderPassed() {
     return (
@@ -22,7 +20,7 @@ class ScoreGridCell extends React.Component {
         <td className="word-cell"><WordInTiles word={word} language={language} /></td>
         {i === 0
           ? <td rowSpan={`${turn.bingo ? turn.words.length + 1 : turn.words.length}`} className="score-cell">
-              <span className={turn.score >= highScore ? 'score-box high' : 'score-box'}>
+              <span className="score-box">
                 {turn.score}
               </span>
             </td>

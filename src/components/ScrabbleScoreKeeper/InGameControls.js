@@ -114,6 +114,16 @@ class InGameControls extends React.Component {
             </div>
           </div>
         </div>
+        <h3>How to use Scrabble Score Online:</h3>
+        <ul>
+          <li>To add Premium Square scores to your word, click on a tile that you typed in an input box.
+          Choose desired option.</li>
+          <li>Click ADD WORD to add word to your turn.</li>
+          <li>Click END TURN, to finish your turn.</li>
+          <li>Click BINGO if you played seven tiles on a turn.</li>
+          <li>If you made a mistake, use unlimited UNDO.</li>
+          <li>Click END GAME when you finished your game.</li>
+        </ul>
       </form>
     );
   }
