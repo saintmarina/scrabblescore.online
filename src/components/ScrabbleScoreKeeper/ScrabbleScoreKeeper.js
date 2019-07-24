@@ -4,8 +4,6 @@ import GameSettings from '../GameSettings/GameSettings';
 import ScoreKeeper from './ScoreKeeper';
 import './ScrabbleScoreKeeper.css';
 
-ReactGA.initialize('UA-144533310-1'); // Here we should use our GA id
-
 class ScrabbleScoreKeeper extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +14,8 @@ class ScrabbleScoreKeeper extends React.Component {
       language: '',
       width: window.innerWidth,
     };
+    ReactGA.initialize('UA-144533310-1');
+    ReactGa.pageview(window.location.pathname + window.location.search);
   }
 
   componentWillMount() {
