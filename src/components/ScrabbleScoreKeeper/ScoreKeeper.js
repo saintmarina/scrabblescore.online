@@ -8,12 +8,16 @@ import InGameControls from './InGameControls';
 import InGameOverControls from './InGameOverControls';
 
 class ScoreKeeper extends React.Component {
+  static beforeUnload(e) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+
   constructor(props) {
     super(props);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleSetGame = this.handleSetGame.bind(this);
     this.renderWinner = this.renderWinner.bind(this);
-    this.beforeUnload = this.beforeUnload.bind(this);
     const { playerNames } = this.props;
     this.state = {
       game: Game.createNewGame(playerNames.length),
@@ -22,16 +26,11 @@ class ScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', this.beforeUnload);
+    window.addEventListener('beforeunload', this.constructor.beforeUnload);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.beforeUnload);
-  }
-
-  beforeUnload(e) {
-    e.preventDefault();
-    e.returnValue = '';
+    window.removeEventListener('beforeunload', this.constructor.beforeUnload);
   }
 
   handleSetGame(currentGame) {
