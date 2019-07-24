@@ -15,7 +15,7 @@ class ScrabbleScoreKeeper extends React.Component {
       width: window.innerWidth,
     };
     ReactGA.initialize('UA-144533310-1');
-    ReactGa.pageview(window.location.pathname + window.location.search);
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   componentWillMount() {
