@@ -1,7 +1,10 @@
+import ReactGA from 'react-ga';
 import React from 'react';
 import GameSettings from '../GameSettings/GameSettings';
 import ScoreKeeper from './ScoreKeeper';
 import './ScrabbleScoreKeeper.css';
+
+ReactGA.initialize('UA-144533310-1'); // Here we should use our GA id
 
 class ScrabbleScoreKeeper extends React.Component {
   constructor(props) {

@@ -9,6 +9,7 @@
     "react": "^16.8.4",
     "react-beforeunload": "^2.1.0",
     "react-dom": "^16.8.4",
+    "react-ga": "^2.6.0",
     "react-onclickoutside": "^6.8.0",
     "react-popper-tooltip": "^2.8.1",
     "react-scripts": "2.1.8"
