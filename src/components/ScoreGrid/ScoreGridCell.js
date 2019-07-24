@@ -19,11 +19,13 @@ class ScoreGridCell extends React.Component {
       <tr key={`row-word-${i}`} className="word-row">
         <td className="word-cell"><WordInTiles word={word} language={language} /></td>
         {i === 0
-          ? <td rowSpan={`${turn.bingo ? turn.words.length + 1 : turn.words.length}`} className="score-cell">
+          ? (
+            <td rowSpan={`${turn.bingo ? turn.words.length + 1 : turn.words.length}`} className="score-cell">
               <span className="score-box">
                 {turn.score}
               </span>
             </td>
+          )
           : null}
       </tr>
     ));
@@ -32,7 +34,7 @@ class ScoreGridCell extends React.Component {
       rows.push(
         <tr key="bingo" className="row bingo-row">
           <td className="bingo-cell"><span className="bingo">BINGO!</span></td>
-        </tr>
+        </tr>,
       );
     }
     return rows;
@@ -41,7 +43,6 @@ class ScoreGridCell extends React.Component {
   render() {
     const { turn, game } = this.props;
     return (
-      
       <table className="score-grid-cell">
         <tbody>
           {turn.isPassed(game) ? this.renderPassed() : this.renderNormal()}

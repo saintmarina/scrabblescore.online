@@ -95,6 +95,7 @@
 	font-weight: bold;
 	font-size: 12px;
 	cursor: pointer;
+	text-shadow: none;
 }
 
 .modifier.double-letter {

@@ -6,21 +6,20 @@ import ScrabbleTile from '../ScrabbleTile/ScrabbleTile';
 import './ScrabbleInputBox.css';
 
 class ScrabbleInputBox extends React.Component {
+  static _clickOnElementByClass(className) {
+    const elements = document.getElementsByClassName(className);
+    if (elements.length !== 0) elements[0].click();
+  }
+
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
     this.focus = this.focus.bind(this);
     this.handleHiddenInputChange = this.handleHiddenInputChange.bind(this);
     this.handleTileClick = this.handleTileClick.bind(this);
-    this._clickOnElementByClass = this._clickOnElementByClass.bind(this);
     this.state = {
       inFocus: false,
     };
-  }
-  _clickOnElementByClass(className) {
-    const elements = document.getElementsByClassName(className)
-    if (elements.length !== 0)
-      elements[0].click()
   }
 
   handleHiddenInputChange(e) {
@@ -29,15 +28,15 @@ class ScrabbleInputBox extends React.Component {
     const result = input.split('').map(letter => (isLetterAllowed(letter, language) ? letter : ''));
     const modifiers = resizeArray(word.modifiers, result.length, null);
     onChange({ value: result.join(''), modifiers });
-    this._clickOnElementByClass("hidden-input")
+    this.constructor._clickOnElementByClass('hidden-input');
   }
 
   handleModifierChange(letterIndex, modifier) {
     const { word, onChange } = this.props;
-    let modifiers = word.modifiers.slice();
+    const modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
     onChange({ value: word.value, modifiers });
-      }
+  }
 
   handleTileClick() {
     this.focus();
@@ -51,7 +50,7 @@ class ScrabbleInputBox extends React.Component {
     const { language, word } = this.props;
     const { inFocus } = this.state;
     return (
-      <div role="textbox" onClick={this.focus} className={`scrabble-input-box${word.value.length > 8 ? ' large' : ''}`}>
+      <div role="textbox" onClick={this.focus} onKeyDown={this.focus} className={`scrabble-input-box${word.value.length > 8 ? ' large' : ''}`}>
         <input
           ref={this.textHiddenInput}
           onChange={this.handleHiddenInputChange}

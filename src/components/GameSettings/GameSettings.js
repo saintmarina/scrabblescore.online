@@ -40,22 +40,28 @@ class GameSettings extends React.Component {
       <div className="">
         <div className="row">
           <div className="col-sm-2 offset-sm-10">
-            <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage} >
+            <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
               <option value="en">English</option>
               <option value="ru">Russian</option>
               <option value="fr">French</option>
-            </select> 
+            </select>
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <div className='logo'>
+            <div className="logo">
               <div className="line-one">Scrabble Score</div>
               <div className="line-two"><p>online</p></div>
             </div>
             <span className="description">
-              <p>Hello and welcome to Scrabble Score Online. This is an easy-to-use tool that replaces pen-and-paper for keeping track of Scrabble scores.</p>
-              <p>Simply fill in the players’ names in order that they will take turns and press the “START” button.</p>
+              <p>
+                 Hello and welcome to Scrabble Score Online. This is an easy-to-use tool
+                 that replaces pen-and-paper for keeping track of Scrabble scores.
+              </p>
+              <p>
+                 Simply fill in the players’ names in order that they will
+                 take turns and press the “START” button.
+              </p>
               <p>Relax and enjoy your game, now you don’t need to do any math!</p>
             </span>
           </div>
@@ -66,21 +72,21 @@ class GameSettings extends React.Component {
               <div className="row">
                 <div className="col-12">
                   {[...Array(numberOfPlayers)].map((_, i) => (
-                      <input
-                        onChange={e => this.handleChangeOfName(i, e)}
-                        id={`player-name-input-${i}`}
-                        key={i}
-                        type="text"
-                        className={playerNames[i] && playerNames[i].length > 0 ? "form-control player-name filled" : "form-control player-name"}
-                        placeholder={`Player ${i + 1}`}
-                      />
+                    <input
+                      onChange={e => this.handleChangeOfName(i, e)}
+                      id={`player-name-input-${i}`}
+                      key={i}
+                      type="text"
+                      className={playerNames[i] && playerNames[i].length > 0 ? 'form-control player-name filled' : 'form-control player-name'}
+                      placeholder={`Player ${i + 1}`}
+                    />
                   ))}
                 </div>
               </div>
             </div>
           </div>
           <div className="start-btn-container">
-            <button onClick={this.handleGameStart} className="btn start">START</button>
+            <button className="btn start" type="button" onClick={this.handleGameStart}>START</button>
           </div>
         </form>
       </div>

@@ -13,6 +13,7 @@ class ScoreKeeper extends React.Component {
     this.handleUndo = this.handleUndo.bind(this);
     this.handleSetGame = this.handleSetGame.bind(this);
     this.renderWinner = this.renderWinner.bind(this);
+    this.beforeUnload = this.beforeUnload.bind(this);
     const { playerNames } = this.props;
     this.state = {
       game: Game.createNewGame(playerNames.length),
@@ -21,10 +22,16 @@ class ScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', function (e) {
-      e.preventDefault();
-      e.returnValue = 'You will lose this page if you quit.';
-    });
+    window.addEventListener('beforeunload', this.beforeUnload);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.beforeUnload);
+  }
+
+  beforeUnload(e) {
+    e.preventDefault();
+    e.returnValue = '';
   }
 
   handleSetGame(currentGame) {
@@ -44,20 +51,19 @@ class ScoreKeeper extends React.Component {
     const { game } = this.state;
     const { playerNames } = this.props;
     const turnBeforeLeftOvers = game.leftOversTurnNumber - 1;
-    const winners = game.getWinners()
+    const winners = game.getWinners();
     const winnersTie = game.getWinners(turnBeforeLeftOvers);
     if (winners.length > 1) {
       return winnersTie.map(winnerIndex => (winnersTie.length > 1
-              ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points`
-              : `${playerNames[winnerIndex]} won with ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points!`)).join(', ')
-    } else {
-      return `${playerNames[[...game.getWinners()]]} won with ${game.getTotalScore([...game.getWinners()])} points!`
+        ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points`
+        : `${playerNames[winnerIndex]} won with ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points!`)).join(', ');
     }
+    return `${playerNames[[...game.getWinners()]]} won with ${game.getTotalScore([...game.getWinners()])} points!`;
   }
 
   render() {
     const { game, games } = this.state;
-    const { playerNames, language, isMobile } = this.props;                
+    const { playerNames, language, isMobile } = this.props;
 
     const controlProps = {
       onSetGame: this.handleSetGame,
@@ -70,22 +76,24 @@ class ScoreKeeper extends React.Component {
     return (
       <div className="score-keeper">
         <div className="container">
-        <h1 className="title">Scrabble Score Sheet</h1>
+          <h1 className="title">Scrabble Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
             : <ScoreGrid playerNames={playerNames} game={game} language={language} />
           }
-              {!game.areLeftOversSubmitted()
-                ? isMobile ? null : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
-                : (
-                  <div className="winner">
-                    <h1>{this.renderWinner()}</h1>
-                  </div>
-                )
+          {!game.areLeftOversSubmitted()
+            ? isMobile
+              ? null
+              : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile} />
+            : (
+              <div className="winner">
+                <h1>{this.renderWinner()}</h1>
+              </div>
+            )
               }
-              {!game.isGameOver()
-                ? <InGameControls {...controlProps} />
-                : <InGameOverControls {...controlProps} />
+          {!game.isGameOver()
+            ? <InGameControls {...controlProps} />
+            : <InGameOverControls {...controlProps} />
               }
         </div>
       </div>

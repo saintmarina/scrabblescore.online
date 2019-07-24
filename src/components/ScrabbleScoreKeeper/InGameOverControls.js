@@ -42,12 +42,10 @@ class InGameOverControls extends React.Component {
     let { game, onSetGame } = this.props;
     e.preventDefault(); /* prevent form submission */
 
-    if (currentWord.value.length !== 0)
-      game = game.addWord(currentWord);
+    if (currentWord.value.length !== 0) game = game.addWord(currentWord);
     game = game.endTurn();
 
-    if (game.currentPlayerIndex === 0)
-      game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers())
+    if (game.currentPlayerIndex === 0) { game = game.distributeLeftOversToReapers(game.getReapers(), game.getSumOfLeftovers()); }
 
     onSetGame(game);
     this.resetCurrentWord();
@@ -92,8 +90,11 @@ class InGameOverControls extends React.Component {
         }
         <h3>How to use Scrabble Score Online:</h3>
         <ul>
-          <li>Unplayed Letters: When the game ends, each player's score is reduced by the sum of his or her unplayed letters.
-              In addition, if a player has used all of his or her letters, the sum of the other players' unplayed letters is added to that player's score.</li>
+          <li>
+              Unplayed Letters: When the game ends, each player's score is reduced by the sum of his&#32;
+              or her unplayed letters. In addition, if a player has used all of his or her letters,&#32;
+              the sum of the other players' unplayed letters is added to that player's score&#46;
+          </li>
           <li>Click SUBMIT NO LEFTOVERS if you finished your game without any tiles on your rack.</li>
           <li>Click SUBMIT LEFTOVERS to submit tiles that are left on your rack when you finished the game.</li>
           <li>If you made a mistake, use unlimited UNDO.</li>

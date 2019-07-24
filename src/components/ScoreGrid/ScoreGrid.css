@@ -26,6 +26,9 @@
 .desktop thead th {
   border-bottom-style: inherit;
 }
+.desktop .table th {
+  padding: 0px;
+}
 
 .score-box {
 	text-shadow: none;

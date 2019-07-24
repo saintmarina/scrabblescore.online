@@ -19,10 +19,10 @@ class InGameControls extends React.Component {
       currentWord: emptyWord,
     };
   }
+
   _scrollInputToTheMiddle() {
-    const elements = document.getElementsByClassName("add-word");
-    if (elements.length !== 0)
-    elements[0].scrollIntoView({block: "center"});
+    const elements = document.getElementsByClassName('add-word');
+    if (elements.length !== 0) elements[0].scrollIntoView({ block: 'center' });
   }
 
   componentDidMount() {
@@ -86,7 +86,7 @@ class InGameControls extends React.Component {
     const { game, language, undoDisabled } = this.props;
     const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN';
     const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
-  
+
     const props = {
       ref: this.input,
       onChange: this.handleChange,
@@ -99,7 +99,7 @@ class InGameControls extends React.Component {
         <div className="buttons">
           <div className="in-game-controls">
             <div className="add-word-and-bingo-btns-container">
-              <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>              
+              <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
               <label className="btn bingo" htmlFor="bingoToggle">
                 <div className="bingo-toggle">BINGO</div>
@@ -116,8 +116,10 @@ class InGameControls extends React.Component {
         </div>
         <h3>How to use Scrabble Score Online:</h3>
         <ul>
-          <li>To add Premium Square scores to your word, click on a tile that you typed in an input box.
-          Choose desired option.</li>
+          <li>
+To add Premium Square scores to your word, click on a tile that you typed in an input box.
+          Choose desired option.
+          </li>
           <li>Click ADD WORD to add word to your turn.</li>
           <li>Click END TURN, to finish your turn.</li>
           <li>Click BINGO if you played seven tiles on a turn.</li>

@@ -35,7 +35,7 @@ body {
   font-size: 18px;
   font-family: Times, serif;
   color: white;
-  text-shadow: 1px 1px rgba(0,0,0,0.8)
+  text-shadow: 1px 1px rgba(0,0,0,0.5)
 }
 
 .vertical-stretch {
@@ -59,8 +59,8 @@ body {
 }
 
 a {
-  text-shadow: none;
-
+  color: white;
+  text-decoration: underline;
 }
 
 .navbar {

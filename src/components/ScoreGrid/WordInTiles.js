@@ -6,7 +6,7 @@ class WordInTiles extends React.Component {
   render() {
     const { word, language } = this.props;
     const letterTiles = word.value.split('').map((letter, i) => {
-      let tile = (
+      const tile = (
         <ScrabbleTile
           key={i}
           letter={letter}

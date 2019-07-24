@@ -28,5 +28,6 @@ module.exports = {
       "react/no-array-index-key": "off",
       "class-methods-use-this": ["error", { "exceptMethods": ["renderPassed", "activePlayerClass"] }],
       "no-plusplus": "off",
+      "no-underscore-dangle": "off",
     }
 };
