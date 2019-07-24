@@ -20,10 +20,6 @@ class InGameControls extends React.Component {
     };
   }
 
-  _scrollInputToTheMiddle() {
-    const elements = document.getElementsByClassName('add-word');
-    if (elements.length !== 0) elements[0].scrollIntoView({ block: 'center' });
-  }
 
   componentDidMount() {
     if (this.input.current) this.input.current.focus();
@@ -33,6 +29,11 @@ class InGameControls extends React.Component {
     const { onSetGame } = this.props;
     onSetGame(game);
     this.resetCurrentWord();
+  }
+
+  _scrollInputToTheMiddle() {
+    const elements = document.getElementsByClassName('add-word');
+    if (elements.length !== 0) elements[0].scrollIntoView({ block: 'center' });
   }
 
   resetCurrentWord() {

@@ -7,7 +7,7 @@ function ScrabbleTile(props) {
   } = props;
   const modifierClass = modifier === null ? '' : modifier;
   return (
-    <span className={`scrabble-letter ${modifierClass}`} onClick={onClick}>
+    <span className={`scrabble-letter ${modifierClass}`} role="button" onClick={onClick} onKeyDown={onClick}>
       <span className="letter">{letter.toUpperCase()}</span>
       <span className="score">{score}</span>
     </span>

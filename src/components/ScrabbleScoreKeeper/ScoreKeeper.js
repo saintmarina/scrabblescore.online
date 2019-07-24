@@ -35,7 +35,8 @@ class ScoreKeeper extends React.Component {
   }
 
   handleSetGame(currentGame) {
-    let { game, games } = this.state;
+    const { game } = this.state;
+    let { games } = this.state;
     games = [...games.slice(), game];
     this.setState({ games, game: currentGame });
   }
@@ -73,6 +74,10 @@ class ScoreKeeper extends React.Component {
       language,
     };
 
+    const toDisplayCallPlayerToAction = () => (isMobile
+      ? null
+      : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile} />);
+
     return (
       <div className="score-keeper">
         <div className="container">
@@ -82,9 +87,7 @@ class ScoreKeeper extends React.Component {
             : <ScoreGrid playerNames={playerNames} game={game} language={language} />
           }
           {!game.areLeftOversSubmitted()
-            ? isMobile
-              ? null
-              : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile} />
+            ? toDisplayCallPlayerToAction()
             : (
               <div className="winner">
                 <h1>{this.renderWinner()}</h1>
