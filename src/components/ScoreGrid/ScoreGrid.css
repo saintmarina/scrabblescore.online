@@ -63,7 +63,7 @@
   padding-bottom: 6px;
 }
 
-.row.bingo-row {
+.table-row.bingo-row {
   text-align: center;
   padding: 9px;
 }
@@ -140,7 +140,7 @@ th.move-number {
   padding: 0px !important;
 }
 
-.mobile .row {
+.mobile .table-row {
 	min-height: 43px;
 }
 .mobile .call-player-to-action {

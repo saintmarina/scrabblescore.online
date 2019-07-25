@@ -18,7 +18,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   componentDidMount() {
     ReactGA.initialize('UA-144533310-1');
-    ReactGA.pageview(window.location.pathname + window.location.search));
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   componentWillMount() {
@@ -43,7 +43,7 @@ class ScrabbleScoreKeeper extends React.Component {
     const { playerNames, language, width } = this.state;
     const isMobile = width <= 815;
     return playerNames.length === 0
-      ? <GameSettings onGameStart={this.handleGameStart} />
+      ? <GameSettings onGameStart={this.handleGameStart} isMobile={isMobile}/>
       : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile} />;
   }
 

@@ -35,9 +35,10 @@ class GameSettings extends React.Component {
 
   render() {
     const { language, numberOfPlayers, playerNames } = this.state;
+    const { isMobile } = this.props;
     return (
 
-      <div className="">
+      <div className="container">
         <div className="row">
           <div className="col-sm-2 offset-sm-10">
             <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
@@ -50,7 +51,10 @@ class GameSettings extends React.Component {
         <div className="row">
           <div className="col-sm-12">
             <div className="logo">
-              <img src="Big_logo.png" alt="logo" width="1109"/>
+            {isMobile
+              ? <img src="mobile_logo.png" alt="logo" width="300"/> 
+              : <img src="big_logo.png" alt="logo" width="520"/>
+            }
             </div>
             <span className="description">
               <p>
