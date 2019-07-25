@@ -14,8 +14,6 @@ class ScrabbleScoreKeeper extends React.Component {
       language: '',
       width: window.innerWidth,
     };
-    ReactGA.initialize('UA-144533310-1');
-    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
   componentWillMount() {
@@ -24,6 +22,11 @@ class ScrabbleScoreKeeper extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  initializeReactGA() {
+    ReactGA.initialize('UA-144533310-1');
+    ReactGA.pageview('/');
   }
 
   handleWindowSizeChange() {
