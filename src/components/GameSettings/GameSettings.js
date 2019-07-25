@@ -50,8 +50,7 @@ class GameSettings extends React.Component {
         <div className="row">
           <div className="col-sm-12">
             <div className="logo">
-              <div className="line-one">Scrabble Score</div>
-              <div className="line-two"><p>online</p></div>
+              <img src="Big_logo.png" alt="logo" width="1109"/>
             </div>
             <span className="description">
               <p>
