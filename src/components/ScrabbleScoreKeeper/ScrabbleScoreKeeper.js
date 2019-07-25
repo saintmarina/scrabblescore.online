@@ -26,7 +26,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   initializeReactGA() {
     ReactGA.initialize('UA-144533310-1');
-    ReactGA.pageview('/');
+    ReactGA.pageview('');
   }
 
   handleWindowSizeChange() {
