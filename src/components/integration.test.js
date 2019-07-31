@@ -78,6 +78,8 @@ describe.skip('Nightmare tests', () => {
   });
 });
 
+jest.mock("react-ga") //This is fixing the error when test is running with Google Analytics (GA aka react-ga)
+
 describe('Game', () => {
   function fillPlayers(wrapper, numOfPlayers) {
     const players = ['Anna', 'Nico', 'Kyle', 'Sofi'];

@@ -14,31 +14,42 @@ X 8. layout/grid
       X - create grid
       X - organize elements in the grid
       X - make sure page is looking nice when resizing 
-9. create logo ~ 4 hours -- 1 day 
+X 9. create logo ~ 4 hours -- 1 day 
 X 10. font/sizing choose font for every element, and size of the font for every element,  ~ 5 hours -- 1 day
     X - text
     X - buttons
     X - bingo switch
     X - score table
     - specify button width in %percents
-11. color/ and shape ~ 10 hours -- 2 days
+X 11. color/ and shape ~ 10 hours -- 2 days
     - background
     - nav bar/ footer
     - buttons
     - table
     - rename start button
-12. Create PLAYER WON
-13. all above is working for both desktop and mobile ~ 3 hours -- 1 day
+X 12. Create PLAYER WON
+X 13. all above is working for both desktop and mobile ~ 3 hours -- 1 day
 14. testing
-15. linting
-16. write documentation
-17. put it on hackernews, reddit
-18. analytics
-19. Something to detect crashes. When someone crashes the app receive an email or simillar.
-20. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
-21. make input correctly move coursor when clicking on arrows
-22. callPlayerToAction can be simplified
-23. add isComplited to turn class
+X 15. linting
+X 16. install GA - google analytics
+17. make static page
+18. Something to detect crashes. When someone crashes the app receive an email or simillar.
+19. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
+20. make input correctly move coursor when clicking on arrows
+21. callPlayerToAction can be simplified
+22. add isComplited to turn class
+23. write documentation
+24. put it on hackernews, reddit
 
 
+1) write a programm in JS that creates an HTTP server, the endpoint /work should sleep 100ms.
+2) write the same program in python using flask
+3) write a program in node that is invoked as follow:
+  node bench.js URL N_REQUESTS N_CONCURRENT
+    The program should perform a total of N_REQUESTS to the URL in question, and doing it with N_CONCURRENT connections.
+    The program should print at the end how many replies it got grouped by HTTP status code (200, etc.)
+    It should also print the average response time (latency) by status code.
+    print total time to complete the N_REQUESTS.
+    Not able to connect to URL can be considered as status code 599
 
+See how many conection can be established to the each server concurrently.
