@@ -32,14 +32,17 @@ X 13. all above is working for both desktop and mobile ~ 3 hours -- 1 day
 14. testing
 X 15. linting
 X 16. install GA - google analytics
-17. make static page
-18. Something to detect crashes. When someone crashes the app receive an email or simillar.
-19. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
-20. make input correctly move coursor when clicking on arrows
-21. callPlayerToAction can be simplified
-22. add isComplited to turn class
-23. write documentation
-24. put it on hackernews, reddit
+X 17. make static page
+18. do event tracking with react-ga
+19. change style for input box
+20. change style for nameinput
+19. Something to detect crashes. When someone crashes the app receive an email or simillar.
+20. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
+21. make input correctly move coursor when clicking on arrows
+22. callPlayerToAction can be simplified
+23. add isComplited to turn class
+24. write documentation
+25. put it on hackernews, reddit
 
 
 1) write a programm in JS that creates an HTTP server, the endpoint /work should sleep 100ms.
