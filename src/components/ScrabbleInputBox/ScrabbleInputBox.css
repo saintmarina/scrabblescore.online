@@ -1,27 +1,4 @@
-.scrabble-input-box {
-	color: black;
-	position: relative;
-	margin: auto;
-	margin-bottom: 10px;
-	border: 1px solid grey;
-	background-color: white;
-	height: 65px;
-	width: 480px;
-	border-radius: 20px;
-}
-.mobile .scrabble-input-box {
-	border-radius: 10px;
-	width: 340px;
-	height: 50px;
-}
-
-.scrabble-input-box.large {
-	height: 131px;
-}
-
-.mobile .scrabble-input-box.large {
-	height: 101px;
-}
+/*Hiding real input box*/
 
 .hidden-input {
 	color: transparent;
@@ -35,27 +12,70 @@
 	z-index: -50;
 }
 
-.scrabble-tiles {
+/*Desktop INPUT BOX css*/
+
+.scrabble-tiles {					/*Scrabble tiles container*/
 	text-align: left;
-	left: 15px;
+	left: 10px;
 	position: relative;
 	bottom: -1px;
 }
 
+.scrabble-input-box {
+	color: black;
+  position: relative;
+  margin: auto;
+  margin-bottom: 10px;
+  border: 1px solid white;
+  background-color: #e66058;
+  height: 81px;
+  width: 471px;
+  border-radius: 5px;
+  padding-top: 8px;
+}
+
+.scrabble-input-box.large {
+	height: 148px;
+}
+
+/*Mobile INPUT BOX css*/
+
+.mobile .scrabble-input-box {
+	border-radius: 5px;
+	width: 340px;
+	height: 50px;
+}
+
+.mobile .scrabble-input-box.large {
+	height: 101px;
+}
+
+/*Blinker css*/
+
+@keyframes blinker {  
+  0% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/*Desktop blinker css*/
+
 .scrabble-input-box .scrabble-tiles.blinker:last-child:after {
 	content: "";
 	position: absolute;
-	background-color: #335;
+	background-color: white;
 	margin-left: 5px;
-	top: 7px;
-	width: 3px;
-	height: 46px;
+		width: 3px;
+	height: 60px;
 	animation: blinker 1s linear infinite;
 }
 
 .scrabble-input-box.large .scrabble-tiles.blinker:last-child:after {
-	top: 74px;
+	top: 68px;
 }
+
+/*Desktop blinker css*/
 
 .mobile .scrabble-tiles.blinker:last-child:after {
 	margin-left: -10px;
@@ -72,12 +92,10 @@
 }
 
 
-@keyframes blinker {  
-  0% { opacity: 1; }
-  49% { opacity: 1; }
-  50% { opacity: 0; }
-  100% { opacity: 0; }
-}
+
+
+
+/*Modifier css*/
 
 .modifier {
 	color: black;

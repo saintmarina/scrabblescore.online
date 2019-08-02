@@ -22,15 +22,20 @@ class ScoreKeeper extends React.Component {
     this.state = {
       game: Game.createNewGame(playerNames.length),
       games: [],
+      debug: true,
     };
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', this.constructor.beforeUnload);
+    const { games, debug } = this.state;
+    if (games.length !== 0 && !debug)
+      { window.removeEventListener('beforeunload', this.constructor.beforeUnload); }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.constructor.beforeUnload);
+    const { games, debug } = this.state;
+    if (games.length !== 0 && !debug)
+      { window.removeEventListener('beforeunload', this.constructor.beforeUnload); }
   }
 
   handleSetGame(currentGame) {
@@ -80,7 +85,7 @@ class ScoreKeeper extends React.Component {
     return (
       <div className="score-keeper">
         <div className="container">
-          <img id="logo" src="logo.png" alt="Scrabble score logo" width="212px" />
+          <img id="small_logo" src="small_logo.png" alt="Scrabble score logo" width="212px" />
           <h1 className="title">Scrabble Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />

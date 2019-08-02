@@ -29,8 +29,6 @@ class ScrabbleScoreKeeper extends React.Component {
     window.removeEventListener('resize', this.handleWindowSizeChange);
   }
 
-  
-
   handleWindowSizeChange() {
     this.setState({ width: window.innerWidth });
   }

@@ -1,7 +1,8 @@
+/*DESKTOP INPUT BOX tile css*/
+
 .scrabble-letter {
 	background-image: url("/background.jpg");
-	border: 5px;
-	border: black;
+	border: 5px black;
 	background-size: 55.7px;
 	display: inline-block;
   width: 56px;
@@ -13,21 +14,33 @@
   text-shadow: none;
 }
 
-.mobile .scrabble-letter {
-	background-size: 41px 45px;
-	left: -10px;
-	height: 45px;
-	width: 41px;
-}
-.mobile .table .scrabble-letter {
-	left: 0px;
-}
-
 .scrabble-letter:hover {
 	box-shadow: 0 0 15px #622528;
 	z-index: 10;
 }
 
+.letter {
+right: 3px;
+width: 100%;
+top: 5px;
+display: block;
+text-align: center;
+line-height: normal;
+font-size: 38px;
+position: absolute;
+}
+
+.score {
+	font-size: 15px;
+	position: absolute;
+	text-align: right;
+	bottom: 0;
+	right: 3px;
+	font-family: Helvetica, Arial, Sans-Serif;
+	letter-spacing: 0px;
+}
+
+/*Modified scrabble tiles css*/
 .scrabble-letter.double-letter {
 	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg");
 }
@@ -48,18 +61,15 @@
 	opacity: 0.77;
 }
 .scrabble-letter.blank .score {
-	font-size: 1px;
+	font-size: 0.1px;
 }
 
-.letter {
-right: 3px;
-width: 100%;
-top: 5px;
-display: block;
-text-align: center;
-line-height: normal;
-font-size: 38px;
-position: absolute;
+/*MOBILE INPUT BOX tile css*/
+.mobile .scrabble-letter {
+	background-size: 41px 45px;
+	left: -10px;
+	height: 45px;
+	width: 41px;
 }
 
 .mobile .letter {
@@ -70,18 +80,46 @@ position: absolute;
 
 }
 
-.score {
-	font-size: 15px;
-	position: absolute;
-	text-align: right;
-	bottom: 0;
-	right: 3px;
-	font-family: Helvetica, Arial, Sans-Serif;
-	letter-spacing: 0px;
-}
-
 .mobile .score {
 	bottom: 0;
 	right: 1px;
 	font-size: 13px;
+}
+
+
+
+.table .scrabble-letter {
+	height: 32px;
+	width: 32px;
+	cursor: default;
+	color: black;
+	text-shadow: none;
+	vertical-align: middle;
+}
+
+.table .scrabble-letter:hover {
+	box-shadow: 0 0 0px ;
+	z-index: 0;
+}
+
+.table .letter {
+	font-size: 21px;
+	top: 2px;
+	left: -2px;
+	font-weight: normal;
+	cursor: default;
+}
+
+
+.table .score {
+	right: 1px;
+	font-size: 10px;
+	top: 18px;
+	
+}
+
+/*MOBILE TABLE tile css*/
+
+.mobile .table .scrabble-letter {
+	left: 0px;
 }

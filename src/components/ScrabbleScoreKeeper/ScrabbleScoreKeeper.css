@@ -1,163 +1,13 @@
-
-.btn {
-	border: solid 1px #980c10;
-  color: white;
-	margin: 4px;
-	cursor: pointer;
-  font-family: "Times New Roman",Times,serif;
-  font-size: 18px;
-  line-height: 0.6;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
-  text-shadow: 1px 1px rgba(0,0,0,0.8);
-}
-.btn:hover {
-  text-shadow: none;
-  color: white;
-  text-shadow: 1px 1px rgba(0,0,0,0.8);
+.score-keeper #small_logo {
+  margin-top: -118px;
 }
 
-.mobile .btn {
-  font-size: 16px;
+h3 {
+margin-top: 25px;
 }
 
-.add-word {
-	height: 46px;
-  width: 180px;
-}
-
-.add-word:hover, .end-game:hover, .undo:hover  {
-color: white;
-text-shadow: 1px 1px rgba(0,0,0,0.8);
-cursor: default;
-}
-.mobile .add-word {
-  padding: inherit;
-  width: 149px;
-}
-
-
-
-.mobile .pass-endturn-button {
-	width: 308px;
-}
-
-.pass-endturn-button {
-	width: 369px;
-  font-size: 24px;
-  height: 46px;
-}
-
-.undo {
-	height: 46px;
-	width: 180px;
-  font-size: 16px;
-}
-
-.mobile .undo {
-	width: 149px;
-}
-
-.mobile label {
-  height: 46px;
-  width: 149px;
-}
-
-
-.mobile .in-game-controls {
-	width: 100%;	
-}
-
-.end-game {
-	height: 46px;
-	width: 180px;
-	font-size: 16px;
-}
-
-.mobile .end-game {
-	height: 46px;
-	width: 149px;
-	font-size: 16px;
-}
-
-.card-header {
-	background-color: white;
-}
-
-.current-score {
-  width: 3rem;
-  height: 3rem;
-  font-weight: bold;
-  background-color: white;
-  color: black;
-  border-radius: 3px;
-  display: inline-block;
-  border: 1px solid grey;
-  margin-top: -68px;
-  padding-top: 10px;
-  float: right;
+.title {
   text-align: center;
-}
-
-.in-game-controls {
-	display: inline-block;
-	width: 57%;
-}
-
-.buttons {
-	text-align: center;
-}
-.bingo-toggle {
-  line-height: 1.7;
-}
-
-input[type="checkbox"]:checked + label {
-  background-color: #ff0000;
-}
-
-table {
- font-family: "Times New Roman", Times, serif; 
-}
-
-.mobile table {
-  font-size: 14px;
-  font-family: "Times New Roman", Times, serif;
-}
-.mobile .move-row {
-  font-weight: bold;
-}
-.mobile .player-name {
-  text-align: center;
-}
-
-th {
-  text-align: center;
-  font-family: "Times New Roman", Times, serif;
-}
-.call-player-to-action {
-  font-family: "Times New Roman", Times, serif;
-  margin-bottom: 15px;
-}
-
-.desktop .call-player-to-action {
-  margin-bottom: 15px;
-}
-.add-word-and-bingo-btns-container input {
-  display: none;
-}
-
-
-label {
-  padding: .375rem .75rem;
-  border: solid;
-  border-color: #C0C0C0;
-  margin: 4px;
-  cursor: pointer;
-  font-size: 21px;
-  
-  font-size: 16px;
-  height: 46px;
-  width: 180px;
-  border-radius: .25rem;
 }
 
 .winner {
@@ -166,21 +16,88 @@ label {
   margin: 20px;
 }
 
-span.line {
-  display: inline-block;
-}
+/*DESKTOP buttons design*/
 
-.title {
+.buttons {                  /*First wrap container for button in InGame(Over)Control components*/
   text-align: center;
 }
 
-h3 {
-margin-top: 25px;
+.in-game-controls {         /*Second wrap container for button in InGame(Over)Control components*/
+  display: inline-block;
+  width: 57%;
 }
 
-.score-keeper #logo {
-  margin-top: -118px;
+.btn {
+  height: 46px;
+  width: 180px;
+	border: solid 1px #980c10;
+  color: white;
+	margin: 4px;
+	cursor: pointer;
+  font-family: "Times New Roman",Times,serif;
+  font-size: 18px;
+  line-height: 1.7;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
+  text-shadow: 1px 1px rgba(0,0,0,0.8);
 }
+
+.btn:hover {
+  color: white;
+}
+
+.add-word:hover, .end-game:hover, .undo:hover  {
+cursor: default;
+}
+
+/*Bingo button styles*/
+
+.add-word-and-bingo-btns-container input {
+  display: none;
+}
+
+div.bingo-toggle {
+  padding: 1px;
+}
+
+/*Pass/End turn button styles*/
+
+.pass-endturn-button {
+  width: 369px;
+}
+
+/*MOBILE buttons design*/
+
+.mobile .in-game-controls {     /*Second wrap container for button in InGame(Over)Control components*/
+  width: 100%;  
+}
+
+.mobile .btn {
+  font-size: 16px;
+  width: 149px;
+  height: 46px;
+}
+
+/*Pass/End turn button styles*/
+
+.mobile .pass-endturn-button {
+	width: 308px;
+}
+
+/*CallPlayerToAction style*/
+
+.call-player-to-action {
+  font-family: "Times New Roman", Times, serif;
+  margin-bottom: 15px;
+}
+
+.desktop .call-player-to-action {
+  margin-bottom: 15px;
+}
+
+.mobile .call-player-to-action {
+  margin-top: 10px;
+}
+
 
 
 

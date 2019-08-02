@@ -5,9 +5,7 @@ class ScoreGridCell extends React.Component {
   renderPassed() {
     return (
       <tr>
-        <td>
-          {'PASS'.split('').map((letter, i) => <span key={i} className="score-box">{letter}</span>)}
-        </td>
+        <td>PASS</td>
       </tr>
     );
   }

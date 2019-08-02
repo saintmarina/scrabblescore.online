@@ -33,16 +33,30 @@ X 13. all above is working for both desktop and mobile ~ 3 hours -- 1 day
 X 15. linting
 X 16. install GA - google analytics
 X 17. make static page
-18. do event tracking with react-ga
+
+
+X 1. reload should only be prompted when:
+  a. you are not in dev mode
+  b. you have played at least one move, and the game is not over
+2. figure out why the react snapshot adds bugs, and fix it
+3. logo size should be shown with css
+4. do event tracking with react-ga:
+  - when a word is added
+  - when the game is ended
+  - when the game has started
+  - when a turn is added
 19. change style for input box
 20. change style for nameinput
-19. Something to detect crashes. When someone crashes the app receive an email or simillar.
+21. change style of the github/facebook icons
+24. write documentation
+25. put it on hackernews, reddit
+
+
 20. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
 21. make input correctly move coursor when clicking on arrows
 22. callPlayerToAction can be simplified
-23. add isComplited to turn class
-24. write documentation
-25. put it on hackernews, reddit
+19. Something to detect crashes. When someone crashes the app receive an email or simillar.
+
 
 
 1) write a programm in JS that creates an HTTP server, the endpoint /work should sleep 100ms.

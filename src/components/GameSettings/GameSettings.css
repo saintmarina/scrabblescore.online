@@ -3,30 +3,6 @@
   margin-bottom: 30px;
 }
 
-.line-one {
-  font-size: 6rem;
-  margin-top: -35px;
-}
-.line-two {
-  font-style: italic;
-  font-size: 2.5rem;
-  margin-top: -39px;
-  margin-left: 29rem;
-
-}
-
-.LoGo {
-width: 100%;
-height: 250px;
-background: #C0C0C0;
-display: inline-block;
-}
-
-.description {
-	font-size: 18px;
-  color: white;
-}
-
 .mobile .description {
   font-size: 16px;
 }
@@ -39,13 +15,11 @@ display: inline-block;
   float: right;
   margin-top: -70px;
   position: relative;
-  font-family: Times, serif;
-  font-size: 18px;
 }
+
 .mobile .custom-select {
   font-size: 16px;
 }
-
 
 /*Design for "START BUTTON"*/
 
@@ -53,29 +27,22 @@ display: inline-block;
 	text-align: center;
 }
 
-button.start {
-  display: inline-block;
-  border-radius: 4px;
-  text-align: center;
-  font-size: 24px;
-  font-family: "Times New Roman",Times,serif;
-  color: white;
-  width: 160px;
-  height: 50px;
-  transition: all 0.3s;
-  cursor: pointer;
-  margin: 5px;
+.start {
+  width: 180px;
  }
 
  .mobile button.start {
- 	margin-top: 15px;
+ 	margin-top: 20px;
  }
 
  /*Design for PLAYERS' NAMES INPUT lines*/
 
- .player-names-choice-container {
+ /*DESKTOP PLAYERS' NAMES INPUT*/
+
+ .player-names-choice-container {   /*Container for player name inputs*/
 	text-align: center;
 	float: none;
+  margin: 20px;
 }
 
 .form-control.player-name {
@@ -83,21 +50,44 @@ button.start {
  	height: 47px;
 	margin: 19px;
 	display: inline-block;
-	border-style: dashed;
-	border-width: 5px;
-	font-size: 18px;
+	border: solid 1px white;
+  color: white;
+  background-color: rgb(255, 255, 255, 0.2);
+  font-size: 18px;
 }
 
-.form-control.player-name.filled {
-	border-style: solid;
-	border-width: 5px;
+
+input::-webkit-input-placeholder {
+  color:  #980c10 !important;
 }
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:   #980c10 !important;
+   opacity:  1;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:   #980c10 !important;
+   opacity:  1;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:   #980c10 !important;
+}
+input::-ms-input-placeholder { /* Microsoft Edge */
+   color:   #980c10 !important;
+}
+
+input::placeholder { /* Most modern browsers support this now. */
+   color:   #980c10 !important;
+}
+
+input:focus {
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.75), 0 0 8px rgba(255, 255, 255, 0.75) !important;
+}
+
+/*MOBILE PLAYERS' NAMES INPUT*/
 
 .mobile .form-control.player-name {
 	margin: 6px;
-	border-width: 4px;
 	width: 216px;
-  height: 48px;
  	font-size: 16px;
- 	font-family: Verdana,Geneva,sans-serif;
 }
