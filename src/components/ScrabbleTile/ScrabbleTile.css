@@ -41,6 +41,7 @@ position: absolute;
 }
 
 /*Modified scrabble tiles css*/
+
 .scrabble-letter.double-letter {
 	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg");
 }
@@ -57,14 +58,12 @@ position: absolute;
 	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
 }
 
-.scrabble-letter.blank {
-	opacity: 0.77;
-}
 .scrabble-letter.blank .score {
-	font-size: 0.1px;
+	display: none;
 }
 
 /*MOBILE INPUT BOX tile css*/
+
 .mobile .scrabble-letter {
 	background-size: 41px 45px;
 	left: -10px;
@@ -85,8 +84,6 @@ position: absolute;
 	right: 1px;
 	font-size: 13px;
 }
-
-
 
 .table .scrabble-letter {
 	height: 32px;
@@ -109,7 +106,6 @@ position: absolute;
 	font-weight: normal;
 	cursor: default;
 }
-
 
 .table .score {
 	right: 1px;

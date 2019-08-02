@@ -39,15 +39,19 @@
 }
 
 /*Mobile INPUT BOX css*/
+.mobile .scrabble-tiles {
+  left: 5px;
+  bottom: 3px;
+}
 
 .mobile .scrabble-input-box {
 	border-radius: 5px;
-	width: 340px;
-	height: 50px;
+  width: 343px;
+  height: 57px;
 }
 
 .mobile .scrabble-input-box.large {
-	height: 101px;
+	height: 111px;
 }
 
 /*Blinker css*/
@@ -66,7 +70,7 @@
 	position: absolute;
 	background-color: white;
 	margin-left: 5px;
-		width: 3px;
+	width: 3px;
 	height: 60px;
 	animation: blinker 1s linear infinite;
 }
@@ -75,20 +79,17 @@
 	top: 68px;
 }
 
-/*Desktop blinker css*/
+/*Mobile blinker css*/
 
 .mobile .scrabble-tiles.blinker:last-child:after {
-	margin-left: -10px;
-	top: 2px;
 	width: 2px;
-	height: 40px;
+	height: 44px;
 }
 
 .mobile .scrabble-input-box.large .scrabble-tiles.blinker:last-child:after {
-	margin-left: -10px;
 	top: 54px;
 	width: 2px;
-	height: 40px;
+	height: 44px;
 }
 
 
@@ -116,6 +117,10 @@
 	text-shadow: none;
 }
 
+.modifier:hover {
+	z-index: 10;
+}
+
 .modifier.double-letter {
 	background-color: #9fcae0;
 }
@@ -135,7 +140,7 @@
 }
 .modifier.blank {
 	background-image: url("/background.jpg");
-	background-size: 68.9px 68.9px;
+	background-size: 69px 69px;
 
 }
 
@@ -164,9 +169,3 @@
 	position: relative;
 	top: 8px;
 }
-
-.modifier:hover {
-	box-shadow: 0 0 15px #de322a;
-	z-index: 10;
-}
-
