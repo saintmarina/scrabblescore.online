@@ -35,9 +35,8 @@ class GameSettings extends React.Component {
 
   render() {
     const { language, numberOfPlayers, playerNames } = this.state;
-    const { isMobile } = this.props;
+    console.log("game settings", window.innerWidth)
     return (
-
       <div className="container">
         <div className="row">
           <div className="col-sm-2 offset-sm-10">
@@ -50,12 +49,7 @@ class GameSettings extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <div className="logo">
-            {isMobile
-              ? <img src="mobile_logo.png" alt="logo" width="300"/> 
-              : <img src="big_logo.png" alt="logo" width="520"/>
-            }
-            </div>
+            <div className="logo"></div>
             <span className="description">
               <p>
                  Hello and welcome to Scrabble Score Online. This is an easy-to-use tool

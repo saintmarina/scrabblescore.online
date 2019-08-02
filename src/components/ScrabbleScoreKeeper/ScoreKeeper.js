@@ -69,6 +69,7 @@ class ScoreKeeper extends React.Component {
   render() {
     const { game, games } = this.state;
     const { playerNames, language, isMobile } = this.props;
+    console.log("score keeper", isMobile)
 
     const controlProps = {
       onSetGame: this.handleSetGame,
@@ -78,9 +79,11 @@ class ScoreKeeper extends React.Component {
       language,
     };
 
-    const toDisplayCallPlayerToAction = () => (isMobile
-      ? null
-      : <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile} />);
+    const toDisplayCallPlayerToAction = () => {
+      if (!isMobile) {
+        return  <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
+      }
+    };
 
     return (
       <div className="score-keeper">

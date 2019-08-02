@@ -93,6 +93,8 @@ class InGameControls extends React.Component {
       word: currentWord,
       language,
     };
+
+    console.log("InGameControls", window.innerWidth)
     return (
       <form>
         <ScrabbleInputBox {...props} />

@@ -14,6 +14,7 @@ class ScrabbleScoreKeeper extends React.Component {
       language: '',
       width: window.innerWidth,
     };
+    console.log("state width", this.state.width)
   }
 
   componentDidMount() {
@@ -30,7 +31,9 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   handleWindowSizeChange() {
+    console.log("resize width", window.innerWidth)
     this.setState({ width: window.innerWidth });
+
   }
 
   handleGameStart(playerNames, language) {
@@ -40,8 +43,9 @@ class ScrabbleScoreKeeper extends React.Component {
   renderGame() {
     const { playerNames, language, width } = this.state;
     const isMobile = width <= 815;
+    console.log("width", width, "isMobile", isMobile)
     return playerNames.length === 0
-      ? <GameSettings onGameStart={this.handleGameStart} isMobile={isMobile}/>
+      ? <GameSettings onGameStart={this.handleGameStart}/>
       : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile} />;
   }
 

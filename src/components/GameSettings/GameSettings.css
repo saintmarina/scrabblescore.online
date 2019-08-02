@@ -1,8 +1,19 @@
-.logo {
-  text-align: center;
+.mobile div.logo {
+  content: url("/mobile_logo.png");
+  margin-left: auto;
+    margin-right: auto;
+
   margin-bottom: 30px;
+  width: 300px;
 }
 
+div.logo {
+  content: url("/big_logo.png");
+   margin-left: auto;
+    margin-right: auto;
+  margin-bottom: 30px;
+  width: 520px;
+}
 .mobile .description {
   font-size: 16px;
 }
