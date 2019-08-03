@@ -12,14 +12,14 @@ class ScrabbleScoreKeeper extends React.Component {
     this.state = {
       playerNames: [],
       language: '',
-      width: window.innerWidth,
+      width: 10,
     };
-    console.log("state width", this.state.width)
   }
 
   componentDidMount() {
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
+    this.handleWindowSizeChange();
   }
 
   componentWillMount() {
@@ -31,19 +31,15 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   handleWindowSizeChange() {
-    console.log("resize width", window.innerWidth)
     this.setState({ width: window.innerWidth });
-
   }
 
   handleGameStart(playerNames, language) {
     this.setState({ playerNames, language });
   }
 
-  renderGame() {
-    const { playerNames, language, width } = this.state;
-    const isMobile = width <= 815;
-    console.log("width", width, "isMobile", isMobile)
+  renderGame(isMobile) {
+    const { playerNames, language } = this.state;
     return playerNames.length === 0
       ? <GameSettings onGameStart={this.handleGameStart}/>
       : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile} />;
@@ -54,21 +50,10 @@ class ScrabbleScoreKeeper extends React.Component {
     const isMobile = width <= 815;
     return (
       <div className={`main ${isMobile ? 'mobile' : 'desktop'}`}>
-        {this.renderGame()}
+        {this.renderGame(isMobile)}
       </div>
     );
   }
 }
 
 export default ScrabbleScoreKeeper;
-
-/* TODO:
-- use lint to correct the code format (use airbnb plug in)
-X research on how to organize files in src directory (make a css file per component).
-- use airbnb js style guide to refactor your code
-X change all this.state to ==>   const { width } = this.state;
-X fix blinker bug
-X css for every component
-
-
-*/

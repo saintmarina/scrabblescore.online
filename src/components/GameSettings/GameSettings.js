@@ -35,7 +35,6 @@ class GameSettings extends React.Component {
 
   render() {
     const { language, numberOfPlayers, playerNames } = this.state;
-    console.log("game settings", window.innerWidth)
     return (
       <div className="container">
         <div className="row">

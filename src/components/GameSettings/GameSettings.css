@@ -1,21 +1,15 @@
-.mobile div.logo {
-  content: url("/mobile_logo.png");
-  margin-left: auto;
-    margin-right: auto;
-
-  margin-bottom: 30px;
-  width: 300px;
-}
-
 div.logo {
-  content: url("/big_logo.png");
-   margin-left: auto;
-    margin-right: auto;
+  content: url("/logo.png");
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 30px;
   width: 520px;
 }
-.mobile .description {
-  font-size: 16px;
+
+@media screen and (max-width: 815px) {      /*Mobile version displays smaller logo*/
+  div.logo {
+    width: 300px;
+  }
 }
 
 /*Design for LANGUAGE SELECT*/
@@ -28,9 +22,6 @@ div.logo {
   position: relative;
 }
 
-.mobile .custom-select {
-  font-size: 16px;
-}
 
 /*Design for "START BUTTON"*/
 
@@ -42,12 +33,13 @@ div.logo {
   width: 180px;
  }
 
- .mobile button.start {
- 	margin-top: 20px;
- }
+@media screen and (max-width: 815px) {
+  button.start {
+    margin-top: 20px;
+  }
+}
 
  /*Design for PLAYERS' NAMES INPUT lines*/
-
  /*DESKTOP PLAYERS' NAMES INPUT*/
 
  .player-names-choice-container {   /*Container for player name inputs*/
@@ -96,8 +88,9 @@ input:focus {
 
 /*MOBILE PLAYERS' NAMES INPUT*/
 
-.mobile .form-control.player-name {
-	margin: 6px;
-	width: 216px;
- 	font-size: 16px;
+@media screen and (max-width: 815px) {
+  .form-control.player-name {
+    margin: 6px;
+    width: 216px;
+  }
 }
