@@ -5,10 +5,7 @@ import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
 class InGameControls extends React.Component {
-  static _scrollInputToTheMiddle() {
-    const elements = document.getElementsByClassName('add-word');
-    if (elements.length !== 0) elements[0].scrollIntoView({ block: 'center' });
-  }
+  
 
   constructor(props) {
     super(props);
@@ -18,12 +15,20 @@ class InGameControls extends React.Component {
     this.handleEndGame = this.handleEndGame.bind(this);
     this.handleAddWord = this.handleAddWord.bind(this);
     this.handleBingo = this.handleBingo.bind(this);
+    this._scrollInputToTheMiddle = this._scrollInputToTheMiddle.bind(this);
     this.input = React.createRef();
     this.state = {
       currentWord: emptyWord,
     };
   }
 
+  _scrollInputToTheMiddle() {
+    const { game } = this.props;
+    const elements = document.getElementsByClassName('add-word');
+    const wordsOfFirstPlayerTurn = game.playersTurns[0][0].words;
+    if (elements.length !== 0 && wordsOfFirstPlayerTurn.length !== 0) 
+      { elements[0].scrollIntoView({ block: 'center' }) }
+  }
 
   componentDidMount() {
     if (this.input.current) this.input.current.focus();
@@ -50,14 +55,14 @@ class InGameControls extends React.Component {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
-    this.constructor._scrollInputToTheMiddle();
+    this._scrollInputToTheMiddle();
   }
 
   handleAddWord() {
     const { currentWord } = this.state;
     const { game } = this.props;
     this.onSetGame(game.addWord(currentWord));
-    this.constructor._scrollInputToTheMiddle();
+    this._scrollInputToTheMiddle();
   }
 
   handleEndTurn(e) {
@@ -66,19 +71,19 @@ class InGameControls extends React.Component {
     e.preventDefault(); /* prevent form submission */
     game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this.onSetGame(game.endTurn());
-    this.constructor._scrollInputToTheMiddle();
+    this._scrollInputToTheMiddle();
   }
 
   handleBingo() {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
-    this.constructor._scrollInputToTheMiddle();
+    this._scrollInputToTheMiddle();
   }
 
   handleEndGame() {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
-    this.constructor._scrollInputToTheMiddle();
+    this._scrollInputToTheMiddle();
   }
 
   render() {
