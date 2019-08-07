@@ -8,6 +8,8 @@ margin-top: 25px;
 
 .title {
   text-align: center;
+  margin-top: -25px;
+  margin-bottom: 30px;
 }
 
 .winner {

@@ -13,8 +13,12 @@ div.logo {
 }
 
 /*Design for LANGUAGE SELECT*/
+.custom-select#language-select {    /*Untill internationalization is done, this element will remain hidden*/
+  display: none;
+}
 
 .custom-select {
+  display: none;
   padding-top: 4px;
   width: 130px;
   float: right;
