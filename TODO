@@ -40,11 +40,7 @@ X 18 1. reload should only be prompted when:
   b. you have played at least one move, and the game is not over
 X 19. figure out why the react snapshot adds bugs, and fix it
 X 20. logo size should be shown with css
-21. do event tracking with react-ga:
-  - when a word is added
-  - when the game is ended
-  - when the game has started
-  - when a turn is added
+X 21. do event tracking with react-ga
 X 22. change style for input box
 X 23. change style for nameinput
 X 24. change style of the github/facebook icons

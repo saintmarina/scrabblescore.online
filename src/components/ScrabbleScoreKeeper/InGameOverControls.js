@@ -1,6 +1,7 @@
 import React from 'react';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
+import ReactGA from 'react-ga';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
@@ -29,6 +30,10 @@ class InGameOverControls extends React.Component {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
+         ReactGA.event({
+      category: 'User',
+      action: 'Clicked Undo InGameOverControls'
+    });
   }
 
   handleChange(word) {
@@ -53,6 +58,11 @@ class InGameOverControls extends React.Component {
 
     onSetGame(game);
     this.resetCurrentWord();
+
+     ReactGA.event({
+      category: 'User',
+      action: 'Clicked Submit LeftOvers'
+    });
   }
 
   render() {

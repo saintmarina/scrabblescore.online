@@ -1,5 +1,6 @@
 import React from 'react';
 import './GameSettings.css';
+import ReactGA from 'react-ga';
 
 class GameSettings extends React.Component {
   constructor(props) {
@@ -32,6 +33,11 @@ class GameSettings extends React.Component {
     const { onGameStart } = this.props;
     e.preventDefault(); /* prevent form submission */
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked Start Game'
+    });
   }
 
   render() {

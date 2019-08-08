@@ -1,6 +1,7 @@
 import React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
 import ModifierTile from './ModifierTile';
+import ReactGA from 'react-ga';
 
 class WithModifierPopover extends React.Component {
   constructor(props) {
@@ -21,6 +22,11 @@ class WithModifierPopover extends React.Component {
     onChange(modifierValue);
     e.preventDefault();
     e.stopPropagation();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked on Modifier'
+    });
   }
 
   handleVisibilityChange(argument) {
