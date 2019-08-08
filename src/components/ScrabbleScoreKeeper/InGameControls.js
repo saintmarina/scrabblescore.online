@@ -56,6 +56,10 @@ class InGameControls extends React.Component {
     onUndo();
     this.resetCurrentWord();
     this._scrollInputToTheMiddle();
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked Undo'
+    });
   }
 
   handleAddWord() {
@@ -63,6 +67,11 @@ class InGameControls extends React.Component {
     const { game } = this.props;
     this.onSetGame(game.addWord(currentWord));
     this._scrollInputToTheMiddle();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked AddWord'
+    });
   }
 
   handleEndTurn(e) {
@@ -72,18 +81,33 @@ class InGameControls extends React.Component {
     game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this.onSetGame(game.endTurn());
     this._scrollInputToTheMiddle();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked EndTurn'
+    });
   }
 
   handleBingo() {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scrollInputToTheMiddle();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked Bingo'
+    });
   }
 
   handleEndGame() {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
     this._scrollInputToTheMiddle();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked End Game'
+    });
   }
 
   render() {
