@@ -35,27 +35,35 @@ X 16. install GA - google analytics
 X 17. make static page
 
 
-X 1. reload should only be prompted when:
+X 18 1. reload should only be prompted when:
   a. you are not in dev mode
   b. you have played at least one move, and the game is not over
-2. figure out why the react snapshot adds bugs, and fix it
-X 3. logo size should be shown with css
-4. do event tracking with react-ga:
+X 19. figure out why the react snapshot adds bugs, and fix it
+X 20. logo size should be shown with css
+21. do event tracking with react-ga:
   - when a word is added
   - when the game is ended
   - when the game has started
   - when a turn is added
-X 19. change style for input box
-X 20. change style for nameinput
-21. change style of the github/facebook icons
+X 22. change style for input box
+X 23. change style for nameinput
+X 24. change style of the github/facebook icons
+X 25. change style for modifier container desktop
+X 26. no scrolling for desktop
+27. take out dialogue "leave page"
+28.rewrite instructions How to use scrabblescore online 
+X 29. callPlayerToAction can be simplified
+X 30. browser back button go back to gamesettings, forward button go to scorekeeper, saving the players names
+
+
+
+
 24. write documentation
 25. put it on hackernews, reddit
-26. back --> undo
-
 
 20. i18n (internationalization - make website change languages) ~ 5 hours -- 3 day
 21. make input correctly move coursor when clicking on arrows
-22. callPlayerToAction can be simplified
+
 19. Something to detect crashes. When someone crashes the app receive an email or simillar.
 
 
