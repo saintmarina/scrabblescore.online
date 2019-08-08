@@ -26,25 +26,17 @@ class ScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
+    const { playerNames } = this.props;
     let stateObj = {
-      isStateUpdated: "true",
+      playerNames: playerNames
     };
-    window.history.pushState(stateObj, "score sheet", "/")
+    window.history.pushState(stateObj, "ScoreSheet", "/") /*Pushing to browser's history*/
+
     window.addEventListener('beforeunload', this.constructor.beforeUnload);
-    window.addEventListener('popstate', this.handleUndo);
-    
-    console.log('didmount')
   }
 
   componentWillUnmount() {
-    console.log('willunmount')
      window.removeEventListener('beforeunload', this.constructor.beforeUnload);  
-     window.removeEventListener('popstate', this.handleUndo);
-  }
-
-  componentDidUpdate(){
-    window.onpopstate = (e) => (this.handleUndo)
-    console.log("didupdate")
   }
 
   handleSetGame(currentGame) {
@@ -59,6 +51,7 @@ class ScoreKeeper extends React.Component {
     const previousGames = games.slice(0, -1);
     const game = games[games.length - 1];
     this.setState({ game, games: previousGames });
+
   }
 
   renderWinner() {

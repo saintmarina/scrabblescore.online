@@ -15,6 +15,7 @@ class GameSettings extends React.Component {
     };
   }
 
+
   handleChangeOfName(i, e) {
     let { playerNames } = this.state;
     playerNames = playerNames.slice();

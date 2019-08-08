@@ -9,6 +9,7 @@ class ScrabbleScoreKeeper extends React.Component {
     super(props);
     this.handleGameStart = this.handleGameStart.bind(this);
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
+    this.handlePopState = this.handlePopState.bind(this);
     this.state = {
       playerNames: [],
       language: '',
@@ -17,6 +18,13 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
+    const { playerNames } = this.state;
+    let stateObj = {
+      playerNames: playerNames
+    };
+    window.history.pushState(stateObj, "GameSettingsPage", "/") /*Pushing to browser's history*/
+    window.addEventListener('popstate', this.handlePopState); /*Listening to brower's back/front button click*/
+
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
@@ -28,6 +36,12 @@ class ScrabbleScoreKeeper extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener('popstate', this.handlePopState);
+  }
+
+  handlePopState(event) {
+   const stateObj = event.state;
+   this.setState({playerNames:stateObj.playerNames})
   }
 
   handleWindowSizeChange() {
