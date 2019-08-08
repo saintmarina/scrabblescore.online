@@ -76,6 +76,7 @@ class ScoreKeeper extends React.Component {
       onSetGame: this.handleSetGame,
       onUndo: this.handleUndo,
       undoDisabled: games.length === 0,
+      isMobile,
       game,
       language,
     };

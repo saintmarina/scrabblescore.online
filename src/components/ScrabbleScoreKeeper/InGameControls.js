@@ -23,10 +23,10 @@ class InGameControls extends React.Component {
   }
 
   _scrollInputToTheMiddle() {
-    const { game } = this.props;
+    const { game, isMobile } = this.props;
     const elements = document.getElementsByClassName('add-word');
     const wordsOfFirstPlayerTurn = game.playersTurns[0][0].words;
-    if (elements.length !== 0 && wordsOfFirstPlayerTurn.length !== 0) 
+    if (isMobile && elements.length !== 0 && wordsOfFirstPlayerTurn.length !== 0) 
       { elements[0].scrollIntoView({ block: 'center' }) }
   }
 
