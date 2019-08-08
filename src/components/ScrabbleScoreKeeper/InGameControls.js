@@ -1,6 +1,7 @@
 import React from 'react';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
+import ReactGA from 'react-ga';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
