@@ -26,12 +26,6 @@ class ScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
-    const { playerNames } = this.props;
-    let stateObj = {
-      playerNames: playerNames
-    };
-    window.history.pushState(stateObj, "ScoreSheet", "/") /*Pushing to browser's history*/
-
     window.addEventListener('beforeunload', this.constructor.beforeUnload);
   }
 

@@ -19,15 +19,14 @@ class ScrabbleScoreKeeper extends React.Component {
 
   componentDidMount() {
     const { playerNames } = this.state;
-    let stateObj = {
-      playerNames: playerNames
-    };
-    window.history.pushState(stateObj, "GameSettingsPage", "/") /*Pushing to browser's history*/
+    window.history.pushState({ playerNames: playerNames }, null) /*Pushing to browser's history*/
     window.addEventListener('popstate', this.handlePopState); /*Listening to brower's back/front button click*/
 
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
+    console.log('env', process.env)
+
   }
 
   componentWillMount() {
@@ -49,6 +48,7 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   handleGameStart(playerNames, language) {
+    window.history.pushState({ playerNames: playerNames }, null) /*Pushing to browser's history*/
     this.setState({ playerNames, language });
   }
 

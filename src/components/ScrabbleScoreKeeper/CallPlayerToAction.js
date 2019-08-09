@@ -4,13 +4,14 @@ function CallPlayerToAction(props) {
   const { isMobile, game, playerNames } = props;
   
   function callPlayerToAction() {
-    const firstPart = isMobile
-      ? 'Submit '
-      : `${playerNames[game.currentPlayerIndex]}, submit `
-    const secondPart = !game.isGameOver()
-        ? 'a word or end turn'
-        : 'your leftovers'
-    return firstPart + secondPart
+    const playerName = playerNames[game.currentPlayerIndex];
+    const msgs = {
+      'mobile-ingame':    `Submit a word or end turn`,
+      'mobile-gameover':  `Submit your leftovers`,
+      'desktop-ingame':   `${playerName}, submit a word or end turn`,
+      'desktop-gameover': `${playerName}, submit your leftovers`,
+    };
+    return msgs[`${isMobile ? 'mobile' : 'desktop'}-${game.isGameOver() ? 'gameover':'ingame'}`];
   }
 
   return (
