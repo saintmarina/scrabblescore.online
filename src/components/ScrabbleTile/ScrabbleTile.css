@@ -1,9 +1,10 @@
 /*DESKTOP INPUT BOX tile css*/
 
 .scrabble-letter {
-	background-image: url("/background.jpg");
+	background-image: url("/tile.jpg");
 	border: 5px black;
 	background-size: 55.7px;
+	border-radius: 2px;
 	display: inline-block;
   width: 56px;
   height: 60px;
@@ -20,14 +21,14 @@
 }
 
 .letter {
-right: 3px;
-width: 100%;
-top: 5px;
-display: block;
-text-align: center;
-line-height: normal;
-font-size: 38px;
-position: absolute;
+	right: 3px;
+	width: 100%;
+	top: 5px;
+	display: block;
+	text-align: center;
+	line-height: normal;
+	font-size: 38px;
+	position: absolute;
 }
 
 .score {
@@ -43,19 +44,19 @@ position: absolute;
 /*Modified scrabble tiles css*/
 
 .scrabble-letter.double-letter {
-	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/background.jpg");
+	background-image: linear-gradient(rgba(159, 202, 224, 0.1), rgba(159, 202, 224, 1)), url("/tile.jpg");
 }
 
 .scrabble-letter.double-word {
-	background-image: linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/background.jpg");
+	background-image: linear-gradient(rgba(237,164,152, 0.1), rgba(237,164,152, 1)), url("/tile.jpg");
 }
 
 .scrabble-letter.triple-letter {
-	background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/background.jpg");
+	background-image:  linear-gradient(rgba(24,163,225, 0.1), rgba(24,163,225, 1)), url("/tile.jpg");
 }
 
 .scrabble-letter.triple-word {
-	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/background.jpg");
+	background-image: linear-gradient(rgba(247,77,19, 0.1), rgba(247,77,19, 1)), url("/tile.jpg");
 }
 
 .scrabble-letter.blank .score {
