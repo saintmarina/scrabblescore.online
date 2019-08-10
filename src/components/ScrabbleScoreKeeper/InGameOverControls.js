@@ -81,11 +81,13 @@ class InGameOverControls extends React.Component {
                 language={language}
               />
               <div className="buttons">
-                <div className="in-game-controls">
-                  <div className="undo-and-end-game-btns-container">
+                <div className="row">
+                  <div className="col">
                     <button onClick={this.handleLeftOvers} type="submit" className="btn pass-endturn-button">{submitButtonText}</button>
                   </div>
-                  <div className="submit-btn-container">
+                </div>
+                <div className="row">
+                  <div className="col">
                     <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
                   </div>
                 </div>
@@ -94,8 +96,8 @@ class InGameOverControls extends React.Component {
           )
           : (
             <div className="buttons">
-              <div className="in-game-controls">
-                <div className="undo-and-end-game-btns-container">
+              <div className="row">
+                <div className="col">
                   <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
                 </div>
               </div>

@@ -21,86 +21,70 @@ margin-top: 25px;
 /*DESKTOP buttons design*/
 
 .buttons {                  /*First wrap container for button in InGame(Over)Control components*/
-  text-align: center;
+  margin: 0 auto;
+  width: 380px;
 }
 
-.in-game-controls {         /*Second wrap container for button in InGame(Over)Control components*/
-  display: inline-block;
-  width: 57%;
+/* The following two rules override bootstrap's row/col spacing */
+.buttons .row {
+  margin-left: -4px;
+  margin-right: -4px;
+  margin-bottom: 8px;
 }
+
+.buttons .col {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+/* Button style */
 
 .btn {
-  height: 46px;
-  width: 180px;
-	border: solid 1px #980c10;
+  width: 100%;
+  border: solid 1px #980c10;
   color: white;
-	margin: 4px;
-	cursor: pointer;
   font-family: "Times New Roman",Times,serif;
   font-size: 18px;
-  line-height: 1.7;
+  line-height: 2.0rem; /* This aligns the bingo fake button text */
   background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
   text-shadow: 1px 1px rgba(0,0,0,0.8);
 }
 
 .btn:hover {
   color: white;
+  box-shadow: 0 0 6px rgba(10,10,10,0.25);
 }
 
-.add-word:hover, .end-game:hover, .undo:hover  {
-cursor: default;
+.btn:disabled {
+  box-shadow: none; /* No hover effet if button disabled */
 }
 
 /*Bingo button styles*/
 
-.add-word-and-bingo-btns-container input {
+.buttons input[type=checkbox] {
   display: none;
 }
 
-div.bingo-toggle {
-  padding: 1px;
-}
-
-/*Pass/End turn button styles*/
-
-.pass-endturn-button {
-  width: 369px;
+label.btn {
+  margin-bottom: 0;
 }
 
 /*MOBILE buttons design*/
 
-.mobile .in-game-controls {     /*Second wrap container for button in InGame(Over)Control components*/
-  width: 100%;  
+.mobile .buttons {
+  width: 340px;
 }
 
 .mobile .btn {
   font-size: 16px;
-  width: 149px;
-  height: 46px;
-}
-
-/*Pass/End turn button styles*/
-
-.mobile .pass-endturn-button {
-	width: 308px;
 }
 
 /*CallPlayerToAction style*/
 
 .call-player-to-action {
-  font-family: "Times New Roman", Times, serif;
-  margin-bottom: 15px;
-}
-
-.desktop .call-player-to-action {
   margin-bottom: 15px;
 }
 
 .mobile .call-player-to-action {
   margin-top: 10px;
 }
-
-
-
-
- 
