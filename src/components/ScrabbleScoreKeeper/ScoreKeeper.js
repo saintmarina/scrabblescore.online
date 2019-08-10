@@ -26,15 +26,15 @@ class ScoreKeeper extends React.Component {
   }
 
   componentWillUnmount() {
-     window.removeEventListener('beforeunload', this.beforeUnload);  
+    window.removeEventListener('beforeunload', this.beforeUnload);  
   }
 
-   beforeUnload(e) {
+  beforeUnload(e) {
     const { games, game } = this.state;
-    if (process.env.NODE_ENV !== 'development' && games.length !== 0 && !game.isGameOver())
-      { e.preventDefault();
-        e.returnValue = '';
-      }
+    if (process.env.NODE_ENV !== 'development' && games.length !== 0 && !game.isGameOver()) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
   }
 
   handleSetGame(currentGame) {
