@@ -3,6 +3,10 @@ import './GameSettings.css';
 import ReactGA from 'react-ga';
 
 class GameSettings extends React.Component {
+  static isStatic() {
+    return navigator.userAgent === 'ReactSnap';
+  }
+
   constructor(props) {
     super(props);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
@@ -13,9 +17,13 @@ class GameSettings extends React.Component {
       numberOfPlayers: 4,
       playerNames: ['', ''],
       language: 'en',
+      isStartButtonDisabled: true,
     };
   }
 
+  componentDidMount() {
+    this.setState({isStartButtonDisabled: this.constructor.isStatic()});
+  }
 
   handleChangeOfName(i, e) {
     let { playerNames } = this.state;
@@ -41,7 +49,8 @@ class GameSettings extends React.Component {
   }
 
   render() {
-    const { language, numberOfPlayers, playerNames } = this.state;
+    const { language, numberOfPlayers, playerNames, isStartButtonDisabled } = this.state;
+    console.log('isStatic', this.constructor.isStatic())
     return (
       <div className="container">
         <div className="row">
@@ -89,7 +98,7 @@ class GameSettings extends React.Component {
             </div>
           </div>
           <div className="start-btn-container">
-            <button className="btn start" type="button" onClick={this.handleGameStart}>START</button>
+            <button className="btn start" type="button" onClick={this.handleGameStart} disabled={isStartButtonDisabled}>START</button>
           </div>
         </form>
       </div>
