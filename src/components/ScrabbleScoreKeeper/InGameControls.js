@@ -1,7 +1,10 @@
 import React from 'react';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
-import ReactGA from 'react-ga';
+
+const amplitude = require('amplitude-js/amplitude')
+amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
+
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
@@ -57,10 +60,9 @@ class InGameControls extends React.Component {
     onUndo();
     this.resetCurrentWord();
     this._scrollInputToTheMiddle();
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked Undo'
-    });
+
+
+    amplitude.getInstance().logEvent('UNDO');
   }
 
   handleAddWord() {
@@ -69,10 +71,7 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scrollInputToTheMiddle();
 
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked AddWord'
-    });
+    amplitude.getInstance().logEvent('ADD WORD', {'word': JSON.parse(JSON.stringify(currentWord))});
   }
 
   handleEndTurn(e) {
@@ -83,10 +82,10 @@ class InGameControls extends React.Component {
     this.onSetGame(game.endTurn());
     this._scrollInputToTheMiddle();
 
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked EndTurn'
-    });
+    const eventValue = currentWord.value.length !== 0
+                        ? ['END TURN', {'word': JSON.stringify(currentWord)}]
+                        : ['END TURN'];
+    amplitude.getInstance().logEvent(...eventValue);
   }
 
   handleBingo() {
@@ -94,10 +93,7 @@ class InGameControls extends React.Component {
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scrollInputToTheMiddle();
 
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked Bingo'
-    });
+    amplitude.getInstance().logEvent('BINGO');
   }
 
   handleEndGame() {
@@ -105,10 +101,8 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scrollInputToTheMiddle();
 
-    ReactGA.event({
-      category: 'User',
-      action: 'Clicked End Game'
-    });
+    amplitude.getInstance().logEvent('END GAME', {'numOfTurns': game.playersTurns.length.toString()});
+
   }
 
   render() {
