@@ -1,6 +1,6 @@
 import React from 'react';
 import './GameSettings.css';
-import ReactGA from 'react-ga';
+const amplitude = require('amplitude-js/amplitude')
 
 class GameSettings extends React.Component {
   static isStatic() {
@@ -50,7 +50,6 @@ class GameSettings extends React.Component {
 
   render() {
     const { language, numberOfPlayers, playerNames, isStartButtonDisabled } = this.state;
-    console.log('isStatic', this.constructor.isStatic())
     return (
       <div className="container">
         <div className="row">

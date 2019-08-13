@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "amplitude": "^4.0.0",
     "amplitude-js": "^5.2.2",
     "jest-enzyme": "^7.1.0",
     "nightmare": "^3.0.2",
