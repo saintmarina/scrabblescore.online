@@ -1,6 +1,6 @@
 import React from 'react';
 import './GameSettings.css';
-const amplitude = require('amplitude-js/amplitude')
+import ReactGA from 'react-ga';
 
 class GameSettings extends React.Component {
   static isStatic() {

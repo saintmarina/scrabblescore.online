@@ -3,10 +3,6 @@ import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import ReactGA from 'react-ga';
 
-const amplitude = require('amplitude-js/amplitude')
-amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
-
-
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
 class InGameControls extends React.Component {
@@ -61,9 +57,10 @@ class InGameControls extends React.Component {
     onUndo();
     this.resetCurrentWord();
     this._scrollInputToTheMiddle();
-
-
-    amplitude.getInstance().logEvent('UNDO');
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked Undo'
+    });
   }
 
   handleAddWord() {
@@ -72,7 +69,10 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('ADD WORD', {'word': JSON.parse(JSON.stringify(currentWord))});
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked AddWord'
+    });
   }
 
   handleEndTurn(e) {
@@ -83,10 +83,10 @@ class InGameControls extends React.Component {
     this.onSetGame(game.endTurn());
     this._scrollInputToTheMiddle();
 
-    const eventValue = currentWord.value.length !== 0
-                        ? ['END TURN', {'word': JSON.stringify(currentWord)}]
-                        : ['END TURN'];
-    amplitude.getInstance().logEvent(...eventValue);
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked EndTurn'
+    });
   }
 
   handleBingo() {
@@ -94,7 +94,10 @@ class InGameControls extends React.Component {
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('BINGO');
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked Bingo'
+    });
   }
 
   handleEndGame() {
@@ -102,8 +105,10 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('END GAME', {'numOfTurns': game.playersTurns.length.toString()});
-
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked End Game'
+    });
   }
 
   render() {
