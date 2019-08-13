@@ -43,18 +43,16 @@ X 25. change style for modifier container desktop
 X 26. no scrolling for desktop
 X 27. callPlayerToAction can be simplified
 X 28. browser back button go back to gamesettings, forward button go to scorekeeper, saving the players names
-
-
-
-
-X 29. reload should only be prompted when:
+X 29. reload shqould only be prompted when:
       X a. you are not in dev mode
       X b. you have played at least one move, and the game is not over
-X 27. image preload/ was changed to prefetch
-29. watch events with amplitude
-22. modifier tiles styles, avoid gradient
-27. make notes for the history pushing, preloading images
-28.rewrite instructions How to use scrabblescore online 
+X 30. image preload/ was changed to prefetch
+X 31. make notes for the history pushing, preloading images
+X 32.rewrite instructions How to use scrabblescore online 
+
+? 32. watch events with amplitude
+
+
 
 
 

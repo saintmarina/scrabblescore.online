@@ -18,9 +18,16 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   componentDidMount() {
+    /* - pushState() allows to modifiy browser history entries;
+       - popstate listens for changes in browser history,like back/front button click;
+       - when history is changed, this.handlePopState function is being fired;
+       - this.handlePopState changes state for ScrabbleScoreKeeper component;
+       - ScrabbleScoreKeeper component rerenders, displaying correct state;
+    */
+
     const { playerNames } = this.state;
-    window.history.pushState({ playerNames: playerNames }, null) /*Pushing to browser's history*/
-    window.addEventListener('popstate', this.handlePopState); /*Listening to brower's back/front button click*/
+    window.history.pushState({ playerNames: playerNames }, null) 
+    window.addEventListener('popstate', this.handlePopState); 
 
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
@@ -46,7 +53,7 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   handleGameStart(playerNames, language) {
-    window.history.pushState({ playerNames: playerNames }, null) /*Pushing to browser's history*/
+    window.history.pushState({ playerNames: playerNames }, null)
     this.setState({ playerNames, language });
   }
 
