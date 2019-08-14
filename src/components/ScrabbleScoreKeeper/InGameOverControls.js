@@ -105,17 +105,17 @@ class InGameOverControls extends React.Component {
         <h3>How to use Scrabble Score Online:</h3>
         <ul>
           <li>
-              Unplayed Letters: When the game ends, each player&apos;s score is reduced by the sum
+              When the game ends, each player&apos;s score is reduced by the sum
               of his or her unplayed letters. In addition, if a player has used all of his
               or her letters, the sum of the other players&apos; unplayed letters is added to
               that player&apos;s score.
           </li>
           <li>
-            Click SUBMIT NO LEFTOVERS if you finished your game without any tiles on your rack.
+            If you finished your game without any tiles on your rack, press SUBMIT NO LEFTOVERS.
           </li>
           <li>
-            Click SUBMIT LEFTOVERS to submit tiles that are left on your rack when you&#32;
-            finished the game.
+            To submit tiles that are left on your rack when you&#32;
+            finished the game, type all the tiles in the input box and press SUBMIT LEFTOVERS.
           </li>
           <li>If you made a mistake, use unlimited UNDO.</li>
         </ul>

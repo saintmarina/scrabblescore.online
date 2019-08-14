@@ -148,14 +148,25 @@ class InGameControls extends React.Component {
         <h3>How to use Scrabble Score Online:</h3>
         <ul>
           <li>
-To add Premium Square scores to your word, click on a tile that you typed in an input box.
-          Choose desired option.
+            If you are finished with your move, press END TURN to pass turn to the next player.
+            Note: if there is something typed in the input box, it will be submitted to your move when the END TURN is pressed.
           </li>
-          <li>Click ADD WORD to add word to your turn.</li>
-          <li>Click END TURN, to finish your turn.</li>
-          <li>Click BINGO if you played seven tiles on a turn.</li>
+          <li>
+            If you have formed more than one word, type your first word in the input box, press ADD WORD.
+            The word will be added to your move, but it still will be your turn and you can continue adding words.
+            Note: you can add any number of words.
+          </li>
+          <li>
+            If you played seven tiles on a turn, press BINGO.
+            Note: This will add 50 points to your move.
+          </li>
+          <li>
+            If some of your tiles fell on Premium Squares (e.g. double-word square), type the word in the input box, 
+            click on the tile that is located on a Premium Square. Choose a desired option from the poped window.
+            Note: if you need to use BLANK tile, follow the same instruction. Choose BLANK from the poped window.
+          </li>
           <li>If you made a mistake, use unlimited UNDO.</li>
-          <li>Click END GAME when you finished your game.</li>
+          <li>When you finished your game, press END GAME.</li>
         </ul>
       </form>
     );
