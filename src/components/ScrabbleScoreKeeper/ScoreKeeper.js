@@ -86,10 +86,14 @@ class ScoreKeeper extends React.Component {
       }
     };
 
+     function back() {
+      window.history.back()
+    }
+
     return (
       <div className="score-keeper">
         <div className="container">
-          <img id="logo" src="logo.png" alt="Scrabble score logo" width="212px" />
+          <img id="logo" role="button" src="logo.png" alt="Scrabble score logo" width="212px" onClick={() => back()}/>
           <h1 className="title">Scrabble Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />

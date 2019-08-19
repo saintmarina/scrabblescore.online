@@ -3,7 +3,7 @@ import React from 'react';
 import GameSettings from '../GameSettings/GameSettings';
 import ScoreKeeper from './ScoreKeeper';
 import './ScrabbleScoreKeeper.css';
-import amplitude from 'amplitude-js';
+import { logEvent } from '../../logic/util';
 
 
 class ScrabbleScoreKeeper extends React.Component {
@@ -55,7 +55,7 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 
   handleGameStart(playerNames, language) {
-    amplitude.getInstance().logEvent('start-game', {'player-names': playerNames, 'language': language});
+    logEvent('start-game', {'player-names': playerNames, 'language': language});
     window.history.pushState({ playerNames: playerNames }, null)
     this.setState({ playerNames, language });
   }

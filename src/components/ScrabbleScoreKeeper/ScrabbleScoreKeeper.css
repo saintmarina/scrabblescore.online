@@ -1,5 +1,7 @@
 .score-keeper #logo {
+  position: relative;
   margin-top: -118px;
+  cursor: pointer;
 }
 
 h3 {

@@ -56,7 +56,7 @@ X 33. Put the logEvent()/logEventInit() code in util.js, and only log when in pr
  X  - If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
   X - Refactor the code that test if is react-snap with a function from util.js
 X 34. disable the player name input box if the app has not loaded yet.
-35. Take out ReactGA events
+X 35. Take out ReactGA events
 36. logo should be clickable to go back to home page
 
 37. instructions:
