@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Scrabble Score Online is an easy-to-use tool that replaces pen-and-paper for keeping track of Scrabble Scores.
 
 ## Available Scripts
 
