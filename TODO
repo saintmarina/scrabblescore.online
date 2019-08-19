@@ -52,6 +52,25 @@ X 32.rewrite instructions How to use scrabblescore online
 
 ? 33. watch events with amplitude
 
+Put the logEvent()/logEventInit() code in util.js, and only log when in production and not react-snap.
+If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
+Refactor the code that test if is react-snap with a function from util.js
+disable the player name input box if the app has not loaded yet.
+Take out ReactGA events
+logo should be clickable to go back to home page
+
+instructions:
+  put game over instructions in the same how to block of text. Instruction if -> when.
+  Reiterate that you are replacing the pen and paper scoring.
+  move -> turn
+  Each turn can have three possiblities:
+     - one word to submit: type the word in the inputbox. If one of the letter in your word is on a premium square (e.g., double-word), click on the letter tile and select the corresponding premium square. Then press end-turn.
+     - More than one word to submit: Same as previously, but use the ADD WORD button.
+     - no words to submit (pass): press the PASS button
+
+
+
+you may contact me via email. -> you may contact the developer, Anna Maniuk, via email.
 
 
 

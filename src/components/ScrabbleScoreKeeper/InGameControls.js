@@ -1,16 +1,17 @@
 import React from 'react';
 import { scrabbleScore } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
-
-const amplitude = require('amplitude-js/amplitude')
-amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
-
+import amplitude from 'amplitude-js';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
 
-class InGameControls extends React.Component {
-  
+/*
+const logAmplitude = process.env.NODE_ENV === 'production'
+                      ? amplitude.getInstance().logEvent
+                      : function() {}
+*/
 
+class InGameControls extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -61,8 +62,7 @@ class InGameControls extends React.Component {
     this.resetCurrentWord();
     this._scrollInputToTheMiddle();
 
-
-    amplitude.getInstance().logEvent('UNDO');
+    amplitude.getInstance().logEvent('undo');
   }
 
   handleAddWord() {
@@ -71,7 +71,7 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('ADD WORD', {'word': JSON.parse(JSON.stringify(currentWord))});
+    amplitude.getInstance().logEvent('add-word', {'word': currentWord});
   }
 
   handleEndTurn(e) {
@@ -82,10 +82,10 @@ class InGameControls extends React.Component {
     this.onSetGame(game.endTurn());
     this._scrollInputToTheMiddle();
 
-    const eventValue = currentWord.value.length !== 0
-                        ? ['END TURN', {'word': JSON.stringify(currentWord)}]
-                        : ['END TURN'];
-    amplitude.getInstance().logEvent(...eventValue);
+    const data = currentWord.value.length !== 0
+                        ? {'word': JSON.stringify(currentWord)}
+                        : {};
+    amplitude.getInstance().logEvent('end-turn', data);
   }
 
   handleBingo() {
@@ -93,7 +93,7 @@ class InGameControls extends React.Component {
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('BINGO');
+    amplitude.getInstance().logEvent('toggle-bingo');
   }
 
   handleEndGame() {
@@ -101,8 +101,8 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('END GAME', {'numOfTurns': game.playersTurns.length.toString()});
-
+    amplitude.getInstance().logEvent('end-game', {'num-of-turns': game.playersTurns.length,
+                                                  'game-turns': game.playersTurns.map((turns, i) => ({turns: turns}))});
   }
 
   render() {

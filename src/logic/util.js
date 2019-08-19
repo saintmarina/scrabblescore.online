@@ -44,4 +44,16 @@ export function scrabbleScore(word, modifiers, language) {
   return result;
 }
 
+/*
+export function logEventInit()
+{
+ ...
+}
+
+export function logEvent(eventName, eventData)
+{
+  ...
+}
+*/
+
 export default null;

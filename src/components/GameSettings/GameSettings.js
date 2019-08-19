@@ -1,6 +1,5 @@
 import React from 'react';
 import './GameSettings.css';
-const amplitude = require('amplitude-js/amplitude')
 
 class GameSettings extends React.Component {
   static isStatic() {
@@ -41,9 +40,6 @@ class GameSettings extends React.Component {
     const { onGameStart } = this.props;
     e.preventDefault(); /* prevent form submission */
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
-
-    amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
-    amplitude.getInstance().logEvent('START GAME');
   }
 
   render() {
