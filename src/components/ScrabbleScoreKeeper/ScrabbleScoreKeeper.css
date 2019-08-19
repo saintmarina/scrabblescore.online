@@ -43,7 +43,6 @@ margin-top: 25px;
   width: 100%;
   border: solid 1px #980c10;
   color: white;
-  font-family: "Times New Roman",Times,serif;
   font-size: 18px;
   line-height: 2.0rem; /* This aligns the bingo fake button text */
   background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
