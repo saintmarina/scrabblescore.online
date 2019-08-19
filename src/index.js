@@ -3,9 +3,11 @@ import { hydrate, render } from "react-dom";
 import './index.css';
 import ScrabbleScoreKeeper from './components/ScrabbleScoreKeeper/ScrabbleScoreKeeper';
 import * as serviceWorker from './serviceWorker';
-import amplitude from 'amplitude-js';
+import { logEventInit } from './logic/util';
 
-amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
+
+/*This initializes amplitude event tracking instance*/
+logEventInit()
 
 const rootElement = document.getElementsByClassName('content')[0];
 if (rootElement.hasChildNodes()) {

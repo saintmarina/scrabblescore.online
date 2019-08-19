@@ -1,3 +1,4 @@
+import amplitude from 'amplitude-js';
 import { scoreListsMap } from './scoreLists';
 
 export function resizeArray(array, desiredLength, defaultValue) {
@@ -44,16 +45,29 @@ export function scrabbleScore(word, modifiers, language) {
   return result;
 }
 
-/*
-export function logEventInit()
-{
- ...
+export function logEventInit() {
+  amplitude.getInstance().init('908142045794995ec39e6025a04bfdb4');
 }
 
-export function logEvent(eventName, eventData)
-{
-  ...
+export function isStaticBuild() {
+    return navigator.userAgent === 'ReactSnap';
+  }
+
+export function isInProduction() {
+  return process.env.NODE_ENV === 'production';
 }
-*/
+
+export function logEvent(eventName, eventData) {
+  if (isStaticBuild() || !isInProduction()) {
+    return;
+  }
+
+  try {
+    amplitude.getInstance().logEvent(eventName, eventData)
+  }
+  catch(error) {
+    console.log(`Something went wrong when logging an event. ${error}.`)
+  }
+}
 
 export default null;

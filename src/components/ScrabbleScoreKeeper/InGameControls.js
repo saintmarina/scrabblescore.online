@@ -1,15 +1,8 @@
 import React from 'react';
-import { scrabbleScore } from '../../logic/util';
+import { scrabbleScore, logEvent } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
-import amplitude from 'amplitude-js';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
-
-/*
-const logAmplitude = process.env.NODE_ENV === 'production'
-                      ? amplitude.getInstance().logEvent
-                      : function() {}
-*/
 
 class InGameControls extends React.Component {
   constructor(props) {
@@ -62,7 +55,7 @@ class InGameControls extends React.Component {
     this.resetCurrentWord();
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('undo');
+    logEvent('undo');
   }
 
   handleAddWord() {
@@ -71,7 +64,7 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('add-word', {'word': currentWord});
+    logEvent('add-word', {'word': currentWord});
   }
 
   handleEndTurn(e) {
@@ -83,9 +76,9 @@ class InGameControls extends React.Component {
     this._scrollInputToTheMiddle();
 
     const data = currentWord.value.length !== 0
-                        ? {'word': JSON.stringify(currentWord)}
+                        ? {'word': currentWord}
                         : {};
-    amplitude.getInstance().logEvent('end-turn', data);
+    logEvent('end-turn', data);
   }
 
   handleBingo() {
@@ -93,7 +86,7 @@ class InGameControls extends React.Component {
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('toggle-bingo');
+    logEvent('toggle-bingo');
   }
 
   handleEndGame() {
@@ -101,8 +94,8 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scrollInputToTheMiddle();
 
-    amplitude.getInstance().logEvent('end-game', {'num-of-turns': game.playersTurns.length,
-                                                  'game-turns': game.playersTurns.map((turns, i) => ({turns: turns}))});
+    logEvent('end-game', {'num-of-turns': game.playersTurns.length,
+                          'game-turns': game.playersTurns.map((turns, i) => ({turns: turns}))});
   }
 
   render() {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { resizeArray, scrabbleScore, isLetterAllowed } from '../../logic/util';
+import { resizeArray, scrabbleScore, isLetterAllowed, logEvent } from '../../logic/util';
 import WithModifierPopover from './WithModifierPopover';
-
 import ScrabbleTile from '../ScrabbleTile/ScrabbleTile';
 import './ScrabbleInputBox.css';
 
@@ -36,6 +35,8 @@ class ScrabbleInputBox extends React.Component {
     const modifiers = word.modifiers.slice();
     modifiers[letterIndex] = modifier;
     onChange({ value: word.value, modifiers });
+
+    logEvent('modifier-added', {value: word.value, modifiers});
   }
 
   handleTileClick() {

@@ -1,11 +1,9 @@
 import React from 'react';
 import './GameSettings.css';
+import { logEvent, isStaticBuild } from '../../logic/util';
+
 
 class GameSettings extends React.Component {
-  static isStatic() {
-    return navigator.userAgent === 'ReactSnap';
-  }
-
   constructor(props) {
     super(props);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
@@ -21,7 +19,7 @@ class GameSettings extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({isStartButtonDisabled: this.constructor.isStatic()});
+    this.setState({isStartButtonDisabled: isStaticBuild()});
   }
 
   handleChangeOfName(i, e) {
@@ -40,6 +38,8 @@ class GameSettings extends React.Component {
     const { onGameStart } = this.props;
     e.preventDefault(); /* prevent form submission */
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
+
+    logEvent('start-game', {playerNames: playerNames, language: language});    
   }
 
   render() {

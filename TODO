@@ -50,16 +50,16 @@ X 30. image preload/ was changed to prefetch
 X 31. make notes for the history pushing, preloading images
 X 32.rewrite instructions How to use scrabblescore online 
 
-? 33. watch events with amplitude
 
-Put the logEvent()/logEventInit() code in util.js, and only log when in production and not react-snap.
-If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
-Refactor the code that test if is react-snap with a function from util.js
-disable the player name input box if the app has not loaded yet.
-Take out ReactGA events
-logo should be clickable to go back to home page
 
-instructions:
+X 33. Put the logEvent()/logEventInit() code in util.js, and only log when in production and not react-snap.
+ X  - If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
+  X - Refactor the code that test if is react-snap with a function from util.js
+34. disable the player name input box if the app has not loaded yet.
+35. Take out ReactGA events
+36. logo should be clickable to go back to home page
+
+37. instructions:
   put game over instructions in the same how to block of text. Instruction if -> when.
   Reiterate that you are replacing the pen and paper scoring.
   move -> turn
@@ -67,14 +67,21 @@ instructions:
      - one word to submit: type the word in the inputbox. If one of the letter in your word is on a premium square (e.g., double-word), click on the letter tile and select the corresponding premium square. Then press end-turn.
      - More than one word to submit: Same as previously, but use the ADD WORD button.
      - no words to submit (pass): press the PASS button
+  Dont use "Note: "
+Style bingo toggle
 
+38. you may contact me via email. -> you may contact the developer, Anna Maniuk, via email.
 
+39. Mobile: scroll up when first load game 
+Mobile: take out the Scrable Score Sheet title.
+40. Preload the image doing some hacks.
 
-you may contact me via email. -> you may contact the developer, Anna Maniuk, via email.
-
-
-
-
+41. Set body to have min width of 400px;
+43. InGameControl: there's a isMobile prop that seems useless.
+44. Put description that google can pick up
+do some keyword research, and figure out a way to put it in your desc.
+45. facebook link should not be face
+46. linting
 
 
 

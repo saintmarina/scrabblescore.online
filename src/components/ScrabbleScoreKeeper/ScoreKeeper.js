@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isInProduction } from '../../logic/util';
 import Game from '../../logic/game';
 import ScoreGrid from '../ScoreGrid/ScoreGrid';
 import ScoreGridMobile from '../ScoreGrid/ScoreGridMobile';
@@ -31,7 +32,7 @@ class ScoreKeeper extends React.Component {
 
   beforeUnload(e) {
     const { games, game } = this.state;
-    if (process.env.NODE_ENV !== 'development' && games.length !== 0 && !game.isGameOver()) {
+    if (isInProduction() && games.length !== 0 && !game.isGameOver()) {
       e.preventDefault();
       e.returnValue = '';
     }
