@@ -122,19 +122,27 @@ class InGameControls extends React.Component {
       <form>
         <ScrabbleInputBox {...props} />
         <div className="buttons">
-          <div className="in-game-controls">
-            <div className="add-word-and-bingo-btns-container">
+          <div className="row">
+            <div className="col">
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
+            </div>
+            <div className="col">
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
               <label className="btn bingo" htmlFor="bingoToggle">
-                <div className="bingo-toggle">BINGO</div>
+                BINGO
               </label>
             </div>
-            <div className="submit-btn-container">
+          </div>
+          <div className="row">
+            <div className="col">
               <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button">{endTurnButtonText}</button>
             </div>
-            <div className="undo-and-end-game-btns-container">
+          </div>
+          <div className="row">
+            <div className="col">
               <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+            </div>
+            <div className="col">
               <button onClick={this.handleEndGame} type="button" className="btn end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
             </div>
           </div>
