@@ -55,7 +55,7 @@ X 32.rewrite instructions How to use scrabblescore online
 X 33. Put the logEvent()/logEventInit() code in util.js, and only log when in production and not react-snap.
  X  - If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
   X - Refactor the code that test if is react-snap with a function from util.js
-34. disable the player name input box if the app has not loaded yet.
+X 34. disable the player name input box if the app has not loaded yet.
 35. Take out ReactGA events
 36. logo should be clickable to go back to home page
 

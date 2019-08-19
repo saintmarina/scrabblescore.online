@@ -14,12 +14,12 @@ class GameSettings extends React.Component {
       numberOfPlayers: 4,
       playerNames: ['', ''],
       language: 'en',
-      isStartButtonDisabled: true,
+      isTagDisabled: true,
     };
   }
 
   componentDidMount() {
-    this.setState({isStartButtonDisabled: isStaticBuild()});
+    this.setState({isTagDisabled: isStaticBuild()});
   }
 
   handleChangeOfName(i, e) {
@@ -43,7 +43,7 @@ class GameSettings extends React.Component {
   }
 
   render() {
-    const { language, numberOfPlayers, playerNames, isStartButtonDisabled } = this.state;
+    const { language, numberOfPlayers, playerNames, isTagDisabled } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -84,6 +84,7 @@ class GameSettings extends React.Component {
                       type="text"
                       className={playerNames[i] && playerNames[i].length > 0 ? 'form-control player-name filled' : 'form-control player-name'}
                       placeholder={`Player ${i + 1}`}
+                      disabled={isTagDisabled}
                     />
                   ))}
                 </div>
@@ -91,7 +92,7 @@ class GameSettings extends React.Component {
             </div>
           </div>
           <div className="start-btn-container">
-            <button className="btn start" type="button" onClick={this.handleGameStart} disabled={isStartButtonDisabled}>START</button>
+            <button className="btn start" type="button" onClick={this.handleGameStart} disabled={isTagDisabled}>START</button>
           </div>
         </form>
       </div>
