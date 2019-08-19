@@ -70,6 +70,10 @@ label.btn {
   margin-bottom: 0;
 }
 
+input[type=checkbox]:checked+label {
+  background: -webkit-gradient(linear, left bottom, left top, from(rgb(222, 50, 42, 0.5)), to(rgb(98, 37, 40, 0.5)));
+}
+
 /*MOBILE buttons design*/
 
 .mobile .buttons {
