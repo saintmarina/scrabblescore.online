@@ -7,6 +7,9 @@
 h3 {
 margin-top: 25px;
 }
+.mobile .title {    /* score grid title is removed for mobbile, it takes too much space otherwise */
+  display: none;
+}
 
 .title {
   text-align: center;

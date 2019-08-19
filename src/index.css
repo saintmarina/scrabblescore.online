@@ -36,7 +36,16 @@ body {
   font-size: 18px;
   font-family: Times, serif;
   color: white;
-  text-shadow: 1px 1px rgba(0,0,0,0.5)
+  text-shadow: 1px 1px rgba(0,0,0,0.5);
+}
+
+@media screen and (max-width: 399px) { 
+  body {
+    background-size: 400px;     /*if screen width is less then 400px, screen min-width is 400px;*/
+  }
+  .table.table-bordered {       /*if screen width is less then 400px, table has fixed width;    */
+    width: 340px;
+  }
 }
 
 @media screen and (max-width: 815px) {
@@ -81,6 +90,10 @@ img.scrabble-logo {
 	width: 17%;
   height: auto;
   margin-top: -3px;
+}
+
+img#scrabble-tile { /*image preload*/
+  display: none;
 }
 
 footer {
