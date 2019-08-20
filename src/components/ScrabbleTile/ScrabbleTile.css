@@ -43,22 +43,22 @@
 /*Modified scrabble tiles css*/
 
 .scrabble-letter.double-letter {
-	background: rgba(159, 202, 224);
+	background: #9fcae0;
 	border: solid 1px black;
 }
 
 .scrabble-letter.double-word {
-	background: rgb(255,202,184);
+	background: #eda498;
 	border: solid 1px black;
 }
 
 .scrabble-letter.triple-letter {
-	background: rgba(24,163,225);
+	background: #18a3e1;
 	border: solid 1px black;
 }
 
 .scrabble-letter.triple-word {
-	background: rgba(247,77,19);
+	background: #f74d13;
 	border: solid 1px black;
 }
 
