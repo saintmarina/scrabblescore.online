@@ -63,6 +63,10 @@ X 38. you may contact me via email. -> you may contact the developer, Anna Maniu
 X 39. Preload the image doing some hacks.
 X 40. Set body to have min width of 400px;
 X 41. Mobile: take out the Scrable Score Sheet title.
+42. Mobile: scroll up when first load game 
+43. InGameControl: there's a isMobile prop that seems useless.
+44. blank tile: show the letter with some transparency
+45. figure out the colors for modifiers
 
 
 37. instructions:
@@ -74,15 +78,14 @@ X 41. Mobile: take out the Scrable Score Sheet title.
      - More than one word to submit: Same as previously, but use the ADD WORD button.
      - no words to submit (pass): press the PASS button
   Dont use "Note: "
-43. InGameControl: there's a isMobile prop that seems useless.
 44. Put description that google can pick up
 do some keyword research, and figure out a way to put it in your desc.
+
+
 45. facebook link should not be face
 46. linting
-47. Mobile: scroll up when first load game 
 
-49 blank tile: show the letter with some transparency
-50 figure out the colors for modifiers
+
 
 
 
