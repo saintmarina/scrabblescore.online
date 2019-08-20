@@ -99,22 +99,26 @@
 /*Modifier css*/
 
 .modifier {
-	color: black;
-	margin: 2px;
-	background-image: url("/modifier-frame.png");
+  width: 69px;
+  height: 69px;
+  background-image: url("/modifier-frame.png");
 	background-size: 138px 69px;
-	width: 69px;
-	height: 69px;
-	display: inline-block;
-	text-align: center;
+  margin: 2px;
+  padding: 8px;
+  cursor: pointer;
+
+  display: inline-flex;
+  vertical-align: middle;  /* tile vertically centered */
+  align-items: center;     /* inner text vertical align */
+	text-align: center;      /* inner text horizontal align */
+
+  color: black;
 	font-family: sans-serif;
-	line-height: 120%;
-	padding-top: 13px;
+	line-height: 1.2em;
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 12px;
-	cursor: pointer;
-	text-shadow: none;
+  text-shadow: none;
 }
 
 .modifier:hover {
@@ -138,34 +142,8 @@
 	background-color: #f74d13;
 	background-position: 69px 0px;
 }
+
 .modifier.blank {
 	background-image: url("/tile.jpg");
 	background-size: 69px 69px;
-
-}
-
-.mobile .modifier.triple-letter {
-	background-color: #18a3e1;
-	background-position: 69px 0px;
-}
-
-.mobile .modifier.triple-word {
-	background-color: #f74d13;
-	background-position: 69px 0px;
-}
-
-.modifier.blank {
-	position: relative;
-	bottom: 14px;
-}
-
-.modifier.blank span{
-	position: relative;
-	top: 7px;
-}
-
-
-.mobile .modifier.blank span{
-	position: relative;
-	top: 8px;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrabbleScore, logEvent } from '../../logic/util';
+import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
@@ -13,23 +13,24 @@ class InGameControls extends React.Component {
     this.handleEndGame = this.handleEndGame.bind(this);
     this.handleAddWord = this.handleAddWord.bind(this);
     this.handleBingo = this.handleBingo.bind(this);
-    this._scrollInputToTheMiddle = this._scrollInputToTheMiddle.bind(this);
+    this._scroll = this._scroll.bind(this);
     this.input = React.createRef();
     this.state = {
       currentWord: emptyWord,
     };
   }
 
-  _scrollInputToTheMiddle() {
-    const { game, isMobile } = this.props;
-    const elements = document.getElementsByClassName('add-word');
-    const wordsOfFirstPlayerTurn = game.playersTurns[0][0].words;
-    if (isMobile && elements.length !== 0 && wordsOfFirstPlayerTurn.length !== 0) 
-      { elements[0].scrollIntoView({ block: 'center' }) }
+  _scroll() {
+    const { isMobile } = this.props;
+    const { currentWord } = this.state;
+    
+    if (!isMobile) return 
+    currentWord === emptyWord ? scrollToTop() : scrollToMiddle()
   }
 
   componentDidMount() {
     if (this.input.current) this.input.current.focus();
+    this._scroll()
   }
 
   onSetGame(game) {
@@ -53,7 +54,7 @@ class InGameControls extends React.Component {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
-    this._scrollInputToTheMiddle();
+    this._scroll();
 
     logEvent('undo');
   }
@@ -62,7 +63,7 @@ class InGameControls extends React.Component {
     const { currentWord } = this.state;
     const { game } = this.props;
     this.onSetGame(game.addWord(currentWord));
-    this._scrollInputToTheMiddle();
+    this._scroll();
 
     logEvent('add-word', {'word': currentWord});
   }
@@ -73,7 +74,7 @@ class InGameControls extends React.Component {
     e.preventDefault(); /* prevent form submission */
     game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
     this.onSetGame(game.endTurn());
-    this._scrollInputToTheMiddle();
+    this._scroll();
 
     const data = currentWord.value.length !== 0
                         ? {'word': currentWord}
@@ -84,7 +85,7 @@ class InGameControls extends React.Component {
   handleBingo() {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
-    this._scrollInputToTheMiddle();
+    this._scroll();
 
     logEvent('toggle-bingo');
   }
@@ -92,7 +93,7 @@ class InGameControls extends React.Component {
   handleEndGame() {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
-    this._scrollInputToTheMiddle();
+    this._scroll();
 
     logEvent('end-game', {'num-of-turns': game.playersTurns.length,
                           'game-turns': game.playersTurns.map((turns, i) => ({turns: turns}))});

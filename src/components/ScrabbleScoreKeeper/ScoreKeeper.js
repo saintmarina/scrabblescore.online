@@ -75,11 +75,9 @@ class ScoreKeeper extends React.Component {
       onSetGame: this.handleSetGame,
       onUndo: this.handleUndo,
       undoDisabled: games.length === 0,
-      isMobile,
       game,
       language,
     };
-
     const toDisplayCallPlayerToAction = () => {
       if (!isMobile) {
         return  <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
@@ -108,7 +106,7 @@ class ScoreKeeper extends React.Component {
             )
               }
           {!game.isGameOver()
-            ? <InGameControls {...controlProps} />
+            ? <InGameControls {...Object.assign(controlProps, {isMobile})} />
             : <InGameOverControls {...controlProps} />
               }
         </div>

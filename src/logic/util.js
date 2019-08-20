@@ -70,4 +70,14 @@ export function logEvent(eventName, eventData) {
   }
 }
 
+export function scrollToTop() {
+  const bodyElement = document.getElementsByTagName('body');
+  bodyElement[0].scrollIntoView(true)
+}
+
+export function scrollToMiddle() {
+  const inputBoxElement = document.getElementsByClassName('add-word');
+  inputBoxElement[0].scrollIntoView({ block: 'center' })
+}
+
 export default null;
