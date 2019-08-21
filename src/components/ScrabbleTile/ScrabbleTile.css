@@ -44,22 +44,22 @@
 
 .scrabble-letter.double-letter {
 	background: #9fcae0;
-	border: solid 1px black;
+	border: solid 1px white;
 }
 
 .scrabble-letter.double-word {
 	background: #eda498;
-	border: solid 1px black;
+	border: solid 1px white;
 }
 
 .scrabble-letter.triple-letter {
 	background: #18a3e1;
-	border: solid 1px black;
+	border: solid 1px white;
 }
 
 .scrabble-letter.triple-word {
 	background: #f74d13;
-	border: solid 1px black;
+	border: solid 1px white;
 }
 
 .scrabble-letter.blank .score {
