@@ -67,6 +67,7 @@ X 42. Mobile: scroll up when first load game
 X 43. InGameControl: there's a isMobile prop that seems useless.
 X 44. blank tile: show the letter with some transparency
 X 45. figure out the colors for modifiers
+X 46. inGameOver PASSED --> NO LEFTOVERS
  modifier color border --> outile
 46. first turn instruction 
 css class first-turn
