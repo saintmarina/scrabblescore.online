@@ -3,11 +3,14 @@ import WordInTiles from './WordInTiles';
 
 class ScoreGridCell extends React.Component {
   renderPassed() {
+    const { game, move } = this.props;
     return (
-      <tr>
-        <td>PASS</td>
-      </tr>
-    );
+       <tr>
+        <td>
+          { game.isMoveInGameOver(move) ? 'NO LEFTOVERS' : 'PASS' }
+        </td>
+      </tr> 
+    )
   }
 
   renderNormal() {

@@ -6,7 +6,7 @@ import './ScoreGrid.css';
 class ScoreGridMobile extends React.Component {
   moveRowText(i) {
     const { game } = this.props;
-    return game.isGameOver() && game.leftOversTurnNumber === i ? 'Leftovers Accounting' : `Move ${i + 1}`;
+    return game.isMoveInGameOver(i) ? 'Leftovers Accounting' : `Move ${i + 1}`;
   }
 
   render() {

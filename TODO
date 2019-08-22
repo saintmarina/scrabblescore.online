@@ -63,13 +63,21 @@ X 38. you may contact me via email. -> you may contact the developer, Anna Maniu
 X 39. Preload the image doing some hacks.
 X 40. Set body to have min width of 400px;
 X 41. Mobile: take out the Scrable Score Sheet title.
-42. Mobile: scroll up when first load game 
-43. InGameControl: there's a isMobile prop that seems useless.
-44. blank tile: show the letter with some transparency
-45. figure out the colors for modifiers
+X 42. Mobile: scroll up when first load game 
+X 43. InGameControl: there's a isMobile prop that seems useless.
+X 44. blank tile: show the letter with some transparency
+X 45. figure out the colors for modifiers
+ modifier color border --> outile
+46. first turn instruction 
+css class first-turn
+star for first double letter
+image canvas size
+add-word has to be disabled for first turn
+passing is ok, but not end turn without modifier
+add popover with instruction "click on the tile"
+44. Put description that google can pick up
 
-
-37. instructions:
+X 37. instructions:
   put game over instructions in the same how to block of text. Instruction if -> when.
   Reiterate that you are replacing the pen and paper scoring.
   move -> turn
@@ -78,7 +86,7 @@ X 41. Mobile: take out the Scrable Score Sheet title.
      - More than one word to submit: Same as previously, but use the ADD WORD button.
      - no words to submit (pass): press the PASS button
   Dont use "Note: "
-44. Put description that google can pick up
+
 do some keyword research, and figure out a way to put it in your desc.
 
 

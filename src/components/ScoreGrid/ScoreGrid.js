@@ -29,7 +29,7 @@ function ScoreGrid(props) {
             <th className="move-number">{i + 1}</th>
             {game.playersTurns.map((player, j) => (
               <td key={j} className={getTurnClass(player[i], game.getCurrentTurn())}>
-                {player[i] ? <ScoreGridCell turn={player[i]} language={language} game={game} />
+                {player[i] ? <ScoreGridCell turn={player[i]} move={i} language={language} game={game} />
                   : null}
               </td>
             ))}

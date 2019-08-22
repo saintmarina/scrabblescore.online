@@ -88,6 +88,10 @@ export default class Game {
     return false;
   }
 
+  isMoveInGameOver(move) {
+    return this.isGameOver() && this.leftOversTurnNumber === move
+  }
+
   getReapers() {
     const reaperIndexes = [];
     for (let i = 0; i < this.playersTurns.length; i++) {
