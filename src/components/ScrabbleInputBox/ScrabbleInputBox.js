@@ -67,16 +67,16 @@ class ScrabbleInputBox extends React.Component {
           autoCorrect="off"
         />
         <div className={inFocus ? 'scrabble-tiles blinker' : 'scrabble-tiles'}>
-          {word.value.split('').map((c, i) => (
+          {word.value.split('').map((letter, letterIndex) => (
             <WithModifierPopover
-              onChange={modifier => this.handleModifierChange(i, modifier)}
-              key={i}
+              onChange={modifier => this.handleModifierChange(letterIndex, modifier)}
+              key={letterIndex}
             >
               <ScrabbleTile
                 onClick={this.handleTileClick}
-                letter={c}
-                score={scrabbleScore(c, [null], language)}
-                modifier={word.modifiers[i]}
+                letter={letter}
+                score={scrabbleScore(letter, [null], language)}
+                modifier={word.modifiers[letterIndex]}
               />
             </WithModifierPopover>
           ))}
