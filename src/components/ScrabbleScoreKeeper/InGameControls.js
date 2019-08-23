@@ -102,9 +102,15 @@ class InGameControls extends React.Component {
   render() {
     const { currentWord } = this.state;
     const { game, language, undoDisabled } = this.props;
-    const endTurnButtonText = game.getCurrentTurn().isEmpty() && currentWord.value === '' ? 'PASS' : 'END TURN';
+    const isCurrentWordEmpty = game.getCurrentTurn().isEmpty() && currentWord.value === ''
+    const endTurnButtonText = isCurrentWordEmpty ? 'PASS' : 'END TURN';
     const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
 
+    const isModifierChosen = currentWord.modifiers.some(modifier => modifier !== null);
+    const isInstructionShown = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0 && !isModifierChosen && currentWord.value !== ''
+    const isFirstTurn = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0
+    const instruction = "instruction-message instruction-shown";
+    const endTurnDisabled = !isModifierChosen && !isCurrentWordEmpty && isFirstTurn;
     const props = {
       ref: this.input,
       onChange: this.handleChange,
@@ -112,13 +118,19 @@ class InGameControls extends React.Component {
       language,
     };
 
+    
+    console.log('isFirstTurn', isFirstTurn)
     return (
-      <form>
+      <form className={isFirstTurn ? 'first-turn' : null}>
         <ScrabbleInputBox {...props} />
+        <div className={isInstructionShown ? `${instruction}` : `${instruction} hide`}> 
+          Click on the tile that is on the double word prime square
+        </div>
+
         <div className="buttons">
           <div className="row">
             <div className="col">
-              <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === ''}>+ ADD A WORD</button>
+              <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === '' || isFirstTurn}>+ ADD A WORD</button>
             </div>
             <div className="col">
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
@@ -129,7 +141,7 @@ class InGameControls extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button">{endTurnButtonText}</button>
+              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={endTurnDisabled}>{endTurnButtonText}</button>
             </div>
           </div>
           <div className="row">

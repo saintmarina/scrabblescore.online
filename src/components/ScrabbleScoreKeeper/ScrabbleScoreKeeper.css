@@ -26,7 +26,7 @@ margin-top: 25px;
 /*DESKTOP buttons design*/
 
 .buttons {                  /*First wrap container for button in InGame(Over)Control components*/
-  margin: 0 auto;
+  margin: 0.5em auto;
   width: 380px;
 }
 
@@ -95,4 +95,24 @@ input[type=checkbox]:checked+label {
 
 .mobile .call-player-to-action {
   margin-top: 10px;
+}
+
+.instruction-message {
+  text-align: center;
+  margin: 0.5em auto;
+  padding: 0.5em 0;
+  line-height: 1em;
+}
+
+.instruction-shown {
+  max-height: 3em;
+  transition: max-height 0.3s ease 2s, padding 0.3s ease 2s, margin 0.3s ease 2s;
+  overflow: hidden;
+}
+
+.instruction-shown.hide {
+  max-height: 0em;
+  padding: 0;
+  margin: 0;
+  transition: max-height 0.3s ease 0s, padding 0.3s ease 0s, margin 0.3s ease 0s;
 }

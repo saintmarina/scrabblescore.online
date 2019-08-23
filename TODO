@@ -49,9 +49,6 @@ X 29. reload shqould only be prompted when:
 X 30. image preload/ was changed to prefetch
 X 31. make notes for the history pushing, preloading images
 X 32.rewrite instructions How to use scrabblescore online 
-
-
-
 X 33. Put the logEvent()/logEventInit() code in util.js, and only log when in production and not react-snap.
  X  - If the logEvent function raises an exception, do not break everything. Catch it and log it in the console. Use try { } catch {}
   X - Refactor the code that test if is react-snap with a function from util.js
@@ -68,7 +65,8 @@ X 43. InGameControl: there's a isMobile prop that seems useless.
 X 44. blank tile: show the letter with some transparency
 X 45. figure out the colors for modifiers
 X 46. inGameOver PASSED --> NO LEFTOVERS
- modifier color border --> outile
+X 47. modifier color border, fix letters so they don't move because of the border
+48. bingo line height in the table cell
 46. first turn instruction 
 css class first-turn
 star for first double letter
@@ -77,6 +75,7 @@ add-word has to be disabled for first turn
 passing is ok, but not end turn without modifier
 add popover with instruction "click on the tile"
 44. Put description that google can pick up
+49. on arrow key even preventDefault()
 
 X 37. instructions:
   put game over instructions in the same how to block of text. Instruction if -> when.

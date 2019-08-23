@@ -50,22 +50,20 @@ export function logEventInit() {
 }
 
 export function isStaticBuild() {
-    return navigator.userAgent === 'ReactSnap';
-  }
+  return navigator.userAgent === 'ReactSnap';
+}
 
 export function isInProduction() {
   return process.env.NODE_ENV === 'production';
 }
 
 export function logEvent(eventName, eventData) {
-  if (isStaticBuild() || !isInProduction()) {
+  if (isStaticBuild() || !isInProduction())
     return;
-  }
 
   try {
     amplitude.getInstance().logEvent(eventName, eventData)
-  }
-  catch(error) {
+  } catch(error) {
     console.log(`Something went wrong when logging an event. ${error}.`)
   }
 }

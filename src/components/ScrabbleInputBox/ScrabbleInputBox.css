@@ -24,8 +24,7 @@
 .scrabble-input-box {
 	color: black;
   position: relative;
-  margin: auto;
-  margin-bottom: 10px;
+  margin: 0 auto;
   border: 1px solid white;
   background-color: #e66058;
   height: 81px;
@@ -102,7 +101,7 @@
   width: 69px;
   height: 69px;
   background-image: url("/modifier-frame.png");
-	background-size: 138px 69px;
+	background-size: 207px 69px;
   margin: 2px;
   padding: 8px;
   cursor: pointer;
@@ -133,14 +132,20 @@
 	background-color: #eda498;
 }
 
+.first-turn .modifier.double-word {
+  background-position: 69px 0px;
+  color: transparent;
+
+}
+
 .modifier.triple-letter {
 	background-color: #18a3e1;
-	background-position: 69px 0px;
+	background-position: 138px 0px;
 }
 
 .modifier.triple-word {
 	background-color: #f74d13;
-	background-position: 69px 0px;
+	background-position: 138px 0px;
 }
 
 .modifier.blank {
