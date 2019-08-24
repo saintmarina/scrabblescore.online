@@ -23,7 +23,7 @@ class ScrabbleInputBox extends React.Component {
 
   handleHiddenInputChange(e) {
     const { language, word, onChange } = this.props;
-    const input = e.target.value;
+    const input = e.target.value.substring(0,15); /* maxLength does not always work on Android */
     const result = input.split('').map(letter => (isLetterAllowed(letter, language) ? letter : ''));
     const modifiers = resizeArray(word.modifiers, result.length, null);
     onChange({ value: result.join(''), modifiers });
