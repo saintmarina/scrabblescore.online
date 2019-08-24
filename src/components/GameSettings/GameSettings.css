@@ -1,14 +1,14 @@
 div.logo {
   content: url("/logo.png");
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 30px;
+  margin: 30px auto;
   width: 520px;
+  height: 103px;
 }
 
 @media screen and (max-width: 815px) {      /*Mobile version displays smaller logo*/
   div.logo {
     width: 300px;
+    height: 60px;
   }
 }
 

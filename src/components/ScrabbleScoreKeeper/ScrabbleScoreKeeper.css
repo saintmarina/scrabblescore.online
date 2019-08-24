@@ -1,12 +1,22 @@
-.score-keeper #logo {
-  position: relative;
-  margin-top: -118px;
+div#small-logo, div#small-logo img {
+  display: block;
   cursor: pointer;
+  width: 212px;
+  height: 42px;
+}
+
+div#small-logo {
+  margin: 20px 0 40px 0;
+}
+
+.mobile div#small-logo {
+  margin: 15px auto;
 }
 
 h3 {
-margin-top: 25px;
+  margin-top: 25px;
 }
+
 .mobile .title {    /* score grid title is removed for mobbile, it takes too much space otherwise */
   display: none;
 }

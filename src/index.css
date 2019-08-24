@@ -92,10 +92,6 @@ img.scrabble-logo {
   margin-top: -3px;
 }
 
-img#scrabble-tile { /*image preload*/
-  display: none;
-}
-
 footer {
 	bottom: 0px;
   left: 0px;
@@ -104,10 +100,3 @@ footer {
 	margin-top: 40px;
 	padding-top: 24px;
 	}
-
-
-
-
-
-
-
