@@ -89,12 +89,8 @@ input[type=checkbox]:checked+label {
 
 /*CallPlayerToAction style*/
 
-.call-player-to-action {
+.desktop .call-player-to-action {
   margin-bottom: 15px;
-}
-
-.mobile .call-player-to-action {
-  margin-top: 10px;
 }
 
 .instruction-message {
@@ -106,7 +102,7 @@ input[type=checkbox]:checked+label {
 
 .instruction-shown {
   max-height: 3em;
-  transition: max-height 0.3s ease 2s, padding 0.3s ease 2s, margin 0.3s ease 2s;
+  transition: max-height 0.3s ease 4s, padding 0.3s ease 4s, margin 0.3s ease 4s;
   overflow: hidden;
 }
 

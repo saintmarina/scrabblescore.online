@@ -24,14 +24,10 @@ class ScoreGridMobile extends React.Component {
                                                       && !player[turnIndex].isPassed(game)
                                                       && !player[turnIndex].bingo;
     return (
-      <table className="table table-bordered">
+      <table className="table table-bordered score-grid-table">
         <thead>
           <tr className="thead-rows">
-            <th className="playerNames" scope="col">
-Names
-              <br />
-(Total)
-            </th>
+            <th className="playerNames" scope="col">Names<br />(Total)</th>
             <th className="playerTurn" scope="col">Player Turn</th>
           </tr>
         </thead>
@@ -56,9 +52,12 @@ Names
 
                     <td className="player-turn">
                       {isCurrentPlayersTurn(player, i)
-                        ? <CallPlayerToAction game={game} playerNames={playerNames} isMobile />
+                        ? <table className="score-grid-cell"><tbody><tr><td>
+                            <CallPlayerToAction game={game} playerNames={playerNames} isMobile />
+                          </td></tr></tbody></table>
                         : <ScoreGridCell turn={player[i]} language={language} game={game} />
                       }
+
                     </td>
                   </tr>
                 )

@@ -9,7 +9,7 @@ function ScoreGrid(props) {
   );
 
   return (
-    <table className="table table-bordered" align="center">
+    <table className="table table-bordered score-grid-table" align="center">
       <thead>
         <tr className="thead-rows">
           <th className="move-header">Move</th>

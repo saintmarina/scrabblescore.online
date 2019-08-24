@@ -118,8 +118,6 @@ class InGameControls extends React.Component {
       language,
     };
 
-    
-    console.log('isFirstTurn', isFirstTurn)
     return (
       <form className={isFirstTurn ? 'first-turn' : null}>
         <ScrabbleInputBox {...props} />

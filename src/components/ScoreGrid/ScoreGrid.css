@@ -24,6 +24,7 @@
 
 .table td {
 	vertical-align: middle;
+  padding: 0.4rem;
 }
 
 .score-grid-cell td {
@@ -74,18 +75,18 @@
 
 /*MOBILE table css*/
 
-.mobile table {
+.mobile .score-grid-table {
   font-size: 14px;
 }
 
 .mobile .playerNames {
   width: 61px;
-  height: 40px;
+  
   text-align: center;
   padding: 0px;
 }
 
-.mobile .table td {
+.mobile .score-grid-table td {
   padding: 0px 1px;
 }
 
@@ -99,10 +100,7 @@
   text-align: center;
 }
 
-.mobile tr .word-row:first-child .word-cell{    /*Correct padding for every row*/
-  padding-top: 6px;
-}
-
-.mobile tr .word-row:last-child .word-cell{
-  padding-bottom: 6px;
+.mobile table.score-grid-cell {
+  margin: 6px 0;
+  min-height: 30px;
 }

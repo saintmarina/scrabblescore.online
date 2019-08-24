@@ -33,8 +33,8 @@ class ScoreGridCell extends React.Component {
 
     if (turn.bingo) {
       rows.push(
-        <tr key="bingo" className="table-row bingo-row">
-          <td className="bingo-cell"><span className="bingo">BINGO!</span></td>
+        <tr key="bingo">
+          <td colSpan="2">BINGO!</td>
         </tr>,
       );
     }
