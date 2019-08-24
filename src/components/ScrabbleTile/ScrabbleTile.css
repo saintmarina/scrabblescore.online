@@ -42,27 +42,31 @@
 
 /*Modified scrabble tiles css*/
 
-.scrabble-letter.double-letter {
+.tile-modifier {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border: 1px solid white;
+	border-radius: 3px;
+}
+
+.scrabble-letter.double-letter .tile-modifier {
 	background: #9fcae0;
-	border: solid 1px white;
 }
 
-.scrabble-letter.double-word {
+.scrabble-letter.double-word .tile-modifier {
 	background: #eda498;
-	border: solid 1px white;
 }
 
-.scrabble-letter.triple-letter {
+.scrabble-letter.triple-letter .tile-modifier {
 	background: #18a3e1;
-	border: solid 1px white;
 }
 
-.scrabble-letter.triple-word {
+.scrabble-letter.triple-word .tile-modifier {
 	background: #f74d13;
-	border: solid 1px white;
 }
 
-.scrabble-letter.blank .score {
+.scrabble-letter.blank .tile-modifier, .scrabble-letter.blank .score {
 	display: none;
 }
 
