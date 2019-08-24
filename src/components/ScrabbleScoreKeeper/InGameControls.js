@@ -104,13 +104,13 @@ class InGameControls extends React.Component {
     const { game, language, undoDisabled } = this.props;
     const isCurrentWordEmpty = game.getCurrentTurn().isEmpty() && currentWord.value === ''
     const endTurnButtonText = isCurrentWordEmpty ? 'PASS' : 'END TURN';
-    const isEndGameButtonDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
+    const isEndGameDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
+    const isBingoDisabled = ![...game.getCurrentTurn().words, currentWord].some( word => word.value.length >= 7 )
 
     const isModifierChosen = currentWord.modifiers.some(modifier => modifier !== null);
     const isInstructionShown = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0 && !isModifierChosen && currentWord.value !== ''
     const isFirstTurn = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0
-    const instruction = "instruction-message instruction-shown";
-    const endTurnDisabled = !isModifierChosen && !isCurrentWordEmpty && isFirstTurn;
+    const isEndTurnDisabled = !isModifierChosen && !isCurrentWordEmpty && isFirstTurn;
     const props = {
       ref: this.input,
       onChange: this.handleChange,
@@ -121,14 +121,14 @@ class InGameControls extends React.Component {
     return (
       <form className={isFirstTurn ? 'first-turn' : null}>
         <ScrabbleInputBox {...props} />
-        <div className={isInstructionShown ? `${instruction}` : `${instruction} hide`}> 
+        <div className={`instruction-message ${isInstructionShown ? "" : "hide"}`}> 
           Click on the tile that is on the double word prime square
         </div>
 
         <div className="buttons">
          <div className="row">
             <div className="col">
-              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={endTurnDisabled}>{endTurnButtonText}</button>
+              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={isEndTurnDisabled}>{endTurnButtonText}</button>
             </div>
           </div>
           <div className="row">
@@ -136,18 +136,18 @@ class InGameControls extends React.Component {
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === '' || isFirstTurn}>+ ADD A WORD</button>
             </div>
             <div className="col">
-              <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} />
-              <label className="btn bingo" htmlFor="bingoToggle">
+              <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} disabled={isBingoDisabled}/>
+              <label className={`btn bingo ${isBingoDisabled ? "disabled" : ""}`} htmlFor="bingoToggle">
                 BINGO
               </label>
             </div>
           </div>
-                   <div className="row">
+          <div className="row">
             <div className="col">
               <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
             </div>
             <div className="col">
-              <button onClick={this.handleEndGame} type="button" className="btn end-game" disabled={isEndGameButtonDisabled}>END GAME</button>
+              <button onClick={this.handleEndGame} type="button" className="btn end-game" disabled={isEndGameDisabled}>END GAME</button>
             </div>
           </div>
         </div>
