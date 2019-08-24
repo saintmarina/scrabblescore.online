@@ -126,6 +126,11 @@ class InGameControls extends React.Component {
         </div>
 
         <div className="buttons">
+         <div className="row">
+            <div className="col">
+              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={endTurnDisabled}>{endTurnButtonText}</button>
+            </div>
+          </div>
           <div className="row">
             <div className="col">
               <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === '' || isFirstTurn}>+ ADD A WORD</button>
@@ -137,12 +142,7 @@ class InGameControls extends React.Component {
               </label>
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={endTurnDisabled}>{endTurnButtonText}</button>
-            </div>
-          </div>
-          <div className="row">
+                   <div className="row">
             <div className="col">
               <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
             </div>
