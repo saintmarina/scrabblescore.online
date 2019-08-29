@@ -87,16 +87,20 @@ X 51. instructions:
   X - Dont use "Note: "
 X 52. on arrow key even preventDefault()
 X 53. linting
-54. tests all green0
-44. Put description that google can pick up, scoring work according to the official rules 
+X 54. tests all green
+X 44. Put description that google can pick up, scoring work according to the official rules 
 
 
 
 
-do some keyword research, and figure out a way to put it in your desc.
+Asosiations to contact:
+http://www.scrabbleplayers.org/w/Welcome_to_NASPAWiki  North-American Scrabble championship
+http://www.absp.org.uk/
 
+screenshot of web-site;
+How to install
+how to develop first install npm, git clone, cd the thing, npm start
 
-45. facebook link should not be face
 
 
 
