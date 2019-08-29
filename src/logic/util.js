@@ -54,7 +54,7 @@ export function isStaticBuild() {
 }
 
 export function isInProduction() {
-  return process.env.NODE_ENV === 'production';
+  return process.env.NODE_ENV === 'production'; // eslint-disable-line no-use-before-define
 }
 
 export function logEvent(eventName, eventData) {

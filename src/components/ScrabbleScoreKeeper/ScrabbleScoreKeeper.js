@@ -36,7 +36,7 @@ class ScrabbleScoreKeeper extends React.Component {
     this.handleWindowSizeChange();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     window.addEventListener('resize', this.handleWindowSizeChange);
   }
 

@@ -1,5 +1,5 @@
+/* eslint-disable */
 import { resizeArray, scrabbleScore, isLetterAllowed } from './Util';
-import Game from './game';
 
 describe('scrabbleScore', () => {
   test('counts score without modifiers', () => {

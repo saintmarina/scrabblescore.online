@@ -50,11 +50,19 @@ class ScrabbleInputBox extends React.Component {
   render() {
     const { language, word } = this.props;
     const { inFocus } = this.state;
+
+    function handleArrowClick(e) {
+      if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) {
+        e.preventDefault()
+      }
+    }
+
     return (
       <div role="textbox" onClick={this.focus} onKeyDown={this.focus} className={`scrabble-input-box${word.value.length > 8 ? ' large' : ''}`}>
         <input
           ref={this.textHiddenInput}
           onChange={this.handleHiddenInputChange}
+          onKeyDown={(e) => handleArrowClick(e)}
           value={word.value}
           className="hidden-input"
           onBlur={() => this.setState({ inFocus: false })}

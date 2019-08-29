@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Game from './game';
 
 const w1 = { value: 'rose', modifiers: [null, null, null, null], score: 8 };

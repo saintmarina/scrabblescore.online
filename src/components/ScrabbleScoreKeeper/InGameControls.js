@@ -96,7 +96,7 @@ class InGameControls extends React.Component {
     this._scroll();
 
     logEvent('end-game', {'num-of-turns': game.playersTurns.length,
-                          'game-turns': game.playersTurns.map((turns, i) => ({turns: turns}))});
+                          'game-turns': game.playersTurns.map((turns) => ({turns: turns}))});
   }
 
   render() {

@@ -127,9 +127,11 @@ describe('Game', () => {
   const getWordAt = (grid, moveIndex, playerIndex, wordIndex) => getScoreGridCell(grid, moveIndex, playerIndex).find('WordInTiles').at(wordIndex).props().word.value;
   const getWinner = wrapper => wrapper.find('.winner').find('h1').text();
   const getLetterModifier = (wrapper, letterIndex) => wrapper.find('WithModifierPopover').at(letterIndex).find('ScrabbleTile').prop('modifier');
-  const getTableLetterModifier = (grid, moveIndex, playerIndex, wordIndex, letterIndex) => getScoreGridCell(grid, moveIndex, playerIndex).find('WordInTiles').at(wordIndex).find('ScrabbleTile')
-    .at(letterIndex)
-    .prop('modifier');
+  const getTableLetterModifier = (grid, moveIndex, playerIndex, wordIndex, letterIndex) => 
+    getScoreGridCell(grid, moveIndex, playerIndex)
+      .find('WordInTiles').at(wordIndex)
+      .find('ScrabbleTile').at(letterIndex)
+      .prop('modifier');
   const getTile = (wrapper, letterIndex) => wrapper.find('ScrabbleInputBox').find('ScrabbleTile').at(letterIndex);
   const checkLetterTiles = (wrapper, letterTiles) => {
     letterTiles.forEach((tile, i) => {
@@ -139,6 +141,8 @@ describe('Game', () => {
   const getCurrentLanguage = wrapper => wrapper.find('ScoreKeeper').prop('language');
   const checkIfButtonDisabled = (wrapper, regex) => wrapper.find('button').filterWhere(n => n.text().match(regex)).prop('disabled');
   const getbuttonText = (wrapper, buttonIndex) => wrapper.find('button').at(buttonIndex).text();
+  const checkInstructionMessage = wrapper => wrapper.find('div.instruction-message').at(0).text()
+  const checkHiddenInstructionMessage = wrapper => wrapper.find('div.instruction-message.hide').exists()
 
   /* .tap(n => console.log(n.debug())) */
 
@@ -167,9 +171,10 @@ describe('Game', () => {
     const wrapper = mount(<ScrabbleScoreKeeper />);
     fillPlayers(wrapper, 4);
     typeInputBox(wrapper, 'ouguiya');
-
     expect(checkIfButtonDisabled(wrapper, /undo/i)).toEqual(true);
-    clickAddWord(wrapper);
+    clickLetterModifier(wrapper, 3, 'double-word');
+    clickEndTurn(wrapper);
+
     expect(checkIfButtonDisabled(wrapper, /undo/i)).toEqual(false);
   });
 
@@ -178,6 +183,10 @@ describe('Game', () => {
     fillPlayers(wrapper, 4);
     expect(checkIfButtonDisabled(wrapper, /add.*word/i)).toEqual(true);
     typeInputBox(wrapper, 'ouguiya');
+    clickLetterModifier(wrapper, 3, 'double-word');
+    clickEndTurn(wrapper);
+
+    typeInputBox(wrapper, 'quizzify');
     expect(checkIfButtonDisabled(wrapper, /add.*word/i)).toEqual(false);
   });
 
@@ -187,6 +196,7 @@ describe('Game', () => {
     expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true);
     typeInputBox(wrapper, 'quizzify');
     expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true);
+    clickLetterModifier(wrapper, 3, 'double-word');
     clickEndTurn(wrapper);
     expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true);
     typeInputBox(wrapper, 'oouiya');
@@ -200,9 +210,11 @@ describe('Game', () => {
     fillPlayers(wrapper, 3);
 
 
-    expect(getbuttonText(wrapper, 1)).toEqual('PASS');
+    expect(getbuttonText(wrapper, 0)).toEqual('PASS');
 
-    typeInputBox(wrapper, 'aalii'); // p0: 5
+    typeInputBox(wrapper, 'aalii'); // p0: 10
+    clickLetterModifier(wrapper, 3, 'double-word');
+    expect(getbuttonText(wrapper, 0)).toEqual('END TURN');
     clickEndTurn(wrapper);
     typeInputBox(wrapper, 'jota'); // p1: 11
     clickEndTurn(wrapper);
@@ -220,9 +232,9 @@ describe('Game', () => {
   it("if no word typed, End Game button displays 'PASS'", () => {
     const wrapper = mount(<ScrabbleScoreKeeper />);
     fillPlayers(wrapper, 3);
-    expect(getbuttonText(wrapper, 1)).toEqual('PASS');
+    expect(getbuttonText(wrapper, 0)).toEqual('PASS');
     typeInputBox(wrapper, 'q');
-    expect(getbuttonText(wrapper, 1)).toEqual('END TURN');
+    expect(getbuttonText(wrapper, 0)).toEqual('END TURN');
   });
 
   it('types inside the scrabble input box', () => {
@@ -247,24 +259,22 @@ describe('Game', () => {
     const wrapper = mount(<ScrabbleScoreKeeper />);
     fillPlayers(wrapper, 4);
 
-    typeInputBox(wrapper, 'aalii'); // p0: 5
-    clickAddWord(wrapper);
-    typeInputBox(wrapper, 'ouguiya'); // p0: 11
-    clickAddWord(wrapper);
+    typeInputBox(wrapper, 'aalii'); // p0: 10
+    clickLetterModifier(wrapper, 3, 'double-word');
     clickEndTurn(wrapper);
-    // Move 0: P0 - 16
+    // Move 0: P0 - 10
     typeInputBox(wrapper, 'jota'); // p1: 11
     clickEndTurn(wrapper);
-    // Move 0: P0 - 16
+    // Move 0: P0 - 10
     //				P1 - 11
     typeInputBox(wrapper, 'kex'); // p2: 14
     clickEndTurn(wrapper);
-    // Move 0: P0 - 16
+    // Move 0: P0 - 10
     //				P1 - 11
     //				P2 - 14
     typeInputBox(wrapper, 'ziti'); // p3: 13
     clickEndTurn(wrapper);
-    // Move 0: P0 - 16
+    // Move 0: P0 - 10
     //				P1 - 11
     //				P2 - 14
     //				P3 - 13
@@ -272,31 +282,31 @@ describe('Game', () => {
     clickAddWord(wrapper);
     clickBingo(wrapper);		// p0: BINGO
     clickEndTurn(wrapper);
-    // Move 1: P0 - 96
+    // Move 1: P0 - 90
     //				P1 - 11
     //				P2 - 14
     //				P3 - 13
     typeInputBox(wrapper, 'pizza'); // p1: 25
     clickEndTurn(wrapper);
-    // Move 1: P0 - 96
+    // Move 1: P0 - 90
     //				P1 - 36
     //				P2 - 14
     //				P3 - 13
     typeInputBox(wrapper, 'oorie'); // p2: 5
     clickEndTurn(wrapper);
-    // Move 1: P0 - 96
+    // Move 1: P0 - 90
     //				P1 - 36
     //				P2 - 19
     //				P3 - 13
     typeInputBox(wrapper, 'ourie'); // p3: 5
     clickEndTurn(wrapper);
-    // Move 1: P0 - 96
+    // Move 1: P0 - 90
     //				P1 - 36
     //				P2 - 19
     //				P3 - 18
 
     clickPass(wrapper); // p0: PASS
-    // Move 2: P0 - 96
+    // Move 2: P0 - 90
     //				P1 - 36
     //				P2 - 19
     //				P3 - 18
@@ -306,7 +316,7 @@ describe('Game', () => {
     clickAddWord(wrapper);
     typeInputBox(wrapper, 'aerie'); // p1:  5
     clickEndTurn(wrapper);
-    // Move 2: P0 - 96
+    // Move 2: P0 - 90
     //				P1 - 81
     //				P2 - 19
     //				P3 - 18
@@ -315,7 +325,7 @@ describe('Game', () => {
     typeInputBox(wrapper, 'faqir'); // p2: 17
     clickAddWord(wrapper);
     clickEndTurn(wrapper);
-    // Move 2: P0 - 96
+    // Move 2: P0 - 90
     //				P1 - 81
     //				P2 - 64
     //				P3 - 18
@@ -323,12 +333,12 @@ describe('Game', () => {
     clickAddWord(wrapper);
     typeInputBox(wrapper, 'quixotry'); // p3: 27
     clickAddWord(wrapper);
-    typeInputBox(wrapper, 'jukebox'); // p3: 27
+    typeInputBox(wrapper, 'jubox'); // p3: 27
     clickEndTurn(wrapper);
-    // Move 2: P0 - 96
+    // Move 2: P0 - 90
     //				P1 - 81
     //				P2 - 64
-    //				P3 - 87
+    //				P3 - 81
 
     const grid = wrapper.find('ScoreGrid');
 
@@ -336,7 +346,6 @@ describe('Game', () => {
     //                   move, player, word
     expect(getMoveNumber(grid, 0)).toEqual('1');
     expect(getWordAt(grid, 0, 0, 0)).toEqual('aalii');
-    expect(getWordAt(grid, 0, 0, 1)).toEqual('ouguiya');
     expect(getWordAt(grid, 0, 1, 0)).toEqual('jota');
     expect(getWordAt(grid, 0, 2, 0)).toEqual('kex');
     expect(getWordAt(grid, 0, 3, 0)).toEqual('ziti');
@@ -349,10 +358,10 @@ describe('Game', () => {
     expect(getWordAt(grid, 1, 3, 0)).toEqual('ourie');
     expect(getMoveNumber(grid, 2)).toEqual('3');
     expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit a word or end turn');
-    expect(getTotalCell(grid, 0)).toEqual('96');
+    expect(getTotalCell(grid, 0)).toEqual('90');
     expect(getTotalCell(grid, 1)).toEqual('81');
     expect(getTotalCell(grid, 2)).toEqual('64');
-    expect(getTotalCell(grid, 3)).toEqual('87');
+    expect(getTotalCell(grid, 3)).toEqual('81');
 
     typeInputBox(wrapper, 'jukebox');
     typeInputBox(wrapper, '');
@@ -364,75 +373,75 @@ describe('Game', () => {
     typeInputBox(wrapper, 'lii'); // p0: -3
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 81
     // P2 - 64
-    // P3 - 87
+    // P3 - 81
     expect(getCurrentPlayer(wrapper)).toEqual('Nico, submit your leftovers');
     typeInputBox(wrapper, 'd'); // p1: -2
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 79
     // P2 - 64
-    // P3 - 87
+    // P3 - 81
     expect(getTotalCell(grid, 1)).toEqual('79');
     typeInputBox(wrapper, 'a'); // p2: -1
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 79
     // P2 - 63
-    // P3 - 87
+    // P3 - 81
     expect(getCurrentPlayer(wrapper)).toEqual('Sofi, submit your leftovers');
     clickSubmitLeftovers(wrapper); // p3: +6
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 79
     // P2 - 63
-    // P3 - 93
+    // P3 - 87
 
-    expect(getTotalCell(grid, 0)).toEqual('93');
+    expect(getTotalCell(grid, 0)).toEqual('87');
     expect(getTotalCell(grid, 1)).toEqual('79');
     expect(getTotalCell(grid, 2)).toEqual('63');
-    expect(getTotalCell(grid, 3)).toEqual('93');
-    expect(getWinner(wrapper)).toEqual('Anna won with 96 points!'); // Tie game P0: 93 and P3: 93 ---> Before leftovers P0: 96 and P3: 87 ---> P0 won!, Anna won!
+    expect(getTotalCell(grid, 3)).toEqual('87');
+    expect(getWinner(wrapper)).toEqual('Anna won with 90 points!'); // Tie game P0: 87 and P3: 87 ---> Before leftovers P0: 90 and P3: 81 ---> P0 won!, Anna won!
     clickUndo(wrapper);
     // UNDO: 1
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 79
     // P2 - 63
     // P3 - 87
     typeInputBox(wrapper, 'f'); // p3: -4
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 93
+    // P0 - 87
     // P1 - 79
     // P2 - 63
-    // P3 - 83
-    expect(getWinner(wrapper)).toEqual('Anna won with 93 points!'); // P0: 93 max points ---> P0 won!, Anna won!
+    // P3 - 77
+    expect(getWinner(wrapper)).toEqual('Anna won with 87 points!'); // P0: 93 max points ---> P0 won!, Anna won!
     clickUndoMultipleTimes(wrapper, 4);
     // ENDGAME
-    // P0 - 96
+    // P0 - 87
     // P1 - 81
     // P2 - 64
-    // P3 - 87
+    // P3 - 81
 
     typeInputBox(wrapper, 'zax'); // p0: -19
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 77
+    // P0 - 71
     // P1 - 81
     // P2 - 64
-    // P3 - 87
+    // P3 - 81
     typeInputBox(wrapper, 'd'); // p1: -2
     clickSubmitLeftovers(wrapper);
     // ENDGAME
     // P0 - 77
     // P1 - 79
     // P2 - 64
-    // P3 - 87
+    // P3 - 81
     typeInputBox(wrapper, 'a'); // p2: -1
     clickSubmitLeftovers(wrapper);
     // ENDGAME
@@ -445,65 +454,65 @@ describe('Game', () => {
     // P0 - 77
     // P1 - 79
     // P2 - 63
-    // P3 - 109
-    expect(getWinner(wrapper)).toEqual('Sofi won with 109 points!');// P3: 109 max points ---> P3 won!, Sofi won!
-    expect(getTotalCell(grid, 3)).toEqual('109');
+    // P3 - 103
+    expect(getWinner(wrapper)).toEqual('Sofi won with 103 points!');// P3: 109 max points ---> P3 won!, Sofi won!
+    expect(getTotalCell(grid, 3)).toEqual('103');
     clickUndoMultipleTimes(wrapper, 5);
-    // Move 2: P0 - 96
-    //				P1 - 81
-    //				P2 - 64
-    //				P3 - 87
+    // Move 2: P0 - 90
+            // P1 - 81
+            // P2 - 64
+            // P3 - 81
     clickPass(wrapper); // p0: PASS
-    // Move 3: P0 - 96
+    // Move 3: P0 - 90
     //				P1 - 81
     //				P2 - 64
-    //				P3 - 87
-    typeInputBox(wrapper, 'backers'); // p1: 15
+    //				P3 - 81
+    typeInputBox(wrapper, 'bacss'); // p1: 6
     clickEndTurn(wrapper);
-    // Move 3: P0 - 96
-    //				P1 - 96
+    // Move 3: P0 - 90
+    //				P1 - 87
     //				P2 - 64
-    //				P3 - 87
+    //				P3 - 81
     typeInputBox(wrapper, 'queue'); // p2: 14
     clickEndTurn(wrapper);
-    // Move 3: P0 - 96
-    //				P1 - 96
+    // Move 3: P0 - 90
+    //				P1 - 87
     //				P2 - 78
-    //				P3 - 87
+    //				P3 - 81
     clickPass(wrapper); // p3: PASS
-    // Move 3: P0 - 96
-    //				P1 - 96
+    // Move 3: P0 - 90
+    //				P1 - 87
     //				P2 - 78
-    //				P3 - 87
+    //				P3 - 81
     clickEndGame(wrapper);
     // END GAME
     typeInputBox(wrapper, 'a'); // p0: -1
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 95
-    // P1 - 79
+    // P0 - 89
+    // P1 - 86
     // P2 - 78
-    // P3 - 87
+    // P3 - 81
     typeInputBox(wrapper, 'a'); // p1: -1
     clickSubmitLeftovers(wrapper);
     // ENDGAME
-    // P0 - 95
-    // P1 - 95
+    // P0 - 89
+    // P1 - 86
     // P2 - 78
-    // P3 - 87
+    // P3 - 81
     clickSubmitLeftovers(wrapper); // p2: +2
     // ENDGAME
-    // P0 - 95
-    // P1 - 95
+    // P0 - 89
+    // P1 - 86
     // P2 - 80
-    // P3 - 87
+    // P3 - 81
     clickSubmitLeftovers(wrapper);// p2: +2
     // ENDGAME
-    // P0 - 95
-    // P1 - 95
+    // P0 - 89
+    // P1 - 86
     // P2 - 80
-    // P3 - 89
-    expect(getWinner(wrapper)).toEqual('Anna: 96 points, Nico: 96 points'); // Tie game P0: 95 and P1: 95 ---> Before leftovers P0: 96 and P1: 96 ---> Tie game: P0 and P1 (Anna and Nico
+    // P3 - 83
+    expect(getWinner(wrapper)).toEqual('Anna: 90 points, Nico: 90 points'); // Tie game P0: 90 and P1: 90 ---> Before leftovers P0: 87 and P1: 87 ---> Tie game: P0 and P1 (Anna and Nico
     clickUndoMultipleTimes(wrapper, 31);
     // UNDO TO THE BEGINNING OF THE GAME
     expect(getTotalCell(grid, 0)).toEqual('0');
@@ -545,6 +554,9 @@ describe('Game', () => {
 			adds modifiers tooltip to the tiles in the TableCells;`, () => {
     const wrapper = mount(<ScrabbleScoreKeeper />);
     fillPlayers(wrapper, 2);
+    typeInputBox(wrapper, 'reapers');
+    clickLetterModifier(wrapper, 3, 'double-word');
+    clickEndTurn(wrapper);
     typeInputBox(wrapper, 'reapers'); // p0: 8
     clickLetterModifier(wrapper, 3, 'triple-word');
     expect(getLetterModifier(wrapper, 3)).toEqual('triple-word');
@@ -560,8 +572,8 @@ describe('Game', () => {
     expect(getLetterModifier(wrapper, 5)).toEqual(null);
     clickAddWord(wrapper);
     const grid = wrapper.find('ScoreGrid');
-    expect(getTableLetterModifier(grid, 0, 0, 0, 0)).toEqual('triple-letter'); // (grid, moveIndex, playerIndex, wordIndex, letterIndex)
-    expect(getTableLetterModifier(grid, 0, 0, 0, 1)).toEqual(null);
+    expect(getTableLetterModifier(grid, 0, 1, 0, 0)).toEqual('triple-letter'); // (grid, moveIndex, playerIndex, wordIndex, letterIndex)
+    expect(getTableLetterModifier(grid, 0, 1, 0, 1)).toEqual(null);
   });
 
   it("changes languages: ru, fr; can't type other characters exept the current language", () => {
@@ -578,5 +590,17 @@ describe('Game', () => {
     expect(getCurrentLanguage(wrapper2)).toEqual('fr');
     typeInputBox(wrapper2, 'фываqk');
     checkLetterTiles(wrapper2, ['Q8', 'K10']);
+  });
+
+  it("firts word can't be submitted if the star/double-word modifier wasn't chosen", () => {
+    const wrapper = mount(<ScrabbleScoreKeeper />);
+    fillPlayers(wrapper, 2);
+    typeInputBox(wrapper, 'ourie');
+    expect(checkInstructionMessage(wrapper)).toEqual("Click on the tile that is on the double word prime square");
+    expect(checkIfButtonDisabled(wrapper, /end turn/i)).toEqual(true);
+    clickLetterModifier(wrapper, 2, 'double-word');
+    expect(checkIfButtonDisabled(wrapper, /end turn/i)).toEqual(false);
+    expect(checkHiddenInstructionMessage(wrapper)).toEqual(true);
+    
   });
 });
