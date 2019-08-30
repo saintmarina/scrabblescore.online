@@ -88,7 +88,8 @@ X 51. instructions:
 X 52. on arrow key even preventDefault()
 X 53. linting
 X 54. tests all green
-X 44. Put description that google can pick up, scoring work according to the official rules 
+X 55. Put description that google can pick up, scoring work according to the official rules 
+X 56. Add meta-description for Google
 
 
 
