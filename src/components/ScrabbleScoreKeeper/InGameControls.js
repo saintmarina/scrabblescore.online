@@ -119,7 +119,7 @@ class InGameControls extends React.Component {
     };
 
     return (
-      <form className={isFirstTurn ? 'first-turn' : null}>
+      <form className={isFirstTurn ? 'first-turn' : null} onSubmit={(e) => e.preventDefault()} >
         <ScrabbleInputBox {...props} />
         <div className={`instruction-message ${isInstructionShown ? "" : "hide"}`}> 
           Click on the tile that is on the double word prime square
