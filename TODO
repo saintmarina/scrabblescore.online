@@ -97,9 +97,8 @@ X 59. Scrolled up when passing/undo
 61. Blank tile on modifier
 62. leftover row is empty at the end of the game 
 X 63. button for new game
-64. when clicking on undo do no refocus
-65. firefox has react icon
-66. send event to amplitude when users respond to resume game option
+X 64. when clicking on undo do no refocus
+65. send event to amplitude when users respond to resume game option
 
 
 
