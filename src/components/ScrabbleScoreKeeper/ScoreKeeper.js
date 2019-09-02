@@ -1,5 +1,4 @@
 import React from 'react';
-import { isInProduction } from '../../logic/util';
 import Game from '../../logic/game';
 import ScoreGrid from '../ScoreGrid/ScoreGrid';
 import ScoreGridMobile from '../ScoreGrid/ScoreGridMobile';
@@ -13,7 +12,7 @@ class ScoreKeeper extends React.Component {
     this.handleUndo = this.handleUndo.bind(this);
     this.handleSetGame = this.handleSetGame.bind(this);
     this.renderWinner = this.renderWinner.bind(this);
-    this.beforeUnload = this.beforeUnload.bind(this);
+
     const { playerNames } = this.props;
     const restoredState = JSON.parse(window.localStorage.getItem('ScoreKeeperState'));
     this.state = restoredState
@@ -25,22 +24,6 @@ class ScoreKeeper extends React.Component {
           game: Game.createNewGame(playerNames.length),
           games: [],
         };
-  }
- 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.beforeUnload);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('beforeunload', this.beforeUnload);  
-  }
-
-  beforeUnload(e) {
-    const { games, game } = this.state;
-    if (isInProduction() && games.length !== 0 && !game.isGameOver()) {
-      e.preventDefault();
-      e.returnValue = '';
-    }
   }
 
   handleSetGame(currentGame) {
