@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { isInProduction } from '../../logic/util';
 import Game from '../../logic/game';
 import ScoreGrid from '../ScoreGrid/ScoreGrid';
@@ -16,10 +15,16 @@ class ScoreKeeper extends React.Component {
     this.renderWinner = this.renderWinner.bind(this);
     this.beforeUnload = this.beforeUnload.bind(this);
     const { playerNames } = this.props;
-    this.state = {
-      game: Game.createNewGame(playerNames.length),
-      games: [],
-    };
+    const restoredState = JSON.parse(window.localStorage.getItem('ScoreKeeperState'));
+    this.state = restoredState
+      ? {
+          game: Game.fromPlain(restoredState.game),
+          games: restoredState.games.map(Game.fromPlain),
+        }
+      : {
+          game: Game.createNewGame(playerNames.length),
+          games: [],
+        };
   }
  
   componentDidMount() {
@@ -39,10 +44,10 @@ class ScoreKeeper extends React.Component {
   }
 
   handleSetGame(currentGame) {
-    const { game } = this.state;
-    let { games } = this.state;
-    games = [...games.slice(), game];
-    this.setState({ games, game: currentGame });
+    const { game, games } = this.state;
+    const newState = {game: currentGame, games: [...games.slice(), game]};
+    this.setState(newState);
+    window.localStorage.setItem('ScoreKeeperState', JSON.stringify(newState));
   }
 
   handleUndo() {
@@ -50,7 +55,6 @@ class ScoreKeeper extends React.Component {
     const previousGames = games.slice(0, -1);
     const game = games[games.length - 1];
     this.setState({ game, games: previousGames });
-
   }
 
   renderWinner() {
@@ -59,6 +63,7 @@ class ScoreKeeper extends React.Component {
     const turnBeforeLeftOvers = game.leftOversTurnNumber - 1;
     const winners = game.getWinners();
     const winnersTie = game.getWinners(turnBeforeLeftOvers);
+    /* XXX TODO CLEANUP GAME STATE */
     if (winners.length > 1) {
       return winnersTie.map(winnerIndex => (winnersTie.length > 1
         ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points`
@@ -84,16 +89,12 @@ class ScoreKeeper extends React.Component {
       }
     };
 
-     function back() {
-      window.history.back()
-    }
-
     return (
       <div className="score-keeper">
         <div className="container">
-          <div id="small-logo" href="logo" onClick={() => back()}>
+          <a id="small-logo" href="/">
             <img src="logo.png" alt="Scrabble score logo"/>
-          </div>
+          </a>
           <h1 className="title">Scrabble Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
@@ -140,15 +141,5 @@ class ScoreKeeper extends React.Component {
     );
   }
 }
-
-ScoreKeeper.propTypes = {
-  playerNames: PropTypes.arrayOf(PropTypes.string),
-  language: PropTypes.string,
-};
-
-ScoreKeeper.defaultProps = {
-  playerNames: ['Player 1', 'Player 2'],
-  language: 'en',
-};
 
 export default ScoreKeeper;

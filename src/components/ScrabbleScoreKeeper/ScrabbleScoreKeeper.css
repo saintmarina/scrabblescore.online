@@ -1,15 +1,15 @@
-div#small-logo, div#small-logo img {
+#small-logo, #small-logo img {
   display: block;
   cursor: pointer;
   width: 212px;
   height: 42px;
 }
 
-div#small-logo {
+#small-logo {
   margin: 20px 0 40px 0;
 }
 
-.mobile div#small-logo {
+.mobile #small-logo {
   margin: 15px auto;
 }
 

@@ -12,12 +12,26 @@ class ScrabbleScoreKeeper extends React.Component {
     this.handleGameStart = this.handleGameStart.bind(this);
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
+    this.constructor.maybeResetLocalStorage();
+    const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
     this.state = {
-      playerNames: [],
-      language: '',
+      playerNames: restoredState ? restoredState.playerNames  : [],
+      language: 'en',
       width: 10,
     };
   }
+
+  static maybeResetLocalStorage() {
+    if (!window.localStorage.getItem('ScrabbleScoreKeeperState'))
+      return;
+    
+    if (window.confirm('You have a game in progress.\nWould you like to resume it?'))
+      return;
+
+    window.localStorage.removeItem('ScrabbleScoreKeeperState');
+    window.localStorage.removeItem('ScoreKeeperState');
+  }
+
 
   componentDidMount() {
     /* - pushState() allows to modifiy browser history entries;
@@ -47,7 +61,7 @@ class ScrabbleScoreKeeper extends React.Component {
 
   handlePopState(event) {
    const stateObj = event.state;
-   this.setState({playerNames:stateObj.playerNames})
+   this.setState({playerNames: stateObj.playerNames})
   }
 
   handleWindowSizeChange() {
@@ -58,13 +72,19 @@ class ScrabbleScoreKeeper extends React.Component {
     logEvent('start-game', {'player-names': playerNames, 'language': language});
     window.history.pushState({ playerNames: playerNames }, null)
     this.setState({ playerNames, language });
+
+    window.localStorage.setItem('ScrabbleScoreKeeperState', JSON.stringify({playerNames}))
   }
 
   renderGame(isMobile) {
     const { playerNames, language } = this.state;
     return playerNames.length === 0
-      ? <GameSettings onGameStart={this.handleGameStart}/>
-      : <ScoreKeeper playerNames={playerNames} language={language} isMobile={isMobile} />;
+      ? <GameSettings onGameStart={this.handleGameStart} />
+      : <ScoreKeeper
+          playerNames={playerNames}
+          language={language}
+          isMobile={isMobile}
+        />;
   }
 
   render() {

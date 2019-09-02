@@ -90,6 +90,11 @@ X 53. linting
 X 54. tests all green
 X 55. Put description that google can pick up, scoring work according to the official rules 
 X 56. Add meta-description for Google
+X 57. First turn disappeared: Prevent form from submission
+58. Closing tabs on mobile ? Maybe use LocalStorage to save current game
+59. Scrolled up when passing/undo
+60. Screen stays on
+61. Blank tile on modifier
 
 
 

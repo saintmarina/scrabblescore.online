@@ -12,6 +12,10 @@ class Turn {
     return new Turn([], false);
   }
 
+  static fromPlain(obj) {
+    return new Turn(obj.words, obj.bingo)
+  }
+
   isEmpty() {
     return this.words.length === 0;
   }
@@ -39,16 +43,21 @@ class Turn {
 }
 
 export default class Game {
-  constructor(players, currentPlayerIndex, leftOversTurnNumber) {
+  constructor(playersTurns, currentPlayerIndex, leftOversTurnNumber) {
     this.currentPlayerIndex = currentPlayerIndex;
-    this.playersTurns = players;
+    this.playersTurns = playersTurns;
     this.leftOversTurnNumber = leftOversTurnNumber;
   }
 
   static createNewGame(numberOfPlayers) {
     const turn = Turn.empty();
-    const players = resizeArray([[turn]], numberOfPlayers, []);
-    return new Game(players, 0, null);
+    const playersTurns = resizeArray([[turn]], numberOfPlayers, []);
+    return new Game(playersTurns, 0, null);
+  }
+
+  static fromPlain(obj) {
+    const turns = obj.playersTurns.map(player => player.map(turn => Turn.fromPlain(turn)));
+    return new Game(turns, obj.currentPlayerIndex, obj.leftOversTurnNumber);
   }
 
   addWord(word) {
