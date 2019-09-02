@@ -12,10 +12,13 @@ class ScrabbleScoreKeeper extends React.Component {
     this.handleGameStart = this.handleGameStart.bind(this);
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
-    this.constructor.maybeResetLocalStorage();
-    const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
+
+    /*
+      DO NOT CHANGE INITIAL STATE:
+      the initial rendering of the component and the static rendering must be the same
+    */
     this.state = {
-      playerNames: restoredState ? restoredState.playerNames  : [],
+      playerNames: [],
       language: 'en',
       width: 10,
     };
@@ -47,6 +50,11 @@ class ScrabbleScoreKeeper extends React.Component {
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
+
+    this.constructor.maybeResetLocalStorage();
+    const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
+    if (restoredState)
+      this.setState({playerNames: restoredState.playerNames})
   }
 
   UNSAFE_componentWillMount() {
