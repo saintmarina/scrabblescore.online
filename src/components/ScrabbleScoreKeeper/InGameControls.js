@@ -76,8 +76,6 @@ class InGameControls extends React.Component {
   }
 
   handleEndTurn(e) {
-    e.preventDefault(); /* prevent form submission */
-
     const { currentWord } = this.state;
     let { game } = this.props;
     if (currentWord.value.length !== 0)
