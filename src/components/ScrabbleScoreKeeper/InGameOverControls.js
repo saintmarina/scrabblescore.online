@@ -96,6 +96,7 @@ class InGameOverControls extends React.Component {
               <div className="row">
                 <div className="col">
                   <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+                  <a href="/" className="btn word-submit-button new-game">NEW GAME</a>
                 </div>
               </div>
             </div>
