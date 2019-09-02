@@ -24,13 +24,19 @@ class InGameControls extends React.Component {
     const { isMobile } = this.props;
     const { currentWord } = this.state;
     
-    if (!isMobile) return 
-    currentWord === emptyWord ? scrollToTop() : scrollToMiddle()
+    if (!isMobile)
+      return;
+
+    if (currentWord === emptyWord)
+      scrollToTop();
+    else
+      scrollToMiddle();
   }
 
   componentDidMount() {
-    if (this.input.current) this.input.current.focus();
-    this._scroll()
+    if (this.input.current)
+      this.input.current.focus();
+    this._scroll();
   }
 
   onSetGame(game) {
@@ -41,7 +47,8 @@ class InGameControls extends React.Component {
 
   resetCurrentWord() {
     this.setState({ currentWord: emptyWord });
-    if (this.input.current) this.input.current.focus();
+    if (this.input.current)
+      this.input.current.focus();
   }
 
   handleChange(word) {
@@ -69,10 +76,12 @@ class InGameControls extends React.Component {
   }
 
   handleEndTurn(e) {
+    e.preventDefault(); /* prevent form submission */
+
     const { currentWord } = this.state;
     let { game } = this.props;
-    e.preventDefault(); /* prevent form submission */
-    game = currentWord.value.length !== 0 ? game.addWord(currentWord) : game;
+    if (currentWord.value.length !== 0)
+      game = game.addWord(currentWord);
     this.onSetGame(game.endTurn());
     this._scroll();
 
