@@ -60,7 +60,6 @@ class InGameControls extends React.Component {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
-    this._scroll();
 
     logEvent('undo');
   }
