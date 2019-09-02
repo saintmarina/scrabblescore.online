@@ -20,23 +20,22 @@ class InGameControls extends React.Component {
     };
   }
 
-  _scroll() {
+  _scroll(where='middle') {
     const { isMobile } = this.props;
-    const { currentWord } = this.state;
     
     if (!isMobile)
       return;
 
-    if (currentWord === emptyWord)
-      scrollToTop();
-    else
+    if (where === 'middle')
       scrollToMiddle();
+    else
+      scrollToTop();
   }
 
   componentDidMount() {
     if (this.input.current)
       this.input.current.focus();
-    this._scroll();
+    this._scroll('top');
   }
 
   onSetGame(game) {

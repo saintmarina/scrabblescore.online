@@ -80,9 +80,11 @@ class ScoreKeeper extends React.Component {
       onSetGame: this.handleSetGame,
       onUndo: this.handleUndo,
       undoDisabled: games.length === 0,
+      isMobile,
       game,
       language,
     };
+
     const toDisplayCallPlayerToAction = () => {
       if (!isMobile) {
         return  <CallPlayerToAction game={game} playerNames={playerNames} isMobile={isMobile}/>
@@ -109,7 +111,7 @@ class ScoreKeeper extends React.Component {
             )
               }
           {!game.isGameOver()
-            ? <InGameControls {...Object.assign(controlProps, {isMobile})} />
+            ? <InGameControls {...controlProps} />
             : <InGameOverControls {...controlProps} />
               }
           <h3>How to use Scrabble Score Online:</h3>
