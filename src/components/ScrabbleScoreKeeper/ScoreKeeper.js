@@ -62,14 +62,13 @@ class ScoreKeeper extends React.Component {
     const { playerNames } = this.props;
     const turnBeforeLeftOvers = game.leftOversTurnNumber - 1;
     const winners = game.getWinners();
-    const winnersTie = game.getWinners(turnBeforeLeftOvers);
-    /* XXX TODO CLEANUP GAME STATE */
     if (winners.length > 1) {
+      const winnersTie = game.getWinners(turnBeforeLeftOvers);
       return winnersTie.map(winnerIndex => (winnersTie.length > 1
         ? `${playerNames[winnerIndex]}: ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points`
         : `${playerNames[winnerIndex]} won with ${game.getTotalScore(winnerIndex, turnBeforeLeftOvers)} points!`)).join(', ');
     }
-    return `${playerNames[[...game.getWinners()]]} won with ${game.getTotalScore([...game.getWinners()])} points!`;
+    return `${playerNames[winners[0]]} won with ${game.getTotalScore(winners[0])} points!`;
   }
 
   render() {

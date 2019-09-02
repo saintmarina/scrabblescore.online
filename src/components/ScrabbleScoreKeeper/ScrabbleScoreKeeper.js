@@ -32,7 +32,6 @@ class ScrabbleScoreKeeper extends React.Component {
     window.localStorage.removeItem('ScoreKeeperState');
   }
 
-
   componentDidMount() {
     /* - pushState() allows to modifiy browser history entries;
        - popstate listens for changes in browser history,like back/front button click;
