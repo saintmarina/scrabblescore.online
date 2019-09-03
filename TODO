@@ -98,7 +98,7 @@ X 59. Scrolled up when passing/undo
 62. leftover row is empty at the end of the game 
 X 63. button for new game
 X 64. when clicking on undo do no refocus
-65. send event to amplitude when users respond to resume game option
+X 65. send event to amplitude when users respond to resume game option
 
 
 

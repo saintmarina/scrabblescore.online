@@ -28,9 +28,10 @@ class ScrabbleScoreKeeper extends React.Component {
     if (!window.localStorage.getItem('ScrabbleScoreKeeperState'))
       return;
     
-    if (window.confirm('You have a game in progress.\nWould you like to resume it?'))
+    if (window.confirm('You have a game in progress.\nWould you like to resume it?')) {
       logEvent('game-resume')
       return;
+    }
 
     window.localStorage.removeItem('ScrabbleScoreKeeperState');
     window.localStorage.removeItem('ScoreKeeperState');
