@@ -11,7 +11,7 @@ class WordInTiles extends React.Component {
           key={i}
           letter={letter}
           modifier={word.modifiers[i]}
-          score={scrabbleScore(letter, [null], language)}
+          score={scrabbleScore(letter, [[]], language)}
         />
       );
       return tile;

@@ -25,7 +25,7 @@ class ScrabbleInputBox extends React.Component {
     const { language, word, onChange } = this.props;
     const input = e.target.value.substring(0,15); /* maxLength does not always work on Android */
     const result = input.split('').map(letter => (isLetterAllowed(letter, language) ? letter : ''));
-    const modifiers = resizeArray(word.modifiers, result.length, null);
+    const modifiers = resizeArray(word.modifiers, result.length, []);
     onChange({ value: result.join(''), modifiers });
     this.constructor._clickOnElementByClass('hidden-input');
   }
@@ -83,7 +83,7 @@ class ScrabbleInputBox extends React.Component {
               <ScrabbleTile
                 onClick={this.handleTileClick}
                 letter={letter}
-                score={scrabbleScore(letter, [null], language)}
+                score={scrabbleScore(letter, [[]], language)}
                 modifier={word.modifiers[letterIndex]}
               />
             </WithModifierPopover>

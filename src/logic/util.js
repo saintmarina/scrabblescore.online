@@ -26,20 +26,25 @@ export function scrabbleScore(word, modifiers, language) {
 
   word.split('').forEach((letter, i) => {
     let score = scoreListsMap[language].scores[letter.toLowerCase()];
-    // eslint-disable-next-line
-    switch (modifiers[i]) {
-      case 'blank': score *= 0; break;
-      case 'double-letter': score *= 2; break;
-      case 'triple-letter': score *= 3; break;
+    for (let j=0; j < modifiers[i].length; j++) {
+      // eslint-disable-next-line
+      switch (modifiers[i][j]) {
+        case 'blank': score *= 0; break;
+        case 'double-letter': score *= 2; break;
+        case 'triple-letter': score *= 3; break;
+      }
     }
     result += score;
-  });
+  })
+  
 
   modifiers.forEach((modifier) => {
+    for (let j=0; j < modifier.length; j++) {
     // eslint-disable-next-line
-    switch (modifier) {
-      case 'double-word': result *= 2; break;
-      case 'triple-word': result *= 3; break;
+      switch (modifier[j]) {
+        case 'double-word': result *= 2; break;
+        case 'triple-word': result *= 3; break;
+      }
     }
   });
   return result;

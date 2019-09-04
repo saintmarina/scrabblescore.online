@@ -5,10 +5,10 @@ function ScrabbleTile(props) {
   const {
     modifier, letter, score, onClick,
   } = props;
-  const modifierClass = modifier === null ? '' : modifier;
+  const modifierClass = modifier === [] ? '' : modifier.join(' ');
   return (
     <span className={`scrabble-letter ${modifierClass}`} role="button" onClick={onClick} onKeyDown={onClick}>
-      {modifier
+      {modifier.length !== 0
         ? <span className="tile-modifier"></span>
         : null
       }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
 import ModifierTile from './ModifierTile';
+import { indexesOf } from '../../logic/util';
 
 class WithModifierPopover extends React.Component {
   constructor(props) {
@@ -8,17 +9,23 @@ class WithModifierPopover extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
-      modifier: null,
+      modifiers: [],
       tooltipShown: false,
     };
   }
 
-  handleClick(modifiertype, e) {
-    const { modifier } = this.state;
+  handleClick(modifier, e) {
+    const { modifiers } = this.state;
     const { onChange } = this.props;
-    const modifierValue = (modifiertype === modifier) ? null : modifiertype;
-    this.setState({ modifier: modifierValue, tooltipShown: false });
-    onChange(modifierValue);
+    const modifiersCopy = modifiers.slice();
+
+    const indexes = indexesOf(modifiersCopy, modifier);
+    if (indexes.length > 0)
+      modifiersCopy.splice(indexes[0], 1)
+    else
+      modifiersCopy.push(modifier)
+    this.setState({ modifiers: modifiersCopy, tooltipShown: false });
+    onChange(modifiersCopy);
     e.preventDefault();
     e.stopPropagation();
   }

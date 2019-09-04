@@ -3,20 +3,20 @@ import { resizeArray, scrabbleScore, isLetterAllowed } from './Util';
 
 describe('scrabbleScore', () => {
   test('counts score without modifiers', () => {
-    const word = 'happy'; // 13
-    const modifiers = [null, null, null, null, null]; // 15
+    const word = 'happy'; // 15
+    const modifiers = [[], [], [], [], []]; 
     expect(scrabbleScore(word, modifiers, 'en')).toEqual(15);
   });
 
   test('counts correctly with any modifier', () => {
     const longWord = 'nonplussed'; // 13
-    const modifiers = ['triple-word', 'double-letter', 'triple-letter', null, 'triple-letter', null, 'triple-letter', null, 'double-word', 'blank']; // 108
+    const modifiers = [['triple-word'], ['double-letter'], ['triple-letter'], [], ['triple-letter'], [], ['triple-letter'], [], ['double-word'], ['blank']]; // 108
     expect(scrabbleScore(longWord, modifiers, 'en')).toEqual(108);
   });
 
   test('calculates French and Russian', () => {
-    expect(scrabbleScore('ложка', ['double-letter', null, 'triple-letter', null, 'triple-word'], 'ru')).toEqual(69);
-    expect(scrabbleScore('yeux', ['double-letter', 'blank', 'triple-word', 'triple-letter'], 'fr')).toEqual(153);
+    expect(scrabbleScore('ложка', [['double-letter'], [], ['triple-letter'], [], ['triple-word']], 'ru')).toEqual(69);
+    expect(scrabbleScore('yeux', [['double-letter'], ['blank'], ['triple-word'], ['triple-letter']], 'fr')).toEqual(153);
   });
 });
 
@@ -37,6 +37,15 @@ describe('resizeArray', () => {
     resizeArray(tripleA, 4, 'a');
     expect(tripleA).toEqual(['a', 'a', 'a']);
   });
+
+  test("calculates correctly if two modifiers (blank and something else) are added", () => {
+    const word = 'happy'; // 15
+    let modifiers = [['double-letter', 'blank'], [], [], [], []]; 
+    expect(scrabbleScore(word, modifiers, 'en')).toEqual(11);
+    modifiers = [['double-letter', 'blank'], ['double-word'], [], [], []]; 
+    expect(scrabbleScore(word, modifiers, 'en')).toEqual(22);
+  })
+
 });
 
 describe('isLetterAllowed', () => {
