@@ -12,6 +12,7 @@ class App extends React.Component {
     this.handleGameStart = this.handleGameStart.bind(this);
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
+    this.handleResetGame = this.handleResetGame.bind(this);
 
     /*
       DO NOT CHANGE INITIAL STATE:
@@ -88,12 +89,16 @@ class App extends React.Component {
 
     window.localStorage.setItem('ScrabbleScoreKeeperState', JSON.stringify({playerNames}))
   }
+  handleResetGame() {
+    this.setState({playerNames: []})
+  }
 
   renderGame(isMobile) {
     const { playerNames, language } = this.state;
     return playerNames.length === 0
       ? <GameSettings onGameStart={this.handleGameStart} />
       : <ScoreKeeper
+          onNewGame={this.handleResetGame}
           playerNames={playerNames}
           language={language}
           isMobile={isMobile}

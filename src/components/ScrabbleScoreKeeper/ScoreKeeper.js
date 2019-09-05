@@ -56,12 +56,13 @@ class ScoreKeeper extends React.Component {
 
   render() {
     const { game, games } = this.state;
-    const { playerNames, language, isMobile } = this.props;
+    const { playerNames, language, isMobile, onNewGame } = this.props;
 
     const controlProps = {
       onSetGame: this.handleSetGame,
       onUndo: this.handleUndo,
       undoDisabled: games.length === 0,
+      onNewGame,
       isMobile,
       game,
       language,
@@ -118,6 +119,9 @@ class ScoreKeeper extends React.Component {
             Players will be then asked to enter their leftover tiles.
             Players with leftover tiles get their leftover points deducted from their score.
             Players with no leftovers collect the leftover points of all other players.
+          </li>
+          <li>
+            If you want to start a new game, click on NEW GAME in the end of the game or click on the logo.
           </li>
         </ul>
         </div>

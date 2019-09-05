@@ -1,5 +1,6 @@
 import React from 'react';
 import { scrabbleScore, logEvent } from '../../logic/util';
+import Game from '../../logic/game';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
@@ -10,6 +11,7 @@ class InGameOverControls extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleUndo = this.handleUndo.bind(this);
     this.handleLeftOvers = this.handleLeftOvers.bind(this);
+    this.handleNewGame = this.handleNewGame.bind(this);
     this.input = React.createRef();
     this.state = {
       currentWord: emptyWord,
@@ -37,6 +39,18 @@ class InGameOverControls extends React.Component {
     const { language } = this.props;
     const currentWord = { ...word, score: -scrabbleScore(word.value, word.modifiers, language) };
     this.setState({ currentWord });
+  }
+
+  handleNewGame() {
+    const { onSetGame, game, onNewGame } = this.props;
+    
+    window.localStorage.removeItem('ScoreKeeperState');
+    window.localStorage.removeItem('ScrabbleScoreKeeperState');
+
+    onSetGame(Game.createNewGame(game.playersTurns.length))
+    onNewGame();
+
+    logEvent('new-game')
   }
 
   handleLeftOvers(e) {
@@ -96,7 +110,7 @@ class InGameOverControls extends React.Component {
             <div className="buttons">
               <div className="row">
                 <div className="col">
-                  <a href="/" className="btn">NEW GAME</a>
+                  <button onClick={this.handleNewGame} type="button" className="btn" disabled={undoDisabled}>NEW GAME</button>
                 </div>
               </div>
               <div className="row">
