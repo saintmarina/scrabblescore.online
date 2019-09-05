@@ -109,8 +109,6 @@ class InGameControls extends React.Component {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
     this._scroll();
-    if (process.env.NODE_ENV !== 'test')
-      noSleep.disable()
 
     logEvent('end-game', {'num-of-turns': game.playersTurns.length,
                           'game-turns': game.playersTurns.map((turns) => ({turns: turns}))});
