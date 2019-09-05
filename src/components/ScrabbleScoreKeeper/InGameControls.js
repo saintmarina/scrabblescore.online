@@ -1,8 +1,10 @@
 import React from 'react';
 import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
+import NoSleep from 'nosleep.js';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
+const noSleep = new NoSleep();
 
 class InGameControls extends React.Component {
   constructor(props) {
@@ -22,6 +24,14 @@ class InGameControls extends React.Component {
 
   _scroll(where='middle') {
     const { isMobile } = this.props;
+    if (process.env.NODE_ENV !== 'test')
+      /*
+        NoSleep requires to be called from an event handler
+        So ideally we would want to put it into the Start Game event handler
+        But if we put noSleep into the Start game event, noSleep won't be called when the user resumes game
+        Thus, we locate it in scroll function, which is beeing executed when user interacts with buttons
+      */
+      noSleep.enable() 
     
     if (!isMobile)
       return;
@@ -99,6 +109,8 @@ class InGameControls extends React.Component {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
     this._scroll();
+    if (process.env.NODE_ENV !== 'test')
+      noSleep.disable()
 
     logEvent('end-game', {'num-of-turns': game.playersTurns.length,
                           'game-turns': game.playersTurns.map((turns) => ({turns: turns}))});

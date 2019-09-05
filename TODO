@@ -93,8 +93,8 @@ X 56. Add meta-description for Google
 X 57. First turn disappeared: Prevent form from submission
 X 58. Closing tabs on mobile ? Maybe use LocalStorage to save current game
 X 59. Scrolled up when passing/undo
-60. Screen stays on (should use https://github.com/richtr/NoSleep.js)
-61. Blank tile on modifier
+X 60. Screen stays on (should use https://github.com/richtr/NoSleep.js)
+X 61. Blank tile on modifier
 62. leftover row is empty at the end of the game 
 X 63. button for new game
 X 64. when clicking on undo do no refocus
