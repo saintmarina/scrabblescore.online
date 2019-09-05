@@ -101,6 +101,7 @@ class InGameControls extends React.Component {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
     this._scroll();
+    this.input.current.focus();
 
     logEvent('toggle-bingo');
   }
