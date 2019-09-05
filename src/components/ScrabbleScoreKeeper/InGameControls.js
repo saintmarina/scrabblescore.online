@@ -112,7 +112,7 @@ class InGameControls extends React.Component {
     const isEndGameDisabled = game.currentPlayerIndex !== 0 || currentWord.value !== '' || game.getCurrentTurn().score > 0 || game.playersTurns[game.getCurrentPlayerIndex()].length === 1;
     const isBingoDisabled = ![...game.getCurrentTurn().words, currentWord].some( word => word.value.length >= 7 )
 
-    const isModifierChosen = currentWord.modifiers.some(modifier => modifier !== []);
+    const isModifierChosen = currentWord.modifiers.some(modifier => modifier.length !== 0);
     const isInstructionShown = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0 && !isModifierChosen && currentWord.value !== ''
     const isFirstTurn = game.getCurrentTurnNumber() === 0 && game.getCurrentPlayerIndex() === 0
     const isEndTurnDisabled = !isModifierChosen && !isCurrentWordEmpty && isFirstTurn;

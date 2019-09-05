@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import ScrabbleScoreKeeper from './ScrabbleScoreKeeper/ScrabbleScoreKeeper';
+import App from './ScrabbleScoreKeeper/App';
 
 const Nightmare = require('nightmare');
 
@@ -89,11 +89,9 @@ describe('Game', () => {
 
     wrapper.find('button').simulate('click');
   }
-
   function chooseLanguage(wrapper, language) {
     wrapper.find('#language-select').simulate('change', { target: { value: language } });
   }
-
   const typeInputBox = (wrapper, input) => wrapper.find('.scrabble-input-box input').simulate('change', { target: { value: input } });
   const clickButton = (wrapper, regex) => wrapper.find('.btn').filterWhere(n => n.text().match(regex)).simulate('click');
   const clickAddWord = wrapper => clickButton(wrapper, /add.*word/i);
@@ -146,6 +144,9 @@ describe('Game', () => {
 
   /* .tap(n => console.log(n.debug())) */
 
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
 
   it('fills Players', () => {
     const wrapper = mount(<App />);
@@ -559,37 +560,39 @@ describe('Game', () => {
     clickEndTurn(wrapper);
     typeInputBox(wrapper, 'reapers'); // p0: 8
     clickLetterModifier(wrapper, 3, 'triple-word');
-    expect(getLetterModifier(wrapper, 3)).toEqual('triple-word');
+    expect(getLetterModifier(wrapper, 3)).toEqual(['triple-word']);
     clickLetterModifier(wrapper, 6, 'double-letter');
-    expect(getLetterModifier(wrapper, 3)).toEqual('triple-word');
+    expect(getLetterModifier(wrapper, 3)).toEqual(['triple-word']);
     clickLetterModifier(wrapper, 0, 'triple-letter');
-    expect(getLetterModifier(wrapper, 0)).toEqual('triple-letter');
-    clickLetterModifier(wrapper, 2, 'double-word');
-    expect(getLetterModifier(wrapper, 2)).toEqual('double-word');
-    clickLetterModifier(wrapper, 5, 'blank');
-    expect(getLetterModifier(wrapper, 5)).toEqual('blank');
-    clickLetterModifier(wrapper, 5, 'blank');
-    expect(getLetterModifier(wrapper, 5)).toEqual(null);
+    expect(getLetterModifier(wrapper, 0)).toEqual(['triple-letter']);
+    clickLetterModifier(wrapper, 2, ['double-word']);
+    expect(getLetterModifier(wrapper, 2)).toEqual(['double-word']);
+    clickLetterModifier(wrapper, 5, ['blank']);
+    expect(getLetterModifier(wrapper, 5)).toEqual(['blank']);
+    clickLetterModifier(wrapper, 5, ['blank']);
+    expect(getLetterModifier(wrapper, 5)).toEqual([]);
     clickAddWord(wrapper);
     const grid = wrapper.find('ScoreGrid');
-    expect(getTableLetterModifier(grid, 0, 1, 0, 0)).toEqual('triple-letter'); // (grid, moveIndex, playerIndex, wordIndex, letterIndex)
-    expect(getTableLetterModifier(grid, 0, 1, 0, 1)).toEqual(null);
+    expect(getTableLetterModifier(grid, 0, 1, 0, 0)).toEqual(['triple-letter']); // (grid, moveIndex, playerIndex, wordIndex, letterIndex)
+    expect(getTableLetterModifier(grid, 0, 1, 0, 1)).toEqual([]);
   });
 
-  it("changes languages: ru, fr; can't type other characters exept the current language", () => {
+  it("changes languages: ru; can't type other characters exept the current language", () => {
     const wrapper1 = mount(<App />);
     chooseLanguage(wrapper1, 'ru');
     fillPlayers(wrapper1, 2);
     expect(getCurrentLanguage(wrapper1)).toEqual('ru');
     typeInputBox(wrapper1, 'quizzifyф');
     checkLetterTiles(wrapper1, ['Ф10']);
+  });
 
-    const wrapper2 = mount(<App />);
-    chooseLanguage(wrapper2, 'fr');
-    fillPlayers(wrapper2, 2);
-    expect(getCurrentLanguage(wrapper2)).toEqual('fr');
-    typeInputBox(wrapper2, 'фываqk');
-    checkLetterTiles(wrapper2, ['Q8', 'K10']);
+  it("changes languages: fr; can't type other characters exept the current language", () => {
+    const wrapper = mount(<App />);
+    chooseLanguage(wrapper, 'fr');
+    fillPlayers(wrapper, 2);
+    expect(getCurrentLanguage(wrapper)).toEqual('fr');
+    typeInputBox(wrapper, 'фываqk');
+    checkLetterTiles(wrapper, ['Q8', 'K10']);
   });
 
   it("firts word can't be submitted if the star/double-word modifier wasn't chosen", () => {
@@ -602,5 +605,24 @@ describe('Game', () => {
     expect(checkIfButtonDisabled(wrapper, /end turn/i)).toEqual(false);
     expect(checkHiddenInstructionMessage(wrapper)).toEqual(true);
     
+  });
+
+  it("max number of modifers per letter is 2, one of them has to be 'blank' otherwise only one modifier allowed", () => {
+    const wrapper = mount(<App />);
+    fillPlayers(wrapper, 2);
+    typeInputBox(wrapper, 'ourie');
+    clickLetterModifier(wrapper, 3, 'double-word');
+    clickLetterModifier(wrapper, 3, 'blank');
+    expect(getLetterModifier(wrapper, 3)).toEqual(['blank', 'double-word']);
+    clickEndTurn(wrapper);
+    
+    const grid = wrapper.find('ScoreGrid');
+    expect(getTotalCell(grid, 0)).toEqual('8');
+
+    typeInputBox(wrapper, 'ourie');
+    clickLetterModifier(wrapper, 3, 'double-word');
+    clickLetterModifier(wrapper, 3, 'triple-word');
+    expect(getLetterModifier(wrapper, 3)).toEqual(['triple-word']);
+
   });
 });

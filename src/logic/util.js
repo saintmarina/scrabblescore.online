@@ -17,6 +17,24 @@ export function indexesOf(array, value) {
   return result;
 }
 
+function __toggleSingleModifier(oldModifiers, modifier) {
+  if (oldModifiers.length === 0)
+    return [modifier];
+  return (oldModifiers[0] === modifier) ? [] : [modifier];
+}
+
+export function toggleModifiers(oldModifiers, modifier) {
+  let modifiersA = oldModifiers.filter(mod => mod === 'blank');
+  let modifiersB = oldModifiers.filter(mod => mod !== 'blank');
+
+  if (modifier === 'blank')
+    modifiersA = __toggleSingleModifier(modifiersA, modifier);
+  else
+    modifiersB = __toggleSingleModifier(modifiersB, modifier);
+
+  return [...modifiersA, ...modifiersB];
+}
+
 export function isLetterAllowed(letter, language) {
   return letter.toLowerCase() in scoreListsMap[language].scores;
 }
@@ -37,7 +55,6 @@ export function scrabbleScore(word, modifiers, language) {
     result += score;
   })
   
-
   modifiers.forEach((modifier) => {
     for (let j=0; j < modifier.length; j++) {
     // eslint-disable-next-line

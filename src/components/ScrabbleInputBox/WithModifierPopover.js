@@ -1,7 +1,7 @@
 import React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
 import ModifierTile from './ModifierTile';
-import { indexesOf } from '../../logic/util';
+import { toggleModifiers } from '../../logic/util';
 
 class WithModifierPopover extends React.Component {
   constructor(props) {
@@ -17,15 +17,9 @@ class WithModifierPopover extends React.Component {
   handleClick(modifier, e) {
     const { modifiers } = this.state;
     const { onChange } = this.props;
-    const modifiersCopy = modifiers.slice();
-
-    const indexes = indexesOf(modifiersCopy, modifier);
-    if (indexes.length > 0)
-      modifiersCopy.splice(indexes[0], 1)
-    else
-      modifiersCopy.push(modifier)
-    this.setState({ modifiers: modifiersCopy, tooltipShown: false });
-    onChange(modifiersCopy);
+    const newModifiers = toggleModifiers(modifiers, modifier);
+    this.setState({ modifiers: newModifiers, tooltipShown: false });
+    onChange(newModifiers);
     e.preventDefault();
     e.stopPropagation();
   }
