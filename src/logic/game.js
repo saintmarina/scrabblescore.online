@@ -72,8 +72,7 @@ export default class Game {
       newGame = this._setTurn(this.currentPlayerIndex, this.getCurrentTurnNumber(), Turn.empty());
     }
     const newPlayerIndex = (this.currentPlayerIndex + 1) % this.playersTurns.length;
-    const players = this.isGameOver() && (this.getCurrentPlayer() === this.playersTurns[this.playersTurns.length - 1]) ? newGame.playersTurns
-      : newGame.playersTurns.map((history, playerIndex) => (playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history));
+    const players = newGame.playersTurns.map((history, playerIndex) => (playerIndex === newPlayerIndex ? [...history, Turn.empty()] : history));
     return new Game(players, newPlayerIndex, this.leftOversTurnNumber);
   }
 
@@ -98,7 +97,7 @@ export default class Game {
   }
 
   isMoveInGameOver(move) {
-    return this.isGameOver() && this.leftOversTurnNumber === move
+    return this.isGameOver() && move >= this.leftOversTurnNumber;
   }
 
   getReapers() {
@@ -122,7 +121,7 @@ export default class Game {
   distributeLeftOversToReapers(reapers, totalLeftOverScore) {
     let game = this;
     reapers.forEach((reaperIndex) => {
-      const turn = new Turn([{ value: '', modifiers: [], score: totalLeftOverScore }], false);
+      const turn = new Turn([{ value: '__reaped_leftovers__', modifiers: [], score: totalLeftOverScore}], false);
       game = game._setTurn(reaperIndex, this.leftOversTurnNumber, turn);
     });
     return game;

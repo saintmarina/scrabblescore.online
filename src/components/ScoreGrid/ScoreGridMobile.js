@@ -18,6 +18,7 @@ class ScoreGridMobile extends React.Component {
       }
       return true;
     };
+    const numRows = game.isGameOver() ? game.leftOversTurnNumber + 1 : game.getCurrentTurnNumber() + 1;
 
     const isCurrentPlayersTurn = (player, turnIndex) => player === game.getCurrentPlayer()
                                                       && player[turnIndex].isEmpty()
@@ -32,7 +33,7 @@ class ScoreGridMobile extends React.Component {
           </tr>
         </thead>
         <tbody key="tbody" className="tbody-rows">
-          {game.getCurrentPlayer().map((_, i) => {
+          {[...Array(numRows)].map((_, i) => {
             const moveRow = (
               <tr key={`moverow${i}`} className="move-row">
                 <td colSpan="2">
@@ -55,7 +56,7 @@ class ScoreGridMobile extends React.Component {
                         ? <table className="score-grid-cell"><tbody><tr><td>
                             <CallPlayerToAction game={game} playerNames={playerNames} isMobile />
                           </td></tr></tbody></table>
-                        : <ScoreGridCell turn={player[i]} language={language} game={game} />
+                        : <ScoreGridCell turn={player[i]} move={i} language={language} game={game} />
                       }
 
                     </td>

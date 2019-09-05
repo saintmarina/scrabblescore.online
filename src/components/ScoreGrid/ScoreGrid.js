@@ -7,6 +7,7 @@ function ScoreGrid(props) {
   const getTurnClass = (turn, currentTurn) => (
     turn === currentTurn ? 'player-turn active' : 'player-turn'
   );
+  const numRows = game.isGameOver() ? game.leftOversTurnNumber + 1 : game.getCurrentTurnNumber() + 1;
 
   return (
     <table className="table table-bordered score-grid-table" align="center">
@@ -24,7 +25,7 @@ function ScoreGrid(props) {
         </tr>
       </thead>
       <tbody className="tbody-rows">
-        {[...Array(game.getCurrentTurnNumber() + 1)].map((_, i) => (
+        {[...Array(numRows)].map((_, i) => (
           <tr className="turn-row" key={i}>
             <th className="move-number">{i + 1}</th>
             {game.playersTurns.map((player, j) => (
