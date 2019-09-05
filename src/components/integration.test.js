@@ -148,7 +148,7 @@ describe('Game', () => {
 
 
   it('fills Players', () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 4);
 
     expect(getNumberOfPlayers(wrapper)).toEqual(4);
@@ -159,7 +159,7 @@ describe('Game', () => {
   });
 
   it("if no name, prints 'Player ' + playerIndex", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     wrapper.find('button').simulate('click');
 
     expect(getNumberOfPlayers(wrapper)).toEqual(2);
@@ -168,7 +168,7 @@ describe('Game', () => {
   });
 
   it('disables Undo button, if no games played', () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 4);
     typeInputBox(wrapper, 'ouguiya');
     expect(checkIfButtonDisabled(wrapper, /undo/i)).toEqual(true);
@@ -179,7 +179,7 @@ describe('Game', () => {
   });
 
   it('disables Add Word button, if no letters typed', () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 4);
     expect(checkIfButtonDisabled(wrapper, /add.*word/i)).toEqual(true);
     typeInputBox(wrapper, 'ouguiya');
@@ -191,7 +191,7 @@ describe('Game', () => {
   });
 
   it("disables End Game button, if it's not the first player's turn and he didn't type any letters yet", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 2);
     expect(checkIfButtonDisabled(wrapper, /end.*game/i)).toEqual(true);
     typeInputBox(wrapper, 'quizzify');
@@ -206,7 +206,7 @@ describe('Game', () => {
   });
 
   it("if no leftovers typed inside input box, button will say 'submit no leftovers'", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 3);
 
 
@@ -230,7 +230,7 @@ describe('Game', () => {
   });
 
   it("if no word typed, End Game button displays 'PASS'", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 3);
     expect(getbuttonText(wrapper, 0)).toEqual('PASS');
     typeInputBox(wrapper, 'q');
@@ -238,14 +238,14 @@ describe('Game', () => {
   });
 
   it('types inside the scrabble input box', () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 3);
     typeInputBox(wrapper, 'quizzify');
     checkLetterTiles(wrapper, ['Q10', 'U1', 'I1', 'Z10', 'Z10', 'I1', 'F4', 'Y4']);
   });
 
   it("case insensitive and doesn't allow any characters except letters inside Scrabble Input Box", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 3);
     typeInputBox(wrapper, '!1q uetzAls=');
     checkLetterTiles(wrapper, ['Q10', 'U1', 'E1', 'T1', 'Z10', 'A1', 'L1', 'S1']);
@@ -256,7 +256,7 @@ describe('Game', () => {
 		currentPlayer: currnet player name/inGame & inGameOver sentence changes correctly;
 		currentWordScore: display score for current word;
 		unlimited undoes;`, () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 4);
 
     typeInputBox(wrapper, 'aalii'); // p0: 10
@@ -523,7 +523,7 @@ describe('Game', () => {
   });
 
   it('leftover on the last player', () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 3);
 
     clickPass(wrapper);
@@ -552,7 +552,7 @@ describe('Game', () => {
   it(`modifier tooltip works;
 			adds modifiers tooltip to the tiles in the InputBox;
 			adds modifiers tooltip to the tiles in the TableCells;`, () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 2);
     typeInputBox(wrapper, 'reapers');
     clickLetterModifier(wrapper, 3, 'double-word');
@@ -577,14 +577,14 @@ describe('Game', () => {
   });
 
   it("changes languages: ru, fr; can't type other characters exept the current language", () => {
-    const wrapper1 = mount(<ScrabbleScoreKeeper />);
+    const wrapper1 = mount(<App />);
     chooseLanguage(wrapper1, 'ru');
     fillPlayers(wrapper1, 2);
     expect(getCurrentLanguage(wrapper1)).toEqual('ru');
     typeInputBox(wrapper1, 'quizzifyф');
     checkLetterTiles(wrapper1, ['Ф10']);
 
-    const wrapper2 = mount(<ScrabbleScoreKeeper />);
+    const wrapper2 = mount(<App />);
     chooseLanguage(wrapper2, 'fr');
     fillPlayers(wrapper2, 2);
     expect(getCurrentLanguage(wrapper2)).toEqual('fr');
@@ -593,7 +593,7 @@ describe('Game', () => {
   });
 
   it("firts word can't be submitted if the star/double-word modifier wasn't chosen", () => {
-    const wrapper = mount(<ScrabbleScoreKeeper />);
+    const wrapper = mount(<App />);
     fillPlayers(wrapper, 2);
     typeInputBox(wrapper, 'ourie');
     expect(checkInstructionMessage(wrapper)).toEqual("Click on the tile that is on the double word prime square");

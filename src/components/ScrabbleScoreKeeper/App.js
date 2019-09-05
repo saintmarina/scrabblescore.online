@@ -2,11 +2,11 @@ import ReactGA from 'react-ga';
 import React from 'react';
 import GameSettings from '../GameSettings/GameSettings';
 import ScoreKeeper from './ScoreKeeper';
-import './ScrabbleScoreKeeper.css';
+import './App.css';
 import { logEvent } from '../../logic/util';
 
 
-class ScrabbleScoreKeeper extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleGameStart = this.handleGameStart.bind(this);
@@ -26,6 +26,9 @@ class ScrabbleScoreKeeper extends React.Component {
 
   static maybeResetLocalStorage() {
     if (!window.localStorage.getItem('ScrabbleScoreKeeperState'))
+      return;
+
+    if (process.env.NODE_ENV === 'test')
       return;
     
     if (window.confirm('You have a game in progress.\nWould you like to resume it?')) {
@@ -52,6 +55,7 @@ class ScrabbleScoreKeeper extends React.Component {
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
+
 
     this.constructor.maybeResetLocalStorage();
     const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
@@ -107,4 +111,4 @@ class ScrabbleScoreKeeper extends React.Component {
   }
 }
 
-export default ScrabbleScoreKeeper;
+export default App;
