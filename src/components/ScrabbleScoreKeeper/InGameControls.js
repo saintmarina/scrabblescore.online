@@ -143,12 +143,12 @@ class InGameControls extends React.Component {
         <div className="buttons">
          <div className="row">
             <div className="col">
-              <button onClick={this.handleEndTurn} type="submit" className="btn pass-endturn-button" disabled={isEndTurnDisabled}>{endTurnButtonText}</button>
+              <button onClick={this.handleEndTurn} type="submit" className="btn" disabled={isEndTurnDisabled}>{endTurnButtonText}</button>
             </div>
           </div>
           <div className="row">
             <div className="col">
-              <button onClick={this.handleAddWord} type="button" className="btn word-submit-button add-word" disabled={currentWord.value === '' || isFirstTurn}>+ ADD A WORD</button>
+              <button onClick={this.handleAddWord} type="button" className="btn middle-scroll-anchor" disabled={currentWord.value === '' || isFirstTurn}>+ ADD A WORD</button>
             </div>
             <div className="col">
               <input onChange={this.handleBingo} type="checkbox" id="bingoToggle" checked={game.getCurrentTurn().bingo} disabled={isBingoDisabled}/>
@@ -159,10 +159,10 @@ class InGameControls extends React.Component {
           </div>
           <div className="row">
             <div className="col">
-              <button onClick={this.handleUndo} type="button" className="btn word-submit-button undo" disabled={undoDisabled}>UNDO</button>
+              <button onClick={this.handleUndo} type="button" className="btn" disabled={undoDisabled}>UNDO</button>
             </div>
             <div className="col">
-              <button onClick={this.handleEndGame} type="button" className="btn end-game" disabled={isEndGameDisabled}>END GAME</button>
+              <button onClick={this.handleEndGame} type="button" className="btn" disabled={isEndGameDisabled}>END GAME</button>
             </div>
           </div>
         </div>

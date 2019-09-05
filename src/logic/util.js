@@ -96,7 +96,7 @@ export function scrollToTop() {
 }
 
 export function scrollToMiddle() {
-  const inputBoxElement = document.getElementsByClassName('add-word');
+  const inputBoxElement = document.getElementsByClassName('middle-scroll-anchor');
   inputBoxElement[0].scrollIntoView({ block: 'center' })
 }
 

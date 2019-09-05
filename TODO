@@ -95,10 +95,14 @@ X 58. Closing tabs on mobile ? Maybe use LocalStorage to save current game
 X 59. Scrolled up when passing/undo
 X 60. Screen stays on (should use https://github.com/richtr/NoSleep.js)
 X 61. Blank tile on modifier
-62. leftover row is empty at the end of the game 
+X 62. leftover row is empty at the end of the game 
 X 63. button for new game
 X 64. when clicking on undo do no refocus
 X 65. send event to amplitude when users respond to resume game option
+X 66. swap new game and undo button
+X 67. clean up button classes
+68. new-game clean localStorage (make new-game a real button with a handles
+69. log event when clicking on new game button
 
 
 
