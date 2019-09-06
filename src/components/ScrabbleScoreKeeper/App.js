@@ -33,7 +33,12 @@ class App extends React.Component {
       return;
 
     const shouldResume = window.confirm('You have a game in progress.\nWould you like to resume it?');
-    logEvent('game-resume', shouldResume);
+
+    /* DEBUG start*/
+
+    const debug = window.localStorage.getItem('ScrabbleScoreKeeperState') + window.localStorage.getItem('ScoreKeeperState')
+
+    logEvent('game-resume', debug);
     
     if (shouldResume)
       return;
