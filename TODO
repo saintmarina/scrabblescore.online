@@ -104,6 +104,10 @@ X 67. clean up button classes
 X 68. new-game clean localStorage (make new-game a real button with a handlers)
 X 69. log event when clicking on new game button
 X 70. add bullet poin about starting new game(to start a new game click on the logo or reload the page)
+X 71. toggling bingo should not take the focus out of the input box
+X 72. undoing END GAME makes the display scroll on the way up on mobile. No good
+73. the new game instruction isn't clear
+74. *maybe* a way to get bug reports when things crash
 
 
 
