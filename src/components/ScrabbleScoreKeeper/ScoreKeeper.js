@@ -121,7 +121,7 @@ class ScoreKeeper extends React.Component {
             Players with no leftovers collect the leftover points of all other players.
           </li>
           <li>
-            If you want to start a new game, click on NEW GAME in the end of the game or click on the logo.
+            To start a new game, click on the logo at the top of the page.
           </li>
         </ul>
         </div>
