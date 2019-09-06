@@ -31,11 +31,12 @@ class App extends React.Component {
 
     if (process.env.NODE_ENV === 'test')
       return;
+
+    const shouldResume = window.confirm('You have a game in progress.\nWould you like to resume it?');
+    logEvent('game-resume', shouldResume);
     
-    if (window.confirm('You have a game in progress.\nWould you like to resume it?')) {
-      logEvent('game-resume')
+    if (shouldResume)
       return;
-    }
 
     window.localStorage.removeItem('ScrabbleScoreKeeperState');
     window.localStorage.removeItem('ScoreKeeperState');
