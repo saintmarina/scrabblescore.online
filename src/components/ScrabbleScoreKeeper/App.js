@@ -36,7 +36,8 @@ class App extends React.Component {
 
     /* DEBUG start*/
 
-    const debug = window.localStorage.getItem('ScrabbleScoreKeeperState') + window.localStorage.getItem('ScoreKeeperState')
+    const debug = {PLAYERS_DATA: window.localStorage.getItem('ScrabbleScoreKeeperState'), GAME_DATA: window.localStorage.getItem('ScoreKeeperState')};
+    console.log(debug)
 
     logEvent('game-resume', debug);
     
