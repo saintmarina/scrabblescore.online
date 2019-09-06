@@ -37,7 +37,9 @@ class ScoreKeeper extends React.Component {
     const { games } = this.state;
     const previousGames = games.slice(0, -1);
     const game = games[games.length - 1];
-    this.setState({ game, games: previousGames });
+    const newState = { game, games: previousGames };
+    this.setState(newState);
+    window.localStorage.setItem('ScoreKeeperState', JSON.stringify(newState));
   }
 
   renderWinner() {
