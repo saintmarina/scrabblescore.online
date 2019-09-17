@@ -1,6 +1,5 @@
 import React from 'react';
 import { scrabbleScore, logEvent } from '../../logic/util';
-import Game from '../../logic/game';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
@@ -42,14 +41,8 @@ class InGameOverControls extends React.Component {
   }
 
   handleNewGame() {
-    const { onSetGame, game, onNewGame } = this.props;
-    
-    window.localStorage.removeItem('ScoreKeeperState');
-    window.localStorage.removeItem('ScrabbleScoreKeeperState');
-
-    onSetGame(Game.createNewGame(game.playersTurns.length))
+    const { onNewGame } = this.props;
     onNewGame();
-
     logEvent('new-game')
   }
 

@@ -3,8 +3,7 @@ import React from 'react';
 import GameSettings from '../GameSettings/GameSettings';
 import ScoreKeeper from './ScoreKeeper';
 import './App.css';
-import { logEvent } from '../../logic/util';
-
+import { logEvent, getPersistedState, clearPersistedState } from '../../logic/util';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,27 +23,14 @@ class App extends React.Component {
     };
   }
 
-  static maybeResetLocalStorage() {
-    if (!window.localStorage.getItem('ScrabbleScoreKeeperState'))
-      return;
-
+  static maybeResumeGame() {
     if (process.env.NODE_ENV === 'test')
-      return;
+      return false;
 
     const shouldResume = window.confirm('You have a game in progress.\nWould you like to resume it?');
+    logEvent('game-resume', {didResume: shouldResume});
 
-    /* DEBUG start*/
-
-    const debug = {PLAYERS_DATA: window.localStorage.getItem('ScrabbleScoreKeeperState'), GAME_DATA: window.localStorage.getItem('ScoreKeeperState')};
-    console.log(debug)
-
-    logEvent('game-resume', debug);
-    
-    if (shouldResume)
-      return;
-
-    window.localStorage.removeItem('ScrabbleScoreKeeperState');
-    window.localStorage.removeItem('ScoreKeeperState');
+    return shouldResume;
   }
 
   componentDidMount() {
@@ -64,10 +50,13 @@ class App extends React.Component {
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
 
-    this.constructor.maybeResetLocalStorage();
-    const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
-    if (restoredState)
-      this.setState({playerNames: restoredState.playerNames})
+    const restoredState = getPersistedState();
+    if (restoredState) {
+      if (this.constructor.maybeResumeGame())
+        this.setState({playerNames: restoredState.playerNames});
+      else
+        clearPersistedState();
+    }
   }
 
   UNSAFE_componentWillMount() {
@@ -92,12 +81,11 @@ class App extends React.Component {
     logEvent('start-game', {'player-names': playerNames, 'language': language});
     window.history.pushState({ playerNames: playerNames }, null)
     this.setState({ playerNames, language });
-
-    window.localStorage.setItem('ScrabbleScoreKeeperState', JSON.stringify({playerNames}))
   }
 
   handleResetGame() {
-    this.setState({playerNames: []})
+    this.setState({playerNames: []});
+    clearPersistedState();
   }
 
   renderGame(isMobile) {

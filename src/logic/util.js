@@ -100,4 +100,17 @@ export function scrollToMiddle() {
   inputBoxElement[0].scrollIntoView({ block: 'center' })
 }
 
+export function persistState(stateObj) {
+  window.localStorage.setItem('ScrabbleState', JSON.stringify(stateObj));
+}
+
+export function getPersistedState() {
+  const state = window.localStorage.getItem('ScrabbleState');
+  return state ? JSON.parse(state) : null;
+}
+
+export function clearPersistedState() {
+  window.localStorage.removeItem('ScrabbleState');
+}
+
 export default null;

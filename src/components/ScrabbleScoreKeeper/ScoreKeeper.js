@@ -5,6 +5,7 @@ import ScoreGridMobile from '../ScoreGrid/ScoreGridMobile';
 import CallPlayerToAction from './CallPlayerToAction';
 import InGameControls from './InGameControls';
 import InGameOverControls from './InGameOverControls';
+import { getPersistedState, persistState } from '../../logic/util';
 
 class ScoreKeeper extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class ScoreKeeper extends React.Component {
     this.renderWinner = this.renderWinner.bind(this);
 
     const { playerNames } = this.props;
-    const restoredState = JSON.parse(window.localStorage.getItem('ScoreKeeperState'));
+    const restoredState = getPersistedState();
     this.state = restoredState
       ? {
           game: Game.fromPlain(restoredState.game),
@@ -28,18 +29,20 @@ class ScoreKeeper extends React.Component {
 
   handleSetGame(currentGame) {
     const { game, games } = this.state;
+    const { playerNames } = this.props;
     const newState = {game: currentGame, games: [...games.slice(), game]};
     this.setState(newState);
-    window.localStorage.setItem('ScoreKeeperState', JSON.stringify(newState));
+    persistState({'playerNames': playerNames, ...newState});
   }
 
   handleUndo() {
     const { games } = this.state;
+    const { playerNames } = this.props;
     const previousGames = games.slice(0, -1);
     const game = games[games.length - 1];
     const newState = { game, games: previousGames };
     this.setState(newState);
-    window.localStorage.setItem('ScoreKeeperState', JSON.stringify(newState));
+    persistState({'playerNames': playerNames, ...newState});
   }
 
   renderWinner() {

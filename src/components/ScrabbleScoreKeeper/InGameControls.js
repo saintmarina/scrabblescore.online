@@ -23,7 +23,8 @@ class InGameControls extends React.Component {
   }
 
   _scroll(where='middle') {
-    const { isMobile, game } = this.props;
+    const { isMobile } = this.props;
+
     if (process.env.NODE_ENV !== 'test') {
       /*
        * NoSleep requires to be called from an event handler
