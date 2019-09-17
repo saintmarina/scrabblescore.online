@@ -26,11 +26,11 @@ class InGameControls extends React.Component {
     const { isMobile, game } = this.props;
     if (process.env.NODE_ENV !== 'test') {
       /*
-        NoSleep requires to be called from an event handler
-        So ideally we would want to put it into the Start Game event handler
-        But if we put noSleep into the Start game event, noSleep won't be called when the user resumes game
-        Thus, we locate it in scroll function, which is beeing executed when user interacts with buttons
-      */
+       * NoSleep requires to be called from an event handler
+       * So ideally we would want to put it into the Start Game event handler
+       * But if we put noSleep into the Start game event, noSleep won't be called when the user resumes game
+       * Thus, we locate it in scroll function, which is beeing executed when user interacts with buttons
+       */
       noSleep.enable();
     }
     

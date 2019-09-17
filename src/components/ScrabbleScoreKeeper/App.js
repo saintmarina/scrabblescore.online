@@ -13,7 +13,6 @@ class App extends React.Component {
     this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
     this.handleResetGame = this.handleResetGame.bind(this);
-
     /*
       DO NOT CHANGE INITIAL STATE:
       the initial rendering of the component and the static rendering must be the same
@@ -49,12 +48,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    /* - pushState() allows to modifiy browser history entries;
-       - popstate listens for changes in browser history,like back/front button click;
-       - when history is changed, this.handlePopState function is being fired;
-       - this.handlePopState changes state for ScrabbleScoreKeeper component;
-       - ScrabbleScoreKeeper component rerenders, displaying correct state;
-    */
+    /* 
+     * pushState() allows to modifiy browser history entries;
+     * popstate listens for changes in browser history,like back/front button click;
+     * when history is changed, this.handlePopState function is being fired;
+     * this.handlePopState changes state for ScrabbleScoreKeeper component;
+     * ScrabbleScoreKeeper component rerenders, displaying correct state;
+     */
 
     const { playerNames } = this.state;
     window.history.pushState({ playerNames: playerNames }, null) 
@@ -63,7 +63,6 @@ class App extends React.Component {
     ReactGA.initialize('UA-144533310-1');
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
-
 
     this.constructor.maybeResetLocalStorage();
     const restoredState = JSON.parse(window.localStorage.getItem('ScrabbleScoreKeeperState'));
@@ -96,6 +95,7 @@ class App extends React.Component {
 
     window.localStorage.setItem('ScrabbleScoreKeeperState', JSON.stringify({playerNames}))
   }
+
   handleResetGame() {
     this.setState({playerNames: []})
   }
