@@ -37,9 +37,6 @@ class InGameControls extends React.Component {
     if (!isMobile)
       return;
 
-    if (game.getCurrentTurnNumber() !== 0)
-      return;
-
     if (where === 'middle')
       scrollToMiddle();
     else
@@ -47,9 +44,12 @@ class InGameControls extends React.Component {
   }
 
   componentDidMount() {
+    const { game } = this.props;
+
     if (this.input.current)
       this.input.current.focus();
-    this._scroll('top');
+    if (game.getCurrentTurnNumber() === 0)
+      this._scroll('top');
   }
 
   onSetGame(game) {

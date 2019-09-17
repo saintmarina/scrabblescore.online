@@ -5,11 +5,6 @@ import ScrabbleTile from '../ScrabbleTile/ScrabbleTile';
 import './ScrabbleInputBox.css';
 
 class ScrabbleInputBox extends React.Component {
-  static _clickOnElementByClass(className) {
-    const elements = document.getElementsByClassName(className);
-    if (elements.length !== 0) elements[0].click();
-  }
-
   constructor(props) {
     super(props);
     this.textHiddenInput = React.createRef();
@@ -27,7 +22,6 @@ class ScrabbleInputBox extends React.Component {
     const result = input.split('').map(letter => (isLetterAllowed(letter, language) ? letter : ''));
     const modifiers = resizeArray(word.modifiers, result.length, []);
     onChange({ value: result.join(''), modifiers });
-    this.constructor._clickOnElementByClass('hidden-input');
   }
 
   handleModifierChange(letterIndex, modifier) {
