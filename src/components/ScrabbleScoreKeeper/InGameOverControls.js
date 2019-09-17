@@ -110,7 +110,7 @@ class InGameOverControls extends React.Component {
             <div className="buttons">
               <div className="row">
                 <div className="col">
-                  <button onClick={this.handleNewGame} type="button" className="btn" disabled={undoDisabled}>NEW GAME</button>
+                  <button onClick={this.handleNewGame} type="button" className="btn">NEW GAME</button>
                 </div>
               </div>
               <div className="row">
