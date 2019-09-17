@@ -50,20 +50,25 @@
 	border-radius: 3px;
 }
 
-.scrabble-letter.double-letter .tile-modifier, .scrabble-letter.double-letter.blank .tile-modifier {
+.scrabble-letter.double-letter .tile-modifier {
 	background: #9fcae0;
 }
 
-.scrabble-letter.double-word .tile-modifier, .scrabble-letter.double-word.blank .tile-modifier {
+.scrabble-letter.double-word .tile-modifier {
 	background: #eda498;
 }
 
-.scrabble-letter.triple-letter .tile-modifier, .scrabble-letter.triple-letter.blank .tile-modifier {
+.scrabble-letter.triple-letter .tile-modifier {
 	background: #18a3e1;
 }
 
-.scrabble-letter.triple-word .tile-modifier, .scrabble-letter.triple-word.blank .tile-modifier {
+.scrabble-letter.triple-word .tile-modifier {
 	background: #f74d13;
+}
+
+.scrabble-letter.triple-letter.blank .tile-modifier, .scrabble-letter.triple-word.blank .tile-modifier,
+.scrabble-letter.double-word.blank .tile-modifier, .scrabble-letter.double-letter.blank .tile-modifier {
+	border: 1px solid white;
 }
 
 .scrabble-letter.blank .score {
