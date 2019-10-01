@@ -75,12 +75,20 @@ export function isStaticBuild() {
   return navigator.userAgent === 'ReactSnap';
 }
 
-export function isInProduction() {
+export function isCordova() {
+  return navigator.userAgent.includes("cordova");
+}
+
+export function isProduction() {
   return process.env.NODE_ENV === 'production'; // eslint-disable-line no-use-before-define
 }
 
+export function isTest() {
+  return process.env.NODE_ENV === 'test';
+}
+
 export function logEvent(eventName, eventData) {
-  if (isStaticBuild() || !isInProduction())
+  if (isStaticBuild() || !isProduction())
     return;
 
   try {
