@@ -107,9 +107,9 @@ X 70. add bullet poin about starting new game(to start a new game click on the l
 X 71. toggling bingo should not take the focus out of the input box
 X 72. undoing END GAME makes the display scroll on the way up on mobile. No good
 X 73. the new game instruction isn't clear
-74. *maybe* a way to get bug reports when things crash
-
-
+X 74. logo.png make as an image tag, specify width in % so we can resize.
+X 75. put images (all except logo) directly in the css as base64
+76. *maybe* a way to get bug reports when things crash
 
 
 Asosiations to contact:

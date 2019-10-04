@@ -39,7 +39,7 @@ class GameSettings extends React.Component {
     e.preventDefault(); /* prevent form submission */
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
 
-    logEvent('start-game', {playerNames: playerNames, language: language});    
+    logEvent('start-game', {playerNames: playerNames, language: language});
   }
 
   render() {
@@ -57,7 +57,7 @@ class GameSettings extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <div className="logo"></div>
+            <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
             <span className="description">
               <p>
                  Hello and welcome to Scrabble Score Online. This is an easy-to-use

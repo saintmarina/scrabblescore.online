@@ -1,10 +1,13 @@
 import React from 'react';
-import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle } from '../../logic/util';
+import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle, isTest, isCordova } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import NoSleep from 'nosleep.js';
 
 const emptyWord = { value: '', modifiers: [], score: 0 };
-const noSleep = new NoSleep();
+let noSleep;
+if (!isTest() && !isCordova()) {
+  noSleep = new NoSleep();
+}
 
 class InGameControls extends React.Component {
   constructor(props) {
@@ -25,13 +28,14 @@ class InGameControls extends React.Component {
   _scroll(where='middle') {
     const { isMobile } = this.props;
 
-    if (process.env.NODE_ENV !== 'test') {
+    if (typeof noSleep !== "undefined") {
       /*
        * NoSleep requires to be called from an event handler
        * So ideally we would want to put it into the Start Game event handler
        * But if we put noSleep into the Start game event, noSleep won't be called when the user resumes game
        * Thus, we locate it in scroll function, which is beeing executed when user interacts with buttons
        */
+
       noSleep.enable();
     }
     

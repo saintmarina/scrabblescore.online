@@ -1,8 +1,11 @@
-div.logo {
-  content: url("/logo.png");
+#big-logo {
+  width: 50%;
   margin: 30px auto;
-  width: 520px;
-  height: 103px;
+  max-width: 520px;
+  max-height: 103px;
+  min-width: 250px;
+  min-height: 50px;
+  display: block;
 }
 
 @media screen and (max-width: 815px) {      /*Mobile version displays smaller logo*/
