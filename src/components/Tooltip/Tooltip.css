@@ -1,4 +1,3 @@
-.tooltip-container {
-	width: 388px;
-  height: 90px;  
+.mobile .tooltip-container {
+  padding: 0.15rem;
 }
