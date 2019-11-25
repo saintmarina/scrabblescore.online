@@ -17,6 +17,7 @@ function CallPlayerToAction(props) {
   return (
     <div className="row justify-content-center">
       <span className="call-player-to-action">{callPlayerToAction()}</span>
+      <div> Test </div>
     </div>
   );
 }
