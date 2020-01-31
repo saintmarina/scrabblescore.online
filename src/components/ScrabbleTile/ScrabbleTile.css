@@ -15,7 +15,7 @@
 }
 
 .scrabble-letter:hover {
-	box-shadow: 0 0 15px #622528;
+	box-shadow: 0 0 7px #622528;
 	z-index: 10;
 }
 

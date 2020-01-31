@@ -102,28 +102,28 @@ class ScoreKeeper extends React.Component {
             ? <InGameControls {...controlProps} />
             : <InGameOverControls {...controlProps} />
               }
-          <h3>How to use Scrabble Score Online:</h3>
+          <h3>Instructions</h3>
         <ul>
           <li>To submit a word, type the word in the input box (the white rectangle above the buttons) then press END TURN</li>
           <li>When scoring a word with a tile on a prime square (e.g., double-word), press on the coresponding tile in the input box
-              then choose a coresponding option from the window..</li>
+              then choose a corresponding option from the window.</li>
           <li>If you made a mistake, you may use unlimited UNDO.</li>
 
           <li>
-            When forming more than one word, press ADD WORD after entering each word in the input box.
+            When scoring multiple words, use ADD WORD.
           </li>
           <li>
-            When a player used all seven tiles in a single turn, press BINGO.
+            When a player uses all seven tiles in a single turn, press BINGO.
             This adds a 50 points bonus.
           </li>
           <li>
-          When using a BLANK tile, press on the coresponding tile and mark it as such.
+            When using a BLANK tile, press on the corresponding tile and mark it as such.
           </li>
           <li>
-            When all the players finished their last turn, press END GAME.
-            Players will be then asked to enter their leftover tiles.
+            When all the players completed their last turn, press END GAME.
+            Players are then asked to enter their leftover tiles.
             Players with leftover tiles get their leftover points deducted from their score.
-            Players with no leftovers collect the leftover points of all other players.
+            Players with no leftovers tiles collect the leftover points of other players.
           </li>
           <li>
             To start a new game, press on the logo at the top of the page.

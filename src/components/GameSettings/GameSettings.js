@@ -62,11 +62,11 @@ class GameSettings extends React.Component {
               <p>
                  Hello and welcome to Scrabble Score Online. This is an easy-to-use
                  scrabble score calculator that replaces pen-and-paper for keeping track of Scrabble scores.
-                 Enjoy the game with your friends and family while this scrabble score sheet will do math for you.
+                 Enjoy the game with your friends and family while this scrabble score sheet will do the math for you.
               </p>
               <p>
                  Simply fill in the players’ names in order that they will
-                 take turns and press the “START” button.
+                 take turns and press the START button.
               </p>
               <p>Relax and enjoy your game, now you don’t need to do any math!</p>
             </span>
