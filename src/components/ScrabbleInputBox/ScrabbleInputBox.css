@@ -183,6 +183,11 @@
   display: inline;
 }
 
+.mobile .star-hint {
+  padding-left: 84px;
+  font-size: 1em;
+}
+
 .star-hint {
   padding-left: 104px;
   display: none;

@@ -102,7 +102,7 @@ class ScoreKeeper extends React.Component {
             ? <InGameControls {...controlProps} />
             : <InGameOverControls {...controlProps} />
               }
-          <h3>Instructions</h3>
+          <h3 className="instructions">Instructions</h3>
         <ul>
           <li>To submit a word, type the word in the input box (the white rectangle above the buttons) then press END TURN.</li>
           <li>When scoring a word with a tile on a prime square (e.g., double-word), press on the coresponding tile in the input box
