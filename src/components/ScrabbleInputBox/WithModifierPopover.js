@@ -39,12 +39,17 @@ class WithModifierPopover extends React.Component {
         trigger="click"
         portalContainer={document.getElementsByClassName('scrabble-input-box')[0]}
         tooltip={(
+          <div>
           <div className="modifier-buttons">
             <ModifierTile modifier="double-letter" onClick={this.handleClick} />
             <ModifierTile modifier="double-word" onClick={this.handleClick} />
             <ModifierTile modifier="triple-letter" onClick={this.handleClick} />
             <ModifierTile modifier="triple-word" onClick={this.handleClick} />
             <ModifierTile modifier="blank" onClick={this.handleClick} />
+          </div>
+          <span className="star-hint">
+            ↑ Press on the star
+          </span>
           </div>
         )}
       >

@@ -1,10 +1,4 @@
 /*Hiding real input box*/
-/* 
-   IOS: caret-color feature doesn't exist in yet Safari,
-   and the caret is visible. The solution for IOS is to put font-size: 0 in ScrabbleScoreCoredova build vertion.
-   Couldn't use fort-size: 0 on ScrabbleScore.Online because it creates a bug, where we can't type anything in the inputbox.
-   If need to rebuild www folder in Cordova, do not forget to put font-size:0 into bulid css file inside www folder and delete caret-color: transparent.
-*/
 
 .hidden-input {
 	color: transparent;
@@ -183,4 +177,16 @@
 
 .modifier-buttons {
   white-space: nowrap;
+}
+
+.first-turn .star-hint {
+  display: inline;
+}
+
+.star-hint {
+  padding-left: 104px;
+  display: none;
+  text-shadow: none;
+  font-weight: bold;
+  font-size: 1.1em;
 }

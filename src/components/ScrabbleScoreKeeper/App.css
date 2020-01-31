@@ -110,8 +110,10 @@ input[type=checkbox]:checked+label {
   padding: 0.5em 0;
   line-height: 1em;
   max-height: 3em;
-  transition: max-height 0.3s ease 4s, padding 0.3s ease 4s, margin 0.3s ease 4s;
+  transition: max-height 0.3s ease 1.5s, padding 0.3s ease 1.5s, margin 0.3s ease 1.5s;
   overflow: hidden;
+  font-size: 1.1em;
+  font-weight: bold;
 }
 
 .instruction-message.hide {

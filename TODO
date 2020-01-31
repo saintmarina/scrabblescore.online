@@ -110,7 +110,7 @@ X 73. the new game instruction isn't clear
 X 74. logo.png make as an image tag, specify width in % so we can resize.
 X 75. put images (all except logo) directly in the css as base64
 76. *maybe* a way to get bug reports when things crash
-
+77. fix: on end-turn amplitude doesn't log anything in modifiers.
 
 Asosiations to contact:
 http://www.scrabbleplayers.org/w/Welcome_to_NASPAWiki  North-American Scrabble championship

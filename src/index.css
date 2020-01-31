@@ -65,13 +65,6 @@ body {
 .vertical-stretch > bottom {
   flex: 0 1;
 }
-/* 
-IOS: this is css, that need to be added directly into www/css/*second-css-file before building in Cordova.
-  This prevents logo to be cut on top of the screen.
-.top {
-  padding-top: 20px;
-}
-*/
 
 a {
   color: white;
