@@ -6,9 +6,9 @@ function CallPlayerToAction(props) {
   function callPlayerToAction() {
     const playerName = playerNames[game.currentPlayerIndex];
     const msgs = {
-      'mobile-ingame':    `Submit a word or end turn`,
+      'mobile-ingame':    `Submit a word or pass`,
       'mobile-gameover':  `Submit your leftovers`,
-      'desktop-ingame':   `${playerName}, submit a word or end turn`,
+      'desktop-ingame':   `${playerName}, submit a word or pass`,
       'desktop-gameover': `${playerName}, submit your leftovers`,
     };
     return msgs[`${isMobile ? 'mobile' : 'desktop'}-${game.isGameOver() ? 'gameover':'ingame'}`];
