@@ -104,7 +104,7 @@ class ScoreKeeper extends React.Component {
               }
           <h3>Instructions</h3>
         <ul>
-          <li>To submit a word, type the word in the input box (the white rectangle above the buttons) then press END TURN</li>
+          <li>To submit a word, type the word in the input box (the white rectangle above the buttons) then press END TURN.</li>
           <li>When scoring a word with a tile on a prime square (e.g., double-word), press on the coresponding tile in the input box
               then choose a corresponding option from the window.</li>
           <li>If you made a mistake, you may use unlimited UNDO.</li>

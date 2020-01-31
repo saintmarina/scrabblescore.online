@@ -9,6 +9,7 @@ class GameSettings extends React.Component {
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
     this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
     this.handleGameStart = this.handleGameStart.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
     this.state = {
       numberOfPlayers: 4,
@@ -40,6 +41,11 @@ class GameSettings extends React.Component {
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
 
     logEvent('start-game', {playerNames: playerNames, language: language});
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter')
+      this.handleGameStart(e);
   }
 
   render() {
@@ -80,6 +86,7 @@ class GameSettings extends React.Component {
                   {[...Array(numberOfPlayers)].map((_, i) => (
                     <input
                       onChange={e => this.handleChangeOfName(i, e)}
+                      onKeyDown={this.handleKeyDown} 
                       id={`player-name-input-${i}`}
                       key={i}
                       type="text"
