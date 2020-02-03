@@ -89,7 +89,7 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scroll();
 
-    logEvent('add-word', {'word': currentWord});
+    logEvent('add-word', {'word': JSON.stringify(currentWord)});
   }
 
   handleEndTurn(e) {
@@ -103,7 +103,7 @@ class InGameControls extends React.Component {
     const data = currentWord.value.length !== 0
                         ? {'word': currentWord}
                         : {};
-    logEvent('end-turn', data);
+    logEvent('end-turn', {data: JSON.stringify(data)});
   }
 
   handleBingo() {
@@ -121,7 +121,7 @@ class InGameControls extends React.Component {
     this._scroll();
 
     logEvent('end-game', {'num-of-turns': game.playersTurns.length,
-                          'game-turns': game.playersTurns.map((turns) => ({turns: turns}))});
+                          'game-turns': JSON.stringify(game.playersTurns.map((turns) => ({turns: turns})))});
   }
 
   render() {

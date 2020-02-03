@@ -30,7 +30,7 @@ class ScrabbleInputBox extends React.Component {
     modifiers[letterIndex] = modifier;
     onChange({ value: word.value, modifiers });
 
-    logEvent('modifier-added', {value: word.value, modifiers});
+    logEvent('add-modifier', {value: word.value, modifiers: JSON.stringify(modifiers)});
   }
 
   handleTileClick() {
