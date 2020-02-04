@@ -1,0 +1,19 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-ionic-webview": {
+      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "com.saintmarina.scrabblescore"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.saintmarina.scrabblescore"
+    }
+  },
+  "dependent_plugins": {}
+}
