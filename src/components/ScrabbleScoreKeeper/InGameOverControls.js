@@ -42,7 +42,7 @@ class InGameOverControls extends React.Component {
 
   handleNewGame() {
     const { onNewGame } = this.props;
-    onNewGame();
+    onNewGame({reset: true});
     logEvent('new-game')
   }
 

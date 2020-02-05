@@ -98,3 +98,46 @@ input:focus {
     width: 216px;
   }
 }
+
+.should-resume {
+  
+  border: 2px solid white;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 2em;
+}
+
+.mobile .should-resume {
+
+}
+
+.should-resume p {
+  text-align: center;
+  font-size: 1.2em;
+  text-shadow: 1px 1px rgba(0,0,0,1);
+}
+
+.should-resume .buttons {
+  margin: 0.5em auto;
+  width: 250px;
+}
+
+.mobile .should-resume .buttons {
+  margin: 0.5em auto;
+  width: 250px;
+}
+
+.should-resume .btn {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.85)), to(rgb(98, 37, 40, 0.85)));
+
+}
+
+.should-resume .btn.faded {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgb(222, 50, 42, 0.65)), to(rgb(98, 37, 40, 0.65)));
+  border: 0;
+  margin-top: 1px;
+}
+
+.homepage-children {
+  margin: 4em 0em;
+}

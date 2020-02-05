@@ -1,13 +1,14 @@
 import React from 'react';
 import './GameSettings.css';
 import { logEvent, isStaticBuild } from '../../logic/util';
+import HomePage from './HomePage';
 
 
 class GameSettings extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
-    this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
+    /*this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);*/
     this.handleGameStart = this.handleGameStart.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
 
@@ -29,10 +30,11 @@ class GameSettings extends React.Component {
     playerNames[i] = e.target.value;
     this.setState({ playerNames });
   }
-
+/*
   handleChangeOfLanguage(e) {
     this.setState({ language: e.target.value });
   }
+  */
 
   handleGameStart(e) {
     const { playerNames, language } = this.state;
@@ -49,35 +51,9 @@ class GameSettings extends React.Component {
   }
 
   render() {
-    const { language, numberOfPlayers, playerNames, isTagDisabled } = this.state;
+    const { numberOfPlayers, playerNames, isTagDisabled } = this.state;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-2 offset-sm-10">
-            <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
-              <option value="en">English</option>
-              <option value="ru">Russian</option>
-              <option value="fr">French</option>
-            </select>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
-            <span className="description">
-              <p>
-                 Hello and welcome to Scrabble Score Online. This is an easy-to-use
-                 scrabble score calculator that replaces pen-and-paper for keeping track of Scrabble scores.
-                 Enjoy the game with your friends and family while this scrabble score sheet will do the math for you.
-              </p>
-              <p>
-                 Simply fill in the players’ names in order that they will
-                 take turns and press the START button.
-              </p>
-              <p>Relax and enjoy your game, now you don’t need to do any math!</p>
-            </span>
-          </div>
-        </div>
+      <HomePage>
         <form>
           <div className="player-names-choice-container">
             <div className="container">
@@ -103,7 +79,7 @@ class GameSettings extends React.Component {
             <button className="btn start" type="button" onClick={this.handleGameStart} disabled={isTagDisabled}>START</button>
           </div>
         </form>
-      </div>
+      </HomePage>
     );
   }
 }

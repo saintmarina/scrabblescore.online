@@ -2,6 +2,7 @@
 import ReactGA from 'react-ga';
 import React from 'react';
 import GameSettings from '../GameSettings/GameSettings';
+import ShouldResume from '../GameSettings/ShouldResume';
 import ScoreKeeper from './ScoreKeeper';
 import './App.css';
 import { logEvent, getPersistedState, clearPersistedState } from '../../logic/util';
@@ -18,6 +19,7 @@ class App extends React.Component {
       the initial rendering of the component and the static rendering must be the same
     */
     this.state = {
+      resumeState: null,
       playerNames: [],
       language: 'en',
       width: 10,
@@ -51,13 +53,8 @@ class App extends React.Component {
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
 
-    const restoredState = getPersistedState();
-    if (restoredState) {
-      if (this.constructor.maybeResumeGame())
-        this.setState({playerNames: restoredState.playerNames});
-      else
-        clearPersistedState();
-    }
+    const resumeState = getPersistedState();
+    this.setState({ resumeState });
   }
 
   UNSAFE_componentWillMount() {
@@ -84,13 +81,29 @@ class App extends React.Component {
     this.setState({ playerNames, language });
   }
 
-  handleResetGame() {
+  handleResetGame({ reset }) {
+    if (reset)
+      clearPersistedState();
+
+    const resumeState = getPersistedState();
+    this.setState({ resumeState });
     this.setState({playerNames: []});
-    clearPersistedState();
   }
 
   renderGame(isMobile) {
-    const { playerNames, language } = this.state;
+    const { resumeState, playerNames, language } = this.state;
+
+    if (resumeState) {
+      const handleResume = resume => {
+        if (resume)
+          this.setState({playerNames: resumeState.playerNames});
+        else
+          clearPersistedState();
+        this.setState({resumeState: null});
+      };
+      return <ShouldResume onResume={handleResume} />
+    }
+
     return playerNames.length === 0
       ? <GameSettings onGameStart={this.handleGameStart} />
       : <ScoreKeeper
