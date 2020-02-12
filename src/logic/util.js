@@ -87,7 +87,33 @@ export function isTest() {
   return process.env.NODE_ENV === 'test';
 }
 
+export function loggableWord(word) {
+  if (word.modifiers.length === 0)
+    return word.value;
+
+  const modifiers = word.modifiers
+    .map((mod, i) => { return mod.length === 0 ? "": `${i}:${mod.join()}`})
+    .filter(mod => !!mod)
+    .join("; ");
+  return `${word.value} (${modifiers}) `;
+}
+
+export function loggableGame(game) {
+  let logGame = "";
+
+  game.playersTurns.map((turns, i) => {
+    logGame = logGame.concat(`PLAYER ${i}: `)
+    return turns
+      .map(turn => 
+        turn.words
+          .forEach(word => logGame = logGame.concat(loggableWord(word))))});
+  return logGame;
+}
+
+//endGame: durationOfGame
+
 export function logEvent(eventName, eventData) {
+  console.log(eventName, eventData);
   if (isStaticBuild() || !isProduction())
     return;
 

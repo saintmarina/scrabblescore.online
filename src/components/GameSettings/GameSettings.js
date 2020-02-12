@@ -1,6 +1,6 @@
 import React from 'react';
 import './GameSettings.css';
-import { logEvent, isStaticBuild } from '../../logic/util';
+import { isStaticBuild } from '../../logic/util';
 import HomePage from './HomePage';
 
 
@@ -41,8 +41,6 @@ class GameSettings extends React.Component {
     const { onGameStart } = this.props;
     e.preventDefault(); /* prevent form submission */
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
-
-    logEvent('start-game', {playerNames: playerNames, language: language});
   }
 
   handleKeyDown(e) {

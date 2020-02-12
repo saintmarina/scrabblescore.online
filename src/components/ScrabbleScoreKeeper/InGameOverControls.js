@@ -65,9 +65,9 @@ class InGameOverControls extends React.Component {
     this.resetCurrentWord();
 
     const data = currentWord.value.length !== 0
-                    ? {'leftovers': currentWord}
-                    : {};
-    logEvent('submit-leftovers', {data: JSON.stringify(data)});
+                    ? {'leftovers': currentWord.value}
+                    : {'leftovers': 'No leftovers submitted'};
+    logEvent('submit-leftovers', data);
   }
 
   render() {

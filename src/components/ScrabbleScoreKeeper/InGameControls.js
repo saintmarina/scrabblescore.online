@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle, isTest, isCordova } from '../../logic/util';
+import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle, isTest, isCordova, loggableWord, loggableGame } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import NoSleep from 'nosleep.js';
 
@@ -89,7 +89,7 @@ class InGameControls extends React.Component {
     this.onSetGame(game.addWord(currentWord));
     this._scroll();
 
-    logEvent('add-word', {'word': JSON.stringify(currentWord)});
+    logEvent('add-word', {'word': loggableWord(this.state.currentWord)});
   }
 
   handleEndTurn(e) {
@@ -101,9 +101,9 @@ class InGameControls extends React.Component {
     this._scroll();
 
     const data = currentWord.value.length !== 0
-                        ? {'word': currentWord}
-                        : {};
-    logEvent('end-turn', {data: JSON.stringify(data)});
+                        ? {'word': loggableWord(this.state.currentWord)}
+                        : {'passed':"PASS"};
+    logEvent('end-turn', data);
   }
 
   handleBingo() {
@@ -120,8 +120,8 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scroll();
 
-    logEvent('end-game', {'num-of-turns': game.playersTurns.length,
-                          'game-turns': JSON.stringify(game.playersTurns.map((turns) => ({turns: turns})))});
+    logEvent('end-game', {'game': loggableGame(game),
+                          'num-of-turns': game.playersTurns[0].length - 1});
   }
 
   render() {
