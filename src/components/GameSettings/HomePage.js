@@ -17,16 +17,15 @@ const HomePage = (props) => {
       <div className="row">
         <div className="col-sm-12">
           <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
+          <h1 style={{display:"none"}}>Scrabble Calculator</h1>
             <p>
-               Hello and welcome to Scrabble Score Online. This is an easy-to-use
-               scrabble score calculator that replaces pen-and-paper for keeping track of Scrabble scores.
-               Enjoy the game with your friends and family while this scrabble score sheet will do the math for you.
+               This is a Scrabble Score Calculator. It keeps track of the game, and replaces traditional pen-and-paper score sheets.
+               Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
             </p>
             <p>
                Simply fill in the players’ names in order that they will
                take turns and press the START button.
             </p>
-            <p>Relax and enjoy your game, now you don’t need to do any math!</p>
         </div>
       </div>
       <div className="homepage-children">
