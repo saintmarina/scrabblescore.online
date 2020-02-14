@@ -126,3 +126,17 @@ input[type=checkbox]:checked+label {
 .instructions {
   margin-top: 60px;
 }
+
+/* Style for RATE US Buttons */
+
+.cordova-ios .android-rating, .cordova-ios .rate-me .row.playmarket {
+   display: none;
+}
+
+.cordova-android .app-store-rating, .cordova-android .rate-me .row.apple {
+  display: none;
+}
+
+.web-platform .rate-me{
+  display: none;
+}

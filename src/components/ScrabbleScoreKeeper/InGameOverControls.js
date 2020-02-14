@@ -100,12 +100,28 @@ class InGameOverControls extends React.Component {
             </form>
           )
           : (
-            <div className="buttons">
+            <div className="buttons">            
               <div className="row">
                 <div className="col">
                   <button onClick={this.handleNewGame} type="button" className="btn">NEW GAME</button>
                 </div>
               </div>
+              <div className="rate-me">
+                <div className="row apple">
+                  <div className="col">
+                    <a className="btn app-store-rating" href="https://apps.apple.com/us/app/scrabble-score-calculator/id1497216063" rel="noopener noreferrer" target="_blank">
+                      <span role="img" aria-label="Star">⭐</span> RATE US ON THE APP STORE <span role="img" aria-label="Star">⭐</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="row playmarket">
+                  <div className="col">
+                    <a className="btn android-rating" href="https://play.google.com/store/apps/details?id=com.saintmarina.scrabblescore" rel="noopener noreferrer" target="_blank">
+                      <span role="img" aria-label="Star">⭐</span> RATE US ON PLAY STORE <span role="img" aria-label="Star">⭐</span>
+                    </a>
+                  </div>
+                </div>
+               </div>
               <div className="row">
                 <div className="col">
                   <button onClick={this.handleUndo} type="button" className="btn" disabled={undoDisabled}>UNDO</button>
