@@ -1,9 +1,21 @@
 import amplitude from 'amplitude-js';
 import { scoreListsMap } from './scoreLists';
 
+let startTime;
+
+function msToMin(ms) {
+  const min = Math.floor((ms / (1000 * 60)) % 60);
+  return min;
+}
+
+export function setStartTime() {
+  startTime = new Date().getTime();
+}
+
 export function resizeArray(array, desiredLength, defaultValue) {
   const output = array.slice(0, desiredLength);
-  while (output.length < desiredLength) output.push(defaultValue);
+  while (output.length < desiredLength)
+    output.push(defaultValue);
   return output;
 }
 
@@ -99,20 +111,28 @@ export function loggableWord(word) {
 }
 
 export function loggableGame(game) {
-  const turns = game.playersTurns.map(playerTurn =>
-    playerTurn.map(turn =>
-      turn.isPassed(game)
-      ? "PASS"
-      : turn.words.map(w => w.value).join("+")).join(','));
+  const loggableTurn = turn => {
+  
+    if (turn.isPassed(game))
+      return "PASS";
+
+    let turnWords = turn.words.map(w => w.value).join("+");
+    if (turn.bingo)
+      return `${turnWords} BINGO`;
+    
+    return turnWords;
+  }
+  const turns = game.playersTurns.map(playerTurn => playerTurn.map(loggableTurn).join(','));
 
   const scores = game.playersTurns.map((_, i) => game.getTotalScore(i));
 
   const numTurns = game.playersTurns[0].length - 1;
 
-  return { turns, scores, numTurns };
-}
+  const endTime = new Date().getTime();
+  const durationMins = startTime ? msToMin(endTime - startTime) :undefined;
 
-//endGame: durationOfGame
+  return { turns, scores, numTurns , durationMins};
+}
 
 export function logEvent(eventName, eventData) {
   console.log(eventName, eventData);

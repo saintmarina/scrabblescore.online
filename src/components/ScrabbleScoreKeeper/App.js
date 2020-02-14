@@ -26,16 +26,6 @@ class App extends React.Component {
     };
   }
 
-  static maybeResumeGame() {
-    if (process.env.NODE_ENV === 'test')
-      return false;
-
-    const shouldResume = window.confirm('You have a game in progress.\nWould you like to resume it?');
-    logEvent('game-resume', {didResume: shouldResume});
-
-    return shouldResume;
-  }
-
   componentDidMount() {
     /* 
      * pushState() allows to modifiy browser history entries;
@@ -100,6 +90,7 @@ class App extends React.Component {
         else
           clearPersistedState("gameState");
         this.setState({resumeState: null});
+        logEvent('game-resume', {resume});
       };
       return <ShouldResume onResume={handleResume} />
     }

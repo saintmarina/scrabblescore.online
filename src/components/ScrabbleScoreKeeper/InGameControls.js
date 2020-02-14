@@ -102,7 +102,7 @@ class InGameControls extends React.Component {
 
     const data = currentWord.value.length !== 0
                         ? {'word': loggableWord(this.state.currentWord)}
-                        : {'passed':"PASS"};
+                        : {'passed': true};
     logEvent('end-turn', data);
   }
 

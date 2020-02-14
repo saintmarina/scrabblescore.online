@@ -1,6 +1,6 @@
 import React from 'react';
 import './GameSettings.css';
-import { resizeArray, isStaticBuild } from '../../logic/util';
+import { resizeArray, isStaticBuild, setStartTime } from '../../logic/util';
 //import { persistState, getPersistedState } from '../../logic/util';
 import HomePage from './HomePage';
 
@@ -14,7 +14,6 @@ class GameSettings extends React.Component {
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
     /*this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);*/
     this.handleGameStart = this.handleGameStart.bind(this);
-
     this.state = {
       playerNames: resizeArray([], MAX_PLAYERS, ""),
       language: 'en',
@@ -62,6 +61,7 @@ class GameSettings extends React.Component {
       playerNames = resizeArray(playerNames, MIN_PLAYERS, "");
 
     onGameStart(playerNames.map((name, i) => (name || `Player ${i + 1}`)), language);
+    setStartTime(); // Recording start time of the game
   }
 
   render() {
