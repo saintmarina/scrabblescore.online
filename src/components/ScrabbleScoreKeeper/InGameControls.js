@@ -120,8 +120,7 @@ class InGameControls extends React.Component {
     onSetGame(game.endGame());
     this._scroll();
 
-    logEvent('end-game', {'game': loggableGame(game),
-                          'num-of-turns': game.playersTurns[0].length - 1});
+    logEvent('end-game', loggableGame(game));
   }
 
   render() {

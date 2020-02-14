@@ -53,7 +53,7 @@ class App extends React.Component {
     ReactGA.pageview(window.location.pathname + window.location.search);
     this.handleWindowSizeChange();
 
-    const resumeState = getPersistedState();
+    const resumeState = getPersistedState("gameState");
     this.setState({ resumeState });
   }
 
@@ -76,16 +76,16 @@ class App extends React.Component {
   }
 
   handleGameStart(playerNames, language) {
-    logEvent('start-game', {'player-names': playerNames, 'language': language});
+    logEvent('start-game', {'player-names': playerNames, 'language': language, 'num-players': playerNames.length});
     window.history.pushState({ playerNames: playerNames }, null)
     this.setState({ playerNames, language });
   }
 
   handleResetGame({ reset }) {
     if (reset)
-      clearPersistedState();
+      clearPersistedState("gameState");
 
-    const resumeState = getPersistedState();
+    const resumeState = getPersistedState("gameState");
     this.setState({ resumeState });
     this.setState({playerNames: []});
   }
@@ -98,7 +98,7 @@ class App extends React.Component {
         if (resume)
           this.setState({playerNames: resumeState.playerNames});
         else
-          clearPersistedState();
+          clearPersistedState("gameState");
         this.setState({resumeState: null});
       };
       return <ShouldResume onResume={handleResume} />

@@ -88,26 +88,28 @@ export function isTest() {
 }
 
 export function loggableWord(word) {
-  if (word.modifiers.length === 0)
-    return word.value;
-
   const modifiers = word.modifiers
-    .map((mod, i) => { return mod.length === 0 ? "": `${i}:${mod.join()}`})
+    .map((mod, i) => { return mod.length === 0 ? null: `${i}:${mod.join()}`})
     .filter(mod => !!mod)
-    .join("; ");
-  return `${word.value} (${modifiers}) `;
+    .join(", ");
+
+  if (!modifiers)
+    return word.value;
+  return `${word.value} (${modifiers})`;
 }
 
 export function loggableGame(game) {
-  let logGame = "";
+  const turns = game.playersTurns.map(playerTurn =>
+    playerTurn.map(turn =>
+      turn.isPassed(game)
+      ? "PASS"
+      : turn.words.map(w => w.value).join("+")).join(','));
 
-  game.playersTurns.map((turns, i) => {
-    logGame = logGame.concat(`PLAYER ${i}: `)
-    return turns
-      .map(turn => 
-        turn.words
-          .forEach(word => logGame = logGame.concat(loggableWord(word))))});
-  return logGame;
+  const scores = game.playersTurns.map((_, i) => game.getTotalScore(i));
+
+  const numTurns = game.playersTurns[0].length - 1;
+
+  return { turns, scores, numTurns };
 }
 
 //endGame: durationOfGame
@@ -134,17 +136,17 @@ export function scrollToMiddle() {
   inputBoxElement[0].scrollIntoView({ block: 'center' })
 }
 
-export function persistState(stateObj) {
-  window.localStorage.setItem('ScrabbleState', JSON.stringify(stateObj));
+export function persistState(name, stateObj) {
+  window.localStorage.setItem(name, JSON.stringify(stateObj));
 }
 
-export function getPersistedState() {
-  const state = window.localStorage.getItem('ScrabbleState');
+export function getPersistedState(name) {
+  const state = window.localStorage.getItem(name);
   return state ? JSON.parse(state) : null;
 }
 
-export function clearPersistedState() {
-  window.localStorage.removeItem('ScrabbleState');
+export function clearPersistedState(name) {
+  window.localStorage.removeItem(name);
 }
 
 export default null;

@@ -15,7 +15,7 @@ class ScoreKeeper extends React.Component {
     this.renderWinner = this.renderWinner.bind(this);
 
     const { playerNames } = this.props;
-    const restoredState = getPersistedState();
+    const restoredState = getPersistedState("gameState");
     this.state = restoredState
       ? {
           game: Game.fromPlain(restoredState.game),
@@ -32,7 +32,7 @@ class ScoreKeeper extends React.Component {
     const { playerNames } = this.props;
     const newState = {game: currentGame, games: [...games.slice(), game]};
     this.setState(newState);
-    persistState({'playerNames': playerNames, ...newState});
+    persistState("gameState", {'playerNames': playerNames, ...newState});
   }
 
   handleUndo() {
@@ -42,7 +42,7 @@ class ScoreKeeper extends React.Component {
     const game = games[games.length - 1];
     const newState = { game, games: previousGames };
     this.setState(newState);
-    persistState({'playerNames': playerNames, ...newState});
+    persistState("gameState", {'playerNames': playerNames, ...newState});
   }
 
   renderWinner() {
