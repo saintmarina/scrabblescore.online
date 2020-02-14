@@ -19,7 +19,7 @@ const HomePage = (props) => {
           <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
           <h1 style={{display:"none"}}>Scrabble Calculator</h1>
             <p>
-               This is a Scrabble Score Calculator. It keeps track of the game, and replaces traditional pen-and-paper score sheets.
+               This Scrabble Score Calculator keeps track of the game, and replaces traditional pen-and-paper score sheets.
                Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
             </p>
             <p>
