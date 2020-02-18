@@ -10,6 +10,7 @@
 
 # production
 /build
+/cordova/platforms/android/app/release
 
 # misc
 .DS_Store

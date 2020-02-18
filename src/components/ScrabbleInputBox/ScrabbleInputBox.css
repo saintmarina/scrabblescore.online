@@ -1,18 +1,20 @@
 /*Hiding real input box*/
 
 .hidden-input {
-	color: transparent;
+  color: transparent;
 	background-color:transparent;
   border: none;
   outline: none;
 	position: absolute;
-	caret-color: transparent;
   bottom: 18px;
 	right: 80px;
 	z-index: -50;
 }
+.web-platform .hidden-input {
+  caret-color: transparent;
+}
 
-.cordodva-ios .hidden-input {
+.cordova-ios .hidden-input {
   font-size: 0;
 }
 

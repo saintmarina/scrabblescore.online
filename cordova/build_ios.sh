@@ -19,6 +19,7 @@ sed -Ei '' 's/web-platform/cordova-ios/g' index.html               #sets correct
 cordova build ios --debug --emulator
 
 # Build app for release:
+# Change version name in cordova/config.xml
 # Run this script
 # Then in Xcode, open ScrabbleScore in platorms/ios
 # Increment app version in Targets ScrableScore -> General
@@ -27,3 +28,11 @@ cordova build ios --debug --emulator
 # Try in emulator
 # Select device "Generic iOS"
 # Menu Product-->Archive
+
+# To restore the launchscreen and icon images:
+# 1. Go to scrabble/mobile_graphics/ios/
+#    Copy fodler AppIcon.appiconset 
+#    Paste it here --> /Users/anna/scrabble/scrabblescore.online/cordova/platforms/ios/ScrabbleScore/Images.xcassets/AppIcon.appiconset 
+# 2. Go to scrabble/mobile_graphics/ios/
+#    Copy fodler LaunchImage.launchimage
+#    Paste it here --> /Users/anna/scrabble/scrabblescore.online/cordova/platforms/ios/ScrabbleScore/Images.xcassets/LaunchImage.launchimage
