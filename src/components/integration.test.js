@@ -84,14 +84,13 @@ describe('Game', () => {
   function fillPlayers(wrapper, numOfPlayers) {
     const players = ['Anna', 'Nico', 'Kyle', 'Sofi'];
     for (let i = 0; i < numOfPlayers; i++) {
-      wrapper.find(`#player-name-input-${i}`).simulate('change', { target: { value: players[i] } });
+      wrapper.find('input').at(i).simulate('change', { target: { value: players[i] } });
     }
-
-    wrapper.find('button').simulate('click');
+    wrapper.find('form').simulate('submit');
   }
-  function chooseLanguage(wrapper, language) {
+  /*function chooseLanguage(wrapper, language) {
     wrapper.find('#language-select').simulate('change', { target: { value: language } });
-  }
+  }*/
   const typeInputBox = (wrapper, input) => wrapper.find('.scrabble-input-box input').simulate('change', { target: { value: input } });
   const clickButton = (wrapper, regex) => wrapper.find('.btn').filterWhere(n => n.text().match(regex)).simulate('click');
   const clickAddWord = wrapper => clickButton(wrapper, /add.*word/i);
@@ -142,7 +141,8 @@ describe('Game', () => {
   const checkInstructionMessage = wrapper => wrapper.find('div.instruction-message').at(0).text()
   const checkHiddenInstructionMessage = wrapper => wrapper.find('div.instruction-message.hide').exists()
 
-  /* .tap(n => console.log(n.debug())) */
+  /* .tap(n => console.log(n.debug())) Print out an element, to be used on an element*/
+  /*console.log(wrapper.debug());  Prints out the whole page, to be used separately*/
 
   beforeEach(() => {
     window.localStorage.clear();
@@ -161,7 +161,7 @@ describe('Game', () => {
 
   it("if no name, prints 'Player ' + playerIndex", () => {
     const wrapper = mount(<App />);
-    wrapper.find('button').simulate('click');
+    wrapper.find('form').simulate('submit');
 
     expect(getNumberOfPlayers(wrapper)).toEqual(2);
     expect(getPlayerNames(wrapper, 0)).toEqual('Player 1');
@@ -358,7 +358,7 @@ describe('Game', () => {
     expect(getWordAt(grid, 1, 2, 0)).toEqual('oorie');
     expect(getWordAt(grid, 1, 3, 0)).toEqual('ourie');
     expect(getMoveNumber(grid, 2)).toEqual('3');
-    expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit a word or end turn');
+    expect(getCurrentPlayer(wrapper)).toEqual('Anna, submit a word or pass');
     expect(getTotalCell(grid, 0)).toEqual('90');
     expect(getTotalCell(grid, 1)).toEqual('81');
     expect(getTotalCell(grid, 2)).toEqual('64');
@@ -577,7 +577,7 @@ describe('Game', () => {
     expect(getTableLetterModifier(grid, 0, 1, 0, 1)).toEqual([]);
   });
 
-  it("changes languages: ru; can't type other characters exept the current language", () => {
+  /*it("changes languages: ru; can't type other characters exept the current language", () => {
     const wrapper1 = mount(<App />);
     chooseLanguage(wrapper1, 'ru');
     fillPlayers(wrapper1, 2);
@@ -593,13 +593,13 @@ describe('Game', () => {
     expect(getCurrentLanguage(wrapper)).toEqual('fr');
     typeInputBox(wrapper, 'фываqk');
     checkLetterTiles(wrapper, ['Q8', 'K10']);
-  });
+  });*/
 
   it("firts word can't be submitted if the star/double-word modifier wasn't chosen", () => {
     const wrapper = mount(<App />);
     fillPlayers(wrapper, 2);
     typeInputBox(wrapper, 'ourie');
-    expect(checkInstructionMessage(wrapper)).toEqual("Click on the tile that is on the double word prime square");
+    expect(checkInstructionMessage(wrapper)).toEqual("↑ Press on a letter");
     expect(checkIfButtonDisabled(wrapper, /end turn/i)).toEqual(true);
     clickLetterModifier(wrapper, 2, 'double-word');
     expect(checkIfButtonDisabled(wrapper, /end turn/i)).toEqual(false);

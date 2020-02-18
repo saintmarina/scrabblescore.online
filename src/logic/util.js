@@ -135,7 +135,6 @@ export function loggableGame(game) {
 }
 
 export function logEvent(eventName, eventData) {
-  console.log(eventName, eventData);
   if (isStaticBuild() || !isProduction())
     return;
 
