@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.saintmarina.scrabblescore" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.saintmarina.scrabblescore" version="2.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <allow-navigation href="http://localhost/*" />
     <allow-navigation href="https://localhost/*" />
     <allow-navigation href="ionic://*" />
@@ -10,12 +10,12 @@
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
-    <name>ScrabbleScore</name>
+    <name>Scrabble Calculator</name>
     <description>
-        This is an easy-to-use scrabble score calculator that replaces pen-and-paper for keeping track of Scrabble scores.
+        An easy-to-use scrabble score calculator that replaces pen-and-paper for keeping track of Scrabble scores.
     </description>
     <author email="anna@maniuk.nyc" href="scrabblescore.online">
-        Apache Cordova Team
+        Anna Maniuk
     </author>
     <content src="index.html" />
     <access origin="*" />
