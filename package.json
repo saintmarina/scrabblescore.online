@@ -7,7 +7,7 @@
     "amplitude-js": "^5.2.2",
     "jest-enzyme": "^7.1.0",
     "nightmare": "^3.0.2",
-    "nosleep.js": "^0.9.0",
+    "nosleep.js": "https://github.com/ViRPo/NoSleep.js#f7a6122f5d6700f18a68bff2c4114b81fdf6fa55",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-beforeunload": "^2.1.0",
