@@ -92,5 +92,8 @@
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:27.1.1@jar" level="project" />
     <orderEntry type="module" module-name="CordovaLib" />
     <orderEntry type="module" module-name="CordovaLib" />
+    <orderEntry type="module" module-name="CordovaLib" />
+    <orderEntry type="module" module-name="CordovaLib" />
+    <orderEntry type="module" module-name="CordovaLib" />
   </component>
 </module>

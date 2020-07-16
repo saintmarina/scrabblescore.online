@@ -17,16 +17,18 @@
 
 /*Design for LANGUAGE SELECT*/
 .custom-select#language-select {    /*Untill internationalization is done, this element will remain hidden*/
-  display: none;
+  /*display: none;*/
 }
 
 .custom-select {
-  display: none;
-  padding-top: 4px;
-  width: 130px;
-  float: right;
-  margin-top: -70px;
-  position: relative;
+  width: 160px;
+  height: 47px;
+  margin: 19px;
+  display: inline-block;
+  border: solid 1px white;
+  color: white;
+  background-color: rgb(255, 255, 255, 0.2);
+  font-size: 18px;
 }
 
 
@@ -46,7 +48,7 @@
  /*Design for PLAYERS' NAMES INPUT lines*/
  /*DESKTOP PLAYERS' NAMES INPUT*/
 
- .player-names-choice-container {   /*Container for player name inputs*/
+ .player-names-choice-container, .language-choice-container {   /*Container for player name inputs*/
 	text-align: center;
 	float: none;
   margin: 20px;
@@ -139,5 +141,6 @@ input:focus {
 }
 
 .homepage-children {
-  margin: 4em 0em;
+  /*margin: 4em 0em;*/
 }
+

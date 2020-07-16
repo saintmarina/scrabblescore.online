@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Builders/Builders how it works" />
+            <option value="$PROJECT_DIR$/Builders/Builders implementation" />
+            <option value="$PROJECT_DIR$/Builders/Function literals with receiver" />
+            <option value="$PROJECT_DIR$/Builders/Html builders" />
+            <option value="$PROJECT_DIR$/Builders/String and map builders" />
+            <option value="$PROJECT_DIR$/Builders/The function apply" />
+            <option value="$PROJECT_DIR$/Classes/Data classes" />
+            <option value="$PROJECT_DIR$/Classes/Extension functions" />
+            <option value="$PROJECT_DIR$/Classes/Rename on import" />
+            <option value="$PROJECT_DIR$/Classes/Sealed classes" />
+            <option value="$PROJECT_DIR$/Classes/Smart casts" />
+            <option value="$PROJECT_DIR$/Collections/All Any and other predicates" />
+            <option value="$PROJECT_DIR$/Collections/Associate" />
+            <option value="$PROJECT_DIR$/Collections/Compound tasks" />
+            <option value="$PROJECT_DIR$/Collections/Filter map" />
+            <option value="$PROJECT_DIR$/Collections/FlatMap" />
+            <option value="$PROJECT_DIR$/Collections/Fold" />
+            <option value="$PROJECT_DIR$/Collections/Getting used to new style" />
+            <option value="$PROJECT_DIR$/Collections/GroupBy" />
+            <option value="$PROJECT_DIR$/Collections/Introduction" />
+            <option value="$PROJECT_DIR$/Collections/Max min" />
+            <option value="$PROJECT_DIR$/Collections/Partition" />
+            <option value="$PROJECT_DIR$/Collections/Sequences" />
+            <option value="$PROJECT_DIR$/Collections/Sort" />
+            <option value="$PROJECT_DIR$/Collections/Sum" />
+            <option value="$PROJECT_DIR$/Conventions/Comparison" />
+            <option value="$PROJECT_DIR$/Conventions/For loop" />
+            <option value="$PROJECT_DIR$/Conventions/Invoke" />
+            <option value="$PROJECT_DIR$/Conventions/Operators overloading" />
+            <option value="$PROJECT_DIR$/Conventions/Ranges" />
+            <option value="$PROJECT_DIR$/Generics/Generic functions" />
+            <option value="$PROJECT_DIR$/Introduction/Default arguments" />
+            <option value="$PROJECT_DIR$/Introduction/Hello, world!" />
+            <option value="$PROJECT_DIR$/Introduction/Lambdas" />
+            <option value="$PROJECT_DIR$/Introduction/Named arguments" />
+            <option value="$PROJECT_DIR$/Introduction/Nothing type" />
+            <option value="$PROJECT_DIR$/Introduction/Nullable types" />
+            <option value="$PROJECT_DIR$/Introduction/String templates" />
+            <option value="$PROJECT_DIR$/Introduction/Triple-quoted strings" />
+            <option value="$PROJECT_DIR$/Properties/Delegates examples" />
+            <option value="$PROJECT_DIR$/Properties/Delegates how it works" />
+            <option value="$PROJECT_DIR$/Properties/Lazy property" />
+            <option value="$PROJECT_DIR$/Properties/Properties" />
+            <option value="$PROJECT_DIR$/util" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

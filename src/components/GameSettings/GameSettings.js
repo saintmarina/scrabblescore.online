@@ -1,7 +1,7 @@
 import React from 'react';
 import './GameSettings.css';
 import { resizeArray, isStaticBuild, setStartTime } from '../../logic/util';
-//import { persistState, getPersistedState } from '../../logic/util';
+import { persistState, getPersistedState } from '../../logic/util';
 import HomePage from './HomePage';
 
 
@@ -12,7 +12,7 @@ class GameSettings extends React.Component {
   constructor(props) {
     super(props);
     this.handleChangeOfName = this.handleChangeOfName.bind(this);
-    /*this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);*/
+    this.handleChangeOfLanguage = this.handleChangeOfLanguage.bind(this);
     this.handleGameStart = this.handleGameStart.bind(this);
     this.state = {
       playerNames: resizeArray([], MAX_PLAYERS, ""),
@@ -22,7 +22,7 @@ class GameSettings extends React.Component {
   }
 
   componentDidMount() {
-    let { playerNames } = /*getPersistedState("settings") ||*/ this.state;
+    let { playerNames } = getPersistedState("settings") || this.state;
     playerNames = resizeArray(playerNames, MAX_PLAYERS, "");
     this.setState({playerNames, isTagDisabled: isStaticBuild()});
   }
@@ -33,11 +33,10 @@ class GameSettings extends React.Component {
     playerNames[i] = e.target.value;
     this.setState({ playerNames });
   }
-/*
+
   handleChangeOfLanguage(e) {
     this.setState({ language: e.target.value });
   }
-  */
 
   handleGameStart(e) {
     let { playerNames, language } = this.state;
@@ -55,7 +54,7 @@ class GameSettings extends React.Component {
     playerNames = playerNames.map(s => s.trim());
     playerNames = trimRightArray(playerNames);
 
-    //persistState("settings", {playerNames});
+    persistState("settings", {playerNames});
 
     if (playerNames.length < MIN_PLAYERS)
       playerNames = resizeArray(playerNames, MIN_PLAYERS, "");
@@ -65,9 +64,9 @@ class GameSettings extends React.Component {
   }
 
   render() {
-    const { playerNames, isTagDisabled } = this.state;
+    const { playerNames, isTagDisabled, language } = this.state;
     return (
-      <HomePage>
+      <HomePage language={language} handleLangChange={this.handleChangeOfLanguage}>
         <form onSubmit={this.handleGameStart}>
           <div className="player-names-choice-container">
             <div className="container">
