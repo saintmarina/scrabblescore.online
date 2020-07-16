@@ -4,7 +4,7 @@ import { scoreListsMap } from './scoreLists';
 let startTime;
 
 function msToMin(ms) {
-  const min = Math.floor((ms / (1000 * 60)) % 60);
+  const min = Math.floor((ms / (1000 * 60)));
   return min;
 }
 
