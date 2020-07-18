@@ -8,7 +8,6 @@
         Anna Maniuk
     </author>
     <content src="index.html" />
-    <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -26,4 +25,7 @@
         <preference name="AppendUserAgent" value="cordova" />
         <preference name="ScrollEnabled" value="true" />
     </platform>
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-statusbar" />
+    <plugin name="cordova-plugin-ionic-webview" spec="~4.1.3" />
 </widget>

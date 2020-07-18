@@ -17,7 +17,7 @@
 
 /*Design for LANGUAGE SELECT*/
 .custom-select#language-select {    /*Untill internationalization is done, this element will remain hidden*/
-  /*display: none;*/
+  margin-bottom: 0;
 }
 
 .custom-select {
@@ -30,7 +30,6 @@
   background-color: rgb(255, 255, 255, 0.2);
   font-size: 18px;
 }
-
 
 /*Design for "START BUTTON"*/
 
@@ -48,7 +47,16 @@
  /*Design for PLAYERS' NAMES INPUT lines*/
  /*DESKTOP PLAYERS' NAMES INPUT*/
 
- .player-names-choice-container, .language-choice-container {   /*Container for player name inputs*/
+.language-choice-container {
+  text-align: center;
+  float: none;
+}
+
+.sel-lang {
+  margin-bottom: 0;
+}
+
+.player-names-choice-container {   /*Container for player name inputs*/
 	text-align: center;
 	float: none;
   margin: 20px;
@@ -139,8 +147,3 @@ input:focus {
   border: 0;
   margin-top: 1px;
 }
-
-.homepage-children {
-  /*margin: 4em 0em;*/
-}
-

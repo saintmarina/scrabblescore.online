@@ -18,7 +18,7 @@ const HomePage = (props) => {
         </div>
       </div>
       <div className="language-choice-container">
-        <p>Select the language:</p>
+        <p className="sel-lang">Select the game language:</p>
         <select className="custom-select" id="language-select" value={props.language} onChange={props.handleLangChange}>
           <option value="en">English</option>
           <option value="ru">Russian</option>

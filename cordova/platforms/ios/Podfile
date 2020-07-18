@@ -2,7 +2,7 @@
 
 platform :ios, '11.0'
 
-target 'ScrabbleScore' do
-	project 'ScrabbleScore.xcodeproj'
+target 'Scrabble Calculator' do
+	project 'Scrabble Calculator.xcodeproj'
 
 end
