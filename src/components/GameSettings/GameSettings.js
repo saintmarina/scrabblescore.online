@@ -66,7 +66,15 @@ class GameSettings extends React.Component {
   render() {
     const { playerNames, isTagDisabled, language } = this.state;
     return (
-      <HomePage language={language} handleLangChange={this.handleChangeOfLanguage}>
+      <HomePage>
+        <div className="language-choice-container">
+          <p className="sel-lang">Select the game language:</p>
+          <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
+            <option value="en">English</option>
+            <option value="ru">Russian</option>
+            <option value="fr">French</option>
+          </select>
+        </div>
         <form onSubmit={this.handleGameStart}>
           <div className="player-names-choice-container">
             <div className="container">
