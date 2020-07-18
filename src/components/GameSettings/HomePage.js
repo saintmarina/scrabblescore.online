@@ -5,8 +5,7 @@ const HomePage = (props) => {
     <div className="container">
       <div className="row">
         <div className="col-sm-12">
-          <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
-          <h1 style={{display:"none"}}>Scrabble Calculator</h1>
+          <h1 className="title-large">Scra Score Sheet</h1>
             <p>
                This Scrabble Score Calculator keeps track of the game, and replaces traditional pen-and-paper score sheets.
                Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.

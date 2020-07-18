@@ -83,9 +83,9 @@ class ScoreKeeper extends React.Component {
       <div className="score-keeper">
         <div className="container">
           <div id="small-logo" onClick={onNewGame}>
-            <img src="logo.png" alt="Scrabble score logo"/>
+            <h3 className="title-small">Scra Score Sheet</h3> 
           </div>
-          <h1 className="title">Scrabble Score Sheet</h1>
+          <h1 className="title">Score Sheet</h1>
           {isMobile
             ? <ScoreGridMobile playerNames={playerNames} game={game} language={language} />
             : <ScoreGrid playerNames={playerNames} game={game} language={language} />

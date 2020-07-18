@@ -1,11 +1,12 @@
 #small-logo, #small-logo img {
   display: block;
-  cursor: pointer;
+  
   width: 212px;
   height: 42px;
 }
 
 #small-logo {
+  cursor: pointer;
   margin: 20px 0 40px 0;
 }
 
