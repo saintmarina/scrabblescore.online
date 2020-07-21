@@ -7,7 +7,7 @@ const HomePage = (props) => {
         <div className="col-sm-12">
           <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
           <p>
-             This Scrabble Score Calculator keeps track of the game, and replaces traditional pen-and-paper score sheets.
+             This Scra Score Sheet keeps track of the game, and replaces traditional pen-and-paper score sheets for the Scrabble crossword game.
              Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
           </p>
           <p>
