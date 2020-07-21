@@ -83,7 +83,7 @@ class ScoreKeeper extends React.Component {
       <div className="score-keeper">
         <div className="container">
           <div id="small-logo" onClick={onNewGame}>
-            <h3 className="title-small">Scra Score Sheet</h3> 
+             <img src="logo.png" alt="Scrabble score logo"/>
           </div>
           <h1 className="title">Score Sheet</h1>
           {isMobile

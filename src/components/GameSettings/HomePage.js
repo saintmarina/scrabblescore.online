@@ -5,15 +5,15 @@ const HomePage = (props) => {
     <div className="container">
       <div className="row">
         <div className="col-sm-12">
-          <h1 className="title-large">Scra Score Sheet</h1>
-            <p>
-               This Scrabble Score Calculator keeps track of the game, and replaces traditional pen-and-paper score sheets.
-               Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
-            </p>
-            <p>
-               Simply fill in the players’ names in order that they will
-               take turns and press the START button.
-            </p>
+          <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
+          <p>
+             This Scrabble Score Calculator keeps track of the game, and replaces traditional pen-and-paper score sheets.
+             Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
+          </p>
+          <p>
+             Simply fill in the players’ names in order that they will
+             take turns and press the START button.
+          </p>
         </div>
       </div>
       <div className="homepage-children">

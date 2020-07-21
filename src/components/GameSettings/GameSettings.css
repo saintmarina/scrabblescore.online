@@ -1,15 +1,28 @@
+#big-logo {
+  width: 50%;
+  margin: 30px auto;
+  max-width: 350px;
+  max-height: 115px;
+  min-width: 250px;
+  min-height: 50px;
+  display: block;
+}
+
+#small-logo, #small-logo img {
+  display: block;
+  cursor: pointer;  
+  width: 175px;
+ }
+ 
+ #small-logo {
+   margin: 20px 0 40px 0;
+ }
+
 @media screen and (max-width: 815px) {      /*Mobile version displays smaller logo*/
   div.logo {
     width: 300px;
     height: 60px;
   }
-}
-
-.title-large {
-  text-align: center;
-  float: none;
-  font-size: 3.5rem;
-  margin: 30px auto;
 }
 
 /*Design for LANGUAGE SELECT*/
