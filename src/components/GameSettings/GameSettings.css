@@ -8,16 +8,6 @@
   display: block;
 }
 
-#small-logo, #small-logo img {
-  display: block;
-  cursor: pointer;  
-  width: 175px;
- }
- 
- #small-logo {
-   margin: 20px 0 40px 0;
- }
-
 @media screen and (max-width: 815px) {      /*Mobile version displays smaller logo*/
   div.logo {
     width: 300px;
