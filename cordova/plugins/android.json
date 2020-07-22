@@ -11,6 +11,9 @@
       "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
       "PACKAGE_NAME": "com.saintmarina.scrabblescore"
     },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.saintmarina.scrabblescore"
+    },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.saintmarina.scrabblescore"
     }
