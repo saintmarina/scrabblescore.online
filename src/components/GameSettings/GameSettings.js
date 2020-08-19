@@ -2,6 +2,7 @@ import React from 'react';
 import './GameSettings.css';
 import { resizeArray, isStaticBuild, setStartTime } from '../../logic/util';
 import { persistState, getPersistedState } from '../../logic/util';
+import { scoreListsMap } from '../../logic/scoreLists';
 import HomePage from './HomePage';
 
 
@@ -70,9 +71,11 @@ class GameSettings extends React.Component {
         <div className="language-choice-container">
           <p className="sel-lang">Select the game language:</p>
           <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
-            <option value="fr">French</option>
+            {Object.keys(scoreListsMap).map((language) => (
+                <option
+                    key={language}
+                    value={language}>{scoreListsMap[language].language}</option>
+            ))}
           </select>
         </div>
         <form onSubmit={this.handleGameStart}>
