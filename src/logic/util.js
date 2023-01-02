@@ -150,11 +150,6 @@ export function scrollToTop() {
   bodyElement[0].scrollIntoView(true)
 }
 
-export function scrollToMiddle() {
-  const inputBoxElement = document.getElementsByClassName('middle-scroll-anchor');
-  inputBoxElement[0].scrollIntoView({ block: 'center' })
-}
-
 export function persistState(name, stateObj) {
   window.localStorage.setItem(name, JSON.stringify(stateObj));
 }

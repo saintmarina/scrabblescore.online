@@ -19,6 +19,8 @@ global.MutationObserver = class {
   observe(element, initObject) {}
 };
 
+global.scrollBy = () => {};
+
 jest.mock('popper.js', () => {
   const PopperJS = jest.requireActual('popper.js');
 

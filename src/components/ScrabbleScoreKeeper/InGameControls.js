@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrabbleScore, logEvent, scrollToTop,  scrollToMiddle, isTest, isCordova, loggableWord, loggableGame } from '../../logic/util';
+import { scrabbleScore, logEvent, scrollToTop, isTest, isCordova, loggableWord, loggableGame } from '../../logic/util';
 import ScrabbleInputBox from '../ScrabbleInputBox/ScrabbleInputBox';
 import NoSleep from 'nosleep.js';
 
@@ -10,42 +10,34 @@ if (!isTest() && !isCordova()) {
 }
 
 class InGameControls extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleUndo = this.handleUndo.bind(this);
-    this.handleEndTurn = this.handleEndTurn.bind(this);
-    this.handleEndGame = this.handleEndGame.bind(this);
-    this.handleAddWord = this.handleAddWord.bind(this);
-    this.handleBingo = this.handleBingo.bind(this);
-    this._scroll = this._scroll.bind(this);
-    this.input = React.createRef();
-    this.state = {
-      currentWord: emptyWord,
-    };
-  }
 
-  _scroll(where='middle') {
-    const { isMobile } = this.props;
+  input = React.createRef();
+  form = React.createRef();
 
-    if (typeof noSleep !== "undefined") {
+  state = {
+    currentWord: emptyWord,
+  };
+
+  handleContainerClick(e) {
+    if (e.target.nodeName === 'BUTTON' && typeof noSleep !== "undefined") {
       /*
        * NoSleep requires to be called from an event handler
        * So ideally we would want to put it into the Start Game event handler
        * But if we put noSleep into the Start game event, noSleep won't be called when the user resumes game
-       * Thus, we locate it in scroll function, which is beeing executed when user interacts with buttons
+       * Thus, we execute when user interacts with buttons
        */
 
       noSleep.enable();
     }
-    
+  }
+
+  _scrollToTop = () => {
+    const { isMobile } = this.props;
+
     if (!isMobile)
       return;
 
-    if (where === 'middle')
-      scrollToMiddle();
-    else
-      scrollToTop();
+    scrollToTop();
   }
 
   componentDidMount() {
@@ -54,7 +46,24 @@ class InGameControls extends React.Component {
     if (this.input.current)
       this.input.current.focus();
     if (game.getCurrentTurnNumber() === 0)
-      this._scroll('top');
+      this._scrollToTop();
+  }
+
+  getSnapshotBeforeUpdate(_prevProps, _prevState) {
+    return { rect: this.getBoundingClientRect() };
+  }
+
+  componentDidUpdate(_prevProps, _prevState, snapshot) {
+    this.adjustScrollPosition(snapshot.rect);
+  }
+
+  getBoundingClientRect() {
+    return this.form.current.getBoundingClientRect();
+  }
+
+  adjustScrollPosition(prevRect) {
+    const rect = this.getBoundingClientRect();
+    window.scrollBy(0, rect.top - prevRect.top);
   }
 
   onSetGame(game) {
@@ -69,13 +78,14 @@ class InGameControls extends React.Component {
       this.input.current.focus();
   }
 
-  handleChange(word) {
+
+  handleChange = (word) => {
     const { language } = this.props;
     const currentWord = { ...word, score: scrabbleScore(word.value, word.modifiers, language) };
     this.setState({ currentWord });
   }
 
-  handleUndo() {
+  handleUndo = () => {
     const { onUndo } = this.props;
     onUndo();
     this.resetCurrentWord();
@@ -83,22 +93,20 @@ class InGameControls extends React.Component {
     logEvent('undo');
   }
 
-  handleAddWord() {
+  handleAddWord = () => {
     const { currentWord } = this.state;
     const { game } = this.props;
     this.onSetGame(game.addWord(currentWord));
-    this._scroll();
-
+    
     logEvent('add-word', {'word': loggableWord(this.state.currentWord)});
   }
 
-  handleEndTurn(e) {
+  handleEndTurn = (e) => {
     const { currentWord } = this.state;
     let { game } = this.props;
     if (currentWord.value.length !== 0)
       game = game.addWord(currentWord);
     this.onSetGame(game.endTurn());
-    this._scroll();
 
     const data = currentWord.value.length !== 0
                         ? {'word': loggableWord(this.state.currentWord)}
@@ -106,19 +114,17 @@ class InGameControls extends React.Component {
     logEvent('end-turn', data);
   }
 
-  handleBingo() {
+  handleBingo = () => {
     const { game, onSetGame } = this.props;
     onSetGame(game.setBingo(!game.getCurrentTurn().bingo));
-    this._scroll();
     this.input.current.focus();
 
     logEvent('toggle-bingo');
   }
 
-  handleEndGame() {
+  handleEndGame = () => {
     const { game, onSetGame } = this.props;
     onSetGame(game.endGame());
-    this._scroll();
 
     logEvent('end-game', loggableGame(game));
   }
@@ -143,7 +149,7 @@ class InGameControls extends React.Component {
     };
 
     return (
-      <form className={isFirstTurn ? 'first-turn' : null} onSubmit={(e) => e.preventDefault()} >
+      <form ref={this.form} className={isFirstTurn ? 'first-turn' : null} onSubmit={(e) => e.preventDefault()} onClick={this.handleContainerClick}>
         <ScrabbleInputBox {...props} />
         <div className={`instruction-message ${isInstructionShown ? "" : "hide"}`}> 
           ↑ Press on a letter
