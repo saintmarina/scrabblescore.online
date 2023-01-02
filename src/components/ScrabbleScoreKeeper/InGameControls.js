@@ -78,6 +78,12 @@ class InGameControls extends React.Component {
       this.input.current.focus();
   }
 
+  reloadLastWord() {
+    const { game } = this.props;
+    this.setState({ currentWord: game.getLastWord() || emptyWord });
+    if (this.input.current)
+      this.input.current.focus();
+  }
 
   handleChange = (word) => {
     const { language } = this.props;
@@ -88,7 +94,7 @@ class InGameControls extends React.Component {
   handleUndo = () => {
     const { onUndo } = this.props;
     onUndo();
-    this.resetCurrentWord();
+    this.reloadLastWord();
 
     logEvent('undo');
   }

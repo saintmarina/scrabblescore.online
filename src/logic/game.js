@@ -139,8 +139,16 @@ export default class Game {
     return new Game(newPlayers, this.currentPlayerIndex, this.leftOversTurnNumber);
   }
 
+  getLastPlayer() {
+    return this.playersTurns[(this.playersTurns.length + this.currentPlayerIndex - 1) % this.playersTurns.length];
+  }
+
   getCurrentPlayer() {
     return this.playersTurns[this.currentPlayerIndex];
+  }
+
+  getLastTurn() {
+    return this.getLastPlayer().slice(-1)[0];
   }
 
   getCurrentTurn() {
@@ -153,6 +161,15 @@ export default class Game {
 
   getCurrentPlayerIndex() {
     return this.currentPlayerIndex;
+  }
+
+  getLastWord() {
+    const currentTurn = this.getCurrentTurn();
+    if (!currentTurn.isEmpty()) {
+      return currentTurn.words.slice(-1)[0];
+    }
+    const lastTurn = this.getLastTurn();
+    return lastTurn.words.slice(-1)[0];
   }
 
   getRunningTotals(playerIndex) {

@@ -113,6 +113,18 @@ test('getCurrentTurn() is getting turn of the current player', () => {
   expect(game.getCurrentTurn().words).toEqual([w2]);
 });
 
+test('getLastWord() is getting the last word of the current player', () => {
+  let game = Game.createNewGame(2);
+  game = game.addWord(w1).addWord(w2);
+  expect(game.getLastWord()).toEqual(w2);
+});
+
+test('getLastWord() is getting the last word of the previous player', () => {
+  let game = Game.createNewGame(2);
+  game = game.addWord(w1).endTurn();
+  expect(game.getLastWord()).toEqual(w1);
+});
+
 test('gerCurrentPlayer() is getting an array of turns of current player', () => {
   let game = Game.createNewGame(2);
   game = game.addWord(w1).endTurn();

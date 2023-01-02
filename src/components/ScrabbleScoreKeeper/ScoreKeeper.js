@@ -38,11 +38,32 @@ class ScoreKeeper extends React.Component {
   handleUndo() {
     const { games } = this.state;
     const { playerNames } = this.props;
-    const previousGames = games.slice(0, -1);
-    const game = games[games.length - 1];
+    const ignoreLastGame = this.undoShouldIgnoreLastGame();
+    const previousGames = games.slice(0, ignoreLastGame ? -2 : -1);
+    const game = games[games.length - (ignoreLastGame ? 2 : 1)];
     const newState = { game, games: previousGames };
     this.setState(newState);
     persistState("gameState", {'playerNames': playerNames, ...newState});
+  }
+
+  /**
+   * This is a bit of a weird one. If there are no changes to the current player's
+   * turns in the two last games, we ignore the last game. If we don't, we end
+   * up duplicating the last word for the current player. This situation occurs
+   * when The user clicks "End Turn" after clicking "Add Word" and not actually
+   * adding a word.
+   */
+  undoShouldIgnoreLastGame() {
+    const { game, games } = this.state;
+    const lastGame = games[games.length - 1];
+    if (!lastGame)
+      return false;
+    const playerIndex = lastGame.getCurrentPlayerIndex();
+    const lastPlayerTurn = lastGame.playersTurns[playerIndex].slice(-1)[0];
+    const currentPlayerTurn = game.playersTurns[playerIndex].slice(-1)[0];
+    if (!lastPlayerTurn.words.length)
+      return false;
+    return JSON.stringify(lastPlayerTurn) === JSON.stringify(currentPlayerTurn);
   }
 
   renderWinner() {
