@@ -107,10 +107,6 @@
   text-align: center;
 }
 
-.mobile .player-name {
-  text-align: center;
-}
-
 .mobile table.score-grid-cell {
   margin: 6px 0;
   min-height: 30px;

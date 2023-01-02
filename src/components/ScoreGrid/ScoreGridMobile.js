@@ -45,7 +45,7 @@ class ScoreGridMobile extends React.Component {
               player[i]
                 ? (
                   <tr key={`move${i}_player${j}`} className="player-move-row">
-                    <td className="player-name">
+                    <td className="text-center">
                       {playerNames[j]}
                       <br />
                       {toDisplayTotals(player[i]) ? totalScores[j][i] : null}
