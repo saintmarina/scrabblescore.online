@@ -10,7 +10,7 @@ class ShouldResume extends React.Component {
     return (
       <HomePage>
         <div className="row justify-content-around">
-          <div className="col-sm-6">
+          <div className="col-sm-8">
             <div className="should-resume">
               <p>
                 You have a game in progress. <br />Would you like to resume it?
