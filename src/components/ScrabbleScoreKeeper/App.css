@@ -73,6 +73,10 @@ h3 {
   box-shadow: none; /* No hover effet if button disabled */
 }
 
+.btn.disabled\:hidden:disabled {
+  visibility: hidden;
+}
+
 /*Bingo button styles*/
 
 .buttons input[type=checkbox] {

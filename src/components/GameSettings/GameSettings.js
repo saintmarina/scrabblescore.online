@@ -3,6 +3,7 @@ import './GameSettings.css';
 import { resizeArray, isStaticBuild, setStartTime } from '../../logic/util';
 import { persistState, getPersistedState } from '../../logic/util';
 import HomePage from './HomePage';
+import { DownIcon, UpIcon } from './icons';
 
 
 const MIN_PLAYERS = 2;
@@ -31,6 +32,13 @@ class GameSettings extends React.Component {
     let { playerNames } = this.state;
     playerNames = playerNames.slice();
     playerNames[i] = e.target.value;
+    this.setState({ playerNames });
+  }
+
+  handleSwapName(i, j) {
+    let { playerNames } = this.state;
+    playerNames = playerNames.slice();
+    [playerNames[i], playerNames[j]] = [playerNames[j], playerNames[i]];
     this.setState({ playerNames });
   }
 
@@ -77,22 +85,35 @@ class GameSettings extends React.Component {
         </div>
         <form onSubmit={this.handleGameStart}>
           <div className="player-names-choice-container">
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  {playerNames.map((playerName, i) => (
-                    <input
-                      key={i}
-                      onChange={e => this.handleChangeOfName(i, e)}
-                      value={playerName}
-                      className="form-control player-name"
-                      placeholder={`Player ${i + 1}`}
-                      disabled={isTagDisabled}
-                    />
-                  ))}
+            {playerNames.map((playerName, i) => (
+              <div key={i} className="d-flex align-items-center">
+                <input
+                  onChange={(e) => this.handleChangeOfName(i, e)}
+                  value={playerName}
+                  className="form-control player-name flex-grow-1"
+                  placeholder={`Player ${i + 1}`}
+                  disabled={isTagDisabled}
+                />
+                <div className="ml-2">
+                  <button
+                    type="button"
+                    onClick={() => this.handleSwapName(i, i - 1)}
+                    disabled={i === 0 || !playerName}
+                    className="btn disabled:hidden">
+                    <UpIcon />
+                  </button>
+                </div>
+                <div className="ml-1">
+                  <button
+                    type="button"
+                    onClick={() => this.handleSwapName(i, i + 1)}
+                    disabled={i === playerNames.length - 1 || !playerName}
+                    className="btn disabled:hidden">
+                    <DownIcon />
+                  </button>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
           <div className="start-btn-container">
             <button className="btn start" type="submit" disabled={isTagDisabled}>START</button>

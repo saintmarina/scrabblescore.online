@@ -59,13 +59,13 @@
 .player-names-choice-container {   /*Container for player name inputs*/
 	text-align: center;
 	float: none;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .form-control.player-name {
  	width: 160px;
  	height: 47px;
-	margin: 19px;
+	margin: 6px 0;
 	display: inline-block;
 	border: solid 1px white;
   color: white;
@@ -98,15 +98,6 @@ input::placeholder { /* Most modern browsers support this now. */
 
 input:focus {
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.75), 0 0 8px rgba(255, 255, 255, 0.75) !important;
-}
-
-/*MOBILE PLAYERS' NAMES INPUT*/
-
-@media screen and (max-width: 815px) {
-  .form-control.player-name {
-    margin: 6px;
-    width: 216px;
-  }
 }
 
 .should-resume {
