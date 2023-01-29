@@ -138,3 +138,7 @@ input:focus {
   border: 0;
   margin-top: 1px;
 }
+
+.translate-y-swap-button {
+  transform: translateY(50%) translateY(6px);
+}

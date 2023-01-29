@@ -3,7 +3,7 @@ import './GameSettings.css';
 import { resizeArray, isStaticBuild, setStartTime } from '../../logic/util';
 import { persistState, getPersistedState } from '../../logic/util';
 import HomePage from './HomePage';
-import { DownIcon, UpIcon } from './icons';
+import { SwapIcon } from './icons';
 
 
 const MIN_PLAYERS = 2;
@@ -97,21 +97,12 @@ class GameSettings extends React.Component {
                 <div className="ml-2">
                   <button
                     type="button"
-                    onClick={() => this.handleSwapName(i, i - 1)}
-                    disabled={i === 0 || !playerName}
-                    className="btn disabled:hidden">
-                    <UpIcon />
-                  </button>
-                </div>
-                <div className="ml-1">
-                  <button
-                    type="button"
                     onClick={() => this.handleSwapName(i, i + 1)}
-                    disabled={i === playerNames.length - 1 || !playerName}
-                    className="btn disabled:hidden">
-                    <DownIcon />
+                    disabled={i === playerNames.length - 1 || isTagDisabled}
+                    className="btn disabled:hidden translate-y-swap-button">
+                    <SwapIcon />
                   </button>
-                </div>
+                </div>              
               </div>
             ))}
           </div>
@@ -123,6 +114,9 @@ class GameSettings extends React.Component {
     );
   }
 }
+
+
+
 
 
 export default GameSettings;
