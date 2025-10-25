@@ -1,0 +1,57 @@
+type: edu
+custom_name: Comparison
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 97
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 97
+    initialized_from_dependency: false
+    possible_answer: |-
+      override fun compareTo(other: MyDate) = when {
+              year != other.year -> year - other.year
+              month != other.month -> month - other.month
+              else -> dayOfMonth - other.dayOfMonth
+          }
+    selected: false
+    status: Unchecked
+  text: |
+    data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
+        /* TODO */
+    }
+
+    fun test(date1: MyDate, date2: MyDate) {
+        // this code should compile:
+        println(date1 < date2)
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+    import koans.util.errorMessage
+
+    class TestComparison {
+
+        @Test(timeout = 1000)
+        fun testBefore() {
+            val first = MyDate(2014, 5, 10)
+            val second = MyDate(2014, 7, 11)
+            Assert.assertTrue(errorMessage("compareTo") + "$first should go before $second", first < second)
+        }
+
+        @Test(timeout = 1000)
+        fun testAfter() {
+            val first = MyDate(2014, 10, 20)
+            val second = MyDate(2014, 7, 11)
+            Assert.assertTrue(errorMessage("compareTo") + "$first should go after $second", first > second)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

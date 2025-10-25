@@ -1,0 +1,34 @@
+type: edu
+custom_name: Hello, world!
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 20
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 22
+    initialized_from_dependency: false
+    possible_answer: '"OK"'
+    selected: true
+    status: Solved
+  text: |
+    fun start(): String = TODO()
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestStart {
+        @Test(timeout = 1000)
+        fun testOk() {
+            Assert.assertEquals("OK", start())
+        }
+    }
+  learner_created: false
+status: Solved
+record: -1

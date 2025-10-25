@@ -1,0 +1,87 @@
+type: edu
+custom_name: Delegates how it works
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 302
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 302
+    initialized_from_dependency: false
+    possible_answer: return timeInMillis!!.toDate()
+    selected: false
+    status: Unchecked
+  - offset: 403
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 403
+    initialized_from_dependency: false
+    possible_answer: timeInMillis = value.toMillis()
+    selected: false
+    status: Unchecked
+  text: |+
+    import kotlin.properties.ReadWriteProperty
+    import kotlin.reflect.KProperty
+
+    class D {
+        var date: MyDate by EffectiveDate()
+    }
+
+    class EffectiveDate<R> : ReadWriteProperty<R, MyDate> {
+
+        var timeInMillis: Long? = null
+
+        override fun getValue(thisRef: R, property: KProperty<*>): MyDate {
+            TODO()
+        }
+
+        override fun setValue(thisRef: R, property: KProperty<*>, value: MyDate) {
+            TODO()
+        }
+    }
+
+  learner_created: false
+- name: src/MyDate.kt
+  visible: true
+  text: |-
+    import java.util.Calendar
+
+    data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int)
+
+    fun MyDate.toMillis(): Long {
+        val c = Calendar.getInstance()
+        c.set(year, month, dayOfMonth)
+        return c.getTimeInMillis()
+    }
+
+    fun Long.toDate(): MyDate {
+        val c = Calendar.getInstance()
+        c.setTimeInMillis(this)
+        return MyDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE))
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestDelegatesHowItWorks {
+        @Test(timeout = 1000)
+        fun testDate() {
+            val d = D()
+            d.date = MyDate(2014, 1, 13)
+            val message = "The methods 'getValue' and 'setValue' are implemented incorrectly"
+            Assert.assertTrue(message, 2014 == d.date.year)
+            Assert.assertTrue(message, 1 == d.date.month)
+            Assert.assertTrue(message, 13 == d.date.dayOfMonth)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

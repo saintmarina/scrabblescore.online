@@ -1,0 +1,75 @@
+type: edu
+custom_name: Generic functions
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 20
+    length: 26
+    placeholder_text: fun partitionTo() = TODO()
+    initial_state:
+      length: 26
+      offset: 20
+    initialized_from_dependency: false
+    possible_answer: |-
+      fun <T, C : MutableCollection<T>> Collection<T>.partitionTo(first: C, second: C, predicate: (T) -> Boolean): Pair<C, C> {
+          for (element in this) {
+              if (predicate(element)) {
+                  first.add(element)
+              } else {
+                  second.add(element)
+              }
+          }
+          return Pair(first, second)
+      }
+    selected: false
+    status: Unchecked
+  text: |
+    import java.util.*
+
+    fun partitionTo() = TODO()
+
+    fun partitionWordsAndLines() {
+        val (words, lines) = listOf("a", "a b", "c", "d e")
+                .partitionTo(ArrayList(), ArrayList()) { s -> !s.contains(" ") }
+        check(words == listOf("a", "c"))
+        check(lines == listOf("a b", "d e"))
+    }
+
+    fun partitionLettersAndOtherSymbols() {
+        val (letters, other) = setOf('a', '%', 'r', '}')
+                .partitionTo(HashSet(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z' }
+        check(letters == setOf('a', 'r'))
+        check(other == setOf('%', '}'))
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import koans.util.errorMessage
+    import org.junit.Assert
+    import org.junit.Test
+    import java.util.*
+
+    class TestGenericFunctions {
+        @Test(timeout = 1000)
+        fun testPartitionWordsAndLines() {
+            partitionWordsAndLines()
+
+            val (words, lines) = listOf("a", "a b", "c", "d e").partitionTo(ArrayList(), ArrayList()) { s -> !s.contains(" ") }
+            Assert.assertEquals(errorMessage("partitionTo"), listOf("a", "c"), words)
+            Assert.assertEquals(errorMessage("partitionTo"), listOf("a b", "d e"), lines)
+        }
+
+        @Test(timeout = 1000)
+        fun testPartitionLettersAndOtherSymbols() {
+            partitionLettersAndOtherSymbols()
+
+            val (letters, other) = setOf('a', '%', 'r', '}').partitionTo(HashSet(), HashSet()) { c -> c in 'a'..'z' || c in 'A'..'Z' }
+            Assert.assertEquals(errorMessage("partitionTo"), setOf('a', 'r'), letters)
+            Assert.assertEquals(errorMessage("partitionTo"), setOf('%', '}'), other)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

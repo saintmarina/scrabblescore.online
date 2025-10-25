@@ -20,6 +20,10 @@
   margin-bottom: 0;
 }
 
+.rules {
+  margin-top: 20px;
+}
+
 .custom-select {
   width: 160px;
   height: 47px;

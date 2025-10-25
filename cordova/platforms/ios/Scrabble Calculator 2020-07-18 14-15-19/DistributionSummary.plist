@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Scrabble Calculator.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>9F7BFD57BF63CB050E6A76D0351D57DA726F2262</string>
+				<key>dateExpires</key>
+				<string>2/4/21</string>
+				<key>type</key>
+				<string>Apple Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>QJ2K7C9985.com.saintmarina.scrabblescore</string>
+				<key>beta-reports-active</key>
+				<true/>
+				<key>com.apple.developer.team-identifier</key>
+				<string>QJ2K7C9985</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>Scrabble Calculator.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>b76046e5-331c-41b6-81e4-d06b68a19cef</string>
+				<key>name</key>
+				<string>ScrabbleScore Profile</string>
+			</dict>
+			<key>symbols</key>
+			<true/>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>QJ2K7C9985</string>
+				<key>name</key>
+				<string>Anna Maniuk</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

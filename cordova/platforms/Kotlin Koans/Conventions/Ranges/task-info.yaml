@@ -1,0 +1,62 @@
+type: edu
+custom_name: Ranges
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 82
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 82
+    initialized_from_dependency: false
+    possible_answer: date in first..last
+    selected: false
+    status: Unchecked
+  text: |
+    fun checkInRange(date: MyDate, first: MyDate, last: MyDate): Boolean {
+        return TODO()
+    }
+  learner_created: false
+- name: src/MyDate.kt
+  visible: true
+  text: |-
+    data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
+        override fun compareTo(other: MyDate): Int {
+            if (year != other.year) return year - other.year
+            if (month != other.month) return month - other.month
+            return dayOfMonth - other.dayOfMonth
+        }
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestRangeTo {
+        fun doTest(date: MyDate, first: MyDate, last: MyDate, shouldBeInRange: Boolean) {
+            val message = "$date should${if (shouldBeInRange) "" else "n't"} be in range: $first..$last:\n"
+            Assert.assertEquals(message, shouldBeInRange, checkInRange(date, first, last))
+        }
+
+        @Test(timeout = 1000)
+        fun testInRange() {
+            doTest(MyDate(2014, 3, 22), MyDate(2014, 1, 1), MyDate(2015, 1, 1), shouldBeInRange = true)
+        }
+
+        @Test(timeout = 1000)
+        fun testBefore() {
+            doTest(MyDate(2013, 3, 22), MyDate(2014, 1, 1), MyDate(2015, 1, 1), shouldBeInRange = false)
+        }
+
+        @Test(timeout = 1000)
+        fun testAfter() {
+            doTest(MyDate(2015, 3, 22), MyDate(2014, 1, 1), MyDate(2015, 1, 1), shouldBeInRange = false)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

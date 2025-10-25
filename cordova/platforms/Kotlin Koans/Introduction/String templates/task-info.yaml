@@ -1,0 +1,49 @@
+type: edu
+custom_name: String templates
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 92
+    length: 24
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 92
+    initialized_from_dependency: false
+    possible_answer: '"""\d{2} $month \d{4}"""'
+    selected: true
+    status: Solved
+  text: |
+    val month = "(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)"
+
+    fun getPattern(): String = TODO()
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Test
+    import org.junit.Assert
+
+    class TestStringTemplates() {
+        private fun testMatch(date: String) = Assert.assertTrue("The pattern should match $date", date.matches(getPattern().toRegex()))
+        private fun testMismatch(date: String) = Assert.assertFalse("The pattern shouldn't match $date", date.matches(getPattern().toRegex()))
+
+        @Test(timeout = 1000)
+        fun match() {
+            testMatch("11 MAR 1952")
+        }
+
+        @Test(timeout = 1000)
+        fun match1() {
+            testMatch("24 AUG 1957")
+        }
+
+        @Test(timeout = 1000)
+        fun doNotMatch() {
+            testMismatch("24 RRR 1957")
+        }
+    }
+  learner_created: false
+status: Solved
+record: -1

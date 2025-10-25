@@ -1,0 +1,83 @@
+type: edu
+custom_name: Getting used to new style
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 137
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 137
+    initialized_from_dependency: false
+    possible_answer: s.length
+    selected: false
+    status: Unchecked
+  - offset: 213
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 213
+    initialized_from_dependency: false
+    possible_answer: group.size
+    selected: false
+    status: Unchecked
+  - offset: 285
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 285
+    initialized_from_dependency: false
+    possible_answer: group.size == maximumSizeOfGroup
+    selected: false
+    status: Unchecked
+  text: |
+    fun doSomethingWithCollection(collection: Collection<String>): Collection<String>? {
+
+        val groupsByLength = collection.groupBy { s -> TODO() }
+
+        val maximumSizeOfGroup = groupsByLength.values.map { group -> TODO() }.max()
+
+        return groupsByLength.values.firstOrNull { group -> TODO() }
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Test
+    import org.junit.Assert
+
+    class TestExtensionsOnCollections {
+        @Test(timeout = 1000)
+        fun testCollectionOfOneElement() {
+            doTest(listOf("a"), listOf("a"))
+        }
+
+        @Test(timeout = 1000)
+        fun testSimpleCollection() {
+            doTest(listOf("a", "c"), listOf("a", "bb", "c"))
+        }
+
+        @Test(timeout = 1000)
+        fun testCollectionWithEmptyStrings() {
+            doTest(listOf("", "", "", ""), listOf("", "", "", "", "a", "bb", "ccc", "dddd"))
+        }
+
+        @Test(timeout = 1000)
+        fun testCollectionWithTwoGroupsOfMaximalSize() {
+            doTest(listOf("a", "c"), listOf("a", "bb", "c", "dd"))
+        }
+
+        private fun doTest(expected: Collection<String>?, argument: Collection<String>) {
+            Assert.assertEquals(
+                    "Wrong result for 'doSomethingStrangeWithCollection()' call on " +
+                            "${argument.joinToString(prefix = "[", postfix = "]") { "\"$it\"" }}:\n",
+                    expected, doSomethingWithCollection(argument))
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

@@ -1,0 +1,49 @@
+type: edu
+custom_name: Properties
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 95
+    length: 3
+    placeholder_text: set
+    initial_state:
+      length: 3
+      offset: 95
+    initialized_from_dependency: false
+    possible_answer: |-
+      set(v) {
+                  field = v
+                  counter++
+              }
+    selected: false
+    status: Unchecked
+  text: |
+    class PropertyExample() {
+        var counter = 0
+        var propertyWithCounter: Int? = null
+            set
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestProperties {
+        @Test(timeout = 1000)
+        fun testPropertyWithCounter() {
+            val q = PropertyExample()
+            q.propertyWithCounter = 14
+            q.propertyWithCounter = 21
+            q.propertyWithCounter = 32
+            Assert.assertTrue("The property 'counter' should contain the number of assignments to 'propertyWithCounter'",
+                    3 == q.counter)
+            Assert.assertTrue("The property 'propertyWithCounter' should store the value assigned to it", 32 == q.propertyWithCounter)
+        }
+
+    }
+  learner_created: false
+status: Unchecked
+record: -1

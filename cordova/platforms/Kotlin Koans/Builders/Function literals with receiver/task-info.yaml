@@ -1,0 +1,51 @@
+type: edu
+custom_name: Function literals with receiver
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 66
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 66
+    initialized_from_dependency: false
+    possible_answer: this % 2 == 0
+    selected: false
+    status: Unchecked
+  - offset: 112
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 112
+    initialized_from_dependency: false
+    possible_answer: this % 2 != 0
+    selected: false
+    status: Unchecked
+  text: |
+    fun task(): List<Boolean> {
+        val isEven: Int.() -> Boolean = { TODO() }
+        val isOdd: Int.() -> Boolean = { TODO() }
+
+        return listOf(42.isOdd(), 239.isOdd(), 294823098.isEven())
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestExtensionFunctionLiterals {
+        @Test(timeout = 1000)
+        fun testIsOddAndIsEven() {
+            Assert.assertEquals("Wrong results for 'isOdd' and 'isEven' calls:\n",
+                    listOf(false, true, true), task())
+
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

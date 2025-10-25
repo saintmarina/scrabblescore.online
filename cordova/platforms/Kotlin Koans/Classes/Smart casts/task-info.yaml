@@ -1,0 +1,63 @@
+type: edu
+custom_name: Smart casts
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 72
+    length: 11
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 72
+    initialized_from_dependency: false
+    possible_answer: expr.value
+    selected: true
+    status: Solved
+  - offset: 106
+    length: 35
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 101
+    initialized_from_dependency: false
+    possible_answer: eval(expr.left) + eval(expr.right)
+    selected: true
+    status: Solved
+  text: |
+    fun eval(expr: Expr): Int =
+            when (expr) {
+                is Num -> TODO()
+                is Sum -> TODO()
+                else -> throw IllegalArgumentException("Unknown expression")
+            }
+
+    interface Expr
+    class Num(val value: Int) : Expr
+    class Sum(val left: Expr, val right: Expr) : Expr
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Test
+    import org.junit.Assert
+
+    class TestSmartCasts {
+        @Test(timeout = 1000)
+        fun testNum() {
+            Assert.assertEquals("'eval' on Num(2) works incorrectly\n", 2, eval(Num(2)))
+        }
+
+        @Test(timeout = 1000)
+        fun testSum() {
+            Assert.assertEquals("'eval' on Sum(Num(2), Num(1)) works incorrectly\n", 3, eval(Sum(Num(2), Num(1))))
+        }
+
+        @Test(timeout = 1000)
+        fun testRecursion() {
+            Assert.assertEquals("'eval' on Sum(Sum(Num(1), Num(2)), Num(3)) works incorrectly\n", 6, eval(Sum(Sum(Num(1), Num(2)), Num(3))))
+        }
+    }
+  learner_created: false
+status: Solved
+record: -1

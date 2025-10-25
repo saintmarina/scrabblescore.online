@@ -1,0 +1,48 @@
+type: edu
+custom_name: Triple-quoted strings
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 162
+    length: 16
+    placeholder_text: .trimIndent()
+    initial_state:
+      length: 13
+      offset: 162
+    initialized_from_dependency: false
+    possible_answer: .trimMargin("#")
+    selected: true
+    status: Solved
+  text: |-
+    const val question = "life, the universe, and everything"
+    const val answer = 42
+
+    val tripleQuotedString = """
+        #question = "$question"
+        #answer = $answer""".trimIndent()
+
+    fun main() {
+        println(tripleQuotedString)
+    }
+  learner_created: false
+- name: test/Tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class Test {
+        @Test(timeout = 1000)
+        fun testSolution() {
+            Assert.assertEquals(
+                    "The margin prefix shouldn't be present " +
+                            "in the resulting string",
+                    tripleQuotedString,
+                    """question = "life, the universe, and everything"
+    answer = 42""")
+        }
+    }
+  learner_created: false
+status: Solved
+record: -1

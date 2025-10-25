@@ -1,0 +1,72 @@
+type: edu
+custom_name: The function apply
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 44
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 44
+    initialized_from_dependency: false
+    possible_answer: |-
+      f()
+          return this
+    selected: false
+    status: Unchecked
+  text: |
+    fun <T> T.myApply(f: T.() -> Unit): T {
+        TODO()
+    }
+
+    fun createString(): String {
+        return StringBuilder().myApply {
+            append("Numbers: ")
+            for (i in 1..10) {
+                append(i)
+            }
+        }.toString()
+    }
+
+    fun createMap(): Map<Int, String> {
+        return hashMapOf<Int, String>().myApply {
+            put(0, "0")
+            for (i in 1..10) {
+                put(i, "$i")
+            }
+        }
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |
+    import org.junit.Assert
+    import org.junit.Test
+    import java.util.HashMap
+
+    class TestTheFunctionWith {
+        @Test(timeout = 1000)
+        fun testCreateString() {
+            val sb = StringBuilder()
+            sb.append("Numbers: ")
+            for (i in 1..10) {
+                sb.append(i)
+            }
+            Assert.assertEquals("Wrong result for 'createString()' call:\n", sb.toString(), createString())
+        }
+
+        @Test(timeout = 1000)
+        fun testCreateMap() {
+            val map = createMap()
+            val expected = HashMap<Int, String>()
+            for (i in 0..10) {
+                expected[i] = "$i"
+            }
+            Assert.assertEquals("Wrong result for 'createMap()' call:\n", expected, map)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

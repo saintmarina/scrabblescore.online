@@ -1,0 +1,1 @@
+/Users/anna/scrabble/scrabblescore.online/cordova/platforms/Kotlin Koans/Introduction/Nothing type/src/Task.kt

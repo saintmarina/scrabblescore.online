@@ -22,7 +22,8 @@ cordova build android --debug --emulator
 # Change version name in cordova/config.xml
 # Run this script
 # Then in Android Studio, open ScrabbleScore in platorms/android
-# Increment app version in app/manifests/AndroidManifest.xml --> line2: android:versionCode="1000" (increment 1000) android: vesionName="1.2.0" (increment 1.2.0)
+# in android project res->values->strings.xml change the app name to "Scra Score Sheet" 
+#Increment app version in app/manifests/AndroidManifest.xml --> line2: android:versionCode="1000" (increment 1000) android: vesionName="1.2.0" (increment 1.2.0)
 # In Build --> Generate Signed Bundle/APK --> Create a bundle
 # In /Users/anna/scrabble/scrabblescore.online/cordova/platforms/android/app/release find app-release.aab
 # Drag app-release.aab to the Developer Console

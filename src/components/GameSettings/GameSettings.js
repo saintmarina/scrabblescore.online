@@ -68,7 +68,7 @@ class GameSettings extends React.Component {
     return (
       <HomePage>
         <div className="language-choice-container">
-          <p className="sel-lang">Select the game language:</p>
+          <p className="sel-lang">Select scoring language:</p>
           <select className="custom-select" id="language-select" value={language} onChange={this.handleChangeOfLanguage}>
             <option value="en">English</option>
             <option value="ru">Russian</option>

@@ -1,0 +1,14 @@
+title: Kotlin Koans
+language: English
+summary: Kotlin Koans are a series of exercises to get you familiar with the Kotlin
+  syntax
+programming_language: Kotlin
+content:
+- Introduction
+- Classes
+- Conventions
+- Collections
+- Properties
+- Builders
+- Generics
+mode: Study

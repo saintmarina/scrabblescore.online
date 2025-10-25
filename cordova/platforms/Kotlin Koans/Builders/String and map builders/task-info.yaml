@@ -1,0 +1,54 @@
+type: edu
+custom_name: String and map builders
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 26
+    length: 10
+    placeholder_text: /* TODO */
+    initial_state:
+      length: 10
+      offset: 26
+    initialized_from_dependency: false
+    possible_answer: |-
+      fun <K, V> buildMap(build: HashMap<K, V>.() -> Unit): Map<K, V> {
+          val map = HashMap<K, V>()
+          map.build()
+          return map
+      }
+    selected: false
+    status: Unchecked
+  text: |
+    import java.util.HashMap
+
+    /* TODO */
+
+    fun usage(): Map<Int, String> {
+        return buildMap {
+            put(0, "0")
+            for (i in 1..10) {
+                put(i, "$i")
+            }
+        }
+    }
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestStringAndMapBuilders {
+        @Test(timeout = 1000)
+        fun testBuildMap() {
+            val expected = hashMapOf<Int, String>()
+            for (i in 0..10) {
+                expected[i] = "$i"
+            }
+            Assert.assertEquals("Wrong result for 'usage()' call:\n", expected, usage())
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

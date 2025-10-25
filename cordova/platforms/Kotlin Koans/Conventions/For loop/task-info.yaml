@@ -1,0 +1,102 @@
+type: edu
+custom_name: For loop
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 0
+    length: 51
+    placeholder_text: 'class DateRange(val start: MyDate, val end: MyDate)'
+    initial_state:
+      length: 51
+      offset: 0
+    initialized_from_dependency: false
+    possible_answer: |-
+      class DateRange(val start: MyDate, val end: MyDate) : Iterable<MyDate> {
+          override fun iterator(): Iterator<MyDate> {
+              return object : Iterator<MyDate> {
+                  var current: MyDate = start
+
+                  override fun next(): MyDate {
+                      if (!hasNext()) throw NoSuchElementException()
+                      val result = current
+                      current = current.followingDate()
+                      return result
+                  }
+
+                  override fun hasNext(): Boolean = current <= end
+              }
+          }
+      }
+    selected: false
+    status: Unchecked
+  text: |-
+    class DateRange(val start: MyDate, val end: MyDate)
+
+    fun iterateOverDateRange(firstDate: MyDate, secondDate: MyDate, handler: (MyDate) -> Unit) {
+        for (date in firstDate..secondDate) {
+            handler(date)
+        }
+    }
+  learner_created: false
+- name: src/DateUtil.kt
+  visible: true
+  text: |-
+    import java.util.Calendar
+
+    /*
+     * Returns the following date after the given one.
+     * For example, for Dec 31, 2019 the date Jan 1, 2020 is returned.
+     */
+    fun MyDate.followingDate(): MyDate {
+        val c = Calendar.getInstance()
+        c.set(year, month, dayOfMonth)
+        val millisecondsInADay = 24 * 60 * 60 * 1000L
+        val timeInMillis = c.timeInMillis + millisecondsInADay
+        val result = Calendar.getInstance()
+        result.timeInMillis = timeInMillis
+        return MyDate(result.get(Calendar.YEAR), result.get(Calendar.MONTH), result.get(Calendar.DATE))
+    }
+  learner_created: false
+- name: src/MyDate.kt
+  visible: true
+  text: |
+    data class MyDate(val year: Int, val month: Int, val dayOfMonth: Int) : Comparable<MyDate> {
+        override fun compareTo(other: MyDate): Int {
+            if (year != other.year) return year - other.year
+            if (month != other.month) return month - other.month
+            return dayOfMonth - other.dayOfMonth
+        }
+    }
+
+    operator fun MyDate.rangeTo(other: MyDate) = DateRange(this, other)
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestForLoop {
+        @Test(timeout = 1000)
+        fun testIterateOverDateRange() {
+            val actualDateRange = arrayListOf<MyDate>()
+            iterateOverDateRange(MyDate(2016, 5, 1), MyDate(2016, 5, 5)) { date ->
+                actualDateRange.add(date)
+            }
+            val expectedDateRange = arrayListOf(
+                    MyDate(2016, 5, 1), MyDate(2016, 5, 2), MyDate(2016, 5, 3), MyDate(2016, 5, 4), MyDate(2016, 5, 5))
+            Assert.assertEquals("Incorrect iteration over the following dates:\n",
+                    expectedDateRange, actualDateRange)
+        }
+
+        @Test(timeout = 1000)
+        fun testIterateOverEmptyRange() {
+            var invoked = false
+            iterateOverDateRange(MyDate(2016, 1, 1), MyDate(2015, 1, 1), { invoked = true })
+            Assert.assertFalse("Handler was invoked on an empty range:\n", invoked)
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1

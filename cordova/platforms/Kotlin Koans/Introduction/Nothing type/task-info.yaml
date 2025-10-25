@@ -1,0 +1,59 @@
+type: edu
+custom_name: Nothing type
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 74
+    length: 10
+    placeholder_text: '   '
+    initial_state:
+      length: 3
+      offset: 74
+    initialized_from_dependency: false
+    possible_answer: ': Nothing'
+    selected: true
+    status: Solved
+  text: |-
+    import java.lang.IllegalArgumentException
+
+    fun failWithWrongAge(age: Int?)    {
+        throw IllegalArgumentException("Wrong age: $age")
+    }
+
+    fun checkAge(age: Int?) {
+        if (age == null || age !in 0..150) failWithWrongAge(age)
+        println("Congrats! Next year you'll be ${age + 1}.")
+    }
+
+    fun main() {
+        checkAge(10)
+    }
+  learner_created: false
+- name: test/Tests.kt
+  visible: false
+  text: |-
+    import org.junit.Assert
+    import org.junit.Test
+
+    class Test {
+        fun testAge(age: Int) {
+            val e: IllegalArgumentException? = try {
+                checkAge(age)
+                null
+            } catch (e: IllegalArgumentException) {
+                e
+            }
+            Assert.assertNotNull(
+                    "Expected IllegalArgumentException for 'checkAge($age)'", e)
+        }
+
+        @Test(timeout = 1000)
+        fun testNegative() = testAge(-10)
+
+        @Test(timeout = 1000)
+        fun testLargeNumber() = testAge(200)
+    }
+  learner_created: false
+status: Solved
+record: -1

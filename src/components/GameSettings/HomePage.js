@@ -7,7 +7,7 @@ const HomePage = (props) => {
         <div className="col-sm-12">
           <img id="big-logo" src="logo.png" alt="Scrabble score logo"/>
           <p>
-             This Scra Score Sheet keeps track of the game, and replaces traditional pen-and-paper score sheets for the Scrabble crossword board game.
+             Scra Score Sheet keeps track of the game, and replaces traditional pen-and-paper score sheets for the Scrabble crossword board game.
              Enjoy the game with your friends and family while this Scrabble Score Keeper does the math for you.
           </p>
           <p>
@@ -19,7 +19,7 @@ const HomePage = (props) => {
       <div className="homepage-children">
       { props.children }
       </div>
-      <div className="row">
+      <div className="row rules">
         <div className="col-sm-12">
           <h5>Features</h5>
           <ul>

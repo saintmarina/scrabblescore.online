@@ -1,0 +1,56 @@
+type: edu
+custom_name: Invoke
+files:
+- name: src/Task.kt
+  visible: true
+  placeholders:
+  - offset: 123
+    length: 6
+    placeholder_text: TODO()
+    initial_state:
+      length: 6
+      offset: 123
+    initialized_from_dependency: false
+    possible_answer: |-
+      numberOfInvocations++
+              return this
+    selected: false
+    status: Unchecked
+  text: |
+    class Invokable {
+        var numberOfInvocations: Int = 0
+            private set
+
+        operator fun invoke(): Invokable {
+            TODO()
+        }
+    }
+
+    fun invokeTwice(invokable: Invokable) = invokable()()
+  learner_created: false
+- name: test/tests.kt
+  visible: false
+  text: |
+    import org.junit.Assert
+    import org.junit.Test
+
+    class TestInvoke {
+        @Test(timeout = 1000)
+        fun testInvokeTwice() = testInvokable(2, ::invokeTwice)
+
+        private fun testInvokable(numberOfInvocations: Int, invokeSeveralTimes: (Invokable) -> Invokable) {
+            val invokable = Invokable()
+            val message = "The number of invocations is incorrect:\n"
+            Assert.assertEquals(message, numberOfInvocations, invokeSeveralTimes(invokable).numberOfInvocations)
+        }
+
+        @Test(timeout = 1000)
+        fun testNumberOfInvocations() {
+            testInvokable(1) { it() }
+            testInvokable(5) { it()()()()() }
+            testInvokable(0) { it }
+        }
+    }
+  learner_created: false
+status: Unchecked
+record: -1
