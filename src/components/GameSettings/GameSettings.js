@@ -73,6 +73,7 @@ class GameSettings extends React.Component {
             <option value="en">English</option>
             <option value="ru">Russian</option>
             <option value="fr">French</option>
+            <option value="es">Spanish</option>
           </select>
         </div>
         <form onSubmit={this.handleGameStart}>
